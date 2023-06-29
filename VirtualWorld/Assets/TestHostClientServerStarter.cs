@@ -8,7 +8,10 @@ public class TestHostClientServerStarter : MonoBehaviour
     public void StartHost()
     {
         NetworkManager.Singleton.StartHost();
-        NetworkManager.Singleton.SceneManager.LoadScene("Test1", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        //NetworkSceneManager.ActiveSceneSynchronizationEnabled = false;
+
+        NetworkManager.Singleton.SceneManager.LoadScene("Test1", UnityEngine.SceneManagement.LoadSceneMode.Single);        
+        //NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = false;
     }
 
     public void StartClient()
@@ -20,5 +23,6 @@ public class TestHostClientServerStarter : MonoBehaviour
     {
         NetworkManager.Singleton.StartServer();
         NetworkManager.Singleton.SceneManager.LoadScene("Test1", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        //NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = false;
     }
 }
