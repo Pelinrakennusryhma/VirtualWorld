@@ -96,7 +96,6 @@ namespace StarterAssets
 
 		private bool _hasAnimator;
 
-		private ClientAuthoritativeTransform _clientTransform;
 
 		private void Awake()
 		{
@@ -129,13 +128,6 @@ namespace StarterAssets
 				this.enabled = false;
 
 			}
-
-            else
-            {
-				_clientTransform = GetComponent<ClientAuthoritativeTransform>();
-				//_clientTransform.Interpolate = false;
-				_clientTransform.UseHalfFloatPrecision = true;
-            }
 		}
 
 		private void Update()
@@ -200,7 +192,7 @@ namespace StarterAssets
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
-			Debug.Log("Movement is " + _input.move);
+			//Debug.Log("Movement is " + _input.move);
 
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -290,8 +282,6 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
-					//_clientTransform.Interpolate = false;
-
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
@@ -304,7 +294,7 @@ namespace StarterAssets
 
                 else
                 {
-					//_clientTransform.Interpolate = true;
+
                 }
 
 				// jump timeout
@@ -315,7 +305,7 @@ namespace StarterAssets
 			}
 			else
 			{
-				//_clientTransform.Interpolate = true;
+
 
 				// reset the jump timeout timer
 				_jumpTimeoutDelta = JumpTimeout;

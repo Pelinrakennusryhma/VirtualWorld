@@ -49,7 +49,6 @@ public class FirstPersonPlayerController : NetworkBehaviour
 
     private Vector3 cameraOriginalLocalPosition;
 
-    private ClientAuthoritativeTransform _clientTransform;
 
     void Awake()
     {
@@ -73,13 +72,6 @@ public class FirstPersonPlayerController : NetworkBehaviour
         {
             Camera.gameObject.SetActive(IsOwner);
             this.enabled = false;
-        }
-
-        else
-        {
-            _clientTransform = GetComponent<ClientAuthoritativeTransform>();
-            //_clientTransform.Interpolate = false;
-            _clientTransform.UseHalfFloatPrecision = true;
         }
     }
 
