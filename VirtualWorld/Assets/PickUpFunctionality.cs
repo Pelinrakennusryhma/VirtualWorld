@@ -77,18 +77,24 @@ public class PickUpFunctionality : NetworkBehaviour
         if (Input.GetButtonDown("Fire1")
             && CurrentlyHoldingObject != null )
         {
-            LaunchForce = Random.Range(10.0f, 20.0f);
-            //Debug.Log("Launchforce " + LaunchForce);
-            //Debug.Log("Release holded object!! " + Time.time);
-            Vector3 anglularVelocity = new Vector3(Random.Range(-100, 100), 
-                                                   Random.Range(-100, 100), 
-                                                   Random.Range(-100, 100));
+            LaunchObject();
+        }
+    }
 
-            Debug.Log("About to call client rpc method");
-            CurrentlyHoldingObject.OnReleasePickUp(FirstPersonPlayerController.Camera.transform.forward * LaunchForce,
-                                                   anglularVelocity);
-            CurrentlyHoldingObject = null;
-        }              
+
+    private void LaunchObject()
+    {
+        LaunchForce = Random.Range(10.0f, 20.0f);
+        //Debug.Log("Launchforce " + LaunchForce);
+        //Debug.Log("Release holded object!! " + Time.time);
+        Vector3 anglularVelocity = new Vector3(Random.Range(-100, 100),
+                                               Random.Range(-100, 100),
+                                               Random.Range(-100, 100));
+
+        Debug.Log("About to call client rpc method");
+        CurrentlyHoldingObject.OnReleasePickUpServerRpc(FirstPersonPlayerController.Camera.transform.forward * LaunchForce,
+                                               anglularVelocity);
+        CurrentlyHoldingObject = null;
     }
 
     public void OnEnterTriggerArea(PickUppableObject pickUppableObject)

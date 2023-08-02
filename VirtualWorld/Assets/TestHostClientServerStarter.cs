@@ -5,12 +5,17 @@ using Unity.Netcode;
 
 public class TestHostClientServerStarter : MonoBehaviour
 {
+    //private string TestSceneName = "Test1";
+    private string TestSceneName = "Playground";
+
     public void StartHost()
     {
         NetworkManager.Singleton.StartHost();
         //NetworkSceneManager.ActiveSceneSynchronizationEnabled = false;
 
-        NetworkManager.Singleton.SceneManager.LoadScene("Test1", UnityEngine.SceneManagement.LoadSceneMode.Single);        
+
+        Debug.Log("Test scene name is " + TestSceneName);
+        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);        
         //NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = false;
     }
 
@@ -22,7 +27,7 @@ public class TestHostClientServerStarter : MonoBehaviour
     public void StartServer()
     {
         NetworkManager.Singleton.StartServer();
-        NetworkManager.Singleton.SceneManager.LoadScene("Test1", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
         //NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = false;
     }
 }

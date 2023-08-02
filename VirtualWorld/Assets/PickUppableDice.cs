@@ -8,6 +8,7 @@ public class PickUppableDice :  PickUppableObject
     public BoxCollider PhysicsCollider;
     public Rigidbody Rigidbody;
 
+
     public override void OnPickUp(FirstPersonPlayerController holder, 
                                   PickUpFunctionality holderPickUpFunctionality)
     {
@@ -20,9 +21,10 @@ public class PickUppableDice :  PickUppableObject
         Debug.Log("On pickup called");
     }
 
-    public override void OnReleasePickUp()
+    [ServerRpc]
+    public override void OnReleasePickUpServerRpc()
     {
-        base.OnReleasePickUp();
+        base.OnReleasePickUpServerRpc();
 
         PhysicsCollider.enabled = true;
         Rigidbody.isKinematic = false;
@@ -32,15 +34,21 @@ public class PickUppableDice :  PickUppableObject
 
     public void LateUpdate()
     {
+        bool hasHolder = false;
 
-
-        if (Holder != null) 
+        if (Holder != null)
         {
-
-            Rigidbody.transform.position = Holder.Camera.transform.position + Holder.Camera.transform.forward * 1.5f;
-            Rigidbody.transform.Rotate(Vector3.right *22.0f * Time.deltaTime + Vector3.up * 18.0f * Time.deltaTime);
-            //Debug.Log("Should move with player " + Time.time);
+            hasHolder = true;        
+            MoveToHolderPositionServerRpc(Holder.Camera.transform.position + Holder.Camera.transform.forward * 1.5f, hasHolder);
         }
+
+        //if (Holder != null) 
+        //{
+
+        //    Rigidbody.transform.position = Holder.Camera.transform.position + Holder.Camera.transform.forward * 1.5f;
+        //    Rigidbody.transform.Rotate(Vector3.right *22.0f * Time.deltaTime + Vector3.up * 18.0f * Time.deltaTime);
+        //    //Debug.Log("Should move with player " + Time.time);
+        //}
 
         //else if (Rigidbody.velocity.magnitude <= 0.01f)
         //{
@@ -51,13 +59,24 @@ public class PickUppableDice :  PickUppableObject
         //}
     }
 
+    [ServerRpc]
+    public void MoveToHolderPositionServerRpc(Vector3 newPos, bool hasHolder)
+    {
 
-    public override void OnReleasePickUp(Vector3 forceToAdd,
+        if (hasHolder) 
+        {
+            Rigidbody.transform.position = newPos;
+            Rigidbody.transform.Rotate(Vector3.right * 22.0f * Time.deltaTime + Vector3.up * 18.0f * Time.deltaTime);
+        }
+    }
+
+    [ServerRpc]
+    public override void OnReleasePickUpServerRpc(Vector3 forceToAdd,
                                          Vector3 angluarVelocity)
     {
         Debug.Log("Force to add magnitude is " + forceToAdd.magnitude);
 
-        base.OnReleasePickUp(forceToAdd,
+        base.OnReleasePickUpServerRpc(forceToAdd,
                              angluarVelocity);
 
         PhysicsCollider.enabled = true;
