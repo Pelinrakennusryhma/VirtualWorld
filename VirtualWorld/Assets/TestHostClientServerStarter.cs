@@ -17,6 +17,7 @@ public class TestHostClientServerStarter : MonoBehaviour
     public TextMeshProUGUI LocalIPText;
     public TextMeshProUGUI GlobalIPText;
 
+    public TMP_InputField NetworkManagerIP;
     public TMP_InputField ServerHostPortInputField;
 
     public TMP_InputField ClientIPInputField;
@@ -122,7 +123,7 @@ public class TestHostClientServerStarter : MonoBehaviour
     // Stolen from ClientDriven bite size sample
     public void SetServerData()
     {
-        var sanitizedIPText = Sanitize("0.0.0.0");
+        var sanitizedIPText = Sanitize(NetworkManagerIP.text);
         //sanitizedIPText = Sanitize("127.0.0.1");
         var sanitizedPortText = Sanitize(ServerHostPortInputField.text);
 
