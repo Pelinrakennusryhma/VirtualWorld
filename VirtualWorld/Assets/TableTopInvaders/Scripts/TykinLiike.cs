@@ -17,13 +17,25 @@ public float tykinLiikkumisNopeus = 29.0f;
     private Quaternion lastKnownCannonRotation;
 
 
+    public NewMiniGameInputs Inputs;
+
     private void Update()
 {
-    // Otetaan horizontal muuttujaan näppäinten A ja D / nuoli vasen ja nuoli oikea arvo
-    var horizontal = Input.GetAxis("Horizontal");
         // Otetaan horizontal muuttujaan näppäinten A ja D / nuoli vasen ja nuoli oikea arvo
-    var vertical = Input.GetAxis("Vertical");
-        
+        //var horizontal = Input.GetAxis("Horizontal");
+        //    // Otetaan horizontal muuttujaan näppäinten A ja D / nuoli vasen ja nuoli oikea arvo
+        //var vertical = Input.GetAxis("Vertical");
+
+        if (Inputs.escOptions)
+        {
+            Debug.Log("Pressed esc");
+            GameFlowManager.Instance.GoToMainMenu();
+            Inputs.ClearEscOptions();
+        }
+
+        float horizontal = Inputs.move.x;
+    float vertical = Inputs.move.y;
+
     // Tehdään rajakysely, jossa verrataan tykin reunoja laudan seiniin ja näin estetään tykin läpi meneminen.
     if(transform.transform.position.x > 16 && transform.transform.position.x < 42) {
         transform.Translate(new Vector3(horizontal, 0, 0) * (tykinLiikkumisNopeus * Time.deltaTime));
@@ -44,8 +56,8 @@ public float tykinLiikkumisNopeus = 29.0f;
         bool mouseWasUsed = false;
         bool keyboardWasUsed = false;
 
-        if (horizontal != 0.0f
-            || vertical != 0.0f)
+        if ((horizontal < -0.1f || horizontal > 0.1f)
+            || (vertical > 0.1f || vertical < -0.1f))
         {
             keyboardWasUsed = true;
 

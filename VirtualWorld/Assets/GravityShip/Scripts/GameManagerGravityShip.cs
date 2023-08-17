@@ -91,7 +91,30 @@ public class GameManagerGravityShip : MonoBehaviour
     public void GoToTitleScreen()
     {
         //SceneManager.LoadScene("GravityShip_TitleScreen");
-        LoadSceneForMiniGameMode("GravityShip_TitleScreen");
+
+        bool alreadyInMenu = false;
+
+        Scene[] scenes = SceneManager.GetAllScenes();
+
+        for (int i = 0; i < scenes.Length; i++)
+        {
+            if (scenes[i].name.Equals("GravityShip_TitleScreen"))
+            {
+                alreadyInMenu = true;
+            }
+        }
+        //SceneManager.LoadScene("Menu");
+
+        if (!alreadyInMenu)
+        {        
+            LoadSceneForMiniGameMode("GravityShip_TitleScreen");
+        }
+
+        else
+        {
+            Debug.Log("Already in menu");
+        }
+
     }
 
     public void GoToNextLevel()
@@ -277,10 +300,10 @@ public class GameManagerGravityShip : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GoToTitleScreen();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    GoToTitleScreen();
+        //}
 
         if (WaitingToSetActiveScene)
         {

@@ -19,6 +19,7 @@ public class ArcadeCabinetTrigger : MonoBehaviour
         {
             MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
             listener.OnEnteredArcadeCabinetTrigger(Cabinet);
+            MiniGamePrompt.Instance.OnEnterMinigameTrigger(Cabinet);
             Debug.Log("Player entered trigger area " + Time.time);
 
         }
@@ -30,6 +31,7 @@ public class ArcadeCabinetTrigger : MonoBehaviour
         {
             MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
             listener.OnExitArcadeCabinetTrigger();
+            MiniGamePrompt.Instance.OnExitMiniGameTrigger();
             Debug.Log("Player exited trigger area " + Time.time);
 
         }

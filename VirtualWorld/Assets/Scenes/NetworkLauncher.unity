@@ -657,6 +657,9 @@ MonoBehaviour:
   GravityShipSkyboxMat: {fileID: 2100000, guid: f531e09e2ad2fb440b4eed7605863143,
     type: 2}
   PlaygroundSkyBoxMat: {fileID: 2100000, guid: aeab33f69c199e54794f516d31450ec4, type: 2}
+  LightingSettingsGravityShip: {fileID: 0}
+  LightingSettingsPlayground: {fileID: 0}
+  LightingSettingsTabletopInvaders: {fileID: 0}
   IsPlayingMinigame: 0
 --- !u!4 &230825634
 Transform:
@@ -1588,7 +1591,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 704883508}
-    PlayerPrefab: {fileID: 5970655708005796580, guid: f8a6ec376064bde4397f3ac11b50313c,
+    PlayerPrefab: {fileID: 3831832412394680306, guid: f8a6ec376064bde4397f3ac11b50313c,
       type: 3}
     Prefabs:
       NetworkPrefabsLists:

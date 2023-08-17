@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using StarterAssets;
+
 public class MiniGameTriggerListener : MonoBehaviour
 {
     public ArcadeCabinetTrigger.CabinetType CurrentCabinet;
-
+    public StarterAssetsInputs Inputs;
     public void OnEnteredArcadeCabinetTrigger(ArcadeCabinetTrigger.CabinetType cabinet)
     {
         CurrentCabinet = cabinet;
@@ -20,8 +22,10 @@ public class MiniGameTriggerListener : MonoBehaviour
     {
         // REplace this with new input system
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Inputs.interact)
         {
+            Inputs.ClearInteractInput();
+
             if (CurrentCabinet == ArcadeCabinetTrigger.CabinetType.TabletopInvaders) 
             {
                 AdditiveSceneLauncher.Instance.SetScene(1);

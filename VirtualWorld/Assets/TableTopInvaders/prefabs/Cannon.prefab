@@ -1307,6 +1307,8 @@ GameObject:
   - component: {fileID: 3494131159232182803}
   - component: {fileID: 3494131159232182800}
   - component: {fileID: 7446916306214637730}
+  - component: {fileID: 8933979098179960733}
+  - component: {fileID: 7382906343029246200}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -1416,6 +1418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tykinLiikkumisNopeus: 29
+  Inputs: {fileID: 8933979098179960733}
 --- !u!114 &3494131159232182804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1452,6 +1455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3765712f601fb4889b3c56594f43aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Inputs: {fileID: 8933979098179960733}
   vasenLaukaisin: {fileID: 1736867169181654122}
   tykinVasemmanLaukaisijanLiike: 0
   "vedettyVasentaTykki\xE4Yhteens\xE4": 0
@@ -1476,6 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ea8c0949455bd4caf6f347fa7fe469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Inputs: {fileID: 8933979098179960733}
   oikealaukasin: {fileID: 1993521328584836402}
   tykinOikeanLaukaisijanLiike: 0
   "vedettyOikeaaTykki\xE4Yhteens\xE4": 0
@@ -1500,6 +1505,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da9b497401e9934183506e1324ef6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8933979098179960733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376597338161574549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c267cabbbf62f40966489027fec46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: {x: 0, y: 0}
+  look: {x: 0, y: 0}
+  jump: 0
+  sprint: 0
+  interact: 0
+  fire1: 0
+  fire2: 0
+  analogMovement: 0
+  cursorLocked: 1
+  cursorInputForLook: 1
+--- !u!114 &7382906343029246200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376597338161574549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 211d7a02223a25d4fbbdfcf16355ca1e,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &4904360476280064292
 GameObject:
   m_ObjectHideFlags: 0

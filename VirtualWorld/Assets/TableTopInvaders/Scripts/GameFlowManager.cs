@@ -43,7 +43,7 @@ public class GameFlowManager : MonoBehaviour
 
     public static int MaxLevel = 29;
 
-
+    public NewMiniGameInputs Inputs;
 
     // Start is called before the first frame update
     public void Awake()
@@ -684,8 +684,28 @@ public class GameFlowManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        bool alreadyInMenu = false;
+
+        Scene[] scenes = SceneManager.GetAllScenes();
+
+        for (int i = 0; i < scenes.Length; i++)
+        {
+            if (scenes[i].name.Equals("Menu"))
+            {
+                alreadyInMenu = true;
+            }
+        }
         //SceneManager.LoadScene("Menu");
-        LoadSceneForMiniGameMode("Menu");
+
+        if (!alreadyInMenu) 
+        {
+            LoadSceneForMiniGameMode("Menu");
+        }
+
+        else
+        {
+            Debug.Log("Already in menu");
+        }
     }
 
     public void GoToEndlessRandom()
@@ -712,16 +732,23 @@ public class GameFlowManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            //Debug.Log("Skip level " + (CurrentLevel - 1).ToString());
-            LaunchNextLevel();
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    //Debug.Log("Skip level " + (CurrentLevel - 1).ToString());
+        //    LaunchNextLevel();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GoToMainMenu();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    GoToMainMenu();
+        //}
+
+        //if (Inputs.escOptions)
+        //{
+        //    Debug.Log("Pressed esc");
+        //    GoToMainMenu();
+        //    Inputs.ClearEscOptions();
+        //}
 
         //if (Input.GetKeyDown(KeyCode.M))
         //{

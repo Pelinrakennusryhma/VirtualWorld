@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OikeaTykki : MonoBehaviour
 {
+    public NewMiniGameInputs Inputs;
+
     // Tykin laukansin objektit oikealaukasin
     public GameObject oikealaukasin;
 
@@ -104,7 +106,7 @@ public class OikeaTykki : MonoBehaviour
         }
 
         // Toteutuu niinkauan kun "Jump eli space" näppäin on painettu ja pohjassa
-        if (Input.GetButton("Fire2"))
+        if (Inputs.fire2)
         {
             if (!startedPullSound)
             {

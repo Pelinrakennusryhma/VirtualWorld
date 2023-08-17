@@ -37,6 +37,10 @@ public class PlayerControllerGravityShip : MonoBehaviour
 
     public bool IsDead = false;
 
+    public NewMiniGameInputs Inputs;
+
+    public bool SpaceReleased;
+
     public static void SetShipType(ShipType type)
     {
         TypeOfShip = type;
@@ -169,18 +173,41 @@ public class PlayerControllerGravityShip : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Inputs.escOptions)
+        {
+            GameManagerGravityShip.Instance.GoToTitleScreen();
+            Inputs.ClearEscOptions();
+        }
+
         if (IsDead)
         {
             return;
         }
 
-        movement = new Vector2(Input.GetAxisRaw("Horizontal"),
-                               Input.GetAxisRaw("Vertical"));
+        movement = new Vector2(Inputs.move.x, Inputs.move.y);
 
-        if (Input.GetButtonDown("Jump"))
+        if (!Inputs.jump)
+        {
+            SpaceReleased = true;
+            //Debug.Log("Released space");
+        }
+
+        if (Inputs.jump && SpaceReleased)
         {
             SpaceWasPressedDuringLastUpdate = true;
+            SpaceReleased = false;
+            //Debug.Log("Pressed space");
         }
+
+
+
+        //movement = new Vector2(Input.GetAxisRaw("Horizontal"),
+        //                       Input.GetAxisRaw("Vertical"));
+
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    SpaceWasPressedDuringLastUpdate = true;
+        //}
 
     }
 

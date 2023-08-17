@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VasenTykki : MonoBehaviour
 {
+    public NewMiniGameInputs Inputs;
+
     // Tykin laukansin objektit vasenlaukaisin ja laukaisin2
     public GameObject vasenLaukaisin;
 
@@ -112,7 +114,7 @@ public class VasenTykki : MonoBehaviour
         }
 
         // Toteutuu niinkauan kun "Jump eli space" näppäin on painettu ja pohjassa
-        if (Input.GetButton("Fire3"))
+        if (Inputs.fire1)
         {
             if (!startedPullSound)
             {
