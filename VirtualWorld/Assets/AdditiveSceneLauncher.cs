@@ -108,33 +108,38 @@ public class AdditiveSceneLauncher : NetworkBehaviour
     }
 
     public void SetScene(int scene)
-    {            
+    {
+        Debug.Log("Should set scene to " + scene);
+
         PlaygroundScene playground = FindObjectOfType<PlaygroundScene>(true);
         playground.DisablePlayground();
 
         character.DisableCharacter();
         //DontDestroyOnLoad(character.transform.parent);
 
-        MiniGameLauncher.Instance.SetSkyboxToDefaultSkybox();
+        //MiniGameLauncher.Instance.SetSkyboxToDefaultSkybox();
         MiniGameLauncher.Instance.StartPlayingMiniGame();
 
         if (scene == 1)
         {
+            MiniGameLauncher.Instance.SetupSceneForTableTopInvaders();
+
             MiniGameLauncher.Instance.SaveActiveSceneName("Menu");
             SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
 
-            Debug.Log("Menu load called");
+            Debug.Log("TAbletop invaders load called");
             //SceneManager.LoadScene("Menu", LoadSceneMode.Single);
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Test1"));
 
         }
 
         else if (scene == 2)
-        {            
-            MiniGameLauncher.Instance.SaveActiveSceneName("Menu");
-            SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
+        {
+            MiniGameLauncher.Instance.SetSceneForGravityShip();
+            MiniGameLauncher.Instance.SaveActiveSceneName("GravityShip_TitleScreen");
+            SceneManager.LoadScene("GravityShip_TitleScreen", LoadSceneMode.Additive);
 
-            Debug.Log("Menu load called");
+            Debug.Log("Gravity ship load called");
             //SceneManager.LoadScene("Menu", LoadSceneMode.Single);
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Test2"));
         }

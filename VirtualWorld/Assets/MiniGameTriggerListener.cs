@@ -26,6 +26,11 @@ public class MiniGameTriggerListener : MonoBehaviour
             {
                 AdditiveSceneLauncher.Instance.SetScene(1);
             }
+
+            else if (CurrentCabinet == ArcadeCabinetTrigger.CabinetType.GravityShip)
+            {
+                AdditiveSceneLauncher.Instance.SetScene(2);
+            }
         }
     }
 }

@@ -7,7 +7,8 @@ public class ArcadeCabinetTrigger : MonoBehaviour
     public enum CabinetType
     {
         None = 0,
-        TabletopInvaders = 1
+        TabletopInvaders = 1,
+        GravityShip = 2
     }
 
     public CabinetType Cabinet;

@@ -14,8 +14,13 @@ public class MiniGameLauncher : NetworkBehaviour
     public int FramesPassedSinceLoadRequest;
     public bool WaitingToLoad;
 
-    public Material SkyboxMat;
+    public Material TabletopInvadersSkyboxMat;
+    public Material GravityShipSkyboxMat;
     public Material PlaygroundSkyBoxMat;
+
+    public LightingSettings LightingSettingsGravityShip;
+    public LightingSettings LightingSettingsPlayground;
+    public LightingSettings LightingSettingsTabletopInvaders;
 
     public bool IsPlayingMinigame;
 
@@ -93,6 +98,11 @@ public class MiniGameLauncher : NetworkBehaviour
             DestroyImmediate(GameFlowManager.Instance.gameObject);
         }
 
+        if (GameManagerGravityShip.Instance != null)
+        {
+            DestroyImmediate(GameManagerGravityShip.Instance.gameObject);
+        }
+
         IsPlayingMinigame = false;
         Character.EnableCharacter();
 
@@ -130,11 +140,20 @@ public class MiniGameLauncher : NetworkBehaviour
         FramesPassedSinceLoadRequest = 0;
     }
 
-    public void SetSkyboxToDefaultSkybox()
+    public void SetupSceneForTableTopInvaders()
     {
+        MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.TabletopInvaders);
         PlaygroundSkyBoxMat = RenderSettings.skybox;
-        RenderSettings.skybox = SkyboxMat;
-        DynamicGI.UpdateEnvironment();
+        RenderSettings.skybox = TabletopInvadersSkyboxMat;
+        DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
+    }
+
+    public void SetSceneForGravityShip()
+    {
+        MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.GravityShip);
+        PlaygroundSkyBoxMat = RenderSettings.skybox;
+        RenderSettings.skybox = GravityShipSkyboxMat;
+        DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
     }
 
     [ServerRpc(RequireOwnership = false)]
