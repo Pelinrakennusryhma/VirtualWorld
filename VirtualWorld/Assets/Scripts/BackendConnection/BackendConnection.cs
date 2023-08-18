@@ -23,11 +23,13 @@ namespace BackendConnection
         string BaseURL = "https://localhost:3001";
         string authRoute = "api/auth/";
         string loginRoute = "api/login/";
+        string registerRoute = "api/users/";
 
         public UnityEvent<string> OnAuthSuccess;
 
         void Awake()
         {
+            
             if (!BaseURL.EndsWith("/"))
             {
                 BaseURL += "/";
@@ -57,7 +59,6 @@ namespace BackendConnection
             {
                 string json = JsonUtility.ToJson(data);
                 byte[] jsonToSend = new UTF8Encoding().GetBytes(json);
-                Debug.Log(jsonToSend);
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             }
 
@@ -111,6 +112,27 @@ namespace BackendConnection
             {
                 PlayerPrefs.SetString("jwt", loggedUserData.token);
             }
+
+            OnAuthSuccess.Invoke(loggedUserData.username);
+        }
+
+        public async void OnBeginRegister(string username, string password, bool rememberMe)
+        {
+            LoginUserData userData = new LoginUserData();
+            userData.username = username;
+            userData.password = password;
+            UnityWebRequest req = CreateRequest(BaseURL + registerRoute, RequestType.POST, userData);
+
+            string text = await GetTextAsync(req);
+
+            LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
+
+            if (rememberMe)
+            {
+                PlayerPrefs.SetString("jwt", loggedUserData.token);
+            }
+
+            OnAuthSuccess.Invoke(loggedUserData.username);
         }
 
         public void LogOut()
