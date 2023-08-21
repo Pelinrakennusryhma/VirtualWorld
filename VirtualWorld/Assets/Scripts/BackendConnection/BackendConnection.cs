@@ -26,6 +26,7 @@ namespace BackendConnection
         string registerRoute = "api/users/";
 
         public UnityEvent<string> OnAuthSuccess;
+        public UnityEvent OnNoLoggedUser;
 
         void Awake()
         {
@@ -48,6 +49,9 @@ namespace BackendConnection
             if (jwt != "") 
             {
                 AuthWithJWT(jwt);
+            } else
+            {
+                OnNoLoggedUser.Invoke();
             }
         }
 
