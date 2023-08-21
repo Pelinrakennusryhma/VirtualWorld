@@ -1,13 +1,9 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.Networking;
-using UnityEngine.Rendering.VirtualTexturing;
-using UnityEngine.UI;
 
 namespace BackendConnection
 {
@@ -27,6 +23,7 @@ namespace BackendConnection
 
         public UnityEvent<string> OnAuthSuccess;
         public UnityEvent OnNoLoggedUser;
+        public UnityEvent<UnityWebRequestException> OnAuthFailed;
 
         void Awake()
         {
@@ -74,12 +71,20 @@ namespace BackendConnection
 
         async void AuthWithJWT(string jwt)
         {
-            UnityWebRequest req = CreateRequest(BaseURL + authRoute, RequestType.POST, null);
-            req.SetRequestHeader("Authorization", "Bearer " + jwt);
-            string text = await GetTextAsync(req);
-            Debug.Log(text);
-            LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
-            OnAuthSuccess.Invoke(loggedUserData.username);
+            try
+            {
+                UnityWebRequest req = CreateRequest(BaseURL + authRoute, RequestType.POST, null);
+                req.SetRequestHeader("Authorization", "Bearer " + jwt);
+                string text = await GetTextAsync(req);
+                Debug.Log(text);
+                LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
+                OnAuthSuccess.Invoke(loggedUserData.username);
+            }
+            catch (UnityWebRequestException e)
+            {
+                OnAuthFailed.Invoke(e);
+            }
+
         }
 
         // get async webrequest
@@ -103,40 +108,58 @@ namespace BackendConnection
 
         public async void OnBeginLogin(string username, string password, bool rememberMe)
         {
-            LoginUserData userData = new LoginUserData();
-            userData.username = username;
-            userData.password = password;
-            UnityWebRequest req = CreateRequest(BaseURL + loginRoute, RequestType.POST, userData);
-
-            string text = await GetTextAsync(req);
-
-            LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
-
-            if (rememberMe)
+            try
             {
-                PlayerPrefs.SetString("jwt", loggedUserData.token);
+                LoginUserData userData = new LoginUserData();
+                userData.username = username;
+                userData.password = password;
+                UnityWebRequest req = CreateRequest(BaseURL + loginRoute, RequestType.POST, userData);
+
+                string text = await GetTextAsync(req);
+
+                LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
+
+                if (rememberMe)
+                {
+                    PlayerPrefs.SetString("jwt", loggedUserData.token);
+                }
+
+                OnAuthSuccess.Invoke(loggedUserData.username);
+            }
+            catch (UnityWebRequestException e)
+            {
+                OnAuthFailed.Invoke(e);
+                throw;
             }
 
-            OnAuthSuccess.Invoke(loggedUserData.username);
         }
 
         public async void OnBeginRegister(string username, string password, bool rememberMe)
         {
-            LoginUserData userData = new LoginUserData();
-            userData.username = username;
-            userData.password = password;
-            UnityWebRequest req = CreateRequest(BaseURL + registerRoute, RequestType.POST, userData);
-
-            string text = await GetTextAsync(req);
-
-            LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
-
-            if (rememberMe)
+            try
             {
-                PlayerPrefs.SetString("jwt", loggedUserData.token);
+                LoginUserData userData = new LoginUserData();
+                userData.username = username;
+                userData.password = password;
+                UnityWebRequest req = CreateRequest(BaseURL + registerRoute, RequestType.POST, userData);
+
+                string text = await GetTextAsync(req);
+
+                LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
+
+                if (rememberMe)
+                {
+                    PlayerPrefs.SetString("jwt", loggedUserData.token);
+                }
+
+                OnAuthSuccess.Invoke(loggedUserData.username);
+            }
+            catch (UnityWebRequestException e)
+            {
+                OnAuthFailed.Invoke(e);
+                throw;
             }
 
-            OnAuthSuccess.Invoke(loggedUserData.username);
         }
 
         public void LogOut()

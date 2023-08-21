@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +17,8 @@ namespace Authentication
         [Header("Shared")]
         [SerializeField] GameObject loginRegisterPanel;
         [SerializeField] Toggle rememberMeToggle;
+        [SerializeField] TMP_Text errorMessage;
+        [SerializeField] float showErrorDuration = 3f;
 
         [Header("Login")]
         [SerializeField] GameObject loginTitle;
@@ -46,6 +50,7 @@ namespace Authentication
             backendConnection.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
             backendConnection.OnAuthSuccess.AddListener(OnEnableLoggedIn);
             backendConnection.OnNoLoggedUser.AddListener(OnEnableRegister);
+            backendConnection.OnAuthFailed.AddListener(OnAuthFailed);
         }
 
         public void OnEnableLogin()
@@ -98,6 +103,35 @@ namespace Authentication
             loginSwitch.gameObject.SetActive(true);
             loginRegisterPanel.SetActive(true);
             loggedInPanel.SetActive(false);
+        }
+
+        void OnAuthFailed(UnityWebRequestException exc)
+        {
+            if (exc.Message.Contains("invalid"))
+            {
+                SetError("Invalid username or password.");
+            } 
+            else if(exc.Message.Contains("unique"))
+            {
+                SetError("Username already taken.");
+            }
+            else
+            {
+                SetError(exc.Error);
+            }
+        }
+
+        void SetError(string message)
+        {
+            errorMessage.text = message;
+            errorMessage.gameObject.SetActive(true);
+            Invoke("HideError", showErrorDuration);
+        }
+
+        void HideError()
+        {
+            errorMessage.text = "";
+            errorMessage.gameObject.SetActive(false);
         }
     }
 }
