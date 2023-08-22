@@ -6,6 +6,9 @@ public class WorldspaceCanvasRotator : MonoBehaviour
 {
     void LateUpdate()
     {
-        transform.rotation = Camera.main.transform.rotation;
+        if(Camera.main != null)
+        {
+            transform.rotation = Camera.main.transform.rotation;
+        }
     }
 }
