@@ -31,7 +31,7 @@ namespace Authentication
 
         public override void OnNetworkSpawn()
         {
-            if(namePlate != null)
+            if(namePlate != null && UserSession.Instance.LoggedUserData.username != null)
             {
                 if (IsOwner)
                 {

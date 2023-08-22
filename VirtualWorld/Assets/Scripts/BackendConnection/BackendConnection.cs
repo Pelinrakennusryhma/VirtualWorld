@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using System.Text;
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -82,7 +81,7 @@ namespace APICalls
             return op.downloadHandler.text;
         }
 
-        public async void OnBeginLogin(string username, string password, bool rememberMe)
+        public async UniTask OnBeginLogin(string username, string password, bool rememberMe)
         {
             try
             {
@@ -110,7 +109,7 @@ namespace APICalls
 
         }
 
-        public async void OnBeginRegister(string username, string password, bool rememberMe)
+        public async UniTask OnBeginRegister(string username, string password, bool rememberMe)
         {
             try
             {

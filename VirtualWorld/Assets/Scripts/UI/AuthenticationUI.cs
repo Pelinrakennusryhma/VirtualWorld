@@ -39,16 +39,14 @@ namespace Authentication
         [SerializeField] TMP_InputField registerNameField;
         [SerializeField] TMP_InputField registerPasswordField;
 
-        void Awake()
+        async void Awake()
         {
             if(backendConnection == null)
             {
                 return;
             }
-            loginButton.onClick.AddListener(() => 
-            backendConnection.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
-            registerButton.onClick.AddListener(() =>
-            backendConnection.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
+            loginButton.onClick.AddListener(async () => await backendConnection.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
+            registerButton.onClick.AddListener(async () => await backendConnection.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
             backendConnection.OnAuthSuccess.AddListener(OnEnableLoggedIn);
             backendConnection.OnNoLoggedUser.AddListener(OnEnableRegister);
             backendConnection.OnAuthFailed.AddListener(OnAuthFailed);
