@@ -4,51 +4,39 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using Authentication;
 
-namespace BackendConnection
+namespace APICalls
 {
-    enum RequestType {
-        GET, 
-        POST, 
-        PUT
-    }
-
     public class BackendConnection : MonoBehaviour
     {
         [SerializeField]
         string BaseURL = "https://localhost:3001";
-        string authRoute = "api/auth/";
-        string loginRoute = "api/login/";
-        string registerRoute = "api/users/";
+        readonly string authRoute = "api/auth/";
+        readonly string loginRoute = "api/login/";
+        readonly string registerRoute = "api/users/";
+        
+        public static BackendConnection Instance { get; private set; }
 
-        public UnityEvent<string> OnAuthSuccess;
+        public UnityEvent<LoggedUserData> OnAuthSuccess;
         public UnityEvent OnNoLoggedUser;
         public UnityEvent<UnityWebRequestException> OnAuthFailed;
 
         void Awake()
         {
-            
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+
             if (!BaseURL.EndsWith("/"))
             {
                 BaseURL += "/";
-            }
-        }
-
-        private void Start()
-        {
-            CheckForSavedJWT();
-        }
-
-        void CheckForSavedJWT()
-        {
-            string jwt = PlayerPrefs.GetString("jwt", "");
-
-            if (jwt != "") 
-            {
-                AuthWithJWT(jwt);
-            } else
-            {
-                OnNoLoggedUser.Invoke();
             }
         }
 
@@ -69,7 +57,7 @@ namespace BackendConnection
             return request;
         }
 
-        async void AuthWithJWT(string jwt)
+        public async void AuthWithJWT(string jwt)
         {
             try
             {
@@ -78,7 +66,7 @@ namespace BackendConnection
                 string text = await GetTextAsync(req);
                 Debug.Log(text);
                 LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
-                OnAuthSuccess.Invoke(loggedUserData.username);
+                OnAuthSuccess.Invoke(loggedUserData);
             }
             catch (UnityWebRequestException e)
             {
@@ -92,18 +80,6 @@ namespace BackendConnection
         {
             var op = await req.SendWebRequest();
             return op.downloadHandler.text;
-        }
-
-        struct LoginUserData
-        {
-            public string username;
-            public string password;
-        }
-
-        struct LoggedUserData
-        {
-            public string username;
-            public string token;
         }
 
         public async void OnBeginLogin(string username, string password, bool rememberMe)
@@ -124,7 +100,7 @@ namespace BackendConnection
                     PlayerPrefs.SetString("jwt", loggedUserData.token);
                 }
 
-                OnAuthSuccess.Invoke(loggedUserData.username);
+                OnAuthSuccess.Invoke(loggedUserData);
             }
             catch (UnityWebRequestException e)
             {
@@ -152,7 +128,7 @@ namespace BackendConnection
                     PlayerPrefs.SetString("jwt", loggedUserData.token);
                 }
 
-                OnAuthSuccess.Invoke(loggedUserData.username);
+                OnAuthSuccess.Invoke(loggedUserData);
             }
             catch (UnityWebRequestException e)
             {

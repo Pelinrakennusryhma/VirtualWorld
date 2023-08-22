@@ -1,3 +1,4 @@
+using APICalls;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -12,7 +13,7 @@ namespace Authentication
     public class AuthenticationUI : MonoBehaviour
     {
         [Header("Backend")]
-        [SerializeField] BackendConnection.BackendConnection backendConnection;
+        [SerializeField] BackendConnection backendConnection;
 
         [Header("Shared")]
         [SerializeField] GameObject loginRegisterPanel;
@@ -72,11 +73,11 @@ namespace Authentication
             loggedInPanel.SetActive(false);
         }
 
-        void OnEnableLoggedIn(string username)
+        void OnEnableLoggedIn(LoggedUserData data)
         {
             loginRegisterPanel.SetActive(false);
             loggedInPanel.SetActive(true);
-            usernameText.text = username;
+            usernameText.text = data.username;
         }
 
         public void OnLogOut()
@@ -125,11 +126,13 @@ namespace Authentication
         {
             errorMessage.text = message;
             errorMessage.gameObject.SetActive(true);
-            Invoke("HideError", showErrorDuration);
+            StopAllCoroutines();
+            StartCoroutine(HideError());
         }
 
-        void HideError()
+        IEnumerator HideError()
         {
+            yield return new WaitForSeconds(showErrorDuration);
             errorMessage.text = "";
             errorMessage.gameObject.SetActive(false);
         }
