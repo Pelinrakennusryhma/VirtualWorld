@@ -10,13 +10,24 @@ namespace Authentication
 {
     public class UserSession : MonoBehaviour
     {
-        [SerializeField] LoggedUserData loggedUserData;
+        public static UserSession Instance { get; private set; }
+
+        public LoggedUserData LoggedUserData { get; private set; }
 
         [SerializeField] BackendConnection backendConnection;
 
         private void Awake()
         {
-            if(backendConnection == null)
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
+
+            if (backendConnection == null)
             {
                 backendConnection = GetComponent<BackendConnection>();
             }
@@ -44,7 +55,7 @@ namespace Authentication
 
         void OnAuthSuccess(LoggedUserData data)
         {
-
+            LoggedUserData = data;
         }
     }
 }

@@ -116,6 +116,11 @@ namespace Authentication
             {
                 SetError("Username already taken.");
             }
+            else if (exc.Message.Contains("expired"))
+            {
+                OnEnableLogin();
+                SetError("Token expired. Please login again.");
+            }
             else
             {
                 SetError(exc.Error);
