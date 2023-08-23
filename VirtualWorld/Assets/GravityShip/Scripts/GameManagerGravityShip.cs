@@ -94,11 +94,13 @@ public class GameManagerGravityShip : MonoBehaviour
 
         bool alreadyInMenu = false;
 
-        Scene[] scenes = SceneManager.GetAllScenes();
+        int sceneCount = SceneManager.sceneCount;
 
-        for (int i = 0; i < scenes.Length; i++)
+        //Scene[] scenes = SceneManager.GetAllScenes();
+
+        for (int i = 0; i < sceneCount; i++)
         {
-            if (scenes[i].name.Equals("GravityShip_TitleScreen"))
+            if (SceneManager.GetSceneAt(i).name.Equals("GravityShip_TitleScreen"))
             {
                 alreadyInMenu = true;
             }

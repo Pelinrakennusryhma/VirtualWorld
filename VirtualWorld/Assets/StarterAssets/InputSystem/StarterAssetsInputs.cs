@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool interact;
+		public bool tablet;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -64,6 +65,12 @@ namespace StarterAssets
 			Debug.Log("On interact is called " + Time.time);
 			InteractInput(value.isPressed);
         }
+
+		public void OnTablet(InputValue value)
+        {			
+			Debug.Log("On tablet called " + Time.time);
+			TabletInput(value.isPressed);
+        }
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -99,6 +106,16 @@ namespace StarterAssets
 		public void ClearInteractInput()
         {
 			interact = false;
+        }
+
+		public void TabletInput(bool newTabletState)
+        {
+			tablet = newTabletState;
+        }
+
+		public void ClearTabletInput()
+        {
+			tablet = false;
         }
 
 #if !UNITY_IOS || !UNITY_ANDROID

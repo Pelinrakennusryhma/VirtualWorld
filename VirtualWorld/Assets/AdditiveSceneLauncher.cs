@@ -34,7 +34,7 @@ public class AdditiveSceneLauncher : NetworkBehaviour
         if (!IsHost
             && !IsServer) 
         {        
-            Debug.LogError("Owner client id is " + OwnerClientId);
+            //Debug.LogError("Owner client id is " + OwnerClientId);
 
             MiniGameLauncher.Instance.CheckIfServerIsPlayingMiniGameServerRpc(OwnerClientId);
         }
