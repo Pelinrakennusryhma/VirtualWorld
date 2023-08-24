@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 5097506351597574497}
   - component: {fileID: 8635227308093710582}
   - component: {fileID: 1468483112934233120}
+  - component: {fileID: 2820733215737845914}
   m_Layer: 0
   m_Name: Nameplate
   m_TagString: Untagged
@@ -251,6 +252,54 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2820733215737845914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5502427813093143186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f16b97cbc7e8a4283c88602e1007d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  namePlate: {fileID: 1468483112934233120}
+  userName:
+    m_InternalValue:
+      utf8LengthInBytes: 0
+      bytes:
+        offset0000:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0016: 0
+        byte0017: 0
+        byte0018: 0
+        byte0019: 0
+        byte0020: 0
+        byte0021: 0
+        byte0022: 0
+        byte0023: 0
+        byte0024: 0
+        byte0025: 0
+        byte0026: 0
+        byte0027: 0
+        byte0028: 0
+        byte0029: 0
 --- !u!1 &5970655708005796580
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +311,6 @@ GameObject:
   - component: {fileID: 7923716339284078105}
   - component: {fileID: 5488660287520231558}
   - component: {fileID: 5385534947526360868}
-  - component: {fileID: 8599724821580876582}
   m_Layer: 0
   m_Name: PlayerObjects
   m_TagString: Untagged
@@ -338,54 +386,6 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &8599724821580876582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5970655708005796580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f16b97cbc7e8a4283c88602e1007d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  namePlate: {fileID: 1468483112934233120}
-  userName:
-    m_InternalValue:
-      utf8LengthInBytes: 0
-      bytes:
-        offset0000:
-          byte0000: 0
-          byte0001: 0
-          byte0002: 0
-          byte0003: 0
-          byte0004: 0
-          byte0005: 0
-          byte0006: 0
-          byte0007: 0
-          byte0008: 0
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        byte0016: 0
-        byte0017: 0
-        byte0018: 0
-        byte0019: 0
-        byte0020: 0
-        byte0021: 0
-        byte0022: 0
-        byte0023: 0
-        byte0024: 0
-        byte0025: 0
-        byte0026: 0
-        byte0027: 0
-        byte0028: 0
-        byte0029: 0
 --- !u!1001 &386688131897264671
 PrefabInstance:
   m_ObjectHideFlags: 0

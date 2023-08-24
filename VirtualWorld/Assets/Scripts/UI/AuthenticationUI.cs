@@ -39,7 +39,7 @@ namespace Authentication
         [SerializeField] TMP_InputField registerNameField;
         [SerializeField] TMP_InputField registerPasswordField;
 
-        async void Awake()
+        void Awake()
         {
             if(backendConnection == null)
             {

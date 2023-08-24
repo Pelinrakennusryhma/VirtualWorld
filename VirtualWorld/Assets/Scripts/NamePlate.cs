@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Authentication
 {
-    public class LoggedUser : NetworkBehaviour
+    public class NamePlate : NetworkBehaviour
     {
         [SerializeField] TMP_Text namePlate;
         [SerializeField] NetworkVariable<FixedString32Bytes> userName = 
@@ -21,6 +21,11 @@ namespace Authentication
 
         private void Awake()
         {
+            if(namePlate == null)
+            {
+                namePlate = GetComponent<TMP_Text>();
+            }
+
             userName.OnValueChanged += OnUserNameSet;
         }
 
