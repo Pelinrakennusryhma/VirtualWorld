@@ -5,9 +5,9 @@ using UnityEngine.Events;
 using UnityEngine.Networking;
 using Authentication;
 
-namespace APICalls
+namespace BackendConnection
 {
-    public class BackendConnection : MonoBehaviour
+    public class APICalls : MonoBehaviour
     {
         [SerializeField]
         string BaseURL = "https://localhost:3001";
@@ -15,7 +15,7 @@ namespace APICalls
         readonly string loginRoute = "api/login/";
         readonly string registerRoute = "api/users/";
         
-        public static BackendConnection Instance { get; private set; }
+        public static APICalls Instance { get; private set; }
 
         public UnityEvent<LoggedUserData> OnAuthSuccess;
         public UnityEvent OnNoLoggedUser;
@@ -85,9 +85,8 @@ namespace APICalls
         {
             try
             {
-                LoginUserData userData = new LoginUserData();
-                userData.username = username;
-                userData.password = password;
+                LoginUserData userData = new LoginUserData(username, password);
+
                 UnityWebRequest req = CreateRequest(BaseURL + loginRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
@@ -141,7 +140,6 @@ namespace APICalls
         {
             PlayerPrefs.SetString("jwt", "");
         }
-
     }
 }
 

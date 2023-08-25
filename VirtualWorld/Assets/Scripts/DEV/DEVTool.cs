@@ -1,13 +1,13 @@
 #if UNITY_EDITOR
 using ParrelSync;
 using UnityEngine;
-using APICalls;
+using BackendConnection;
 
 namespace Dev
 {
     public class DEVTool : MonoBehaviour
     {
-        [SerializeField] BackendConnection backendConnection;
+        [SerializeField] APICalls apiCalls;
 
         async void Start()
         {
@@ -28,8 +28,8 @@ namespace Dev
                 password = System.Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD");
             }
 
-            backendConnection.LogOut();
-            await backendConnection.OnBeginLogin(userName, password, false);
+            apiCalls.LogOut();
+            await apiCalls.OnBeginLogin(userName, password, false);
 
             Debug.Log("FINISHED DEV LOGIN " + Time.time);
         }

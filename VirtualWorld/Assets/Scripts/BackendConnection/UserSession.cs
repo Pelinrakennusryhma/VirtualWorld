@@ -4,17 +4,19 @@ using UnityEngine;
 using Authentication;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
-using APICalls;
+using BackendConnection;
+using Unity.Netcode;
 
 namespace Authentication
 {
-    public class UserSession : MonoBehaviour
+    public class UserSession : NetworkBehaviour
     {
         public static UserSession Instance { get; private set; }
 
         public LoggedUserData LoggedUserData { get; private set; }
 
-        [SerializeField] BackendConnection backendConnection;
+        [SerializeField] APICalls apiCalls;
+        [SerializeField] WebSocketConnection wsConnection;
 
         private void Awake()
         {
@@ -27,11 +29,11 @@ namespace Authentication
                 Instance = this;
             }
 
-            if (backendConnection == null)
+            if (apiCalls == null)
             {
-                backendConnection = GetComponent<BackendConnection>();
+                apiCalls = GetComponent<APICalls>();
             }
-            backendConnection.OnAuthSuccess.AddListener(OnAuthSuccess);
+            apiCalls.OnAuthSuccess.AddListener(OnAuthSuccess);
         }
 
         private void Start()
@@ -45,17 +47,55 @@ namespace Authentication
 
             if (jwt != "")
             {
-                backendConnection.AuthWithJWT(jwt);
+                apiCalls.AuthWithJWT(jwt);
             }
             else
             {
-                backendConnection.OnNoLoggedUser.Invoke();
+                apiCalls.OnNoLoggedUser.Invoke();
             }
         }
 
         void OnAuthSuccess(LoggedUserData data)
         {
             LoggedUserData = data;
+            
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if (IsClient)
+            {
+                GetCharacterDataServerRpc(LoggedUserData.token);
+            } 
+            else if(IsServer) 
+            {
+                wsConnection = apiCalls.GetComponent<WebSocketConnection>();
+            }
+
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        void GetCharacterDataServerRpc(string token)
+        {
+            wsConnection.GetCharacterData(token);
+        }
+
+        [ClientRpc]
+        public void PublishCharacterDaraClientRpc(CharacterData charData)
+        {
+            if (IsServer)
+            {
+                return;
+            }
+
+            if(charData.user == LoggedUserData.id)
+            {
+                Debug.Log("MY CHAR DATA");
+            } else
+            {
+                Debug.Log("NOT MY CHAR DATA");
+            }
         }
     }
 }

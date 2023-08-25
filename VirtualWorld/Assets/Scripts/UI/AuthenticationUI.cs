@@ -1,4 +1,4 @@
-using APICalls;
+using BackendConnection;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
@@ -13,7 +13,7 @@ namespace Authentication
     public class AuthenticationUI : MonoBehaviour
     {
         [Header("Backend")]
-        [SerializeField] BackendConnection backendConnection;
+        [SerializeField] APICalls apiCalls;
 
         [Header("Shared")]
         [SerializeField] GameObject loginRegisterPanel;
@@ -41,15 +41,16 @@ namespace Authentication
 
         void Awake()
         {
-            if(backendConnection == null)
+            if(apiCalls == null)
             {
-                return;
+                apiCalls = FindAnyObjectByType<APICalls>();
             }
-            loginButton.onClick.AddListener(async () => await backendConnection.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
-            registerButton.onClick.AddListener(async () => await backendConnection.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
-            backendConnection.OnAuthSuccess.AddListener(OnEnableLoggedIn);
-            backendConnection.OnNoLoggedUser.AddListener(OnEnableRegister);
-            backendConnection.OnAuthFailed.AddListener(OnAuthFailed);
+
+            loginButton.onClick.AddListener(async () => await apiCalls.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
+            registerButton.onClick.AddListener(async () => await apiCalls.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
+            apiCalls.OnAuthSuccess.AddListener(OnEnableLoggedIn);
+            apiCalls.OnNoLoggedUser.AddListener(OnEnableRegister);
+            apiCalls.OnAuthFailed.AddListener(OnAuthFailed);
         }
 
         public void OnEnableLogin()
@@ -80,7 +81,7 @@ namespace Authentication
 
         public void OnLogOut()
         {
-            backendConnection.LogOut();
+            apiCalls.LogOut();
             OnEnableLogin();
             loggedInPanel.SetActive(false);
         }
