@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
 using Authentication;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 public class WebSocketConnection : NetworkBehaviour
 {
@@ -111,18 +113,28 @@ public class WebSocketConnection : NetworkBehaviour
         }
     }
 
-    public async void GetCharacterData(string playerToken)
+    public async void GetCharacterData(string id)
     {
         if (websocket.State == WebSocketState.Open)
         {
-            WebSocketMessageOut msg = new WebSocketMessageOut("GetCharacterData", playerToken);
-            await websocket.SendText(JsonUtility.ToJson(msg));
+            WebSocketMessageOut msg = new WebSocketMessageOut("GetCharacterData", id);
+            await websocket.SendText(JsonConvert.SerializeObject(msg));
+        }
+    }
+
+    public async void AddMoneyToCharacter(string playerToken, int amount)
+    {
+        if (websocket.State == WebSocketState.Open)
+        {
+            string[] args = new string[] { playerToken, amount.ToString() };
+            WebSocketMessageOut msg = new WebSocketMessageOut("AddMoneyToCharacter", JsonConvert.SerializeObject(args));
+            await websocket.SendText(JsonConvert.SerializeObject(msg));
         }
     }
 
     void ParseMessage(string message)
     {
-        WebSocketMessageIn wsMsg = JsonUtility.FromJson<WebSocketMessageIn>(message);
+        WebSocketMessageIn wsMsg = JsonConvert.DeserializeObject<WebSocketMessageIn>(message);
 
         switch (wsMsg.type)
         {
@@ -136,8 +148,7 @@ public class WebSocketConnection : NetworkBehaviour
 
     void HandleIncomingCharacterData(string msg)
     {
-        CharacterData charData = JsonUtility.FromJson<CharacterData>(msg);
-        //Debug.Log("id: " + charData.id + "user: " + charData.user + "money: " + charData.inventory.money);
-        userSession.PublishCharacterDaraClientRpc(charData);
+        CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
+        userSession.SetCharacterDataClientRpc(charData);
     }
 }
