@@ -9,26 +9,35 @@ using BackendConnection;
 using Authentication;
 using Newtonsoft;
 using Newtonsoft.Json;
+using UnityEngine.TextCore.Text;
+using UnityEngine.Events;
 
 public class WebSocketConnection : NetworkBehaviour
 {
+    public static WebSocketConnection Instance { get; private set; }
     [SerializeField] string webSocketAddress;
     [SerializeField] APICalls apiCalls;
-    [SerializeField] UserSession userSession;
     WebSocket websocket;
     LoggedUserData superUserData;
 
+    public UnityEvent<CharacterData> EventIncomingCharacterData;
+
     private void Awake()
     {
-        if(apiCalls == null)
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
+        if (apiCalls == null)
         {
             apiCalls = GetComponent<APICalls>();
         }
-        if(userSession == null)
-        {
-            userSession = GetComponent<UserSession>();
-        }
-        //apiCalls.OnAuthSuccess.AddListener(async (LoggedUserData data) => await Connect(data));
+
         apiCalls.OnAuthSuccess.AddListener((data) => superUserData = data);
     }
 
@@ -46,8 +55,7 @@ public class WebSocketConnection : NetworkBehaviour
 
         if (!IsServer)
         {
-            Debug.Log("is not server, destroying " + IsServer);
-            Destroy(this);
+            this.enabled = false;
             return;
         }
         Dictionary<string, string> headers = new Dictionary<string, string>();
@@ -115,6 +123,7 @@ public class WebSocketConnection : NetworkBehaviour
 
     public async void GetCharacterData(string id)
     {
+        Debug.Log("GetCharacterData: " + id);
         if (websocket.State == WebSocketState.Open)
         {
             WebSocketMessageOut msg = new WebSocketMessageOut("GetCharacterData", id);
@@ -148,7 +157,8 @@ public class WebSocketConnection : NetworkBehaviour
 
     void HandleIncomingCharacterData(string msg)
     {
+        Debug.Log("HandleIncomingCharacterData" + msg);
         CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
-        userSession.SetCharacterDataClientRpc(charData);
+        EventIncomingCharacterData.Invoke(charData);
     }
 }
