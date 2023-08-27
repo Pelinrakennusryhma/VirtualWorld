@@ -133,6 +133,7 @@ public class WebSocketConnection : NetworkBehaviour
 
     public async void AddMoneyToCharacter(string playerToken, int amount)
     {
+        Debug.Log("!?!?!" + playerToken + " " + amount);
         if (websocket.State == WebSocketState.Open)
         {
             string[] args = new string[] { playerToken, amount.ToString() };

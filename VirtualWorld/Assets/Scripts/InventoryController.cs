@@ -8,28 +8,32 @@ public class InventoryController : NetworkBehaviour
 {
     [SerializeField] Character character;
     [SerializeField] WebSocketConnection wsConnection;
-    [SerializeField] UserSession userSession;
     [SerializeField] public Inventory Inventory { get; private set; }
 
     public override void OnNetworkSpawn()
     {
         wsConnection = WebSocketConnection.Instance;
-        userSession = UserSession.Instance;
 
-        wsConnection.EventIncomingCharacterData.AddListener(OnIncomingCharacterDataClientRpc);
+        character.EventInventoryChanged.AddListener(OnInventoryChanged);
     }
 
-    [ClientRpc]
-    void OnIncomingCharacterDataClientRpc(CharacterData charData)
+    void OnInventoryChanged(Inventory inventory)
     {
-        if (charData.user == userSession.LoggedUserData.id)
-        {
-            Inventory = charData.inventory;
-            Debug.Log("my inventory, money: " + Inventory.money);
-        }
-        else
-        {
-            Debug.Log("NOT my inventory");
-        }
+        Inventory = inventory;
+        Debug.Log("inventory changed!");
     }
+
+    //[ClientRpc]
+    //void OnIncomingCharacterDataClientRpc(CharacterData charData)
+    //{
+    //    if (charData.user == userSession.LoggedUserData.id)
+    //    {
+    //        Inventory = charData.inventory;
+    //        Debug.Log("my inventory, money: " + Inventory.money);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("NOT my inventory");
+    //    }
+    //}
 }

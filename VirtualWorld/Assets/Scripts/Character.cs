@@ -19,6 +19,8 @@ public class Character : NetworkBehaviour
 
     [SerializeField] public InventoryController inventoryController { get; private set; }
 
+    public UnityEvent<Inventory> EventInventoryChanged;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,8 +33,6 @@ public class Character : NetworkBehaviour
             DontDestroyOnLoad(gameObject);
             inventoryController = GetComponent<InventoryController>();
         }
-
-
     }
 
     public override void OnNetworkSpawn()
@@ -44,7 +44,6 @@ public class Character : NetworkBehaviour
 
         if (IsClient)
         {
-
             GetCharacterDataServerRpc(userSession.LoggedUserData.id);
         }
     }
@@ -55,6 +54,7 @@ public class Character : NetworkBehaviour
         if(charData.user == userSession.LoggedUserData.id)
         {
             characterData = charData;
+            EventInventoryChanged.Invoke(characterData.inventory);
             Debug.Log("my data");
         } else
         {
@@ -63,7 +63,7 @@ public class Character : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    void AddMoneyServerRpc(string userId, int amount)
+    public void AddMoneyServerRpc(string userId, int amount)
     {
         wsConnection.AddMoneyToCharacter(userId, amount);
     }
