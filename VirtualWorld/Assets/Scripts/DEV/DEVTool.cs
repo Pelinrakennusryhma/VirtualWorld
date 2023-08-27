@@ -11,27 +11,33 @@ namespace Dev
 
         async void Start()
         {
-            Debug.Log("STARTED DEV LOGIN " + Time.time);
+            float startTime = Time.time;
+            Debug.Log("STARTED DEV LOGIN");
 
-            string userName;
+            string username;
             string password;
 
             if (ClonesManager.IsClone())
             {
-                userName = System.Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME");
+                username = System.Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME");
                 password = System.Environment.GetEnvironmentVariable("UNITY_CLIENT_PASSWORD");
 
             }
             else
             {
-                userName = System.Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME");
+                username = System.Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME");
                 password = System.Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD");
             }
 
-            apiCalls.LogOut();
-            await apiCalls.OnBeginLogin(userName, password, false);
+            if(username == "" || password == "")
+            {
+                Debug.Log("CANCELLED DEV LOGIN: No username and/or password");
+            }
 
-            Debug.Log("FINISHED DEV LOGIN " + Time.time);
+            apiCalls.LogOut();
+            await apiCalls.OnBeginLogin(username, password, false);
+
+            Debug.Log("FINISHED DEV LOGIN: completed in " + (Time.time - startTime) * 1000 + " milliseconds.");
         }
 
     }

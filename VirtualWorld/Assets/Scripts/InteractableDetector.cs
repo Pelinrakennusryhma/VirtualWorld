@@ -13,6 +13,7 @@ public class InteractableDetector : NetworkBehaviour
     public UnityEvent EventInteractableLost;
     public UnityEvent EventInteractionStarted;
     [SerializeField] StarterAssetsInputs input;
+    [SerializeField] InteractionUI ui;
     I_Interactable currentInteractable;
     GameObject currentInteractableGO;
 
@@ -24,11 +25,14 @@ public class InteractableDetector : NetworkBehaviour
             return;
         }
 
-        InteractionUI ui = FindObjectOfType<InteractionUI>();
-        if (ui != null)
+        if (IsHost)
         {
-            ui.InitDetector(this);
+            Invoke("FindAndInitUI", 1f);
+        } else
+        {
+            FindAndInitUI();
         }
+
     }
 
     private void Start()
@@ -42,11 +46,22 @@ public class InteractableDetector : NetworkBehaviour
 
     private void Update()
     {
-        if(input.interact && currentInteractable != null)
+        if (input.interact && currentInteractable != null)
         {
             Interact();
         }
-        input.interact = false;
+    }
+
+    void FindAndInitUI()
+    {
+        ui = FindObjectOfType<InteractionUI>();
+        if (ui != null)
+        {
+            ui.InitDetector(this);
+        } else
+        {
+            Invoke("FindAndInitUI", 1f);
+        }
     }
 
     void Interact()
@@ -57,6 +72,7 @@ public class InteractableDetector : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         I_Interactable interactable = other.GetComponent<I_Interactable>();
 
         if (interactable != null)

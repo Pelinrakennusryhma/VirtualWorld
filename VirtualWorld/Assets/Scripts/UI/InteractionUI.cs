@@ -7,6 +7,7 @@ namespace UI
 {
     public class InteractionUI : MonoBehaviour
     {
+        [SerializeField] string interactionButton = "E";
         [SerializeField] TMP_Text promptText;
         [SerializeField] TextFlasher promptTextFlasher;
         GameObject currentInteractableGO;
@@ -54,7 +55,7 @@ namespace UI
 
         void SetPromptText(string msg)
         {
-            promptText.text = $"[E] {msg}";
+            promptText.text = $"[{interactionButton}] {msg}";
         }
 
         void ClearPromptText()

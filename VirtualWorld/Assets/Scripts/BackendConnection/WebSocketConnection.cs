@@ -123,7 +123,6 @@ public class WebSocketConnection : NetworkBehaviour
 
     public async void GetCharacterData(string id)
     {
-        Debug.Log("GetCharacterData: " + id);
         if (websocket.State == WebSocketState.Open)
         {
             WebSocketMessageOut msg = new WebSocketMessageOut("GetCharacterData", id);
@@ -133,7 +132,6 @@ public class WebSocketConnection : NetworkBehaviour
 
     public async void AddMoneyToCharacter(string playerToken, int amount)
     {
-        Debug.Log("!?!?!" + playerToken + " " + amount);
         if (websocket.State == WebSocketState.Open)
         {
             string[] args = new string[] { playerToken, amount.ToString() };
@@ -158,7 +156,6 @@ public class WebSocketConnection : NetworkBehaviour
 
     void HandleIncomingCharacterData(string msg)
     {
-        Debug.Log("HandleIncomingCharacterData" + msg);
         CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
         EventIncomingCharacterData.Invoke(charData);
     }

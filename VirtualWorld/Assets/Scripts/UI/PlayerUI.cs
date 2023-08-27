@@ -14,7 +14,6 @@ namespace UI
         [SerializeField] TextFlasher moneyTextFlasher;
         [SerializeField] string currencyIcon = "€";
 
-        bool inited = false;
         int previousMoney;
 
         void Awake()
@@ -33,17 +32,6 @@ namespace UI
             }
 
             previousMoney = inventory.money;
-
-
-            //if (!inited)
-            //{
-            //    inited = true;
-            //} else
-            //{
-            //    moneyTextFlasher.FlashText();
-            //}
-
-
         }
     }
 }

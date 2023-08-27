@@ -35,6 +35,11 @@ namespace StarterAssets
 			}
 		}
 
+		private void LateUpdate()
+		{
+			ClearInteractInput();
+		}
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
@@ -61,7 +66,6 @@ namespace StarterAssets
 
 		public void OnInteract(InputValue value)
         {
-			Debug.Log("On interact is called " + Time.time);
 			InteractInput(value.isPressed);
         }
 #else
