@@ -22,18 +22,4 @@ public class InventoryController : NetworkBehaviour
         Inventory = inventory;
         Debug.Log("inventory changed!");
     }
-
-    //[ClientRpc]
-    //void OnIncomingCharacterDataClientRpc(CharacterData charData)
-    //{
-    //    if (charData.user == userSession.LoggedUserData.id)
-    //    {
-    //        Inventory = charData.inventory;
-    //        Debug.Log("my inventory, money: " + Inventory.money);
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("NOT my inventory");
-    //    }
-    //}
 }

@@ -2,6 +2,7 @@ using Authentication;
 using StarterAssets;
 using System.Collections;
 using TMPro;
+using UI;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -45,13 +46,13 @@ public class InteractableDetector : NetworkBehaviour
         {
             Interact();
         }
+        input.interact = false;
     }
 
     void Interact()
     {
         EventInteractionStarted.Invoke();
         currentInteractable.Interact(UserSession.Instance.LoggedUserData.id);
-        input.interact = false;
     }
 
     private void OnTriggerEnter(Collider other)

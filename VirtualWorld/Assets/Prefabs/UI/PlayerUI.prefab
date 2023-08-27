@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5498026202107278538}
   - component: {fileID: 565780138853312983}
   - component: {fileID: 1104779697628334639}
+  - component: {fileID: 8848730576444235774}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -135,6 +136,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8848730576444235774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179571457575140230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93795ce8f28c524f806908798ea4642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1104779697628334639}
+  flashTextDuration: 0.09
+  flashFontColor: {r: 1, g: 0.8688811, b: 0.25, a: 1}
+  flashFontSize: 54
 --- !u!1 &1185182170334608236
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +188,7 @@ RectTransform:
   - {fileID: 2022708880950516605}
   - {fileID: 8223923237102483991}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -255,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   moneyText: {fileID: 1104779697628334639}
+  moneyTextFlasher: {fileID: 8848730576444235774}
   currencyIcon: "\u20AC"
 --- !u!114 &5585759261996631978
 MonoBehaviour:
@@ -269,9 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptText: {fileID: 166181233590110762}
-  flashTextDuration: 0.09
-  flashFontColor: {r: 0.6666667, g: 1, b: 0.68374133, a: 1}
-  flashFontSize: 48
+  promptTextFlasher: {fileID: 3872116647127907629}
 --- !u!1 &5961940519713371297
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +376,7 @@ GameObject:
   - component: {fileID: 8223923237102483991}
   - component: {fileID: 1949488058968172472}
   - component: {fileID: 166181233590110762}
+  - component: {fileID: 3872116647127907629}
   m_Layer: 5
   m_Name: InteractionPopupText
   m_TagString: Untagged
@@ -385,7 +402,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 60}
+  m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1949488058968172472
 CanvasRenderer:
@@ -484,3 +501,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3872116647127907629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082090860249062941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93795ce8f28c524f806908798ea4642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 166181233590110762}
+  flashTextDuration: 0.09
+  flashFontColor: {r: 0.6666667, g: 1, b: 0.6666667, a: 1}
+  flashFontSize: 48

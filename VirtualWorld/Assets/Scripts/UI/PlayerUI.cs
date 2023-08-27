@@ -5,20 +5,45 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class PlayerUI : MonoBehaviour
+namespace UI
 {
-    [SerializeField] Character character;
-    [SerializeField] TMP_Text moneyText;
-    [SerializeField] string currencyIcon = "€";
-
-    void Awake()
+    public class PlayerUI : MonoBehaviour
     {
-        character = Character.Instance;
-        character.EventInventoryChanged.AddListener(OnInventoryChanged);
-    }
+        [SerializeField] Character character;
+        [SerializeField] TMP_Text moneyText;
+        [SerializeField] TextFlasher moneyTextFlasher;
+        [SerializeField] string currencyIcon = "€";
 
-    void OnInventoryChanged(Inventory inventory)
-    {
-        moneyText.text = $"{inventory.money} {currencyIcon}";
+        bool inited = false;
+        int previousMoney;
+
+        void Awake()
+        {
+            character = Character.Instance;
+            character.EventInventoryChanged.AddListener(OnInventoryChanged);
+        }
+
+        void OnInventoryChanged(Inventory inventory)
+        {
+            moneyText.text = $"{inventory.money} {currencyIcon}";
+
+            if(previousMoney != inventory.money)
+            {
+                moneyTextFlasher.FlashText();
+            }
+
+            previousMoney = inventory.money;
+
+
+            //if (!inited)
+            //{
+            //    inited = true;
+            //} else
+            //{
+            //    moneyTextFlasher.FlashText();
+            //}
+
+
+        }
     }
 }
