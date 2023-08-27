@@ -28,6 +28,7 @@ namespace UI
 
         void OnInteractableDetected(I_Interactable interactable, GameObject interactableObj)
         {
+            currentInteractableGO = interactableObj;
             SetPromptText(interactable.DetectionMessage);
             SetCanvasPosition(interactableObj.transform.position);
             promptText.gameObject.SetActive(true);
@@ -35,6 +36,7 @@ namespace UI
 
         void OnInteractableLost()
         {
+            currentInteractableGO = null;
             ClearPromptText();
             promptText.gameObject.SetActive(false);
         }
