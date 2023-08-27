@@ -356,6 +356,99 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3907845874802621823, guid: 778878bf4745f564da781d47ffb87877, type: 3}
+--- !u!1001 &512281983
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 190412319919929667, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_Name
+      value: MoneyBall (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 977075941874300692, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: amountToGet
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 977075941874300692, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: moneyChangeAmount
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 977075941874300692, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: <DetectionMessage>k__BackingField
+      value: Lose %%amount%% euros!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 25.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790908109737665239, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6485964006647751023, guid: e3b5e1ddbb9064448a704ed2dc4564b7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 11c44b1bb21a04f46b09180f21e7a65c, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e3b5e1ddbb9064448a704ed2dc4564b7, type: 3}
 --- !u!1 &542508511
 GameObject:
   m_ObjectHideFlags: 0
