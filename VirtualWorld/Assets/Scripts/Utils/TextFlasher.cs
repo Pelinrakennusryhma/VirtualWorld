@@ -22,15 +22,16 @@ namespace UI
             {
                 text = GetComponent<TMP_Text>();
             }
-        }
 
+            originalFontSize = text.fontSize;
+            originalFontColor = text.color;
+        }
 
         public void FlashText()
         {
-            originalFontSize = text.fontSize;
-            originalFontColor = text.color;
             StartCoroutine(IEFlashText());
         }
+
         IEnumerator IEFlashText()
         {
             text.fontSize = flashFontSize;
