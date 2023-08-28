@@ -6,7 +6,7 @@ public class TestButton : MonoBehaviour
 {
    public void OnClick()
     {
-        Debug.Log("we clicked test button " + Time.time);
-        Debug.Break();
+        Debug.LogWarning("we clicked test button " + Time.time);
+        //Debug.Break();
     }
 }

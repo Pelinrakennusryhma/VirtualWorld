@@ -55,7 +55,7 @@ public class AdditiveSceneLauncher : NetworkBehaviour
         if (!IsServer
             && !IsHost
             && clientId == OwnerClientId
-            )
+            && !MiniGameLauncher.Instance.IsPlayingMinigame)
         {
             Debug.LogError("Cleint rpc called. Client id is " + clientId + " OwnerClientId is " + OwnerClientId);
 
