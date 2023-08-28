@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Characters;
+using WorldObjects;
 
 namespace UI
 {
@@ -61,6 +61,7 @@ namespace UI
         void ClearPromptText()
         {
             promptText.text = "";
+            promptTextFlasher.Reset();
         }
     }
 }

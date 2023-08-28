@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldspaceCanvasRotator : MonoBehaviour
+namespace UI
 {
-    void LateUpdate()
+    public class WorldspaceCanvasRotator : MonoBehaviour
     {
-        if(Camera.main != null)
+        void LateUpdate()
         {
-            transform.rotation = Camera.main.transform.rotation;
+            if (Camera.main != null)
+            {
+                transform.rotation = Camera.main.transform.rotation;
+            }
         }
     }
 }
+

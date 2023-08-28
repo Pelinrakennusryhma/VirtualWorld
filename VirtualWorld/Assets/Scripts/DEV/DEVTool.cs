@@ -7,6 +7,7 @@ namespace Dev
 {
     public class DEVTool : MonoBehaviour
     {
+        [Header("Helper dev script to automatically login a user, \nsuperUser for server(normal unity project)\nand a normal for client(cloned project).")]
         [SerializeField] APICalls apiCalls;
 
         async void Start()
