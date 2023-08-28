@@ -129,8 +129,10 @@ public class MiniGameLauncher : NetworkBehaviour
     public void UnloadActiveScene()
     {        
         Debug.Log("Unloading scene " + ActiveSceneName);
-        SceneManager.UnloadSceneAsync(ActiveSceneName);
-
+        if(ActiveSceneName != "")
+        {
+            SceneManager.UnloadSceneAsync(ActiveSceneName);
+        }
     }
 
     public void SaveActiveSceneName(string sceneName)
