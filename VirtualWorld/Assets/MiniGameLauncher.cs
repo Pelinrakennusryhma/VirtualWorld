@@ -27,7 +27,7 @@ public class MiniGameLauncher : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);      
     }
 
     public override void OnNetworkSpawn()
@@ -88,6 +88,28 @@ public class MiniGameLauncher : NetworkBehaviour
 
     public void StartPlayingMiniGame()
     {
+        //MapBlip[] blips = FindObjectsOfType<MapBlip>();
+
+        //for (int i = 0; i < blips.Length; i++)
+        //{
+        //    blips[i].DisableBlips();
+        //}
+
+        //PlayerEnablerDisabler[] players = FindObjectsOfType<PlayerEnablerDisabler>(true);
+
+        //for (int i = 0; i < players.Length; i++)
+        //{
+        //    players[i].DisablePlayer();
+        //}
+
+        PlayerCharacter[] allPlayers = FindObjectsOfType<PlayerCharacter>(true);
+
+        for (int i = 0; i < allPlayers.Length; i++)
+        {
+            allPlayers[i].DisableCharacter();
+        }
+
+
         IsPlayingMinigame = true;
     }
 
@@ -118,9 +140,24 @@ public class MiniGameLauncher : NetworkBehaviour
         {
             UnloadActiveScene();
         }
+
         FindObjectOfType<PlaygroundScene>(true).gameObject.SetActive(true);
         RenderSettings.skybox = PlaygroundSkyBoxMat;
         DynamicGI.UpdateEnvironment();
+
+        //MapBlip[] blips = FindObjectsOfType<MapBlip>();
+
+        //for (int i = 0; i < blips.Length; i++)
+        //{
+        //    blips[i].ReEnableBlips();
+        //}
+
+        PlayerCharacter[] allPlayers = FindObjectsOfType<PlayerCharacter>(true);
+
+        for (int i = 0; i < allPlayers.Length; i++)
+        {
+            allPlayers[i].EnableCharacter();
+        }
         //Scene active = SceneManager.GetSceneByName("Playground");
         //SceneManager.SetActiveScene(active);
         //SceneManager.LoadScene("Playground", LoadSceneMode.Single);
@@ -159,7 +196,7 @@ public class MiniGameLauncher : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void CheckIfServerIsPlayingMiniGameServerRpc(ulong clientId)
     {
-        Debug.LogError("RPC called. client id is" + clientId);
+        //Debug.LogError("RPC called. client id is" + clientId);
 
         if ((IsServer 
             || IsHost)

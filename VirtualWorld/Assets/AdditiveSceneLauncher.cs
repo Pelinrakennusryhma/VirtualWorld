@@ -24,6 +24,7 @@ public class AdditiveSceneLauncher : NetworkBehaviour
             character = GetComponentInChildren<PlayerCharacter>(true);
             MiniGameLauncher.Instance.SetCharacter(character);
         }
+
     }
 
     public override void OnNetworkSpawn()
@@ -37,6 +38,12 @@ public class AdditiveSceneLauncher : NetworkBehaviour
             //Debug.LogError("Owner client id is " + OwnerClientId);
 
             MiniGameLauncher.Instance.CheckIfServerIsPlayingMiniGameServerRpc(OwnerClientId);
+        }
+
+        if (MiniGameLauncher.Instance.IsPlayingMinigame)
+        {
+            character = GetComponentInChildren<PlayerCharacter>(true);
+            character.DisableCharacter();
         }
     }
 
@@ -53,7 +60,27 @@ public class AdditiveSceneLauncher : NetworkBehaviour
             Debug.LogError("Cleint rpc called. Client id is " + clientId + " OwnerClientId is " + OwnerClientId);
 
             MiniGameLauncher.Instance.GoBackToPlayground(false);
-            SceneManager.UnloadSceneAsync(sceneName);
+
+            bool containsScene = false;
+
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name.Equals(sceneName))
+                {
+                    containsScene = true;
+                }
+            }
+
+            if (containsScene) 
+            {
+                SceneManager.UnloadSceneAsync(sceneName);
+                Debug.LogError("Contained and unloaded scene");
+            }
+
+            else
+            {
+                Debug.Log("Don't unload anything, because scene's don't have that scene loaded");
+            }
             Debug.LogError("Should have unloaded scene async");
         }
 

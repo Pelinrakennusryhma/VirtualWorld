@@ -6,12 +6,10 @@ using TMPro;
 public class MiniGamePrompt : MonoBehaviour
 {
 
-    public static MiniGamePrompt Instance;
     public TextMeshProUGUI TextMeshPro;
 
     public void Awake()
     {
-        Instance = this;
         TextMeshPro = GetComponent<TextMeshProUGUI>();
         OnExitMiniGameTrigger();
     }
