@@ -3389,7 +3389,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3546,7 +3546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869ba4631b5f3d348959c07070776fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeDiceParent: {fileID: 525200146}
+  activeDiceParent: {fileID: 554707011}
   diceAdjusts: []
   bonusAdjusts: []
   activeDice: []
@@ -4605,7 +4605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6771c470fe024e408f8988848d1f79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offSet: {x: 0, y: 0, z: 0.75}
+  offSet: {x: 0, y: -0.3, z: 0.4}
   uiManager: {fileID: 1278744523}
   diceSetup: {fileID: 554707014}
   diceThrower: {fileID: 554707012}
