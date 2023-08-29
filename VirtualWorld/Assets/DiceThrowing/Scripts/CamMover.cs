@@ -5,6 +5,8 @@ using static UnityEngine.GraphicsBuffer;
 
 namespace DiceMinigame
 {
+
+
     public class CamMover : MonoBehaviour
     {
         public Vector3 offSet;
@@ -21,17 +23,17 @@ namespace DiceMinigame
         // Start is called before the first frame update
         void Start()
         {
+            originalPos = transform.position;
+            originalRot = transform.rotation;
             eventManager.EventAllDiceStopped.AddListener(AllDiceStoppedEventHandler);
             eventManager.EventThrowAgainPressed.AddListener(ThrowAgainPressedEventHandler);
             eventManager.EventThrowMorePressed.AddListener(ThrowMorePressedEventHandler);
-
-            Init();
         }
 
         public void Init()
         {
-            originalPos = transform.localPosition;
-            originalRot = transform.localRotation;
+            originalPos = transform.position;
+            originalRot = transform.rotation;
         }
 
         void AllDiceStoppedEventHandler(List<DiceScore> dices, List<BonusAdjust> bonuses)
@@ -54,7 +56,7 @@ namespace DiceMinigame
             diceLocations.Sort(delegate (Transform diceA, Transform diceB)
             {
                 return Vector3.Distance(transform.position, diceA.position)
-            .CompareTo(Vector3.Distance(transform.position, diceB.position));
+                .CompareTo(Vector3.Distance(transform.position, diceB.position));
             });
 
             ZoomToDice(DiceMinigameGlobalSettings.Instance.zoomInTime);
@@ -83,7 +85,7 @@ namespace DiceMinigame
 
         public void ZoomToDice(float smoothTime)
         {
-            targetPos = diceLocations[targetDiceIndex].localPosition;
+            targetPos = diceLocations[targetDiceIndex].position;
             StartCoroutine(Zoom(targetPos, smoothTime));
         }
 
@@ -101,13 +103,20 @@ namespace DiceMinigame
 
         private IEnumerator Zoom(Vector3 targetPos, float smoothTime)
         {
-            Vector3 startPosition = transform.localPosition;
-            Vector3 finalPosition = targetPos + originalPos + offSet;
-            Quaternion startRotation = transform.localRotation;
+            //Vector3 startPosition = transform.position;
+            //Vector3 finalPosition = targetPos + offSet;
+            //Quaternion startRotation = transform.rotation;
+
+            //Vector3 relativePos = targetPos - finalPosition;
+            //Quaternion finalRotation = Quaternion.LookRotation(relativePos);
+
+            Vector3 startPosition = transform.position;
+            Vector3 finalPosition = targetPos + (Vector3.up * offSet.y);
+            finalPosition = finalPosition + ((finalPosition - originalPos).normalized * offSet.z);
+            Quaternion startRotation = transform.rotation;
 
             Vector3 relativePos = targetPos - finalPosition;
-            Quaternion finalRotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            //Quaternion finalRotation = Quaternion.FromToRotation(finalPosition, targetPos);
+            Quaternion finalRotation = Quaternion.LookRotation(relativePos);
 
             float elapsedTime = 0f;
 
@@ -116,25 +125,21 @@ namespace DiceMinigame
                 float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / smoothTime);
                 elapsedTime += Time.deltaTime;
 
-                transform.localPosition = Vector3.Lerp(startPosition, finalPosition, lerpFactor);
-                transform.localRotation = Quaternion.Slerp(startRotation, finalRotation, lerpFactor);
+                transform.position = Vector3.Lerp(startPosition, finalPosition, lerpFactor);
+                transform.rotation = Quaternion.Slerp(startRotation, finalRotation, lerpFactor);
 
                 yield return null;
             }
             yield return new WaitForSeconds(DiceMinigameGlobalSettings.Instance.cameraStayOnDiceTime);
-
-            if (diceLocations.Count > 1)
-            {
-                NextDicePos();
-                ZoomToDice(DiceMinigameGlobalSettings.Instance.cameraMoveToNextDiceTime);
-            }
+            NextDicePos();
+            ZoomToDice(DiceMinigameGlobalSettings.Instance.cameraMoveToNextDiceTime);
         }
 
         private IEnumerator ResetCamera(float smoothTime)
         {
-            Vector3 startPosition = transform.localPosition;
+            Vector3 startPosition = transform.position;
             Vector3 finalPosition = originalPos;
-            Quaternion startRotation = transform.localRotation;
+            Quaternion startRotation = transform.rotation;
             Quaternion finalRotation = originalRot;
 
             float elapsedTime = 0f;
@@ -143,8 +148,9 @@ namespace DiceMinigame
             {
                 float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / smoothTime);
                 elapsedTime += Time.deltaTime;
-                transform.localPosition = Vector3.Lerp(startPosition, finalPosition, lerpFactor);
-                transform.localRotation = Quaternion.Slerp(startRotation, finalRotation, lerpFactor);
+
+                transform.position = Vector3.Lerp(startPosition, finalPosition, lerpFactor);
+                transform.rotation = Quaternion.Slerp(startRotation, finalRotation, lerpFactor);
 
                 yield return null;
             }

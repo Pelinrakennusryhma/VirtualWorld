@@ -142,15 +142,16 @@ namespace Scenes
                 if(scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {
                     // make sure to only pick our own player
-                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    GameObject player = Character.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
+                    player.SetActive(false);
                 } else
                 {
                     GameObject[] allObjects = activeScene.GetRootGameObjects();
 
                     foreach (GameObject gameObject in allObjects)
                     {
-                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject.CompareTag("Player"))
+                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == Character.Instance.OwnedCharacter)
                         {
 
                         } else
