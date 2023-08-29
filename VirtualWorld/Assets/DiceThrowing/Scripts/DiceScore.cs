@@ -9,7 +9,7 @@ namespace DiceMinigame
     {
         [System.NonSerialized]
         public bool thrown = false;
-        [SerializeField] float torque = 15f;
+        [SerializeField] float torque = 0f;
         protected GameObject sides;
         protected Rigidbody rb;
         protected bool stopped = false;
@@ -42,11 +42,11 @@ namespace DiceMinigame
 
             rb.useGravity = true;
             rb.AddForce(throwDirection * throwingForce);
-            Vector3 throwTorque = new(
-                Random.Range(-torque, torque),
-                Random.Range(-torque, torque),
-                Random.Range(-torque, torque));
-            rb.AddTorque(throwTorque, ForceMode.Force);
+            //Vector3 throwTorque = new(
+            //    Random.Range(-torque, torque),
+            //    Random.Range(-torque, torque),
+            //    Random.Range(-torque, torque));
+            //rb.AddTorque(throwTorque, ForceMode.Impulse);
         }
 
         protected virtual void Stop()

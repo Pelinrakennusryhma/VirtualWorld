@@ -287,9 +287,9 @@ namespace DiceMinigame
 
             List<Vector3> positions = new List<Vector3>();
 
-            float x = 0;
-            float y = 0;
-            float z = 0;
+            float x = transform.position.x;
+            float y = transform.position.y;
+            float z = transform.position.z;
             int placedOnRow = 0;
             int rowsPlaced = 0;
             int columnsPlaced = 0;
@@ -299,14 +299,14 @@ namespace DiceMinigame
                 // place every other dice on right and every other on left
                 if (i % 2 == 0)
                 {
-                    x = (-placedOnRow - 1) / 2 * gap;
+                    x = (-placedOnRow - 1) / 2 * gap / 10;
                 }
                 else
                 {
-                    x = (placedOnRow + 1) / 2 * gap;
+                    x = (placedOnRow + 1) / 2 * gap / 10;
                 }
-                y = rowsPlaced * gap;
-                z = columnsPlaced * gap;
+                y = rowsPlaced * gap / 10;
+                z = columnsPlaced * gap / 10;
                 placedOnRow++;
 
                 // next row
@@ -331,7 +331,7 @@ namespace DiceMinigame
 
         float GetRandomness()
         {
-            float randomness = 0.1f;
+            float randomness = 0.01f;
             return Random.Range(-randomness, randomness);
         }
     }

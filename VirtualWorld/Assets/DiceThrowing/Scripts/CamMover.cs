@@ -21,11 +21,15 @@ namespace DiceMinigame
         // Start is called before the first frame update
         void Start()
         {
-            originalPos = transform.position;
-            originalRot = transform.rotation;
             eventManager.EventAllDiceStopped.AddListener(AllDiceStoppedEventHandler);
             eventManager.EventThrowAgainPressed.AddListener(ThrowAgainPressedEventHandler);
             eventManager.EventThrowMorePressed.AddListener(ThrowMorePressedEventHandler);
+        }
+
+        public void Init()
+        {
+            originalPos = transform.position;
+            originalRot = transform.rotation;
         }
 
         void AllDiceStoppedEventHandler(List<DiceScore> dices, List<BonusAdjust> bonuses)
@@ -96,7 +100,7 @@ namespace DiceMinigame
         private IEnumerator Zoom(Vector3 targetPos, float smoothTime)
         {
             Vector3 startPosition = transform.position;
-            Vector3 finalPosition = targetPos + offSet;
+            Vector3 finalPosition = targetPos - (transform.TransformDirection(offSet));
             Quaternion startRotation = transform.rotation;
 
             Vector3 relativePos = targetPos - finalPosition;
@@ -115,12 +119,17 @@ namespace DiceMinigame
                 yield return null;
             }
             yield return new WaitForSeconds(DiceMinigameGlobalSettings.Instance.cameraStayOnDiceTime);
-            NextDicePos();
-            ZoomToDice(DiceMinigameGlobalSettings.Instance.cameraMoveToNextDiceTime);
+
+            if (diceLocations.Count > 1)
+            {
+                NextDicePos();
+                ZoomToDice(DiceMinigameGlobalSettings.Instance.cameraMoveToNextDiceTime);
+            }
         }
 
         private IEnumerator ResetCamera(float smoothTime)
         {
+
             Vector3 startPosition = transform.position;
             Vector3 finalPosition = originalPos;
             Quaternion startRotation = transform.rotation;
@@ -132,7 +141,6 @@ namespace DiceMinigame
             {
                 float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / smoothTime);
                 elapsedTime += Time.deltaTime;
-
                 transform.position = Vector3.Lerp(startPosition, finalPosition, lerpFactor);
                 transform.rotation = Quaternion.Slerp(startRotation, finalRotation, lerpFactor);
 

@@ -11,6 +11,26 @@ using UnityEngine.SceneManagement;
 
 namespace Scenes
 {
+    public struct SceneLoadParams
+    {
+        public Vector3 origo;
+        public Quaternion rotation;
+        public bool nulled;
+
+        public SceneLoadParams(Vector3 origo, Quaternion rotation)
+        {
+            this.origo = origo;
+            nulled = false;
+            this.rotation = rotation;
+        }
+
+        public SceneLoadParams(bool nulled)
+        {
+            this.nulled = nulled;
+            origo = Vector3.zero;
+            rotation = Quaternion.identity;
+        }
+    }
     struct CachedGameObject
     {
         public GameObject gameObject;
@@ -34,6 +54,8 @@ namespace Scenes
 
         List<CachedGameObject> cachedGameObjectList = new List<CachedGameObject>();
 
+        public SceneLoadParams sceneLoadParams;
+
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -55,20 +77,34 @@ namespace Scenes
 
         public void LoadScene(string scenePath)
         {
-            StartCoroutine(LoadAsyncScene(scenePath));
+            this.sceneLoadParams = new SceneLoadParams(true);
+            string sceneName = ParseSceneName(scenePath);
+            StartCoroutine(LoadAsyncScene(sceneName, true));
+        }
+
+        public void LoadSceneByName(string sceneName, bool unloadCurrent, SceneLoadParams sceneLoadParams)
+        {
+            StartCoroutine(LoadAsyncScene(sceneName, unloadCurrent));
+
+            if(!sceneLoadParams.nulled)
+            {
+                this.sceneLoadParams = sceneLoadParams;
+                Debug.Log("sceneloadparams exist!: " + sceneLoadParams.origo);
+            }
         }
 
         public void UnloadScene()
         {
-            StartCoroutine(UnloadAsyncScene());
+            StartCoroutine(UnloadAsyncScene(true));
         }
 
-        IEnumerator LoadAsyncScene(string scenePath)
+        IEnumerator LoadAsyncScene(string sceneName, bool pack)
         {
-            string sceneName = ParseSceneName(scenePath);
-
-            PackScene();
-            
+            if (pack)
+            {
+                PackScene();
+            }
+      
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             while (!async.isDone)
@@ -78,12 +114,15 @@ namespace Scenes
 
             Scene subScene = SceneManager.GetSceneByName(sceneName);
 
-            inactiveSceneContainer.gameObject.SetActive(false);
+            if (pack)
+            {
+                inactiveSceneContainer.gameObject.SetActive(false);
+            }
 
             SceneManager.SetActiveScene(subScene);
         }
 
-        IEnumerator UnloadAsyncScene()
+        IEnumerator UnloadAsyncScene(bool unpack)
         {
             AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
@@ -92,8 +131,11 @@ namespace Scenes
                 yield return null;
             }
 
-            inactiveSceneContainer.gameObject.SetActive(true);
-            UnpackScene();
+            if (unpack)
+            {
+                inactiveSceneContainer.gameObject.SetActive(true);
+                UnpackScene();
+            }
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(mainSceneName));
         }
@@ -108,22 +150,6 @@ namespace Scenes
                 cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
                 gameObject.SetActive(false);
             }
-
-            //inactiveSceneContainer = new GameObject("Inactive Scene Container").transform;
-
-            //foreach (GameObject go in allObjects)
-            //{
-            //    NetworkObject nObj = go.GetComponent<NetworkObject>();
-            //    if (nObj != null)
-            //    {
-            //        cachedNetworkObjects.Add(nObj);
-            //        nObj.gameObject.SetActive(false);
-            //    } else
-            //    {
-            //        go.transform.SetParent(inactiveSceneContainer, false);
-            //    }
-            //}
-
         }
 
         void UnpackScene()
@@ -133,15 +159,7 @@ namespace Scenes
                 cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
             }
 
-            //inactiveSceneContainer.DetachChildren();
-
-            //foreach (NetworkObject networkObject in cachedNetworkObjects)
-            //{
-            //    networkObject.gameObject.SetActive(true);
-            //}
-
-            //Destroy(inactiveSceneContainer.gameObject);
-            //cachedNetworkObjects.Clear();
+            cachedGameObjectList.Clear();
         }
 
         string ParseSceneName(string scenePath)

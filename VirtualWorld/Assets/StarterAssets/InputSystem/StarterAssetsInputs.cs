@@ -14,6 +14,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool interact;
+		public bool action1;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -38,6 +39,7 @@ namespace StarterAssets
 		private void LateUpdate()
 		{
 			ClearInteractInput();
+			Action1Input(false);
 		}
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -67,6 +69,11 @@ namespace StarterAssets
 		public void OnInteract(InputValue value)
         {
 			InteractInput(value.isPressed);
+        }
+
+        public void OnAction1(InputValue value)
+        {
+			Action1Input(value.isPressed);
         }
 #else
 	// old input sys if we do decide to have it (most likely wont)...
@@ -105,9 +112,14 @@ namespace StarterAssets
 			interact = false;
         }
 
+        public void Action1Input(bool newAction1State)
+        {
+            action1 = newAction1State;
+        }
+
 #if !UNITY_IOS || !UNITY_ANDROID
 
-		private void OnApplicationFocus(bool hasFocus)
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			//SetCursorState(cursorLocked);
 
