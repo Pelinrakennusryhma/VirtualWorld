@@ -11,6 +11,18 @@ using UnityEngine.SceneManagement;
 
 namespace Scenes
 {
+    struct CachedGameObject
+    {
+        public GameObject gameObject;
+        public bool isEnabled;
+
+        public CachedGameObject(GameObject go, bool isEnabled)
+        {
+            gameObject = go;
+            this.isEnabled = isEnabled;
+        }
+    }
+
     [RequireComponent(typeof(ScenePicker))]
     public class SceneLoader : NetworkBehaviour
     {
@@ -19,6 +31,8 @@ namespace Scenes
 
         [SerializeField] Transform inactiveSceneContainer;
         List<NetworkObject> cachedNetworkObjects = new List<NetworkObject>();
+
+        List<CachedGameObject> cachedGameObjectList = new List<CachedGameObject>();
 
         void Awake()
         {
@@ -64,9 +78,9 @@ namespace Scenes
 
             Scene subScene = SceneManager.GetSceneByName(sceneName);
 
-            SceneManager.SetActiveScene(subScene);
-
             inactiveSceneContainer.gameObject.SetActive(false);
+
+            SceneManager.SetActiveScene(subScene);
         }
 
         IEnumerator UnloadAsyncScene()
@@ -78,8 +92,10 @@ namespace Scenes
                 yield return null;
             }
 
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(mainSceneName));
+            inactiveSceneContainer.gameObject.SetActive(true);
             UnpackScene();
+
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(mainSceneName));
         }
 
         void PackScene()
@@ -87,36 +103,45 @@ namespace Scenes
             Scene activeScene = SceneManager.GetActiveScene();
             GameObject[] allObjects = activeScene.GetRootGameObjects();
 
-            inactiveSceneContainer = new GameObject("Inactive Scene Container").transform;
-
-            foreach (GameObject go in allObjects)
+            foreach (GameObject gameObject in allObjects)
             {
-                NetworkObject nObj = go.GetComponent<NetworkObject>();
-                if (nObj != null)
-                {
-                    cachedNetworkObjects.Add(nObj);
-                    nObj.gameObject.SetActive(false);
-                } else
-                {
-                    go.transform.SetParent(inactiveSceneContainer, false);
-                }
+                cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
+                gameObject.SetActive(false);
             }
+
+            //inactiveSceneContainer = new GameObject("Inactive Scene Container").transform;
+
+            //foreach (GameObject go in allObjects)
+            //{
+            //    NetworkObject nObj = go.GetComponent<NetworkObject>();
+            //    if (nObj != null)
+            //    {
+            //        cachedNetworkObjects.Add(nObj);
+            //        nObj.gameObject.SetActive(false);
+            //    } else
+            //    {
+            //        go.transform.SetParent(inactiveSceneContainer, false);
+            //    }
+            //}
 
         }
 
         void UnpackScene()
         {
-            SceneManager.MoveGameObjectToScene(inactiveSceneContainer.gameObject, SceneManager.GetActiveScene());
-            inactiveSceneContainer.DetachChildren();;
-            inactiveSceneContainer.parent = transform;
-
-            foreach (NetworkObject networkObject in cachedNetworkObjects)
+            foreach (CachedGameObject cachedGameObject in cachedGameObjectList)
             {
-                networkObject.gameObject.SetActive(true);
+                cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
             }
 
-            Destroy(inactiveSceneContainer.gameObject);
-            cachedNetworkObjects.Clear();
+            //inactiveSceneContainer.DetachChildren();
+
+            //foreach (NetworkObject networkObject in cachedNetworkObjects)
+            //{
+            //    networkObject.gameObject.SetActive(true);
+            //}
+
+            //Destroy(inactiveSceneContainer.gameObject);
+            //cachedNetworkObjects.Clear();
         }
 
         string ParseSceneName(string scenePath)

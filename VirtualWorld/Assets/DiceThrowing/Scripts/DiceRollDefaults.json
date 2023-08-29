@@ -1,0 +1,28 @@
+{
+  "savedRolls": [
+    {
+      "diceRollData": [
+        {
+          "name": "D6",
+          "amount": 3,
+          "bonus": false,
+          "penalty": false
+        }
+      ],
+      "bonus": 0,
+      "name": "3D6"
+    },
+    {
+      "diceRollData": [
+        {
+          "name": "D100",
+          "amount": 1,
+          "bonus": false,
+          "penalty": false
+        }
+      ],
+      "bonus": 0,
+      "name": "1D100"
+    }
+  ]
+}
