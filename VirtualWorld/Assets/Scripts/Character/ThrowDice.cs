@@ -11,7 +11,7 @@ public class ThrowDice : MonoBehaviour, IPlayerAction
     public void Execute()
     {
         Debug.Log("executing throw dice");
-        SceneLoader.Instance.LoadSceneByName("DiceThrowingBare", false, new SceneLoadParams(transform.position, transform.rotation));
+        SceneLoader.Instance.LoadSceneByName("DiceThrowingBare", new SceneLoadParams(transform.position, transform.rotation, ScenePackMode.PLAYER_ONLY));
     }
 
 }

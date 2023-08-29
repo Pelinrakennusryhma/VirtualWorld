@@ -11,17 +11,27 @@ using UnityEngine.SceneManagement;
 
 namespace Scenes
 {
+    public enum ScenePackMode
+    {
+        ALL,
+        NONE,
+        PLAYER_ONLY,
+        ALL_BUT_PLAYER
+    }
+
     public struct SceneLoadParams
     {
         public Vector3 origo;
         public Quaternion rotation;
         public bool nulled;
+        public ScenePackMode scenePackMode;
 
-        public SceneLoadParams(Vector3 origo, Quaternion rotation)
+        public SceneLoadParams(Vector3 origo, Quaternion rotation, ScenePackMode scenePackMode)
         {
             this.origo = origo;
             nulled = false;
             this.rotation = rotation;
+            this.scenePackMode = scenePackMode;
         }
 
         public SceneLoadParams(bool nulled)
@@ -29,6 +39,7 @@ namespace Scenes
             this.nulled = nulled;
             origo = Vector3.zero;
             rotation = Quaternion.identity;
+            scenePackMode = ScenePackMode.NONE;
         }
     }
     struct CachedGameObject
@@ -49,7 +60,6 @@ namespace Scenes
         public static SceneLoader Instance { get; private set; }
         [SerializeField] string mainSceneName;
 
-        [SerializeField] Transform inactiveSceneContainer;
         List<NetworkObject> cachedNetworkObjects = new List<NetworkObject>();
 
         List<CachedGameObject> cachedGameObjectList = new List<CachedGameObject>();
@@ -79,31 +89,23 @@ namespace Scenes
         {
             this.sceneLoadParams = new SceneLoadParams(true);
             string sceneName = ParseSceneName(scenePath);
-            StartCoroutine(LoadAsyncScene(sceneName, true));
+            StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
         }
 
-        public void LoadSceneByName(string sceneName, bool unloadCurrent, SceneLoadParams sceneLoadParams)
+        public void LoadSceneByName(string sceneName, SceneLoadParams sceneLoadParams)
         {
-            StartCoroutine(LoadAsyncScene(sceneName, unloadCurrent));
-
-            if(!sceneLoadParams.nulled)
-            {
-                this.sceneLoadParams = sceneLoadParams;
-                Debug.Log("sceneloadparams exist!: " + sceneLoadParams.origo);
-            }
+            this.sceneLoadParams = sceneLoadParams;
+            StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
         }
 
         public void UnloadScene()
         {
-            StartCoroutine(UnloadAsyncScene(true));
+            StartCoroutine(UnloadAsyncScene());
         }
 
-        IEnumerator LoadAsyncScene(string sceneName, bool pack)
+        IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
-            if (pack)
-            {
-                PackScene();
-            }
+            PackScene(sceneLoadParams.scenePackMode);
       
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -114,15 +116,10 @@ namespace Scenes
 
             Scene subScene = SceneManager.GetSceneByName(sceneName);
 
-            if (pack)
-            {
-                inactiveSceneContainer.gameObject.SetActive(false);
-            }
-
             SceneManager.SetActiveScene(subScene);
         }
 
-        IEnumerator UnloadAsyncScene(bool unpack)
+        IEnumerator UnloadAsyncScene()
         {
             AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
@@ -131,24 +128,39 @@ namespace Scenes
                 yield return null;
             }
 
-            if (unpack)
-            {
-                inactiveSceneContainer.gameObject.SetActive(true);
-                UnpackScene();
-            }
-
+            UnpackScene();
+            
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(mainSceneName));
         }
 
-        void PackScene()
+        void PackScene(ScenePackMode scenePackMode)
         {
-            Scene activeScene = SceneManager.GetActiveScene();
-            GameObject[] allObjects = activeScene.GetRootGameObjects();
-
-            foreach (GameObject gameObject in allObjects)
+            if(scenePackMode != ScenePackMode.NONE)
             {
-                cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
-                gameObject.SetActive(false);
+                Scene activeScene = SceneManager.GetActiveScene();
+
+                if(scenePackMode == ScenePackMode.PLAYER_ONLY)
+                {
+                    // make sure to only pick our own player
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
+                } else
+                {
+                    GameObject[] allObjects = activeScene.GetRootGameObjects();
+
+                    foreach (GameObject gameObject in allObjects)
+                    {
+                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject.CompareTag("Player"))
+                        {
+
+                        } else
+                        {
+                            cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
+                            gameObject.SetActive(false);
+                        }
+                    }
+                }
+
             }
         }
 

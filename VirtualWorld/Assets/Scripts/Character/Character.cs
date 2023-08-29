@@ -11,6 +11,7 @@ namespace Characters {
     public class Character : NetworkBehaviour
     {
         public static Character Instance { get; private set; }
+        [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
 
         [SerializeField] CharacterData characterData;
 
@@ -33,6 +34,11 @@ namespace Characters {
                 DontDestroyOnLoad(gameObject);
                 inventoryController = GetComponent<InventoryController>();
             }
+        }
+
+        public void SetPlayerGameObject(GameObject go)
+        {
+            OwnedCharacter = go;
         }
 
         public override void OnNetworkSpawn()
