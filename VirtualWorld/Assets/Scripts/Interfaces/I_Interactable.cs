@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
-public interface I_Interactable
+namespace WorldObjects
 {
-    public string DetectionMessage { get; set; }
-    public void Interact(string playerId);
+    public interface I_Interactable
+    {
+        public string DetectionMessage { get; set; }
+        public void Interact(string playerId, UnityAction callback);
+    }
 }

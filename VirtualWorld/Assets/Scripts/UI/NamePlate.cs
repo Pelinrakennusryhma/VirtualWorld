@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Authentication
 {
-    public class NamePlate : NetworkBehaviour
+    public class Nameplate : NetworkBehaviour
     {
         [SerializeField] TMP_Text namePlate;
         [SerializeField] NetworkVariable<FixedString32Bytes> userName = 

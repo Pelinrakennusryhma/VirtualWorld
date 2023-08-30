@@ -1,3 +1,4 @@
+using Scenes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,7 @@ public class MainMenuTabletopInvaders : MonoBehaviour
         // Poistutaan pelistä
         //Application.Quit();
 
-        MiniGameLauncher.Instance.GoBackToPlayground(true);
+        //MiniGameLauncher.Instance.GoBackToPlayground(true);
+        SceneLoader.Instance.UnloadScene();
     }
 }

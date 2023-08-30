@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4691509466571487088
 MonoBehaviour:
@@ -48,6 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wsConnection: {fileID: 0}
   userSession: {fileID: 0}
+  EventInventoryChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2845221288109614394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +65,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 4691509466571487088}
   wsConnection: {fileID: 0}
-  userSession: {fileID: 0}
 --- !u!114 &4409866130384201076
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6984877580260586142
 MonoBehaviour:
@@ -84,7 +84,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   webSocketAddress: ws://localhost:3001
   apiCalls: {fileID: 6984877580260586142}
-  character: {fileID: 0}
+  EventIncomingCharacterData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3200071727638041246
 MonoBehaviour:
   m_ObjectHideFlags: 0

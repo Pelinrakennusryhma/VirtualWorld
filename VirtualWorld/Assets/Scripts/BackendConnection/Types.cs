@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Authentication
+namespace BackendConnection
 {
     public enum RequestType
     {
@@ -50,25 +50,6 @@ namespace Authentication
             this.arg = arg;
         }
     }
-
-    // {
-    // "inventory" :{
-    //   "money":90,
-    //   "id":"64e90f204f14013fafc5ef24"
-    //  },
-    // "user":"64e90f1f4f14013fafc5ef20"}
-    public struct InventoryWithUser : INetworkSerializable
-    {
-        public Inventory inventory;
-        public string user;
-
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-        {
-            serializer.SerializeValue(ref inventory);
-            serializer.SerializeValue(ref user);
-        }
-    }
-
     public struct Inventory : INetworkSerializable
     {
         public int money;
@@ -84,7 +65,6 @@ namespace Authentication
         }
 
     }
-
     public struct CharacterData : INetworkSerializable
     {
         public Inventory inventory;
@@ -99,7 +79,6 @@ namespace Authentication
         }
 
     }
-
     public struct WebSocketMessageIn
     {
         public string type;

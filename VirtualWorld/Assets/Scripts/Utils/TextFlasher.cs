@@ -40,6 +40,12 @@ namespace UI
             text.fontSize = originalFontSize;
             text.color = originalFontColor;
         }
+
+        public void Reset()
+        {
+            text.fontSize = originalFontSize;
+            text.color = originalFontColor;
+        }
     }
 }
 
