@@ -16,9 +16,6 @@ public class PlayerActions : MonoBehaviour
     IPlayerAction queuedAction;
     IPlayerAction queuedDelayedAction;
 
-    //string actionStringFormat = "action";
-    //Dictionary<string, IPlayerAction> actionKeybinds = new Dictionary<string, IPlayerAction>();
-
     void Start()
     {
         inputs = GetComponentInParent<StarterAssetsInputs>();
@@ -45,7 +42,7 @@ public class PlayerActions : MonoBehaviour
             {
                 queuedAction.Execute();
             }
-            else
+            else // Can't execute for some reason, make the queued action start with a delay to make it look less awkward after landing for example
             {
                 queuedDelayedAction = queuedAction;
                 queuedAction = null;
@@ -57,7 +54,6 @@ public class PlayerActions : MonoBehaviour
                 StartCoroutine(DelayExecute(queuedDelayedAction, queuedActionExecuteDelay));
                 queuedDelayedAction = null;
             }
-
         }
     }
 
@@ -74,28 +70,6 @@ public class PlayerActions : MonoBehaviour
         {
             return false;
         }
-        //else
-        //{
-        //    if (queuedCoroutine != null)
-        //    {
-        //        StopCoroutine(queuedCoroutine);
-        //    }
-
-        //    queuedAction = null;
-        //    queuedCoroutine = StartCoroutine(DelayExecute(action, queuedActionExecuteDelay));
-        //}
-
-
-
-        //if (!action.RequireGrounded || thirdPersonController.Grounded)
-        //{
-        //    if(queuedCoroutine != null)
-        //    {
-        //        StopCoroutine(queuedCoroutine);
-        //    }
-
-        //    queuedCoroutine = StartCoroutine(DelayExecute(action, queuedActionExecuteDelay));
-        //}
     }
 
     IEnumerator DelayExecute(IPlayerAction action, float delay)
@@ -103,8 +77,6 @@ public class PlayerActions : MonoBehaviour
         yield return new WaitForSeconds(delay);
         action.Execute();
     }
-
-    // ---------- Action Key mapping On hold until solid input system ---------
 
     void FindAllActions()
     {
@@ -114,6 +86,11 @@ public class PlayerActions : MonoBehaviour
             actions.Add(actionScript);
         }
     }
+
+    // ---------- Action Key mapping On hold until solid input system ---------
+
+    //string actionStringFormat = "action";
+    //Dictionary<string, IPlayerAction> actionKeybinds = new Dictionary<string, IPlayerAction>();
 
     //void MapActionsToKeys()
     //{

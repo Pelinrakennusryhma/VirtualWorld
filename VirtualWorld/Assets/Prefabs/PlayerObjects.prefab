@@ -535,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485ffbdc1b1ba2a4585593c53241b815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputs: {fileID: 7534143838894327699}
 --- !u!1 &4252218475215535747
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140a19831c18d7249a851b1654f03c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  queuedActionExecuteDelay: 0.5
 --- !u!1001 &3985386372033014785
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ namespace Scenes
     public class SceneLoader : NetworkBehaviour
     {
         public static SceneLoader Instance { get; private set; }
-        [SerializeField] string mainSceneName;
+        [SerializeField] public string MainSceneName { get; private set; }
 
         List<NetworkObject> cachedNetworkObjects = new List<NetworkObject>();
 
@@ -82,7 +82,7 @@ namespace Scenes
         void Start()
         {
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
-            mainSceneName = ParseSceneName(mainScenePath);
+            MainSceneName = ParseSceneName(mainScenePath);
         }
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
@@ -130,7 +130,7 @@ namespace Scenes
 
             UnpackScene();
             
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(mainSceneName));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
         }
 
         void PackScene(ScenePackMode scenePackMode)
@@ -141,7 +141,6 @@ namespace Scenes
 
                 if(scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {
-                    // make sure to only pick our own player
                     GameObject player = Character.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
                     player.SetActive(false);

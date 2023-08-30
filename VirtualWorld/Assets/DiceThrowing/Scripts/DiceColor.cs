@@ -8,7 +8,7 @@ namespace DiceMinigame
     {
         public List<Color> colors;
         private Renderer diceRenderer;
-        // Start is called before the first frame update
+
         void Start()
         {
             diceRenderer = transform.GetChild(1).GetComponent<Renderer>();

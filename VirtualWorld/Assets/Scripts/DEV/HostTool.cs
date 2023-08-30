@@ -25,20 +25,21 @@ public class HostTool : NetworkBehaviour
         }
     }
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
-        StartCoroutine(GetCharData());
-
+        if (!IsHost)
+        {
+            Destroy(this);
+        } else
+        {
+            StartCoroutine(GetCharData());
+        }
     }
 
     IEnumerator GetCharData()
     {
         do
         {
-            if (!IsHost)
-            {
-                Destroy(this);
-            }
             CheckIfServerIsReadyServerRpc();
             yield return new WaitForSeconds(0.2f);
         } while (!serverIsReady);

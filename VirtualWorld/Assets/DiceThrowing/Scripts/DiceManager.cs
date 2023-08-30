@@ -325,14 +325,12 @@ namespace DiceMinigame
                         columnsPlaced++;
                     }
                 }
-                //Vector3 pos = new Vector3(x + GetRandomness(), y + GetRandomness(), z + GetRandomness());
-                Vector3 pos = Vector3.zero;
-                pos += transform.right * x;
-                pos += transform.up * y;
-                pos += transform.forward * z;
-                positions.Add(pos);
 
-                //Instantiate(testPrefab, transform.TransformPoint(pos), Quaternion.identity, transform);
+                Vector3 pos = Vector3.zero;
+                pos += transform.right * (x + GetRandomness());
+                pos += transform.up * (y + GetRandomness());
+                pos += transform.forward * (z + GetRandomness());
+                positions.Add(pos);
             }
 
             return positions;

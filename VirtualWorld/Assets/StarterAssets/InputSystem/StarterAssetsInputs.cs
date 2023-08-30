@@ -25,7 +25,6 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 #endif
 
-
 		public override void OnNetworkSpawn()
 		{
 			this.enabled = false;
@@ -41,6 +40,16 @@ namespace StarterAssets
 			ClearInteractInput();
 			Action1Input(false);
 		}
+
+		private void OnDisable()
+		{
+            MoveInput(Vector2.zero);
+            LookInput(Vector2.zero);
+            JumpInput(false);
+            SprintInput(false);
+            InteractInput(false);
+            Action1Input(false);
+        }
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
