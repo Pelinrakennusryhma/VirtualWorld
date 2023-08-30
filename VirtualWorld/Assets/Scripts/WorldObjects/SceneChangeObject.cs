@@ -24,7 +24,7 @@ namespace WorldObjects
         public void Interact(string playerId, UnityAction callback)
         {
             callback?.Invoke();
-            SceneLoader.Instance.LoadScene(scenePicker.scenePath);
+            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(ScenePackMode.ALL, "ShowWorlds"));
         }
     }
 }

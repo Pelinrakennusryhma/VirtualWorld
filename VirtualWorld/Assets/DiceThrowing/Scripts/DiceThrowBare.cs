@@ -22,8 +22,14 @@ namespace DiceMinigame
                 return;
             }
 
-            // if params are passed we are throwing dice out in the world, get vector data and disable the dice surroundings
-            if (!SceneLoader.Instance.sceneLoadParams.nulled)
+            object sceneData = SceneLoader.Instance.sceneLoadParams.sceneData;
+
+            // whether we're playing dicethrow on arcade or out in the world determines if the surroundings are shown
+            if ((string)sceneData == "ShowWorlds")
+            {
+                environments.SetActive(true);
+
+            } else
             {
                 Vector3 offset = SceneLoader.Instance.sceneLoadParams.origo;
                 Quaternion rotation = SceneLoader.Instance.sceneLoadParams.rotation;
@@ -36,9 +42,6 @@ namespace DiceMinigame
                 camMover.Init();
 
                 environments.SetActive(false);
-            } else
-            {
-                environments.SetActive(true);
             }
         }
     }

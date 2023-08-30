@@ -7710,6 +7710,11 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Strength
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7869873546869171050, guid: 55b3908a56575804c95f6623f456ab00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9222065738425870839, guid: 55b3908a56575804c95f6623f456ab00,
         type: 3}
       propertyPath: m_LocalPosition.x

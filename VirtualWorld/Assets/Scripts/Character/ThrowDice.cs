@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ThrowDice : MonoBehaviour, IPlayerAction
 {
+    public bool RequireGrounded { get => true; }
     public string ActionName { get => "Throw dice.";}
 
     public void Execute()

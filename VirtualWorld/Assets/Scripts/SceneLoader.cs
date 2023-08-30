@@ -23,23 +23,23 @@ namespace Scenes
     {
         public Vector3 origo;
         public Quaternion rotation;
-        public bool nulled;
+        public object sceneData;
         public ScenePackMode scenePackMode;
 
-        public SceneLoadParams(Vector3 origo, Quaternion rotation, ScenePackMode scenePackMode)
+        public SceneLoadParams(Vector3 origo, Quaternion rotation, ScenePackMode scenePackMode, object sceneData = null)
         {
             this.origo = origo;
-            nulled = false;
+            this.sceneData = sceneData;
             this.rotation = rotation;
             this.scenePackMode = scenePackMode;
         }
 
-        public SceneLoadParams(bool nulled)
+        public SceneLoadParams(ScenePackMode scenePackMode, object sceneData = null)
         {
-            this.nulled = nulled;
-            origo = Vector3.zero;
-            rotation = Quaternion.identity;
-            scenePackMode = ScenePackMode.NONE;
+            this.origo = Vector3.zero;
+            this.sceneData = sceneData;
+            this.rotation = Quaternion.identity;
+            this.scenePackMode = scenePackMode;
         }
     }
     struct CachedGameObject
@@ -85,9 +85,9 @@ namespace Scenes
             mainSceneName = ParseSceneName(mainScenePath);
         }
 
-        public void LoadScene(string scenePath)
+        public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
-            this.sceneLoadParams = new SceneLoadParams(true);
+            this.sceneLoadParams = sceneLoadParams;
             string sceneName = ParseSceneName(scenePath);
             StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
         }

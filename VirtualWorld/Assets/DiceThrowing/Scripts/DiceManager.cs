@@ -260,7 +260,7 @@ namespace DiceMinigame
                         GameObject childDicePrefab = d100Score.childDicePrefab;
 
                         spawnPos = GetPosition();
-                        GameObject instantiatedChildDice = Instantiate(childDicePrefab, spawnPos, Quaternion.identity, activeDiceParent);
+                        GameObject instantiatedChildDice = Instantiate(childDicePrefab, transform.TransformPoint(spawnPos), Quaternion.identity, activeDiceParent);
                         d100Score.InitChild(instantiatedChildDice);
                     }
                 }
