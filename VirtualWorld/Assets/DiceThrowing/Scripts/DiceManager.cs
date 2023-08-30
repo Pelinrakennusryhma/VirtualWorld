@@ -8,6 +8,9 @@ namespace DiceMinigame
 {
     public class DiceManager : MonoBehaviour
     {
+        public GameObject testPrefab;
+
+
         public Transform activeDiceParent;
         public List<DiceAdjust> diceAdjusts;
         public List<BonusAdjust> bonusAdjusts;
@@ -20,7 +23,7 @@ namespace DiceMinigame
         private List<List<DiceScore>> bonusDiceGroups = new List<List<DiceScore>>();
         private List<List<DiceScore>> penaltyDiceGroups = new List<List<DiceScore>>();
         private List<DiceScore> diceToFade = new List<DiceScore>();
-        // Start is called before the first frame update
+
         void Awake()
         {
             allPositions = CreatePositions(DiceMinigameGlobalSettings.Instance.maxDice);
@@ -238,8 +241,8 @@ namespace DiceMinigame
 
                 for (int i = 0; i < diceAdjust.GetAmount(); i++)
                 {
-                    Vector3 spawnPos = transform.position + GetPosition();
-                    GameObject instantiatedDice = Instantiate(diceAdjust.dicePrefab, spawnPos, Quaternion.identity, activeDiceParent);
+                    Vector3 spawnPos = GetPosition();
+                    GameObject instantiatedDice = Instantiate(diceAdjust.dicePrefab, transform.TransformPoint(spawnPos), Quaternion.identity, activeDiceParent);
                     activeDice.Add(instantiatedDice);
 
                     DiceScore diceScore = instantiatedDice.GetComponent<DiceScore>();
@@ -256,7 +259,7 @@ namespace DiceMinigame
                         D100Score d100Score = instantiatedDice.GetComponent<D100Score>();
                         GameObject childDicePrefab = d100Score.childDicePrefab;
 
-                        spawnPos = transform.position + GetPosition();
+                        spawnPos = GetPosition();
                         GameObject instantiatedChildDice = Instantiate(childDicePrefab, spawnPos, Quaternion.identity, activeDiceParent);
                         d100Score.InitChild(instantiatedChildDice);
                     }
@@ -328,6 +331,8 @@ namespace DiceMinigame
                 pos += transform.up * y;
                 pos += transform.forward * z;
                 positions.Add(pos);
+
+                //Instantiate(testPrefab, transform.TransformPoint(pos), Quaternion.identity, transform);
             }
 
             return positions;

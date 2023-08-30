@@ -3421,7 +3421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194227}
-  throwingForce: 60
+  throwingForce: 600
 --- !u!114 &554707014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3546,6 +3546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869ba4631b5f3d348959c07070776fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testPrefab: {fileID: 6620160644590663068, guid: 3b76d120d5d9c6e4ab85c6cf0083ccd4,
+    type: 3}
   activeDiceParent: {fileID: 554707011}
   diceAdjusts: []
   bonusAdjusts: []
