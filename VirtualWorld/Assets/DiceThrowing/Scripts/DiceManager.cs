@@ -287,9 +287,9 @@ namespace DiceMinigame
 
             List<Vector3> positions = new List<Vector3>();
 
-            float x = transform.position.x;
-            float y = transform.position.y;
-            float z = transform.position.z;
+            float x = transform.localPosition.x;
+            float y = transform.localPosition.y;
+            float z = transform.localPosition.z;
             int placedOnRow = 0;
             int rowsPlaced = 0;
             int columnsPlaced = 0;
@@ -322,7 +322,11 @@ namespace DiceMinigame
                         columnsPlaced++;
                     }
                 }
-                Vector3 pos = new Vector3(x + GetRandomness(), y + GetRandomness(), z + GetRandomness());
+                //Vector3 pos = new Vector3(x + GetRandomness(), y + GetRandomness(), z + GetRandomness());
+                Vector3 pos = Vector3.zero;
+                pos += transform.right * x;
+                pos += transform.up * y;
+                pos += transform.forward * z;
                 positions.Add(pos);
             }
 
