@@ -29,7 +29,7 @@ namespace DiceMinigame
             object sceneData = SceneLoader.Instance.sceneLoadParams.sceneData;
 
             // whether we're playing dicethrow on arcade or out in the world determines if the surroundings are shown
-            if (SceneLoader.Instance == null || (string)sceneData == "ShowWorlds")
+            if ((string)sceneData == "ShowWorlds")
             {
                 environments.SetActive(true);
                 eventSystem.SetActive(true);
