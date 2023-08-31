@@ -56,7 +56,7 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
 
                 for (int i = 0; i < resultAppendList.Count; i++)
                 {
-                    Debug.Log("Raycast hit " + resultAppendList[i].gameObject.name.ToString());
+                    //Debug.Log("Raycast hit " + resultAppendList[i].gameObject.name.ToString());
 
                     Button button = resultAppendList[i].gameObject.GetComponent<Button>();
 
@@ -69,15 +69,29 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
 
                     Scrollbar scroll = resultAppendList[i].gameObject.GetComponent<Scrollbar>();
 
-                    
+                    ScrollRect scrollRect = resultAppendList[i].gameObject.GetComponent<ScrollRect>();
 
-                    if (scroll != null && Input.GetMouseButton(0))
+                    if (scrollRect != null)
                     {
-                        float value = scroll.value + Input.GetAxis("Mouse Y") * 0.5f; // Replace with new input system
+                        scroll = scrollRect.GetComponentInChildren<Scrollbar>();
+
+                        if (scroll != null)
+                        {
+                            float value = scroll.value + Input.mouseScrollDelta.y * 0.5f; // Replace with new input system?
+                            value = Mathf.Clamp(value, 0, 1.0f);
+                            scroll.value = value;
+                            //Debug.Log("Should DRAG");
+                        }
+                    }
+
+                    else if (scroll != null && Input.GetMouseButton(0))
+                    {
+                        float value = scroll.value + Input.GetAxis("Mouse Y") * 0.5f; // Replace with new input system?
                         value = Mathf.Clamp(value, 0, 1.0f);
                         scroll.value = value;
-                        Debug.Log("Should DRAG");
+                        //Debug.Log("Should DRAG");
                     }
+                    
                 }
 
 

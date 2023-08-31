@@ -30,18 +30,21 @@ public class TabletFunctionalityController : NetworkBehaviour
 
     public ViewWithinAViewRaycaster Raycaster;
 
-    public GameObject NewsFeedButtonOriginal;
+    public GameObject NewsFeedButtonOriginalLocal;
+    public GameObject NewsFeedButtonOriginalGlobal;
     public GameObject NewsFeedButtonParent;
+
+    public NewsFeedWindowChanger NewsFeedWindowChanger;
 
     private void Awake()
     {
-        ActivateProperCamera(ViewId.None);
+        ActivateProperView(ViewId.None);
         CurrentView = ViewId.Map;
     }
 
     public void OnTabletOpened()
     {
-        ActivateProperCamera(CurrentView);
+        ActivateProperView(CurrentView);
         Raycaster.ActivateRaycaster();
         Debug.Log("Tablet was opened. React to that. " + Time.time);
     }
@@ -92,7 +95,7 @@ public class TabletFunctionalityController : NetworkBehaviour
         else
         {
             CurrentView = newView;
-            ActivateProperCamera(CurrentView);
+            ActivateProperView(CurrentView);
 
             Debug.Log("Next view is " + newView);
         }
@@ -127,15 +130,19 @@ public class TabletFunctionalityController : NetworkBehaviour
         else
         {
             CurrentView = newView;
-            ActivateProperCamera(CurrentView);
+            ActivateProperView(CurrentView);
 
             Debug.Log("Next view is " + newView);
         }
     }
 
-    public void ActivateProperCamera(ViewId viewId)
+    public void ActivateProperView(ViewId viewId)
     {
+        NewsFeedController.Instance.OnNewsUpdated -= OnNewsUpdated;
+
         Raycaster.InactivateRaycaster();
+
+
         MapCamera.gameObject.SetActive(false);
         InventoryCamera.gameObject.SetActive(false);
         NewsFeedCamera.gameObject.SetActive(false);
@@ -148,6 +155,7 @@ public class TabletFunctionalityController : NetworkBehaviour
             case ViewId.Map:
                 MapCamera.gameObject.SetActive(true);
                 ScreenMeshRenderer.material = MapMaterial;
+
                 break;
 
             case ViewId.Inventory:
@@ -158,6 +166,8 @@ public class TabletFunctionalityController : NetworkBehaviour
             case ViewId.NewsFeed:
                 NewsFeedCamera.gameObject.SetActive(true);
                 ScreenMeshRenderer.material = NewsFeedMaterial;
+                NewsFeedController.Instance.OnNewsUpdated += OnNewsUpdated;
+
                 InitializeNewsFeed();
                 Raycaster.ActivateRaycaster();
                 break;
@@ -168,32 +178,80 @@ public class TabletFunctionalityController : NetworkBehaviour
 
     public void OnTabletClosed()
     {
+        NewsFeedController.Instance.OnNewsUpdated -= OnNewsUpdated;
+
         Raycaster.InactivateRaycaster();
-        ActivateProperCamera(ViewId.None);
+        ActivateProperView(ViewId.None);
     }
 
+
+    // WHAT IF NEEDS IS UPDATED AND IDs CHANGED AFTER INITIALIZING AND DURING VIEWING THE NEWSFEED???
     private void InitializeNewsFeed()
     {
-        //TMPro.TextMeshProUGUI u = NewsFeedCamera.gameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>(true);
-        //u.text = NewsFeedController.Instance.GetLocalNews();
+        NewsFeedWindowChanger.ShowNewsList();
 
         Button[] childButtons = NewsFeedButtonParent.GetComponentsInChildren<Button>(true);
 
         for (int i = 0; i < childButtons.Length; i++)
         {
+            NewsFeedButton newsFeedButton = childButtons[i].GetComponent<NewsFeedButton>();
+
+            if (newsFeedButton != null)
+            {
+                newsFeedButton.OnNewsItemClicked -= OnNewsItemClicked;
+            }
+
             DestroyImmediate(childButtons[i].gameObject);
         }
 
-        int amountOfNews = 12;
+        List<NewsFeedItem> globalNews = NewsFeedController.Instance.GetGlobalNews();
+        List<NewsFeedItem> localNews = NewsFeedController.Instance.GetLocalNews();
 
-        string[] news = NewsFeedController.Instance.GetLocalNews(amountOfNews);
-
-        for (int i = 0; i < amountOfNews; i++)
+        for (int i = 0; i < globalNews.Count; i++)
         {
-            Button button = Instantiate(NewsFeedButtonOriginal, NewsFeedButtonParent.transform).GetComponent<Button>();
-            button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = news[i];
+            InstantiateButton(globalNews, i, NewsFeedButtonOriginalGlobal);
         }
 
-        NewsFeedController.Instance.GetGlobalNewsServerRpc();
+        for (int i = 0; i < localNews.Count; i++)
+        {
+            InstantiateButton(localNews, i, NewsFeedButtonOriginalLocal);
+        }
+
+
+    }
+
+    private void InstantiateButton(List<NewsFeedItem> array, 
+                                   int i,
+                                   GameObject buttonOriginal)
+    {
+        Button button = Instantiate(buttonOriginal, NewsFeedButtonParent.transform).GetComponent<Button>();
+        button.gameObject.SetActive(true);
+        button.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = array[i].Header;
+        NewsFeedButton newsFeedButton = button.GetComponent<NewsFeedButton>();
+        newsFeedButton.NewsId = array[i].ID;
+        newsFeedButton.NewsFeedItem = array[i];
+        newsFeedButton.OnNewsItemClicked -= OnNewsItemClicked;
+        newsFeedButton.OnNewsItemClicked += OnNewsItemClicked;
+        //Debug.LogError("Instantiating news item " + i);
+    }
+
+    public void OnNewsItemClicked(int itemID,
+                                  NewsFeedItem item)
+    {
+        //NewsFeedItem newsFeedItem = NewsFeedController.Instance.GetLocalNewsItemByID(itemID);
+        //NewsFeedWindowChanger.ShowIndividualNews(newsFeedItem);
+
+        NewsFeedWindowChanger.ShowIndividualNews(item);
+
+         Debug.LogError("On news item clicked called");
+    }
+
+    public void OnNewsUpdated()
+    {
+        if (!NewsFeedWindowChanger.IsShowingANewsItem) 
+        {
+            InitializeNewsFeed();
+        }
+        Debug.Log("News updated while the view is open " + Time.time);
     }
 }

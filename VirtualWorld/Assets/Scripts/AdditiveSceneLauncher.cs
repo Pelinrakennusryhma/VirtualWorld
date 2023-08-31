@@ -32,15 +32,17 @@ public class AdditiveSceneLauncher : NetworkBehaviour
         base.OnNetworkSpawn();
 
 
+
         if (!IsHost
-            && !IsServer) 
+            && !IsServer
+            && IsOwner) 
         {        
             //Debug.LogError("Owner client id is " + OwnerClientId);
-
+            NewsFeedController.Instance.OnClientPlayerSpawned();
             MiniGameLauncher.Instance.CheckIfServerIsPlayingMiniGameServerRpc(OwnerClientId);
         }
 
-        if (MiniGameLauncher.Instance.IsPlayingMinigame)
+        if (MiniGameLauncher.Instance.IsPlayingMinigame) // But this shouldn't even happen. Wtf is going on in here?
         {
             character = GetComponentInChildren<PlayerCharacter>(true);
             character.DisableCharacter();

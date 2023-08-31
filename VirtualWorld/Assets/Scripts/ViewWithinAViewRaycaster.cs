@@ -25,6 +25,7 @@ public class ViewWithinAViewRaycaster : MonoBehaviour
 
     public void ActivateRaycaster()
     {
+
         gameObject.SetActive(true);
     }
 
@@ -53,11 +54,11 @@ public class ViewWithinAViewRaycaster : MonoBehaviour
         {
             if (RaycastHits[i].collider == TabletScreenCollider)
             {
-                Debug.Log("We are hitting the tablet screen with a raycast " + Time.time);
+                //Debug.Log("We are hitting the tablet screen with a raycast " + Time.time);
                 textureCoordinateHit = RaycastHits[i].textureCoord;
                 hitsScreen = true;
 
-                Debug.Log("Texture coordinate hit is x " + textureCoordinateHit.x + " y " + textureCoordinateHit.y + " at time " + Time.time);
+                //Debug.Log("Texture coordinate hit is x " + textureCoordinateHit.x + " y " + textureCoordinateHit.y + " at time " + Time.time);
 
                 break;
             }
@@ -81,7 +82,7 @@ public class ViewWithinAViewRaycaster : MonoBehaviour
             {
                 if (RaycastHits[i].collider != null) 
                 {
-                    Debug.Log("Hits " + RaycastHits[i].collider.gameObject.name);
+                    //Debug.Log("Hits " + RaycastHits[i].collider.gameObject.name);
 
                     TestClickDetector clickDetector = RaycastHits[i].collider.gameObject.GetComponentInChildren<TestClickDetector>(true);
 

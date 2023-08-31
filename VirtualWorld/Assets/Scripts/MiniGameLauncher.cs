@@ -30,30 +30,6 @@ public class MiniGameLauncher : NetworkBehaviour
         DontDestroyOnLoad(gameObject);      
     }
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-
-        if (!IsServer
-            && !IsHost)
-        {
-            //Debug.LogError("On network spawn called on checking if serve is playing minigame. Owner client id is " + OwnerClientId);
-            //CheckIfServerIsPlayingMiniGameServerRpc(OwnerClientId);
-
-        }
-    }
-
-    public void Start()
-    {
-        if (!IsServer
-           && !IsHost)
-        {
-            //Debug.LogError("Start called on checking if serve is playing minigame. Owner client id is " + OwnerClientId);
-            //CheckIfServerIsPlayingMiniGameServerRpc(OwnerClientId);
-
-        }
-    }
-
     public void StartUnloadingActiveScene()
     {
         FramesPassedSinceLoadRequest = 0;
@@ -71,18 +47,18 @@ public class MiniGameLauncher : NetworkBehaviour
         //    GoBackToPlayground(true);
         //}
 
-        if (WaitingToLoad)
-        {
-            return;
+        //if (WaitingToLoad)
+        //{
+        //    return;
 
-            FramesPassedSinceLoadRequest++;
+        //    FramesPassedSinceLoadRequest++;
 
-            if (FramesPassedSinceLoadRequest >= 2)
-            {
-                Scene active = SceneManager.GetSceneByName(ActiveSceneName);
-                SceneManager.SetActiveScene(active);
-            }
-        }
+        //    if (FramesPassedSinceLoadRequest >= 2)
+        //    {
+        //        Scene active = SceneManager.GetSceneByName(ActiveSceneName);
+        //        SceneManager.SetActiveScene(active);
+        //    }
+        //}
     }
 
 
