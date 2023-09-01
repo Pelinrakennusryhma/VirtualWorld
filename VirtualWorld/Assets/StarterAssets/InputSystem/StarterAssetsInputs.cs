@@ -1,5 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED || UNITY_SERVER
 using UnityEngine.InputSystem;
 #endif
 using Unity.Netcode;
@@ -126,7 +126,7 @@ namespace StarterAssets
             action1 = newAction1State;
         }
 
-#if !UNITY_IOS || !UNITY_ANDROID
+#if !UNITY_IOS || !UNITY_ANDROID || !UNITY_SERVER
 
         private void OnApplicationFocus(bool hasFocus)
 		{

@@ -8,6 +8,14 @@ namespace Scenes
     {
         [SerializeField]
         public string scenePath;
+
+        public string GetSceneName()
+        {
+            string[] scenePathSplit = scenePath.Split('/');
+            string sceneName = scenePathSplit[scenePathSplit.Length - 1].Split('.')[0];
+
+            return sceneName;
+        }
     }
 }
 

@@ -1,0 +1,8 @@
+{
+  "ipForClient": "192.168.56.1",
+  "ipForServer": "0.0.0.0",
+  "serverPort": "7000",
+  "httpUrl": "http://localhost",
+  "webSocketUrl": "ws://localhost",
+  "backendPort": "3001"
+}
