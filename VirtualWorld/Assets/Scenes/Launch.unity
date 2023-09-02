@@ -215,7 +215,9 @@ MonoBehaviour:
   wsConnection: {fileID: 1789081065}
   serverInit: {fileID: 3751662}
   clientInit: {fileID: 3751664}
+  userSession: {fileID: 1789081067}
   configFile: {fileID: 4900000, guid: 437624ce1ecc1c54db1141c94408255c, type: 3}
+  runAsClient: 0
 --- !u!1 &4037544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5783,6 +5785,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62fded7be76b48744ab53904dc526046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1789081067 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8791103795521057354, guid: f385cea2709c6b14abc0ca05420e089a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1099311447}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08774387649f76b47b3eb19b6a33c3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1802828328

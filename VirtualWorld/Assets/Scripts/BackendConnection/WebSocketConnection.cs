@@ -53,7 +53,12 @@ namespace BackendConnection
 
         public void Init(string wsUrl, ushort port)
         {
-            webSocketAddress = wsUrl + ":" + port;
+            string prefix = "";
+            if (char.IsDigit(wsUrl[0]))
+            {
+                prefix = "ws://";
+            }
+            webSocketAddress = prefix + wsUrl + ":" + port;
         }
 
         async UniTask Connect(LoggedUserData loggedUserData)

@@ -37,7 +37,12 @@ namespace BackendConnection
 
         public void Init(string httpUrl, ushort port)
         {
-            baseURL = httpUrl + ":" + port + "/";
+            string prefix = "";
+            if (char.IsDigit(httpUrl[0]))
+            {
+                prefix = "http://";
+            }
+            baseURL = prefix + httpUrl + ":" + port + "/";
         }
 
         private UnityWebRequest CreateRequest(string path, RequestType type, object data = null)
