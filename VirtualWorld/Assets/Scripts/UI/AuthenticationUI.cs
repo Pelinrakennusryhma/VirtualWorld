@@ -46,6 +46,8 @@ namespace Authentication
                 apiCalls = FindAnyObjectByType<APICalls>();
             }
 
+            OnEnableRegister();
+
             loginButton.onClick.AddListener(async () => await apiCalls.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
             registerButton.onClick.AddListener(async () => await apiCalls.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
             apiCalls.OnAuthSuccess.AddListener(OnEnableLoggedIn);

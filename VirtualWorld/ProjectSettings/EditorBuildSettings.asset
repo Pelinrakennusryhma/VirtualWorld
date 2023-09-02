@@ -6,266 +6,266 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Launch.unity
+    guid: ea850e64019f6414b928538b8d6e9f37
+  - enabled: 0
     path: Assets/Scenes/NetworkLauncher.unity
     guid: 056b2c2cbcf56a548ad0a7be9cd4b7f3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test1.unity
     guid: 586eaf6ccf7ee6a4c9fe37d1d50ad2b0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test2.unity
     guid: 18e9fe8857d11044a8d40b2557263178
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test3.unity
     guid: ecc6432701e95eb499860df13d965414
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 6a793b360179dc2439a76f5c8490b3f2
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/Credits.unity
     guid: a755b4855bfde1c45a34bb6398e6ed56
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameModeMenu.unity
     guid: 653ce5667a111274dbb47e609f12ccbc
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_CustomLose.unity
     guid: 7e2ee9f9a5b695a43a673d68b0bd03ce
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_CustomWin.unity
     guid: 9e57efae4be71d14fb8868e6163ded8c
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_LastLevelCompleted.unity
     guid: 0771338758adbce409f77a8e3e9685e4
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_LastLevelReached.unity
     guid: 6696c2cfff87a7442ad27cc88f1f3b38
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_Lose.unity
     guid: 430f110a80200334d9836944619e7a1f
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_TimeAttackLose.unity
     guid: 9877a3fc42f557048ac1a40e4dd7f0c0
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_TimeAttackWin.unity
     guid: 88ab4500c343f6b43b085a1704072029
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/GameOver_Win.unity
     guid: fd1e5468296ad1840baf5ab3a9283454
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Menus/Menu.unity
     guid: d4cf5fc4283c9074cb524377dfb70657
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level0.unity
     guid: f79277afb6959bc448183133c6876794
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level1.unity
     guid: 722398066ce0a774c9f7210c390f0869
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level2.unity
     guid: 5a4d4c9c6e449154b97f72c5604ac802
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level3.unity
     guid: 604e46bbd732b064194f16e52aa50f40
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level4.unity
     guid: 872def5f19a235e4991605c878f3dfc4
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level5.unity
     guid: d4f44ca0edcc612408edb05e89488bbb
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level6.unity
     guid: 5f5184b8cf2117d45be4145ff892da70
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level7.unity
     guid: b432ebc2d398170449a38bfd65b240e2
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level8.unity
     guid: 41193fa22f12b5743a1b70d62f3898ac
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level9.unity
     guid: ab7cd14854f97a94fb8a824e6c10fa96
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level10.unity
     guid: c410805e14bc2ef4595963273c051d63
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level11.unity
     guid: 759d4323d3a730244b5aa79504da2e07
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level12.unity
     guid: 267ab38cb56a914478762af6961886c1
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level13.unity
     guid: 1f69de4a014eece459c1bcc17d4f37f3
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level14.unity
     guid: b2390ae80a1068249b741934ae5b2ea8
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level15.unity
     guid: 65f5f95f48f6f884e97e3f0671541504
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level16.unity
     guid: cec6ed27c1962a647b5a8b8df4e6ac2c
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level17.unity
     guid: 850d30cca3690fa4da42c20501292654
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level18.unity
     guid: 2926a16f7da039c48955811d85168a1a
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level19.unity
     guid: 0044739074d0be944bbec3f9de587cd2
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level20.unity
     guid: 013068a8dd341a944926106a47d8212a
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level21.unity
     guid: f202e577bdfeae744849d27bdab2e20f
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level22.unity
     guid: 51d6f77395cef1942b9edeebcdcd776b
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level23.unity
     guid: 61d925648988c904b85073d8b393dcfd
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level24.unity
     guid: 0605ad63e185dc24982b9cf0a8e3a405
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level25.unity
     guid: ce1986388291b24428bbe45ca3924c27
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level26.unity
     guid: b49424087de07a643b1dd9677a5f2223
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level27.unity
     guid: 2745e65e884e5f14983d7396f136a237
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level28.unity
     guid: 44a6b2f2d8250ed4a83b642b4f1d9d54
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/Level29.unity
     guid: 44d7c625fc7f28241b2e7d68118d1ae3
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/LevelEndlessRandom.unity
     guid: fc38c155296e6b04795443c832192a7d
-  - enabled: 1
+  - enabled: 0
     path: Assets/TableTopInvaders/Scenes/Levels/OmaValintaPeli.unity
     guid: aca833e88aba88546998b4fcd6478bdd
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Menus/GravityShip_Credits.unity
     guid: 28aa5d4596beba04bbecb45cb045fb02
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Menus/GravityShip_GameCompleteScreen.unity
     guid: 1be5facbd0f1d5c4f8542113c1505a93
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Menus/GravityShip_ShipSelectionScreen.unity
     guid: 5f4a6b5cb2712374a83c66c4bba7b95a
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Menus/GravityShip_TitleScreen.unity
     guid: ea3c3b73511ec024ba3f7f09b6d575b5
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Menus/GravityShip_YouDied.unity
     guid: 47fc6cf67a34c2d4aabe612c4ab7c93f
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level1.unity
     guid: 5742d71d55c249e4db5d5f04d195c086
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level2.unity
     guid: e322e1a647ff1dc4693344d1a2ffee0a
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level3.unity
     guid: a9c4cc474a3576845b8ec9d0261fa6a4
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level4.unity
     guid: 84552fa0c200ffc47a779663e2c0cdc5
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level5.unity
     guid: e75ca0df92befb447883dfde39a89550
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level6.unity
     guid: 02de6662a9c23354991fc412840d2cb8
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level7.unity
     guid: 15275217960c1d44faf412e1a2dd42f1
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level8.unity
     guid: 56c86e2d60f78314194f9116ad124410
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level9.unity
     guid: ab5984b36a5fe9a429a6554d26f57414
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level10.unity
     guid: e3064482d3e8941438a636c60d84f579
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level11.unity
     guid: 77b5fa23102dd184c8f12fcda4bbcab9
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level12.unity
     guid: cb59b4520eec33646afa150b79e20aef
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level13.unity
     guid: 344bd0ee908be2544bf60a996771b549
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level14.unity
     guid: fc508b8ab0dd80044940aa4ad2731a6c
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level15.unity
     guid: c205ad9047c7026499200bdba05f48b9
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level16.unity
     guid: 67ff393c5d4ad4c4aaa3ddb00a0b2620
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level17.unity
     guid: 1d1b4325485afe04cbaf243041f9a2b8
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level18.unity
     guid: a7b2f1a551108c74ab30bb984016fa97
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level19.unity
     guid: 9272d2ee913ed8645a51cd66b8c03719
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level20.unity
     guid: 1f06231c9bb1d8e49b353c8af73b234b
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level21.unity
     guid: 1f94c643323065a4cb80d001fb769127
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level22.unity
     guid: 19ef9ef082375b04c9ad5c778fe86829
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level23.unity
     guid: c452c285cf13bdb44925a9200f154a81
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level24.unity
     guid: 2494fdfda68961e46a54da1089579092
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level25.unity
     guid: 5e046a9d9f830064fa074f61af40924b
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level26.unity
     guid: e0ea8b39f54f8254785ff045b2cad3a9
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level27.unity
     guid: 2b58e959064400c40b777547b9ddebee
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level28.unity
     guid: c0b11bf25bb75144c8940a697fba18cf
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level29.unity
     guid: 3ec1c2a450907f64c813504c77d0c128
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level30.unity
     guid: 4277e3c04f9d64d4dae35d1dea81c9a5
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level31.unity
     guid: 985b41bc600666f4aa362dfce7442b94
-  - enabled: 1
+  - enabled: 0
     path: Assets/GravityShip/Scenes/Levels/GravityShip_Level999AllElements.unity
     guid: 5cb1a0fa2965c1046be5998a903b9c63
   - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 08024bf0a71c10b4aa3e29b940eea5a1
-  - enabled: 1
-    path: Assets/DiceThrowing/Scenes/DiceThrowing.unity
-    guid: e8e823229f478de4d8b4a6399cb48cd5
   - enabled: 1
     path: Assets/DiceThrowing/Scenes/DiceThrowingBare.unity
     guid: e0825c97d7090be4bbdcafe405fb2f31

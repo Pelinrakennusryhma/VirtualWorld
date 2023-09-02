@@ -35,7 +35,7 @@ namespace Authentication
             apiCalls.OnAuthSuccess.AddListener(OnAuthSuccess);
         }
 
-        private void Start()
+        public void Init()
         {
             CheckForSavedJWT();
         }

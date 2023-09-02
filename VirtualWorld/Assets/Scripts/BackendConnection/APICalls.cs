@@ -10,7 +10,7 @@ namespace BackendConnection
     public class APICalls : MonoBehaviour
     {
         [SerializeField]
-        string BaseURL = "https://localhost:3001";
+        string baseURL = "https://localhost:3001";
         readonly string authRoute = "api/auth/";
         readonly string loginRoute = "api/login/";
         readonly string registerRoute = "api/users/";
@@ -20,6 +20,7 @@ namespace BackendConnection
         public UnityEvent<LoggedUserData> OnAuthSuccess;
         public UnityEvent OnNoLoggedUser;
         public UnityEvent<UnityWebRequestException> OnAuthFailed;
+        public UnityEvent OnLogout;
 
         void Awake()
         {
@@ -32,15 +33,21 @@ namespace BackendConnection
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
+        }
 
-            if (!BaseURL.EndsWith("/"))
+        public void Init(string httpUrl, ushort port)
+        {
+            string prefix = "";
+            if (char.IsDigit(httpUrl[0]))
             {
-                BaseURL += "/";
+                prefix = "http://";
             }
+            baseURL = prefix + httpUrl + ":" + port + "/";
         }
 
         private UnityWebRequest CreateRequest(string path, RequestType type, object data = null)
         {
+            Debug.Log("path: " + path);
             UnityWebRequest request = new UnityWebRequest(path, type.ToString());
 
             if(data != null)
@@ -60,7 +67,7 @@ namespace BackendConnection
         {
             try
             {
-                UnityWebRequest req = CreateRequest(BaseURL + authRoute, RequestType.POST, null);
+                UnityWebRequest req = CreateRequest(baseURL + authRoute, RequestType.POST, null);
                 req.SetRequestHeader("Authorization", "Bearer " + jwt);
                 string text = await GetTextAsync(req);
                 Debug.Log(text);
@@ -87,7 +94,7 @@ namespace BackendConnection
             {
                 LoginUserData userData = new LoginUserData(username, password);
 
-                UnityWebRequest req = CreateRequest(BaseURL + loginRoute, RequestType.POST, userData);
+                UnityWebRequest req = CreateRequest(baseURL + loginRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
 
@@ -115,7 +122,7 @@ namespace BackendConnection
                 LoginUserData userData = new LoginUserData();
                 userData.username = username;
                 userData.password = password;
-                UnityWebRequest req = CreateRequest(BaseURL + registerRoute, RequestType.POST, userData);
+                UnityWebRequest req = CreateRequest(baseURL + registerRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
 
@@ -139,6 +146,7 @@ namespace BackendConnection
         public void LogOut()
         {
             PlayerPrefs.SetString("jwt", "");
+            OnLogout.Invoke();
         }
     }
 }
