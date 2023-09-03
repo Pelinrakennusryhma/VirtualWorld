@@ -1,8 +1,10 @@
+using BackendConnection;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -62,6 +64,19 @@ namespace UI
         public void SetPlayerCharacter(GameObject playerGO)
         {
             playerInputs = playerGO.GetComponentInChildren<StarterAssetsInputs>();
+        }
+
+        public void OnLogOutPressed()
+        {
+            Debug.Log("Log out pressed");
+            SceneManager.LoadScene(0);
+            APICalls.Instance.LogOut();
+        }
+
+        public void OnQuitPressed()
+        {
+            Debug.Log("Quit pressed");
+            Application.Quit();
         }
     }
 }

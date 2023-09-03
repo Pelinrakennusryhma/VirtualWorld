@@ -188,7 +188,7 @@ RectTransform:
   - {fileID: 2022708880950516605}
   - {fileID: 8223923237102483991}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c064579b1cc3cd548a82fbeeee0f80cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionButton: E
   promptText: {fileID: 166181233590110762}
   promptTextFlasher: {fileID: 3872116647127907629}
 --- !u!1 &5961940519713371297

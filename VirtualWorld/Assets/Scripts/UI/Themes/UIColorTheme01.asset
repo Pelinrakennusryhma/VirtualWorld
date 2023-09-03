@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3613edba93573184ea8842d044bdc5d5, type: 3}
   m_Name: UIColorTheme01
   m_EditorClassIdentifier: 
-  <ColorDark>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <ColorNormal>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <ColorLight>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <ColorLightest>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <ColorTransparent0>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <ColorTransparent1>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <ColorDark>k__BackingField: {r: 0.08235294, g: 0.08235294, b: 0.08235294, a: 1}
+  <ColorNormal>k__BackingField: {r: 0.18823531, g: 0.10588236, b: 0.24705884, a: 1}
+  <ColorLight>k__BackingField: {r: 0.23529413, g: 0.25490198, b: 0.36078432, a: 1}
+  <ColorLightest>k__BackingField: {r: 0.7058824, g: 0.64705884, b: 0.64705884, a: 1}
+  <ColorTransparentFull>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <ColorTransparentMedium>k__BackingField: {r: 0.08235294, g: 0.08235294, b: 0.08235294,
+    a: 0.8980392}
+  <ColorTransparentSlight>k__BackingField: {r: 0.08235294, g: 0.08235294, b: 0.08235294,
+    a: 0.7490196}
+  <ColorWhite>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <ColorBlack>k__BackingField: {r: 0, g: 0, b: 0, a: 1}

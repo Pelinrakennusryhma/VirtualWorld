@@ -6,9 +6,27 @@ namespace UI
 {
     public class UIPalette : MonoBehaviour
     {
-        [field: SerializeField] public UIColorTheme theme { get; private set; }
+        [field: SerializeField] public UIColorTheme Theme { get; private set; }
 
-        [SerializeField] public Dictionary<PaletteColor, Color> Palette { get; private set; }
+        //[ContextMenu("Refresh themed children")]
+
+        private void Awake()
+        {
+            RefreshThemedChildren();
+        }
+
+        void RefreshThemedChildren()
+        {
+            Debug.Log("Refresh children " + gameObject.name);
+            Theme.CreatePalette();
+
+            IThemedComponent[] components = GetComponentsInChildren<IThemedComponent>();
+
+            foreach (IThemedComponent component in components)
+            {
+                component.SetColors(Theme);
+            }
+        }
 
     }
 }
