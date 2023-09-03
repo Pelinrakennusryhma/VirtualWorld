@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace UI
 {
-
     public class ThemedButton : MonoBehaviour, IThemedComponent, IPointerEnterHandler, IPointerExitHandler
     {
 
@@ -18,16 +17,23 @@ namespace UI
         [SerializeField] PaletteColor textDisabledColor;
         //[SerializeField] bool keepClickedColor;
         [SerializeField] float clickFlashDuration = 0.1f;
+        ButtonGroup bg;
+        bool frozen = false;
         Color returnColor;
         Image image;
         TMP_Text text;
         Button button;
+        string originalText = "";
 
         UIColorTheme theme;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             Debug.Log("enter?");
+            if (frozen)
+            {
+                return;
+            }
             text.color = theme.GetColorFromPalette(textHoverColor);
         }
 
@@ -42,6 +48,10 @@ namespace UI
         public void OnPointerExit(PointerEventData eventData)
         {
             Debug.Log("exit?");
+            if (frozen)
+            {
+                return;
+            }
             text.color = theme.GetColorFromPalette(textColor);
             returnColor = text.color;
         }
@@ -49,6 +59,10 @@ namespace UI
         void OnTextClick()
         {
             Debug.Log("click?");
+            if (frozen)
+            {
+                return;
+            }
             StartCoroutine(FlashTextColor());
         }
 
@@ -79,12 +93,37 @@ namespace UI
 
             button = GetComponent<Button>();
             image = GetComponent<Image>();
+            bg = GetComponent<ButtonGroup>();
             text = transform.GetChild(0).GetComponent<TMP_Text>();
             button.onClick.AddListener(OnTextClick);
 
             SetImageColor();
             SetButtonColors();
             SetTextColor();
+        }
+
+        public void FreezeAndDecorate()
+        {
+            frozen = true;
+            originalText = text.text;
+            text.text = $"<u>{text.text}</u>";
+
+            if(bg != null)
+            {
+                bg.ShowButtons();
+            }
+        }
+
+        public void Unfreeze()
+        {
+            frozen = false;
+            text.text = originalText;
+            SetTextColor();
+
+            if (bg != null)
+            {
+                bg.HideButtons();
+            }
         }
     }
 }

@@ -8,8 +8,7 @@ namespace UI
     {
         [field: SerializeField] public UIColorTheme Theme { get; private set; }
 
-        //[ContextMenu("Refresh themed children")]
-
+        [ContextMenu("Refresh themed children")]
         private void Awake()
         {
             RefreshThemedChildren();

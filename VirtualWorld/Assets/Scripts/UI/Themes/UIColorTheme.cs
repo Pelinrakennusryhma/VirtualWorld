@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UIElements;
 
 namespace UI
 {
@@ -28,8 +31,7 @@ namespace UI
         [field: SerializeField] public Color ColorTransparentSlight { get; private set; }
         [field: SerializeField] public Color ColorWhite { get; private set; }
         [field: SerializeField] public Color ColorBlack { get; private set; }
-
-        [SerializeField] public Dictionary<PaletteColor, Color> Palette { get; private set; }
+        [SerializeField] Dictionary<PaletteColor, Color> Palette { get; set; }
 
         public void CreatePalette()
         {
@@ -43,7 +45,6 @@ namespace UI
             Palette.Add(PaletteColor.COLOR_TRANSPARENT_SLIGHT, ColorTransparentSlight);
             Palette.Add(PaletteColor.COLOR_WHITE, ColorWhite);
             Palette.Add(PaletteColor.COLOR_BLACK, ColorBlack);
-            Debug.Log("created palette?!");
         }
 
         public Color GetColorFromPalette(PaletteColor paletteColor)
