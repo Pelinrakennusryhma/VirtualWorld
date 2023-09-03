@@ -1,4 +1,5 @@
 using BackendConnection;
+using Characters;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace UI
         StarterAssetsInputs playerInputs;
         public static UIManager Instance;
 
-        public UnityEvent EventMenuPressed;
+        public UnityEvent<bool> EventMenuToggled; 
+
         void Awake()
         {
             if (Instance == null)
@@ -61,15 +63,15 @@ namespace UI
             {
                 playerUI.SetActive(false);
                 menu.SetActive(true);
+                EventMenuToggled.Invoke(true);
             } else
             {
                 ButtonGroup firstBg = menu.GetComponentInChildren<ButtonGroup>(true);
                 firstBg.ResetGroup();
                 playerUI.SetActive(true);
                 menu.SetActive(false);
-
+                EventMenuToggled.Invoke(false);
             }
-
         }
 
         public void SetPlayerCharacter(GameObject playerGO)

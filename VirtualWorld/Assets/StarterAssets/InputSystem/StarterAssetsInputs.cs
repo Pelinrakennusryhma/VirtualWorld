@@ -1,5 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED || UNITY_SERVER
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
 using Unity.Netcode;
@@ -45,13 +45,18 @@ namespace StarterAssets
 
 		private void OnDisable()
 		{
+			ZeroInputs();
+        }
+
+		public void ZeroInputs()
+		{
             MoveInput(Vector2.zero);
             LookInput(Vector2.zero);
             JumpInput(false);
             SprintInput(false);
             InteractInput(false);
             Action1Input(false);
-			MenuInput(false);
+            MenuInput(false);
         }
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -112,7 +117,6 @@ namespace StarterAssets
 		{
 			jump = newJumpState;
 		}
-
 
 		public void SprintInput(bool newSprintState)
 		{
