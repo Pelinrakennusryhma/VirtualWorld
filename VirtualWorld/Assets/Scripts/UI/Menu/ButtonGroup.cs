@@ -100,6 +100,7 @@ namespace UI
         public void ResetGroup()
         {
             ActiveChild.Unfreeze();
+            ActiveChild = null;
         }
 
         public void SetColors(UIColorTheme theme)

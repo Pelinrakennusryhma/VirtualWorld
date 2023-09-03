@@ -57,8 +57,19 @@ namespace UI
 
         void ToggleUIComponents()
         {
-            playerUI.SetActive(!playerUI.activeSelf);
-            menu.SetActive(!menu.activeSelf);
+            if (playerUI.activeSelf)
+            {
+                playerUI.SetActive(false);
+                menu.SetActive(true);
+            } else
+            {
+                ButtonGroup firstBg = menu.GetComponentInChildren<ButtonGroup>(true);
+                firstBg.ResetGroup();
+                playerUI.SetActive(true);
+                menu.SetActive(false);
+
+            }
+
         }
 
         public void SetPlayerCharacter(GameObject playerGO)
