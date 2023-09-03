@@ -122,7 +122,12 @@ namespace UI
 
             if (bg != null)
             {
+                if(bg.ActiveChild != null)
+                {
+                    bg.ActiveChild.Unfreeze();
+                }
                 bg.HideButtons();
+
             }
         }
     }

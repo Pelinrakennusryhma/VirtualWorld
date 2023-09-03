@@ -61,6 +61,8 @@ namespace UI
                 button.gameObject.SetActive(false);
             }
 
+            ActiveChild = null;
+
             rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, originalHeight);
         }
 
