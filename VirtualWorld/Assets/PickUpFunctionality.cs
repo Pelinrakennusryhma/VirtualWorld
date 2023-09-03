@@ -33,8 +33,7 @@ public class PickUpFunctionality : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance != null
-            && GameManager.Instance.IsPaused)
+        if (GameManager.Instance != null)
         {
             return;
         }

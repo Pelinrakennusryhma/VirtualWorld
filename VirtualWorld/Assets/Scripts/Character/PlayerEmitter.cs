@@ -9,7 +9,8 @@ namespace Characters
         {
             if (IsOwner)
             {
-                Character.Instance.SetPlayerGameObject(this.gameObject);
+                Character.Instance.SetPlayerGameObject(gameObject);
+                UI.UIManager.Instance.SetPlayerCharacter(gameObject);
             }
         }
     }
