@@ -17,6 +17,8 @@ namespace UI
         [SerializeField] PaletteColor textDisabledColor;
         //[SerializeField] bool keepClickedColor;
         [SerializeField] float clickFlashDuration = 0.1f;
+        [SerializeField] GameObject panelToOpen;
+
         ButtonGroup bg;
         bool frozen = false;
         Color returnColor;
@@ -26,6 +28,7 @@ namespace UI
         string originalText = "";
 
         UIColorTheme theme;
+        UIManager uiManager;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -63,6 +66,8 @@ namespace UI
             {
                 return;
             }
+
+            uiManager.OpenMenuPanel(panelToOpen);
             StartCoroutine(FlashTextColor());
         }
 
@@ -87,9 +92,10 @@ namespace UI
             image.color = theme.GetColorFromPalette(color);
         }
 
-        public void SetColors(UIColorTheme theme)
+        public void Init(UIColorTheme theme, UIManager uiManager)
         {
             this.theme = theme;
+            this.uiManager = uiManager;
 
             button = GetComponent<Button>();
             image = GetComponent<Image>();

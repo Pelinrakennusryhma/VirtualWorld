@@ -8,19 +8,17 @@ namespace UI
     public class ThemedComponent : MonoBehaviour, IThemedComponent
     {
         [SerializeField] PaletteColor color;
-        UIPalette uiPalette;
         Image image;
         UIColorTheme theme;
 
         void SetImageColor()
         {
-            image.color = uiPalette.Theme.GetColorFromPalette(color);
+            image.color = theme.GetColorFromPalette(color);
         }
 
-        public void SetColors(UIColorTheme theme)
+        public void Init(UIColorTheme theme, UIManager uiManager)
         {
             this.theme = theme;
-            uiPalette = transform.root.GetComponent<UIPalette>();
             image = GetComponent<Image>();
 
             SetImageColor();

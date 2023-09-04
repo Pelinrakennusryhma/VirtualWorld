@@ -18,12 +18,8 @@ MonoBehaviour:
   <ColorLightest>k__BackingField: {r: 0.7058824, g: 0.64705884, b: 0.64705884, a: 1}
   <ColorTransparentFull>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <ColorTransparentMedium>k__BackingField: {r: 0.08235294, g: 0.08235294, b: 0.08235294,
-    a: 0.8980392}
+    a: 0.84313726}
   <ColorTransparentSlight>k__BackingField: {r: 0.08235294, g: 0.08235294, b: 0.08235294,
-    a: 0.7490196}
+    a: 0.9529412}
   <ColorWhite>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <ColorBlack>k__BackingField: {r: 0, g: 0, b: 0, a: 1}
-  <NormalTextStyle>k__BackingField: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e,
-    type: 2}
-  <ClickedTextStyle>k__BackingField: {fileID: 11400000, guid: b4d0aaf3dff07b74ba69b1cba3d8a1b7,
-    type: 2}

@@ -17,7 +17,9 @@ namespace UI
         StarterAssetsInputs playerInputs;
         public static UIManager Instance;
 
-        public UnityEvent<bool> EventMenuToggled; 
+        public UnityEvent<bool> EventMenuToggled;
+
+        GameObject currentOpenMenuPanel;
 
         void Awake()
         {
@@ -37,6 +39,9 @@ namespace UI
         {
             playerUI.SetActive(true);
             menu.SetActive(false);
+
+            ResetButtonGroups();
+            ResetMenuPanels();
         }
 
         void Update()
@@ -61,13 +66,14 @@ namespace UI
         {
             if (playerUI.activeSelf)
             {
+                ResetMenuPanels();
+                ResetButtonGroups();
                 playerUI.SetActive(false);
                 menu.SetActive(true);
                 EventMenuToggled.Invoke(true);
             } else
             {
-                ButtonGroup firstBg = menu.GetComponentInChildren<ButtonGroup>(true);
-                firstBg.ResetGroup();
+
                 playerUI.SetActive(true);
                 menu.SetActive(false);
                 EventMenuToggled.Invoke(false);
@@ -90,6 +96,36 @@ namespace UI
         {
             Debug.Log("Quit pressed");
             Application.Quit();
+        }
+
+        public void OpenMenuPanel(GameObject panel)
+        {
+            if(currentOpenMenuPanel != null)
+            {
+                currentOpenMenuPanel.SetActive(false);
+            }
+
+            currentOpenMenuPanel = panel;
+
+            if (panel != null)
+            {
+                panel.SetActive(true);
+            }
+        }
+
+        void ResetMenuPanels()
+        {
+            if(currentOpenMenuPanel != null)
+            {
+                currentOpenMenuPanel.SetActive(false);
+                currentOpenMenuPanel = null;
+            }
+        }
+
+        void ResetButtonGroups()
+        {
+            ButtonGroup firstBg = menu.GetComponentInChildren<ButtonGroup>(true);
+            firstBg.ResetGroup();
         }
     }
 }

@@ -5,5 +5,5 @@ using UnityEngine;
 
 public interface IThemedComponent
 {
-    public void SetColors(UIColorTheme theme);
+    public void Init(UIColorTheme theme, UIManager uiManager);
 }

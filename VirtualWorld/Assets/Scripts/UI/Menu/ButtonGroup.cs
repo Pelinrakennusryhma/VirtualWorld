@@ -14,6 +14,7 @@ namespace UI
         List<ThemedButton> buttons;
         RectTransform rect;
         float originalHeight;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -106,7 +107,7 @@ namespace UI
             }
         }
 
-        public void SetColors(UIColorTheme theme)
+        public void Init(UIColorTheme theme, UIManager uiManager)
         {
             for (int i = 0; i < transform.childCount; i++)
             {

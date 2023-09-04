@@ -7,6 +7,7 @@ namespace UI
     public class UIPalette : MonoBehaviour
     {
         [field: SerializeField] public UIColorTheme Theme { get; private set; }
+        [SerializeField] UIManager uiManager;
 
         [ContextMenu("Refresh themed children")]
         private void Awake()
@@ -23,7 +24,7 @@ namespace UI
 
             foreach (IThemedComponent component in components)
             {
-                component.SetColors(Theme);
+                component.Init(Theme, uiManager);
             }
         }
 
