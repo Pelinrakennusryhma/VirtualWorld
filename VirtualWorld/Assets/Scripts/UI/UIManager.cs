@@ -19,6 +19,7 @@ namespace UI
 
         public UnityEvent<bool> EventMenuToggled;
 
+        [SerializeField] Transform menuPanelParent;
         GameObject currentOpenMenuPanel;
 
         void Awake()
@@ -115,10 +116,9 @@ namespace UI
 
         void ResetMenuPanels()
         {
-            if(currentOpenMenuPanel != null)
+            foreach (Transform menuPanel in menuPanelParent)
             {
-                currentOpenMenuPanel.SetActive(false);
-                currentOpenMenuPanel = null;
+                menuPanel.gameObject.SetActive(false);
             }
         }
 

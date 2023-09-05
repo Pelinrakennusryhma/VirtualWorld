@@ -11,6 +11,7 @@ namespace UI
         COLOR_DARK,
         COLOR_NORMAL,
         COLOR_LIGHT,
+        COLOR_LIGHTER,
         COLOR_LIGHTEST,
         COLOR_TRANSPARENT_FULL,
         COLOR_TRANSPARENT_MEDIUM,
@@ -25,6 +26,7 @@ namespace UI
         [field: SerializeField] public Color ColorDark { get; private set; }
         [field: SerializeField] public Color ColorNormal { get; private set; }
         [field: SerializeField] public Color ColorLight { get; private set; }
+        [field: SerializeField] public Color ColorLighter { get; private set; }
         [field: SerializeField] public Color ColorLightest { get; private set; }
         [field: SerializeField] public Color ColorTransparentFull { get; private set; }
         [field: SerializeField] public Color ColorTransparentMedium { get; private set; }
@@ -39,6 +41,7 @@ namespace UI
             Palette.Add(PaletteColor.COLOR_DARK, ColorDark);
             Palette.Add(PaletteColor.COLOR_NORMAL, ColorNormal);
             Palette.Add(PaletteColor.COLOR_LIGHT, ColorLight);
+            Palette.Add(PaletteColor.COLOR_LIGHTER, ColorLighter);
             Palette.Add(PaletteColor.COLOR_LIGHTEST, ColorLightest);
             Palette.Add(PaletteColor.COLOR_TRANSPARENT_FULL, ColorTransparentFull);
             Palette.Add(PaletteColor.COLOR_TRANSPARENT_MEDIUM, ColorTransparentMedium);

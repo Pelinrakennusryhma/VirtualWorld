@@ -1,5 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED || UNITY_SERVER
 using UnityEngine.InputSystem;
 #endif
 using Unity.Netcode;

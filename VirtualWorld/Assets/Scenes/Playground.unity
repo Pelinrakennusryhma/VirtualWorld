@@ -2712,6 +2712,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6181239124702374364, guid: 9da558cb8eecef042acfd6e532b1cd71,
+        type: 3}
+      propertyPath: menuPanelParent
+      value: 
+      objectReference: {fileID: 3714949227665187807}
     - target: {fileID: 7265436144266939915, guid: 9da558cb8eecef042acfd6e532b1cd71,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2753,6 +2758,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da558cb8eecef042acfd6e532b1cd71, type: 3}
+--- !u!224 &3714949227665187807 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5157229420914110275, guid: 9da558cb8eecef042acfd6e532b1cd71,
+    type: 3}
+  m_PrefabInstance: {fileID: 3714949227665187806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6630948325863305898
 PrefabInstance:
   m_ObjectHideFlags: 0
