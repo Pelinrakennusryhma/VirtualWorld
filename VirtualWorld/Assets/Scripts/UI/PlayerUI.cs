@@ -20,7 +20,10 @@ namespace UI
         void Awake()
         {
             character = Character.Instance;
-            character.EventInventoryChanged.AddListener(OnInventoryChanged);
+            if (character != null)
+            {
+                character.EventInventoryChanged.AddListener(OnInventoryChanged);
+            }
         }
 
         void OnInventoryChanged(Inventory inventory)

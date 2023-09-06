@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using Authentication;
+using System;
 
 namespace BackendConnection
 {
@@ -11,9 +12,9 @@ namespace BackendConnection
     {
         [SerializeField]
         string baseURL = "https://localhost:3001";
-        readonly string authRoute = "api/auth/";
-        readonly string loginRoute = "api/login/";
-        readonly string registerRoute = "api/users/";
+        readonly string authRoute = "/api/auth/";
+        readonly string loginRoute = "/api/login/";
+        readonly string registerRoute = "/api/users/";
         
         public static APICalls Instance { get; private set; }
 
@@ -35,14 +36,9 @@ namespace BackendConnection
             }
         }
 
-        public void Init(string httpUrl, ushort port)
+        public void Init(string httpsUrl)
         {
-            string prefix = "";
-            if (char.IsDigit(httpUrl[0]))
-            {
-                prefix = "http://";
-            }
-            baseURL = prefix + httpUrl + ":" + port + "/";
+            baseURL = httpsUrl;
         }
 
         private UnityWebRequest CreateRequest(string path, RequestType type, object data = null)
