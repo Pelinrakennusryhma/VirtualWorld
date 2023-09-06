@@ -1,7 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED || UNITY_SERVER
 using UnityEngine.InputSystem;
-#endif
 using Unity.Netcode;
 
 namespace StarterAssets
@@ -59,7 +57,6 @@ namespace StarterAssets
             MenuInput(false);
         }
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -97,11 +94,6 @@ namespace StarterAssets
 		{
 			MenuInput(value.isPressed);
 		}
-#else
-	// old input sys if we do decide to have it (most likely wont)...
-#endif
-
-
         public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;

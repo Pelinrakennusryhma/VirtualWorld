@@ -72,9 +72,10 @@ namespace Configuration
             switch (processType)
             {
                 case ProcessType.CLIENT:
-                    string ip = Environment.GetEnvironmentVariable("UNITY_SERVER_IP");
-                    string https = Environment.GetEnvironmentVariable("UNITY_HTTPS_URL");
-                    string wss = Environment.GetEnvironmentVariable("UNITY_WSS_URL"); // currently not needed
+                    string ip = "13.53.55.62";
+                    string https = "https://gameserver.hyvanmielenpelit.fi";
+                    string wss = "wss://gameserver.hyvanmielenpelit.fi";
+                    Debug.Log("config.port: " + Config.serverPort);
                     initData = new InitData(
                         processType,
                         ip,
@@ -119,6 +120,7 @@ namespace Configuration
                     string ip2 = Environment.GetEnvironmentVariable("UNITY_SERVER_IP");
                     string https2 = Environment.GetEnvironmentVariable("UNITY_HTTPS_URL");
                     string wss2 = Environment.GetEnvironmentVariable("UNITY_WSS_URL");
+                    Debug.Log("IP2 IN INIT: " + ip2);
                     initData = new InitData(
                         processType,
                         ip2,
