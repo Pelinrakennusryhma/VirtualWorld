@@ -15,6 +15,8 @@ public class ArcadeCabinetTrigger : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+
+        return;
         if (other.CompareTag("Player"))
         {
             MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
@@ -27,6 +29,8 @@ public class ArcadeCabinetTrigger : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
+
+        return;
         if (other.CompareTag("Player"))
         {
             MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();

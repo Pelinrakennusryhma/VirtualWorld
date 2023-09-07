@@ -243,7 +243,7 @@ public class TabletFunctionalityController : NetworkBehaviour
 
         NewsFeedWindowChanger.ShowIndividualNews(item);
 
-         Debug.LogError("On news item clicked called");
+         Debug.Log("On news item clicked called");
     }
 
     public void OnNewsUpdated()

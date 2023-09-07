@@ -49,7 +49,7 @@ public class NewsFeedController : NetworkBehaviour
     public void OnClientPlayerSpawned()
     {
         RequestGlobalNewsServerRpc();
-        Debug.Log("Player spawned, should update global news at startup. Probably the call is in the wrong place at Additive Scene Launcher");
+        //Debug.Log("Player spawned, should update global news at startup. Probably the call is in the wrong place at Additive Scene Launcher");
     }
 
 
@@ -190,7 +190,7 @@ public class NewsFeedController : NetworkBehaviour
             OnNewsUpdated();
         }
 
-        Debug.LogError("Adding news item to local news " + Time.time);
+        //Debug.Log("Adding news item to local news " + Time.time);
     }
 
 
@@ -201,7 +201,7 @@ public class NewsFeedController : NetworkBehaviour
                                                  string header,
                                                  string content)
     {
-        Debug.Log("Server rpc is called");
+        //Debug.Log("Server rpc is called");
 
         NewsFeedItem item = new NewsFeedItem();
         item.Priority = priority;
@@ -235,7 +235,7 @@ public class NewsFeedController : NetworkBehaviour
 
         GlobalNews.Add(item);
 
-        Debug.LogError("Got through. about to call client rpc");
+        //Debug.Log("Got through. about to call client rpc");
 
         UpdateGlobalNewsItemClientRpc(item.Priority,
                                       item.ID,
@@ -263,7 +263,7 @@ public class NewsFeedController : NetworkBehaviour
         item.Header = header;
         item.Content = content;
         GlobalNews.Add(item);
-        Debug.Log("Updating client global news " + item.Header);
+        //Debug.Log("Updating client global news " + item.Header);
 
         if (OnNewsUpdated != null)
         {
@@ -274,7 +274,7 @@ public class NewsFeedController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RequestGlobalNewsServerRpc()
     {
-        Debug.Log("Requesting global news");
+        //Debug.Log("Requesting global news");
 
         for (int i = 0; i < GlobalNews.Count; i++)
         {
@@ -283,7 +283,7 @@ public class NewsFeedController : NetworkBehaviour
                                           GlobalNews[i].Header,
                                           GlobalNews[i].Content);
 
-            Debug.Log("Updating item " + GlobalNews[i].Header);
+            //Debug.Log("Updating item " + GlobalNews[i].Header);
         }
     }
 

@@ -66,7 +66,7 @@ public class TestNewsFeedFiller : NetworkBehaviour
         // Note: this is called server side, so any parameters
         // that should define the news should be addded to the method call
 
-        Debug.Log("A server rpc is called");
+        //Debug.Log("A server rpc is called");
 
         // Here some logic for generating the item in question...
         string header = "Global news item " + Random.Range(0, 9999).ToString();

@@ -52,10 +52,6 @@ public class PlayerControllerGravityShip : MonoBehaviour
     {
         Instance = this; 
         GravityAreas = FindObjectsOfType<GravityAreaTrigger>();
-
-
-
-
     }
 
     private void Start()

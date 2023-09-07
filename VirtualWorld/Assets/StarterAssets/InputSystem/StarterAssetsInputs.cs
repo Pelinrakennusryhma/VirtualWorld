@@ -85,7 +85,7 @@ namespace StarterAssets
 
 		public void OnTablet(InputValue value)
         {			
-			Debug.Log("On tablet called " + Time.time);
+			//Debug.Log("On tablet called " + Time.time);
 			TabletInput(value.isPressed);		
 		}
 

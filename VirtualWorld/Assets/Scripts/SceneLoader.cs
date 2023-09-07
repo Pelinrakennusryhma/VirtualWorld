@@ -83,6 +83,12 @@ namespace Scenes
         {
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
+
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
@@ -129,7 +135,7 @@ namespace Scenes
             }
 
             UnpackScene();
-            
+
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
         }
 
@@ -174,6 +180,19 @@ namespace Scenes
             cachedGameObjectList.Clear();
         }
 
+
+
+        // A very special case: a player entries during client playing a minigame
+        // and ends up being spawned in the active minigame scene
+        // We add the player to cached objects, so we can activate it during unpack operation
+        public void OnEnterNewPlayerWhileMainSceneIsInactive(GameObject playerObject)
+        {
+            Scene mainScene = SceneManager.GetSceneByName(MainSceneName);
+            SceneManager.MoveGameObjectToScene(playerObject, mainScene);
+            cachedGameObjectList.Add(new CachedGameObject(playerObject, playerObject.gameObject.activeSelf));
+            playerObject.SetActive(false);
+        }
+
         string ParseSceneName(string scenePath)
         {
             string[] scenePathSplit = scenePath.Split('/');
@@ -182,6 +201,59 @@ namespace Scenes
             return sceneName;
         }
 
+        // For the purposes of changing the subscene without messing with the packed main scene.
+        public void SwitchSubScenes(string incomingSceneName)
+        {
+            StartCoroutine(LoadNewSubSceneAndUnloadOldSubScene(incomingSceneName));
+        }
+
+        IEnumerator LoadNewSubSceneAndUnloadOldSubScene(string incomingSceneName)
+        {            
+            Scene oldSubScene = SceneManager.GetActiveScene();
+
+            // Disable objects, so they won't mess up with FindObjectsOfType when a new scene is loaded
+            // Gravity ship does this at the start of every level.
+            GameObject[] oldRootObjects = oldSubScene.GetRootGameObjects();
+
+            Camera oldMainCamera = Camera.main;
+
+            for (int i = 0; i < oldRootObjects.Length; i++)
+            {
+                oldRootObjects[i].gameObject.SetActive(false);
+            }
+
+            // But keep the main camera enabled, so we don't get a brief flash of default skybox
+            oldMainCamera.gameObject.SetActive(true);
+
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(incomingSceneName, LoadSceneMode.Additive);
+
+            while (!loadOperation.isDone)
+            {
+                yield return null;
+            }
+       
+            Scene newSubScene = SceneManager.GetSceneByName(incomingSceneName);            
+            
+            oldMainCamera.gameObject.SetActive(false); 
+            
+            SceneManager.SetActiveScene(newSubScene);
+            SceneManager.UnloadSceneAsync(oldSubScene);
+        }
+
+        public void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            Debug.Log("On scene loaded " + scene.name);
+        }
+
+        public void OnSceneUnloaded(Scene scene)
+        {
+            Debug.Log("Unloaded scene " + scene.name);
+
+            if (scene.name.Equals(MainSceneName))
+            {
+                Debug.Log("We just unloaded main scene. This is not cool.");
+            }
+        }
     }
 }
 

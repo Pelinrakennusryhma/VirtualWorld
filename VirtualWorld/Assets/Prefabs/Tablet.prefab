@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2284359947375645366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 1062231836899658510}
   - component: {fileID: 2249500894888291117}
   - component: {fileID: 7949935133753534845}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tablet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,6 +297,10 @@ MonoBehaviour:
   InventoryMaterial: {fileID: 2100000, guid: 7e3d631ff58b46246b380924417ae7e6, type: 2}
   NewsFeedMaterial: {fileID: 2100000, guid: 367a4259b894b7549873b300d3c46015, type: 2}
   Raycaster: {fileID: 0}
+  NewsFeedButtonOriginalLocal: {fileID: 0}
+  NewsFeedButtonOriginalGlobal: {fileID: 0}
+  NewsFeedButtonParent: {fileID: 0}
+  NewsFeedWindowChanger: {fileID: 0}
 --- !u!1 &3044982528255610943
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +313,7 @@ GameObject:
   - component: {fileID: 3925035996054182441}
   - component: {fileID: 5244246956561833717}
   - component: {fileID: 1367931564773958118}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6894837959332302412}
   - component: {fileID: 1845512910840174062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virtual Camera Transition Pos1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8901243559738787420}
   - component: {fileID: 6214813249504867188}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virtual Camera Closeup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +560,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6391960617007346837}
   - component: {fileID: 5005703647772679745}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virtual Camera Transition Pos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -630,7 +634,7 @@ GameObject:
   - component: {fileID: 5138995946787890390}
   - component: {fileID: 6953185740151887527}
   - component: {fileID: 2234085043618191328}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -725,7 +729,7 @@ GameObject:
   - component: {fileID: 1774117028851314581}
   - component: {fileID: 7300817667604841786}
   - component: {fileID: 5799187691289758759}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +826,7 @@ GameObject:
   - component: {fileID: 3596439713691280866}
   - component: {fileID: 66721381402137469}
   - component: {fileID: 5553246131770426869}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ScreenPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -975,7 +979,7 @@ GameObject:
   - component: {fileID: 3327032297727793278}
   - component: {fileID: 8867385064972352025}
   - component: {fileID: 5038437991658312323}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5942676795205241906}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1241,7 +1245,7 @@ GameObject:
   - component: {fileID: 3324367682288812738}
   - component: {fileID: 6160310459458113783}
   - component: {fileID: 6354885432180180087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ScreenCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

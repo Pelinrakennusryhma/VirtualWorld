@@ -30,10 +30,10 @@ public class MiniGameLauncher : NetworkBehaviour
         DontDestroyOnLoad(gameObject);      
     }
 
-    public void StartUnloadingActiveScene()
-    {
-        FramesPassedSinceLoadRequest = 0;
-    }
+    //public void StartUnloadingActiveScene()
+    //{
+    //    FramesPassedSinceLoadRequest = 0;
+    //}
 
     public void SetCharacter(PlayerCharacter character)
     {
@@ -78,18 +78,18 @@ public class MiniGameLauncher : NetworkBehaviour
         //    players[i].DisablePlayer();
         //}
 
-        PlayerCharacter[] allPlayers = FindObjectsOfType<PlayerCharacter>(true);
+        //PlayerCharacter[] allPlayers = FindObjectsOfType<PlayerCharacter>(true);
 
-        for (int i = 0; i < allPlayers.Length; i++)
-        {
-            allPlayers[i].DisableCharacter();
-        }
+        //for (int i = 0; i < allPlayers.Length; i++)
+        //{
+        //    allPlayers[i].DisableCharacter();
+        //}
 
 
         IsPlayingMinigame = true;
     }
 
-    public void GoBackToPlayground(bool unloadScene)
+    public void StopPlayingMinigame()
     {
         if (GameFlowManager.Instance != null)
         {
@@ -100,53 +100,68 @@ public class MiniGameLauncher : NetworkBehaviour
         {
             DestroyImmediate(GameManagerGravityShip.Instance.gameObject);
         }
-
-        IsPlayingMinigame = false;
-        Character.EnableCharacter();
-
-
-        //PlayerCharacter[] allCharacters = FindObjectsOfType<PlayerCharacter>(true);
-
-        //for (int i = 0; i < allCharacters.Length; i++)
-        //{
-        //    allCharacters[i].EnableCharacter();
-        //}
-        
-        if (unloadScene) 
-        {
-            UnloadActiveScene();
-        }
-
-        FindObjectOfType<PlaygroundScene>(true).gameObject.SetActive(true);
-        RenderSettings.skybox = PlaygroundSkyBoxMat;
-        DynamicGI.UpdateEnvironment();
-
-        //MapBlip[] blips = FindObjectsOfType<MapBlip>();
-
-        //for (int i = 0; i < blips.Length; i++)
-        //{
-        //    blips[i].ReEnableBlips();
-        //}
-
-        PlayerCharacter[] allPlayers = FindObjectsOfType<PlayerCharacter>(true);
-
-        for (int i = 0; i < allPlayers.Length; i++)
-        {
-            allPlayers[i].EnableCharacter();
-        }
-        //Scene active = SceneManager.GetSceneByName("Playground");
-        //SceneManager.SetActiveScene(active);
-        //SceneManager.LoadScene("Playground", LoadSceneMode.Single);
     }
 
-    public void UnloadActiveScene()
-    {        
-        Debug.Log("Unloading scene " + ActiveSceneName);
-        if(ActiveSceneName != "")
-        {
-            SceneManager.UnloadSceneAsync(ActiveSceneName);
-        }
-    }
+    //public void GoBackToPlayground(bool unloadScene)
+    //{
+    //    if (GameFlowManager.Instance != null)
+    //    {
+    //        DestroyImmediate(GameFlowManager.Instance.gameObject);
+    //    }
+
+    //    if (GameManagerGravityShip.Instance != null)
+    //    {
+    //        DestroyImmediate(GameManagerGravityShip.Instance.gameObject);
+    //    }
+
+    //    IsPlayingMinigame = false;
+
+
+    //    Character.EnableCharacter();
+
+
+    //    //PlayerCharacter[] allCharacters = FindObjectsOfType<PlayerCharacter>(true);
+
+    //    //for (int i = 0; i < allCharacters.Length; i++)
+    //    //{
+    //    //    allCharacters[i].EnableCharacter();
+    //    //}
+
+    //    if (unloadScene) 
+    //    {
+    //        UnloadActiveScene();
+    //    }
+
+    //    FindObjectOfType<PlaygroundScene>(true).gameObject.SetActive(true);
+    //    RenderSettings.skybox = PlaygroundSkyBoxMat;
+    //    DynamicGI.UpdateEnvironment();
+
+    //    //MapBlip[] blips = FindObjectsOfType<MapBlip>();
+
+    //    //for (int i = 0; i < blips.Length; i++)
+    //    //{
+    //    //    blips[i].ReEnableBlips();
+    //    //}
+
+    //    //PlayerCharacter[] allPlayers = FindObjectsOfType<PlayerCharacter>(true);
+
+    //    //for (int i = 0; i < allPlayers.Length; i++)
+    //    //{
+    //    //    allPlayers[i].EnableCharacter();
+    //    //}
+    //    //Scene active = SceneManager.GetSceneByName("Playground");
+    //    //SceneManager.SetActiveScene(active);
+    //    //SceneManager.LoadScene("Playground", LoadSceneMode.Single);
+    //}
+
+    //public void UnloadActiveScene()
+    //{        
+    //    Debug.Log("Unloading scene " + ActiveSceneName);
+    //    if(ActiveSceneName != "")
+    //    {
+    //        SceneManager.UnloadSceneAsync(ActiveSceneName);
+    //    }
+    //}
 
     public void SaveActiveSceneName(string sceneName)
     {
@@ -155,34 +170,54 @@ public class MiniGameLauncher : NetworkBehaviour
         FramesPassedSinceLoadRequest = 0;
     }
 
-    public void SetupSceneForTableTopInvaders()
-    {
-        MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.TabletopInvaders);
-        PlaygroundSkyBoxMat = RenderSettings.skybox;
-        RenderSettings.skybox = TabletopInvadersSkyboxMat;
-        DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
-    }
+    //public void SetupSceneForTableTopInvaders()
+    //{
+    //    MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.TabletopInvaders);
+    //    PlaygroundSkyBoxMat = RenderSettings.skybox;
+    //    RenderSettings.skybox = TabletopInvadersSkyboxMat;
+    //    DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
+    //}
 
-    public void SetSceneForGravityShip()
-    {
-        MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.GravityShip);
-        PlaygroundSkyBoxMat = RenderSettings.skybox;
-        RenderSettings.skybox = GravityShipSkyboxMat;
-        DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
-    }
+    //public void SetSceneForGravityShip()
+    //{
+    //    MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.GravityShip);
+    //    PlaygroundSkyBoxMat = RenderSettings.skybox;
+    //    RenderSettings.skybox = GravityShipSkyboxMat;
+    //    DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
+    //}    
+    
+    
+    //public void SetupSceneForTableTopInvaders()
+    //{
+    //    MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.TabletopInvaders);
+    //    PlaygroundSkyBoxMat = RenderSettings.skybox;
+    //    RenderSettings.skybox = TabletopInvadersSkyboxMat;
+    //    DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
+    //}
 
-    [ServerRpc(RequireOwnership = false)]
-    public void CheckIfServerIsPlayingMiniGameServerRpc(ulong clientId)
-    {
+    //public void SetSceneForGravityShip()
+    //{
+    //    MiniGameLight.Instance.TurnOnMiniGameLight(ArcadeCabinetTrigger.CabinetType.GravityShip);
+    //    PlaygroundSkyBoxMat = RenderSettings.skybox;
+    //    RenderSettings.skybox = GravityShipSkyboxMat;
+    //    DynamicGI.UpdateEnvironment(); // Do we need to even call this. Does it have an effect on anything?
+    //}
 
-        Debug.Log("RPC called. client id is" + clientId);
+    //[ServerRpc(RequireOwnership = false)]
+    //public void CheckIfServerIsPlayingMiniGameServerRpc(ulong clientId)
+    //{
 
-        if ((IsServer 
-            || IsHost)
-            && IsPlayingMinigame)
-        {
-            Debug.Log("Got through the if checks");
-            AdditiveSceneLauncher.Instance.UnloadMiniGameSceneClientRpc(ActiveSceneName, clientId);            
-        }
-    }
+    //    Debug.Log("RPC called. client id is" + clientId);
+
+    //    if ((IsServer 
+    //        || IsHost)
+    //        && IsPlayingMinigame)
+    //    {
+    //        Debug.Log("Got through the if checks");
+
+    //        string activeSceneName = SceneManager.GetActiveScene().name;
+    //        Debug.Log("Activescene name is " + activeSceneName);
+    //        AdditiveSceneLauncher.Instance.UnloadMiniGameSceneClientRpc(activeSceneName, clientId);            
+    //    }
+    //}
 }

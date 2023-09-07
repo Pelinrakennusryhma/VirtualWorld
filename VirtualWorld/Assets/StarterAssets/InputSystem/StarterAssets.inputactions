@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Tablet",
+                    "type": "Button",
+                    "id": "4d6920ce-c771-4d78-af04-f8e3ba949f4b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Action1",
                     "type": "Button",
                     "id": "b54800ac-5a26-464e-a478-2464111f1e7a",
@@ -267,6 +276,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Action1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e73fab6c-7752-4fed-8f8e-18649c4d1141",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Tablet",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51f362f0-c6dc-4dde-89b8-25f91bf50659",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Tablet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

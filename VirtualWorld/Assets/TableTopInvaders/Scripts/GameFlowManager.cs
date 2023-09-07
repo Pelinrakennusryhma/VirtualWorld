@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Scenes;
 
 public class GameFlowManager : MonoBehaviour
 {
@@ -761,8 +762,16 @@ public class GameFlowManager : MonoBehaviour
 
     public void LoadSceneForMiniGameMode(string sceneName)
     {
-        MiniGameLauncher.Instance.UnloadActiveScene();
-        MiniGameLauncher.Instance.SaveActiveSceneName(sceneName);
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        //SceneLoader.Instance.UnloadScene();
+        //SceneLoader.Instance.LoadSceneByName(sceneName, new SceneLoadParams(transform.position, transform.rotation, ScenePackMode.ALL));
+
+        SceneLoader.Instance.SwitchSubScenes(sceneName);
+
+
+        //SceneLoader.Instance.LoadSceneByName(sceneName, new SceneLoadParams(ScenePackMode.ALL, null));
+
+        //MiniGameLauncher.Instance.UnloadActiveScene();
+        //MiniGameLauncher.Instance.SaveActiveSceneName(sceneName);
+        //SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
     }
 }

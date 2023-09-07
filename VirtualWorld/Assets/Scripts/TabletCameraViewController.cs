@@ -84,8 +84,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
     public void OnTabletPressed()
     {
-        Debug.Log("Tablet button was pressed " + Time.time);
-        Inputs.ClearTabletInput();
+        //Debug.Log("Tablet button was pressed " + Time.time);
+        //Inputs.ClearTabletInput();
 
 
         IsTakenOverByCheapInterpolations = true;
@@ -114,8 +114,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
         MapCamera.gameObject.SetActive(true);
 
-        MapStartPos = MainVirtualCamera.transform.position;
-        MapStartRot = MainVirtualCamera.transform.rotation;
+        MapStartPos = ThirdPersonCamera.transform.position;
+        MapStartRot = ThirdPersonCamera.transform.rotation;
 
         HasReachedTransitionPos = false;
 
@@ -124,8 +124,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
         Graphics.gameObject.SetActive(true);
 
-        float magnitudeToPos1 = (MainVirtualCamera.transform.position - TransitionPos1Camera.transform.position).magnitude;
-        float magnitudeToPos2 = (MainVirtualCamera.transform.position - TransitionPos2Camera.transform.position).magnitude;
+        float magnitudeToPos1 = (ThirdPersonCamera.transform.position - TransitionPos1Camera.transform.position).magnitude;
+        float magnitudeToPos2 = (ThirdPersonCamera.transform.position - TransitionPos2Camera.transform.position).magnitude;
 
         ThirdPersonCamera.enabled = false;
         FlyCamera.enabled = true;
@@ -156,8 +156,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
         //Graphics.gameObject.SetActive(false);
 
-        float magnitudeToPos1 = (MainVirtualCamera.transform.position - TransitionPos1Camera.transform.position).magnitude;
-        float magnitudeToPos2 = (MainVirtualCamera.transform.position - TransitionPos2Camera.transform.position).magnitude;
+        float magnitudeToPos1 = (ThirdPersonCamera.transform.position - TransitionPos1Camera.transform.position).magnitude;
+        float magnitudeToPos2 = (ThirdPersonCamera.transform.position - TransitionPos2Camera.transform.position).magnitude;
 
         if (magnitudeToPos1 <= magnitudeToPos2)
         {
@@ -182,7 +182,12 @@ public class TabletCameraViewController : NetworkBehaviour
 
         if (Inputs.tablet)
         {
-            OnTabletPressed();
+            Inputs.ClearTabletInput();
+
+            if (ThirdPersonController.Grounded) 
+            {
+                OnTabletPressed();
+            }
         }
 
         if (!IsTakenOverByCheapInterpolations)
@@ -421,7 +426,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
         TabletScaler.transform.localScale = Vector3.zero;
 
-        Debug.Log("Don't mess with cameras anymore " + Time.time);
+        //Debug.Log("Don't mess with cameras anymore " + Time.time);
         //Debug.Break();
     }
 

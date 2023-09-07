@@ -235,6 +235,7 @@ namespace DiceMinigame
         public void OnClose()
         {
             SceneLoader.Instance.UnloadScene();
+            Debug.Log("Just a test log here.");
         }
     }
 }
