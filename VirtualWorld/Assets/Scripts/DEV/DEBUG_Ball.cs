@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
+using Mirror;
 
 public class DEBUG_Ball : NetworkBehaviour
 {
@@ -10,18 +10,9 @@ public class DEBUG_Ball : NetworkBehaviour
         Debug.Log("--------- Playground Scene Loaded! ---------");
     }
 
-    public override void OnNetworkSpawn()
+    void OnServerConnect(NetworkConnectionToClient conn)
     {
-        base.OnNetworkSpawn();
-
-        if (IsServer)
-        {
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-        }
+        Debug.Log($"---- CLIENT {conn.connectionId} CONNECTED ----");
     }
 
-    void OnClientConnected(ulong clientId)
-    {
-        Debug.Log($"---- CLIENT {clientId} CONNECTED ----");
-    }
 }

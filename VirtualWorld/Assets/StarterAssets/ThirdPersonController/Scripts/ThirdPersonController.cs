@@ -3,7 +3,7 @@
 using UnityEngine.InputSystem;
 #endif
 
-using Unity.Netcode;
+using Mirror;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -14,7 +14,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 	[RequireComponent(typeof(PlayerInput))]
 #endif
-	public class ThirdPersonController : NetworkBehaviour
+	public class ThirdPersonController : MonoBehaviour
 	{
 		public Camera Camera;
 		public GameObject CinemachineVirtualCameraObject;
@@ -119,16 +119,16 @@ namespace StarterAssets
 			_fallTimeoutDelta = FallTimeout;
 		}
 
-		public override void OnNetworkSpawn()
-		{
-			if (!IsOwner)
-			{
-				Camera.gameObject.SetActive(false);
-				CinemachineVirtualCameraObject.gameObject.SetActive(false);
-				this.enabled = false;
+		//public override void OnNetworkSpawn()
+		//{
+		//	if (!IsOwner)
+		//	{
+		//		Camera.gameObject.SetActive(false);
+		//		CinemachineVirtualCameraObject.gameObject.SetActive(false);
+		//		this.enabled = false;
 
-			}
-		}
+		//	}
+		//}
 
 		private void Update()
 		{

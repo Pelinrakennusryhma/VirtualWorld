@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Scenes;
 using UnityEngine.Events;
-using Unity.Netcode;
+using Mirror;
 
 namespace WorldObjects
 {

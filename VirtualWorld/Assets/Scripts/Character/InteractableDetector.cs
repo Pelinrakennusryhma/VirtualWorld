@@ -1,7 +1,7 @@
 using Authentication;
 using StarterAssets;
 using UI;
-using Unity.Netcode;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 using WorldObjects;
@@ -18,23 +18,23 @@ namespace Characters
         I_Interactable currentInteractable;
         GameObject currentInteractableGO;
 
-        public override void OnNetworkSpawn()
-        {
-            if (!IsOwner)
-            {
-                Destroy(this);
-                return;
-            }
+        //public override void OnNetworkSpawn()
+        //{
+        //    if (!IsOwner)
+        //    {
+        //        Destroy(this);
+        //        return;
+        //    }
 
-            if (IsHost)
-            {
-                Invoke("FindAndInitUI", 1f);
-            } else
-            {
-                FindAndInitUI();
-            }
+        //    if (isHost)
+        //    {
+        //        Invoke("FindAndInitUI", 1f);
+        //    } else
+        //    {
+        //        FindAndInitUI();
+        //    }
 
-        }
+        //}
 
         private void Start()
         {

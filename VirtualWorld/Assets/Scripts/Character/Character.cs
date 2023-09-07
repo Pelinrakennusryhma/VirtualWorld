@@ -5,7 +5,7 @@ using Authentication;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
-using Unity.Netcode;
+using Mirror;
 
 namespace Characters { 
     public class Character : NetworkBehaviour
@@ -13,14 +13,14 @@ namespace Characters {
         public static Character Instance { get; private set; }
         [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
 
-        [SerializeField] CharacterData characterData;
+        //[SerializeField] CharacterData characterData;
 
         [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] UserSession userSession;
 
         [SerializeField] public InventoryController inventoryController { get; private set; }
 
-        public UnityEvent<Inventory> EventInventoryChanged;
+        //public UnityEvent<Inventory> EventInventoryChanged;
 
         private void Awake()
         {
@@ -41,41 +41,41 @@ namespace Characters {
             OwnedCharacter = go;
         }
 
-        public override void OnNetworkSpawn()
-        {
-            userSession = UserSession.Instance;
-            wsConnection = WebSocketConnection.Instance;
+        //public override void OnNetworkSpawn()
+        //{
+        //    userSession = UserSession.Instance;
+        //    wsConnection = WebSocketConnection.Instance;
 
-            wsConnection.EventIncomingCharacterData.AddListener(OnIncomingCharacterDataClientRpc);
+        //    wsConnection.EventIncomingCharacterData.AddListener(OnIncomingCharacterDataClientRpc);
 
-            if (IsClient)
-            {
-                GetCharacterDataServerRpc(userSession.LoggedUserData.id);
-            }
-        }
+        //    if (isClient)
+        //    {
+        //        GetCharacterDataServer(userSession.LoggedUserData.id);
+        //    }
+        //}
 
-        [ClientRpc]
-        void OnIncomingCharacterDataClientRpc(CharacterData charData)
-        {
-            if(charData.user == userSession.LoggedUserData.id)
-            {
-                characterData = charData;
-                EventInventoryChanged.Invoke(characterData.inventory);
-                Debug.Log("my data");
-            } else
-            {
-                Debug.Log("NOT my data");
-            }
-        }
+        //[ClientRpc]
+        //void OnIncomingCharacterDataClientRpc(CharacterData charData)
+        //{
+        //    if(charData.user == userSession.LoggedUserData.id)
+        //    {
+        //        characterData = charData;
+        //        EventInventoryChanged.Invoke(characterData.inventory);
+        //        Debug.Log("my data");
+        //    } else
+        //    {
+        //        Debug.Log("NOT my data");
+        //    }
+        //}
 
-        [ServerRpc(RequireOwnership = false)]
-        public void AddMoneyServerRpc(string userId, int amount)
+        [Command]
+        public void AddMoneyServer(string userId, int amount)
         {
             wsConnection.AddMoneyToCharacter(userId, amount);
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        void GetCharacterDataServerRpc(string id)
+        [Command]
+        void GetCharacterDataServer(string id)
         {
             wsConnection.GetCharacterData(id);
         }

@@ -2,7 +2,6 @@ using UnityEngine;
 using NativeWebSocket;
 using System;
 using System.Collections.Generic;
-using Unity.Netcode;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
@@ -11,6 +10,7 @@ using Newtonsoft;
 using Newtonsoft.Json;
 using UnityEngine.TextCore.Text;
 using UnityEngine.Events;
+using Mirror;
 
 namespace BackendConnection
 {
@@ -22,7 +22,7 @@ namespace BackendConnection
         WebSocket websocket;
         LoggedUserData superUserData;
 
-        public UnityEvent<CharacterData> EventIncomingCharacterData;
+        //public UnityEvent<CharacterData> EventIncomingCharacterData;
 
         private void Awake()
         {
@@ -43,12 +43,19 @@ namespace BackendConnection
             apiCalls.OnAuthSuccess.AddListener((data) => superUserData = data);
         }
 
-        public override void OnNetworkSpawn()
+    //    public override void OnNetworkSpawn()
+    //    {
+    //        base.OnNetworkSpawn();
+    //#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+    //        Connect(superUserData);
+    //#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+    //    }
+
+        public void Start()
         {
-            base.OnNetworkSpawn();
-    #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             Connect(superUserData);
-    #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         public void Init(string wsUrl)
@@ -59,7 +66,7 @@ namespace BackendConnection
         async UniTask Connect(LoggedUserData loggedUserData)
         {
 
-            if (!IsServer)
+            if (!isServer)
             {
                 this.enabled = false;
                 return;
@@ -162,8 +169,8 @@ namespace BackendConnection
 
         void HandleIncomingCharacterData(string msg)
         {
-            CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
-            EventIncomingCharacterData.Invoke(charData);
+            //CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
+            //EventIncomingCharacterData.Invoke(charData);
         }
     }
 }

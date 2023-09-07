@@ -1,10 +1,10 @@
 using UnityEngine;
-using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using BackendConnection;
 using System;
 using Scenes;
 using Cysharp.Threading.Tasks;
+using Mirror;
+using UnityEngine.SceneManagement;
 
 namespace Configuration
 {
@@ -23,14 +23,10 @@ namespace Configuration
 
             await apiCalls.OnBeginLogin(data.username, data.password, false);
 
-            var utp = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
-            utp.SetConnectionData(data.ip, data.serverPort);
-
             string mainSceneName = mainScenePicker.GetSceneName();
             Debug.Log(mainSceneName);
 
-            NetworkManager.Singleton.StartServer();
-            NetworkManager.Singleton.SceneManager.LoadScene(mainSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+            VWNetworkManager.singleton.StartServer();
             Debug.Log("--- SERVER INIT END ---");
         }
 

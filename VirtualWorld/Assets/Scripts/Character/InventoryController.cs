@@ -2,28 +2,28 @@ using Authentication;
 using BackendConnection;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Mirror;
 using UnityEngine;
 
 namespace Characters
 {
-    public class InventoryController : NetworkBehaviour
+    public class InventoryController : MonoBehaviour
     {
         [SerializeField] Character character;
         [SerializeField] WebSocketConnection wsConnection;
-        [SerializeField] public Inventory Inventory { get; private set; }
+        //[SerializeField] public Inventory Inventory { get; private set; }
 
-        public override void OnNetworkSpawn()
+        void Start()
         {
             wsConnection = WebSocketConnection.Instance;
 
-            character.EventInventoryChanged.AddListener(OnInventoryChanged);
+            //character.EventInventoryChanged.AddListener(OnInventoryChanged);
         }
 
-        void OnInventoryChanged(Inventory inventory)
-        {
-            Inventory = inventory;
-            Debug.Log("inventory changed!");
-        }
+        //void OnInventoryChanged(Inventory inventory)
+        //{
+        //    Inventory = inventory;
+        //    Debug.Log("inventory changed!");
+        //}
     }
 }

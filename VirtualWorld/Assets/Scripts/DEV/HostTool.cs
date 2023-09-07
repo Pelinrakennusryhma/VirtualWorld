@@ -3,7 +3,7 @@ using BackendConnection;
 using Characters;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Mirror;
 using UnityEngine;
 
 public class HostTool : NetworkBehaviour
@@ -25,29 +25,29 @@ public class HostTool : NetworkBehaviour
         }
     }
 
-    public override void OnNetworkSpawn()
-    {
-        if (!IsHost)
-        {
-            Destroy(this);
-        } else
-        {
-            StartCoroutine(GetCharData());
-        }
-    }
+    //public override void OnNetworkSpawn()
+    //{
+    //    if (!isHost)
+    //    {
+    //        Destroy(this);
+    //    } else
+    //    {
+    //        StartCoroutine(GetCharData());
+    //    }
+    //}
 
     IEnumerator GetCharData()
     {
         do
         {
-            CheckIfServerIsReadyServerRpc();
+            CheckIfServerIsReadyServer();
             yield return new WaitForSeconds(0.2f);
         } while (!serverIsReady);
 
         WebSocketConnection.Instance.GetCharacterData(UserSession.Instance.LoggedUserData.id);
     }
-    [ServerRpc]
-    void CheckIfServerIsReadyServerRpc()
+    [Server]
+    void CheckIfServerIsReadyServer()
     {
         serverIsReady = true;
     }

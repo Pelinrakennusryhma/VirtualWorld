@@ -22,20 +22,20 @@ namespace UI
             character = Character.Instance;
             if (character != null)
             {
-                character.EventInventoryChanged.AddListener(OnInventoryChanged);
+                //character.EventInventoryChanged.AddListener(OnInventoryChanged);
             }
         }
 
-        void OnInventoryChanged(Inventory inventory)
-        {
-            moneyText.text = $"{inventory.money} {currencyIcon}";
+        //void OnInventoryChanged(Inventory inventory)
+        //{
+        //    moneyText.text = $"{inventory.money} {currencyIcon}";
 
-            if(previousMoney != inventory.money)
-            {
-                moneyTextFlasher.FlashText();
-            }
+        //    if(previousMoney != inventory.money)
+        //    {
+        //        moneyTextFlasher.FlashText();
+        //    }
 
-            previousMoney = inventory.money;
-        }
+        //    previousMoney = inventory.money;
+        //}
     }
 }

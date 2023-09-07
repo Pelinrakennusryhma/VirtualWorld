@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Unity.Netcode;
+using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -55,12 +55,10 @@ namespace Scenes
     }
 
     [RequireComponent(typeof(ScenePicker))]
-    public class SceneLoader : NetworkBehaviour
+    public class SceneLoader : MonoBehaviour
     {
         public static SceneLoader Instance { get; private set; }
         [SerializeField] public string MainSceneName { get; private set; }
-
-        List<NetworkObject> cachedNetworkObjects = new List<NetworkObject>();
 
         List<CachedGameObject> cachedGameObjectList = new List<CachedGameObject>();
 

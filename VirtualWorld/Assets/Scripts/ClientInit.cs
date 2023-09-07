@@ -1,8 +1,8 @@
 using UnityEngine;
-using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
+using Mirror;
 using BackendConnection;
 using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace Configuration
 {
@@ -17,9 +17,6 @@ namespace Configuration
             apiCalls.OnAuthSuccess.AddListener(EnableConnectCanvas);
             apiCalls.OnLogout.AddListener(DisableConnectCanvas);
 
-            var utp = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
-            utp.SetConnectionData(data.ip, data.serverPort);
-
             if(data.processType == ProcessType.DEV_CLIENT)
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -31,10 +28,10 @@ namespace Configuration
 
         async UniTask AutoLog(string username, string password)
         {
-            //apiCalls.LogOut();
+            apiCalls.LogOut();
             await apiCalls.OnBeginLogin(username, password, false);
-            bool clientStarted = NetworkManager.Singleton.StartClient();
-            Debug.Log("clientStarted: " + clientStarted);
+            VWNetworkManager.singleton.StartClient();
+            Debug.Log("client autostarted");
         }
 
         void EnableConnectCanvas(LoggedUserData dummyData)
@@ -49,8 +46,8 @@ namespace Configuration
 
         public void ConnectToServer()
         {
-            bool clientStarted = NetworkManager.Singleton.StartClient();
-            Debug.Log("Client started by clicking connect button: " + clientStarted);
+            VWNetworkManager.singleton.StartClient();
+            Debug.Log("Client started by clicking connect button");
         }
     }
 }

@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode;
+using Mirror;
 
 namespace StarterAssets
 {
-	public class StarterAssetsInputs : NetworkBehaviour
+	public class StarterAssetsInputs : MonoBehaviour
 	{
 		[Header("Character Input Values")]
 		public Vector2 move;
@@ -24,15 +24,15 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 #endif
 
-		public override void OnNetworkSpawn()
-		{
-			this.enabled = false;
+		//public override void OnNetworkSpawn()
+		//{
+		//	this.enabled = false;
 
-			if (IsOwner)
-			{
-				this.enabled = true;
-			}
-		}
+		//	if (IsOwner)
+		//	{
+		//		this.enabled = true;
+		//	}
+		//}
 
 		private void LateUpdate()
 		{
@@ -141,13 +141,13 @@ namespace StarterAssets
 		{
 			//SetCursorState(cursorLocked);
 
-			if (IsOwner) 
-			{
-                PlayerInput playerInput = GetComponent<PlayerInput>();
-                playerInput.enabled = false;
-                playerInput.enabled = true;
-            }
-			SetCursorState(false);
+			//if (IsOwner) 
+			//{
+   //             PlayerInput playerInput = GetComponent<PlayerInput>();
+   //             playerInput.enabled = false;
+   //             playerInput.enabled = true;
+   //         }
+			//SetCursorState(false);
 		}
 
 		private void SetCursorState(bool newState)
