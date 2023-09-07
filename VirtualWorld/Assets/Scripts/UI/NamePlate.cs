@@ -8,44 +8,32 @@ using UnityEngine;
 
 namespace Authentication
 {
-    //public class Nameplate : NetworkBehaviour
-    //{
-    //    [SerializeField] TMP_Text namePlate;
-    //    [SerializeField] NetworkVariable<FixedString32Bytes> userName = 
-    //        new NetworkVariable<FixedString32Bytes>
-    //        (
-    //            "", 
-    //            NetworkVariableReadPermission.Everyone, 
-    //            NetworkVariableWritePermission.Owner
-    //        );
+    public class Nameplate : NetworkBehaviour
+    {
+        [SerializeField] TMP_Text namePlate;
+        [SyncVar] string username;
 
-    //    private void Awake()
-    //    {
-    //        if(namePlate == null)
-    //        {
-    //            namePlate = GetComponent<TMP_Text>();
-    //        }
+        private void Awake()
+        {
+            if (namePlate == null)
+            {
+                namePlate = GetComponentInChildren<TMP_Text>();
+            }
+        }
 
-    //        userName.OnValueChanged += OnUserNameSet;
-    //    }
-
-    //    void OnUserNameSet(FixedString32Bytes previous, FixedString32Bytes current)
-    //    {
-    //        namePlate.text = current.ToString();
-    //    }
-
-    //    public override void OnNetworkSpawn()
-    //    {
-    //        if(namePlate != null && UserSession.Instance.LoggedUserData.username != null)
-    //        {
-    //            if (IsOwner)
-    //            {
-    //                userName.Value = UserSession.Instance.LoggedUserData.username;
-    //            } else
-    //            {
-    //                namePlate.text = userName.Value.ToString();
-    //            }
-    //        }
-    //    }
-    //}
+        void Start()
+        {
+            if (namePlate != null && UserSession.Instance.LoggedUserData.username != null)
+            {
+                if (isLocalPlayer)
+                {
+                    username = UserSession.Instance.LoggedUserData.username;
+                }
+                else
+                {
+                    namePlate.text = username;
+                }
+            }
+        }
+    }
 }

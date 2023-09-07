@@ -7,34 +7,33 @@ namespace Characters
 {
     public class PlayerEmitter : NetworkBehaviour
     {
-        //StarterAssetsInputs inputs;
-        //bool controlsDisabled = false;
-        //void Start()
-        //{
-        //    if (isLocalPlayer)
-        //    {
-        //        Character.Instance.SetPlayerGameObject(gameObject);
-        //        UIManager.Instance.SetPlayerCharacter(gameObject);
+        StarterAssetsInputs inputs;
+        bool controlsDisabled = false;
+        void Start()
+        {
+            if (isLocalPlayer)
+            {
+                Character.Instance.SetPlayerGameObject(gameObject);
+                UIManager.Instance.SetPlayerCharacter(gameObject);
 
-        //        inputs = GetComponentInChildren<StarterAssetsInputs>();
+                inputs = GetComponentInChildren<StarterAssetsInputs>();
 
-        //        UIManager.Instance.EventMenuToggled.AddListener(TogglePlayerInputs);
-        //    }
-        //}
+                UIManager.Instance.EventMenuToggled.AddListener(TogglePlayerInputs);
+            }
+        }
 
-        //private void Update()
-        //{
-        //    if (controlsDisabled)
-        //    {
-        //        inputs.ZeroInputs();
-        //    }
-        //}
+        private void Update()
+        {
+            if (controlsDisabled)
+            {
+                inputs.ZeroInputs();
+            }
+        }
 
-        //void TogglePlayerInputs(bool menuEnabled)
-        //{
-        //    controlsDisabled = menuEnabled;
-        //    Debug.Log("Inputs enabled: " + !menuEnabled);
-        //}
-
+        void TogglePlayerInputs(bool menuEnabled)
+        {
+            controlsDisabled = menuEnabled;
+            Debug.Log("Inputs enabled: " + !menuEnabled);
+        }
     }
 }

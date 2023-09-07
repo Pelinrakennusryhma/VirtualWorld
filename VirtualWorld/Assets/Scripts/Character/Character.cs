@@ -7,7 +7,8 @@ using Cysharp.Threading.Tasks;
 using BackendConnection;
 using Mirror;
 
-namespace Characters { 
+namespace Characters
+{
     public class Character : NetworkBehaviour
     {
         public static Character Instance { get; private set; }
