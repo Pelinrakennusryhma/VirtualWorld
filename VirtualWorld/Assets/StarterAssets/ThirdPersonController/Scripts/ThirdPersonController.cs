@@ -207,7 +207,6 @@ namespace StarterAssets
             if (ShouldAnimate())
             {
                 _animator.SetBool(_animIDGrounded, Grounded);
-                SetAnimatorBoolCommand(_animIDGrounded, Grounded);
             }
         }
 
@@ -296,26 +295,12 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-
-                SetAnimatorFloatCommand(_animIDSpeed, _animationBlend);
-                SetAnimatorFloatCommand(_animIDMotionSpeed, inputMagnitude);
-
             }
         }
 
         bool ShouldAnimate()
         {
             return _hasAnimator && isLocalPlayer;
-        }
-        [Command]
-        void SetAnimatorFloatCommand(int animHash, float value)
-        {
-            _animator.SetFloat(animHash, value);
-        }
-        [Command]
-        void SetAnimatorBoolCommand(int animHash, bool value)
-        {
-            _animator.SetBool(animHash, value);
         }
 
         private void JumpAndGravity()
@@ -330,8 +315,6 @@ namespace StarterAssets
                 {
                     _animator.SetBool(_animIDJump, false);
                     _animator.SetBool(_animIDFreeFall, false);
-                    SetAnimatorBoolCommand(_animIDJump, false);
-                    SetAnimatorBoolCommand(_animIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -350,7 +333,6 @@ namespace StarterAssets
                     if (ShouldAnimate())
                     {
                         _animator.SetBool(_animIDJump, true);
-                        SetAnimatorBoolCommand(_animIDJump, true);
                     }
                 }
 
@@ -376,7 +358,6 @@ namespace StarterAssets
                     if (ShouldAnimate())
                     {
                         _animator.SetBool(_animIDFreeFall, true);
-                        SetAnimatorBoolCommand(_animIDFreeFall, true);
                     }
                 }
 
