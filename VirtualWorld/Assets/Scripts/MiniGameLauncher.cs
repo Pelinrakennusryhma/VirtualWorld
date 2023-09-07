@@ -142,8 +142,10 @@ public class MiniGameLauncher : NetworkBehaviour
     public void UnloadActiveScene()
     {        
         Debug.Log("Unloading scene " + ActiveSceneName);
-        SceneManager.UnloadSceneAsync(ActiveSceneName);
-
+        if(ActiveSceneName != "")
+        {
+            SceneManager.UnloadSceneAsync(ActiveSceneName);
+        }
     }
 
     public void SaveActiveSceneName(string sceneName)
@@ -172,13 +174,14 @@ public class MiniGameLauncher : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void CheckIfServerIsPlayingMiniGameServerRpc(ulong clientId)
     {
-        //Debug.LogError("RPC called. client id is" + clientId);
+
+        Debug.Log("RPC called. client id is" + clientId);
 
         if ((IsServer 
             || IsHost)
             && IsPlayingMinigame)
         {
-            Debug.LogError("Got through the if checks");
+            Debug.Log("Got through the if checks");
             AdditiveSceneLauncher.Instance.UnloadMiniGameSceneClientRpc(ActiveSceneName, clientId);            
         }
     }

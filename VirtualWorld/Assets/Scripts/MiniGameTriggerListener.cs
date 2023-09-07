@@ -27,7 +27,7 @@ public class MiniGameTriggerListener : MonoBehaviour
 
         if (Inputs.interact)
         {
-            Inputs.ClearInteractInput();
+            //Inputs.ClearInteractInput();
 
             if (CurrentCabinet == ArcadeCabinetTrigger.CabinetType.TabletopInvaders) 
             {

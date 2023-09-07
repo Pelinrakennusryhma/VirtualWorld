@@ -1,3 +1,4 @@
+using Scenes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,7 +48,8 @@ public class MainMenuGravityShip : MonoBehaviour
         GameManagerGravityShip.Instance.SoundManager.PlayUIClick();
         //Application.Quit();
 
-        MiniGameLauncher.Instance.GoBackToPlayground(true);
+        //MiniGameLauncher.Instance.GoBackToPlayground(true);
+        SceneLoader.Instance.UnloadScene();
     }
 
 

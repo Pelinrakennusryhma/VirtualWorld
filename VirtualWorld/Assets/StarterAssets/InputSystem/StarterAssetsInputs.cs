@@ -1,5 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED || UNITY_SERVER
 using UnityEngine.InputSystem;
 #endif
 using Unity.Netcode;
@@ -15,6 +15,8 @@ namespace StarterAssets
 		public bool sprint;
 		public bool interact;
 		public bool tablet;
+		public bool action1;
+
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -25,7 +27,6 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 #endif
 
-
 		public override void OnNetworkSpawn()
 		{
 			this.enabled = false;
@@ -35,6 +36,22 @@ namespace StarterAssets
 				this.enabled = true;
 			}
 		}
+
+		private void LateUpdate()
+		{
+			ClearInteractInput();
+			Action1Input(false);
+		}
+
+		private void OnDisable()
+		{
+            MoveInput(Vector2.zero);
+            LookInput(Vector2.zero);
+            JumpInput(false);
+            SprintInput(false);
+            InteractInput(false);
+            Action1Input(false);
+        }
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
@@ -62,21 +79,27 @@ namespace StarterAssets
 
 		public void OnInteract(InputValue value)
         {
-			Debug.Log("On interact is called " + Time.time);
 			InteractInput(value.isPressed);
         }
+
 
 		public void OnTablet(InputValue value)
         {			
 			Debug.Log("On tablet called " + Time.time);
-			TabletInput(value.isPressed);
+			TabletInput(value.isPressed);		
+		}
+
+        public void OnAction1(InputValue value)
+        {
+			Action1Input(value.isPressed);
+
         }
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 			//move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -108,6 +131,7 @@ namespace StarterAssets
 			interact = false;
         }
 
+
 		public void TabletInput(bool newTabletState)
         {
 			tablet = newTabletState;
@@ -118,9 +142,16 @@ namespace StarterAssets
 			tablet = false;
         }
 
-#if !UNITY_IOS || !UNITY_ANDROID
 
-		private void OnApplicationFocus(bool hasFocus)
+        public void Action1Input(bool newAction1State)
+        {
+            action1 = newAction1State;
+        }
+
+
+#if !UNITY_IOS || !UNITY_ANDROID || !UNITY_SERVER
+
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			//SetCursorState(cursorLocked);
 

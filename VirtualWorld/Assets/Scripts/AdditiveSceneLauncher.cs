@@ -31,8 +31,6 @@ public class AdditiveSceneLauncher : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
-
-
         if (!IsHost
             && !IsServer
             && IsOwner) 
