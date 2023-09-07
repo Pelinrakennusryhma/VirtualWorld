@@ -44,7 +44,7 @@
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "fb3848d5-ea9c-421b-a73b-7b1da2fdfc92",
+                    "id": "feee4243-c39f-4d64-8a70-d3257aed0767",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -53,7 +53,7 @@
                 {
                     "name": "Action1",
                     "type": "Button",
-                    "id": "b54800ac-5a26-464e-a478-2464111f1e7a",
+                    "id": "4817e3e0-b143-43bb-bcb2-5f7d6fc0a22e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -62,7 +62,7 @@
                 {
                     "name": "Menu",
                     "type": "Button",
-                    "id": "b40375ab-fd40-4374-8930-7b104dd97120",
+                    "id": "ed5a84d6-1d53-4818-8ae1-74ce44062155",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -185,7 +185,7 @@
                     "id": "ed66cbff-2900-4a62-8896-696503cfcd31",
                     "path": "<Pointer>/delta",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=15,y=15)",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
                     "groups": "KeyboardMouse",
                     "action": "Look",
                     "isComposite": false,
@@ -248,29 +248,18 @@
                 },
                 {
                     "name": "",
-                    "id": "900368f1-ec95-46f9-b1d8-6d070e63ee4d",
+                    "id": "7f98c7fe-8188-4f2f-9f87-d8bfb5d65bf1",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardMouse",
+                    "groups": "",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "ed4f1edc-84e0-4456-a1d4-0e54155839a0",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ea0f37fe-905f-442d-8b05-29e3ac55bd0e",
+                    "id": "1bbea7f9-8298-4dc8-9b06-53c6a1653300",
                     "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
@@ -281,7 +270,7 @@
                 },
                 {
                     "name": "",
-                    "id": "bb682377-3b60-421c-8898-930b63ebd129",
+                    "id": "1d633362-43d5-46c7-b250-876ffe88f2fe",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

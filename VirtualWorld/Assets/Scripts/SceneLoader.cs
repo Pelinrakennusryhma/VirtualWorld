@@ -104,7 +104,7 @@ namespace Scenes
         IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
             PackScene(sceneLoadParams.scenePackMode);
-      
+
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             while (!async.isDone)
@@ -127,22 +127,23 @@ namespace Scenes
             }
 
             UnpackScene();
-            
+
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
         }
 
         void PackScene(ScenePackMode scenePackMode)
         {
-            if(scenePackMode != ScenePackMode.NONE)
+            if (scenePackMode != ScenePackMode.NONE)
             {
                 Scene activeScene = SceneManager.GetActiveScene();
 
-                if(scenePackMode == ScenePackMode.PLAYER_ONLY)
+                if (scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {
                     GameObject player = Character.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
                     player.SetActive(false);
-                } else
+                }
+                else
                 {
                     GameObject[] allObjects = activeScene.GetRootGameObjects();
 
@@ -151,7 +152,8 @@ namespace Scenes
                         if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == Character.Instance.OwnedCharacter)
                         {
 
-                        } else
+                        }
+                        else
                         {
                             cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
                             gameObject.SetActive(false);
@@ -166,7 +168,10 @@ namespace Scenes
         {
             foreach (CachedGameObject cachedGameObject in cachedGameObjectList)
             {
-                cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+                if (cachedGameObject.gameObject != null)
+                {
+                    cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+                }
             }
 
             cachedGameObjectList.Clear();

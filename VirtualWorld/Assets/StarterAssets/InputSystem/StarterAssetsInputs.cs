@@ -1,6 +1,7 @@
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-using Mirror;
+#endif
 
 namespace StarterAssets
 {
@@ -18,45 +19,34 @@ namespace StarterAssets
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
-#if !UNITY_IOS || !UNITY_ANDROID
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
-#endif
 
-		//public override void OnNetworkSpawn()
-		//{
-		//	this.enabled = false;
-
-		//	if (IsOwner)
-		//	{
-		//		this.enabled = true;
-		//	}
-		//}
+#if ENABLE_INPUT_SYSTEM
 
 		private void LateUpdate()
 		{
 			ClearInteractInput();
 			Action1Input(false);
-            MenuInput(false);
-        }
+			MenuInput(false);
+		}
 
 		private void OnDisable()
 		{
 			ZeroInputs();
-        }
+		}
 
 		public void ZeroInputs()
 		{
-            MoveInput(Vector2.zero);
-            LookInput(Vector2.zero);
-            JumpInput(false);
-            SprintInput(false);
-            InteractInput(false);
-            Action1Input(false);
-            MenuInput(false);
-        }
-
+			MoveInput(Vector2.zero);
+			LookInput(Vector2.zero);
+			JumpInput(false);
+			SprintInput(false);
+			InteractInput(false);
+			Action1Input(false);
+			MenuInput(false);
+		}
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -64,7 +54,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -81,24 +71,26 @@ namespace StarterAssets
 		}
 
 		public void OnInteract(InputValue value)
-        {
+		{
 			InteractInput(value.isPressed);
-        }
+		}
 
-        public void OnAction1(InputValue value)
-        {
+		public void OnAction1(InputValue value)
+		{
 			Action1Input(value.isPressed);
-        }
+		}
 
 		public void OnMenu(InputValue value)
 		{
 			MenuInput(value.isPressed);
 		}
-        public void MoveInput(Vector2 newMoveDirection)
+#endif
+
+
+		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
-			//move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		} 
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
@@ -116,47 +108,34 @@ namespace StarterAssets
 		}
 
 		public void InteractInput(bool newInteractState)
-        {
+		{
 			interact = newInteractState;
-        }
+		}
 
 		public void ClearInteractInput()
-        {
+		{
 			interact = false;
-        }
+		}
 
-        public void Action1Input(bool newAction1State)
-        {
-            action1 = newAction1State;
-        }
+		public void Action1Input(bool newAction1State)
+		{
+			action1 = newAction1State;
+		}
 
 		public void MenuInput(bool newMenuState)
 		{
 			menu = newMenuState;
 		}
 
-#if !UNITY_IOS || !UNITY_ANDROID || !UNITY_SERVER
-
-        private void OnApplicationFocus(bool hasFocus)
+		private void OnApplicationFocus(bool hasFocus)
 		{
-			//SetCursorState(cursorLocked);
-
-			//if (IsOwner) 
-			//{
-   //             PlayerInput playerInput = GetComponent<PlayerInput>();
-   //             playerInput.enabled = false;
-   //             playerInput.enabled = true;
-   //         }
-			//SetCursorState(false);
+			// SetCursorState(cursorLocked);
 		}
 
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-
-#endif
-
 	}
-	
+
 }

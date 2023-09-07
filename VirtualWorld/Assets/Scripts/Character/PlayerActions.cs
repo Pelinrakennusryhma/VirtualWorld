@@ -47,7 +47,8 @@ public class PlayerActions : MonoBehaviour
                 queuedDelayedAction = queuedAction;
                 queuedAction = null;
             }
-        } else if (queuedDelayedAction != null)
+        }
+        else if (queuedDelayedAction != null)
         {
             if (CanExecute(queuedDelayedAction))
             {
@@ -66,7 +67,8 @@ public class PlayerActions : MonoBehaviour
         else if (thirdPersonController.Grounded || !action.RequireGrounded)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }

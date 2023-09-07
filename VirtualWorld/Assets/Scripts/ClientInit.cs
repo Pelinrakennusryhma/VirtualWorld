@@ -17,7 +17,7 @@ namespace Configuration
             apiCalls.OnAuthSuccess.AddListener(EnableConnectCanvas);
             apiCalls.OnLogout.AddListener(DisableConnectCanvas);
 
-            if(data.processType == ProcessType.DEV_CLIENT)
+            if (data.processType == ProcessType.DEV_CLIENT)
             {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 AutoLog(data.username, data.password);

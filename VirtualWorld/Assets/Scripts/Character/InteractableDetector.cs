@@ -8,7 +8,7 @@ using WorldObjects;
 
 namespace Characters
 {
-    public class InteractableDetector : NetworkBehaviour
+    public class InteractableDetector : MonoBehaviour
     {
         public UnityEvent<I_Interactable, GameObject> EventInteractableDetected;
         public UnityEvent EventInteractableLost;
@@ -38,11 +38,14 @@ namespace Characters
 
         private void Start()
         {
-            if(Camera.main == null)
+            NetworkBehaviour networkBehaviour = transform.parent.GetComponent<NetworkBehaviour>();
+            if (!networkBehaviour.isLocalPlayer)
             {
                 Destroy(this);
                 return;
             }
+
+            FindAndInitUI();
         }
 
         private void Update()
@@ -59,7 +62,8 @@ namespace Characters
             if (ui != null)
             {
                 ui.InitDetector(this);
-            } else
+            }
+            else
             {
                 Invoke("FindAndInitUI", 1f);
             }
@@ -86,7 +90,7 @@ namespace Characters
 
         private void OnTriggerExit(Collider other)
         {
-            if(other.gameObject == currentInteractableGO)
+            if (other.gameObject == currentInteractableGO)
             {
                 currentInteractable = null;
                 currentInteractableGO = null;
