@@ -51,14 +51,9 @@ namespace BackendConnection
     #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
-        public void Init(string wsUrl, ushort port)
+        public void Init(string wsUrl)
         {
-            string prefix = "";
-            if (char.IsDigit(wsUrl[0]))
-            {
-                prefix = "ws://";
-            }
-            webSocketAddress = prefix + wsUrl + ":" + port;
+            webSocketAddress = wsUrl;
         }
 
         async UniTask Connect(LoggedUserData loggedUserData)

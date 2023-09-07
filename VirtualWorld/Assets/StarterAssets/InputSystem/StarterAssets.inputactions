@@ -51,18 +51,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Tablet",
+                    "name": "Action1",
                     "type": "Button",
-                    "id": "4d6920ce-c771-4d78-af04-f8e3ba949f4b",
+                    "id": "b54800ac-5a26-464e-a478-2464111f1e7a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Action1",
+                    "name": "Menu",
                     "type": "Button",
-                    "id": "b54800ac-5a26-464e-a478-2464111f1e7a",
+                    "id": "b40375ab-fd40-4374-8930-7b104dd97120",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -281,23 +281,12 @@
                 },
                 {
                     "name": "",
-                    "id": "e73fab6c-7752-4fed-8f8e-18649c4d1141",
-                    "path": "<Keyboard>/tab",
+                    "id": "bb682377-3b60-421c-8898-930b63ebd129",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Tablet",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "51f362f0-c6dc-4dde-89b8-25f91bf50659",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Tablet",
+                    "groups": "",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

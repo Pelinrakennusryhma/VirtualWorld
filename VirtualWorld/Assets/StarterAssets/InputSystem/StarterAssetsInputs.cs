@@ -1,7 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED || UNITY_SERVER
 using UnityEngine.InputSystem;
-#endif
 using Unity.Netcode;
 
 namespace StarterAssets
@@ -16,6 +14,7 @@ namespace StarterAssets
 		public bool interact;
 		public bool tablet;
 		public bool action1;
+		public bool menu;
 
 
 		[Header("Movement Settings")]
@@ -41,9 +40,15 @@ namespace StarterAssets
 		{
 			ClearInteractInput();
 			Action1Input(false);
-		}
+            MenuInput(false);
+        }
 
 		private void OnDisable()
+		{
+			ZeroInputs();
+        }
+
+		public void ZeroInputs()
 		{
             MoveInput(Vector2.zero);
             LookInput(Vector2.zero);
@@ -51,9 +56,9 @@ namespace StarterAssets
             SprintInput(false);
             InteractInput(false);
             Action1Input(false);
+            MenuInput(false);
         }
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -94,11 +99,11 @@ namespace StarterAssets
 			Action1Input(value.isPressed);
 
         }
-#else
-	// old input sys if we do decide to have it (most likely wont)...
-#endif
 
-
+		public void OnMenu(InputValue value)
+		{
+			MenuInput(value.isPressed);
+		}
         public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
@@ -114,7 +119,6 @@ namespace StarterAssets
 		{
 			jump = newJumpState;
 		}
-
 
 		public void SprintInput(bool newSprintState)
 		{
@@ -147,6 +151,12 @@ namespace StarterAssets
         {
             action1 = newAction1State;
         }
+
+
+		public void MenuInput(bool newMenuState)
+		{
+			menu = newMenuState;
+		}
 
 
 #if !UNITY_IOS || !UNITY_ANDROID || !UNITY_SERVER
