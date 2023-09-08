@@ -8,12 +8,14 @@ namespace Configuration
     [Serializable]
     public struct GameConfigData
     {
-        public string ipForClient;
+        public string devIpForClient;
+        public string prodIpForClient;
         public string ipForServer;
         public ushort serverPort;
         public string httpUrl;
-        public string webSocketUrl;
-        public ushort backendPort;
+        public string wsUrl;
+        public string httpsUrl;
+        public string wssUrl;
     }
 }
 

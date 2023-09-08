@@ -72,10 +72,9 @@ namespace Configuration
             switch (processType)
             {
                 case ProcessType.CLIENT:
-                    string ip = "13.53.55.62";
-                    string https = "https://gameserver.hyvanmielenpelit.fi";
-                    string wss = "wss://gameserver.hyvanmielenpelit.fi";
-                    Debug.Log("config.port: " + Config.serverPort);
+                    string ip = Config.prodIpForClient;
+                    string https = Config.httpsUrl;
+                    string wss = Config.wssUrl;
                     initData = new InitData(
                         processType,
                         ip,
@@ -95,21 +94,21 @@ namespace Configuration
                         Config.ipForServer,
                         Config.serverPort,
                         Config.httpUrl,
-                        Config.webSocketUrl,
+                        Config.wsUrl,
                         Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
                     apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.webSocketUrl);
+                    wsConnection.Init(Config.wsUrl);
                     serverInit.Init(initData);
                     break;
                 case ProcessType.DEV_CLIENT:
                     initData = new InitData(
                         processType,
-                        Config.ipForClient,
+                        Config.devIpForClient,
                         Config.serverPort,
-                        Config.httpUrl, 
-                        Config.webSocketUrl,
+                        Config.httpUrl,
+                        Config.wsUrl,
                         Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME"),
                         Environment.GetEnvironmentVariable("UNITY_CLIENT_PASSWORD")
                         );
@@ -137,15 +136,15 @@ namespace Configuration
                 case ProcessType.DEV_SERVER:
                     initData = new InitData(
                         processType,
-                        Config.ipForServer, 
-                        Config.serverPort, 
+                        Config.ipForServer,
+                        Config.serverPort,
                         Config.httpUrl,
-                        Config.webSocketUrl,
+                        Config.wsUrl,
                         Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
                     apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.webSocketUrl);
+                    wsConnection.Init(Config.wsUrl);
                     serverInit.Init(initData);
                     break;
                 default:

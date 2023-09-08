@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # ParrelSync folders
 *_clone_[0-9]*/
+
+# Game Config File
+VirtualWorld/[Aa]ssets/Config/GameConfig.json

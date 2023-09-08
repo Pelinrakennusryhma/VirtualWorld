@@ -15,7 +15,7 @@ namespace BackendConnection
         readonly string authRoute = "/api/auth/";
         readonly string loginRoute = "/api/login/";
         readonly string registerRoute = "/api/users/";
-        
+
         public static APICalls Instance { get; private set; }
 
         public UnityEvent<LoggedUserData> OnAuthSuccess;
@@ -46,7 +46,7 @@ namespace BackendConnection
             Debug.Log("path: " + path);
             UnityWebRequest request = new UnityWebRequest(path, type.ToString());
 
-            if(data != null)
+            if (data != null)
             {
                 string json = JsonUtility.ToJson(data);
                 byte[] jsonToSend = new UTF8Encoding().GetBytes(json);
