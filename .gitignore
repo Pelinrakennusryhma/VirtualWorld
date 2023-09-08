@@ -75,4 +75,4 @@ crashlytics-build.properties
 *_clone_[0-9]*/
 
 # Game Config File
-VirtualWorld/[Aa]ssets/Config/GameConfig.json
+VirtualWorld/[Aa]ssets/Config/GameConfig*
