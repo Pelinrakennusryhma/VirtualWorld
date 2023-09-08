@@ -37,7 +37,7 @@ public class MainMenuTabletopInvaders : MonoBehaviour
     public void QuitGame() {
         GameFlowManager.Instance.SoundManager.PlayUIPress();
         GameFlowManager.Instance.SoundManager.PlaySound("UI button pressed");
-        Debug.Log("QUIT!");
+        //Debug.Log("QUIT!");
         // Poistutaan pelistä
         //Application.Quit();
 

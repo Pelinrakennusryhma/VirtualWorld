@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
 namespace Characters { 
     public class Character : NetworkBehaviour

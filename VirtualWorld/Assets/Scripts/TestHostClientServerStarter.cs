@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
 
 public class TestHostClientServerStarter : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class TestHostClientServerStarter : MonoBehaviour
 
     public void Awake()
     {
-        string ipAddress = "fuck off";
+        string ipAddress = "no ip address found";
         ipAddress = GetLocalIPAddress();
         LocalIPText.text = ipAddress;
         GlobalIPText.text = FetchIPAddressFromInternet();
@@ -83,18 +84,32 @@ public class TestHostClientServerStarter : MonoBehaviour
     public void StartLocalHost()
     {
         NetworkManager.Singleton.StartHost();
-        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+
+        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);        
+        //NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
     }
 
     public void StartLocalServer()
     {
         NetworkManager.Singleton.StartServer();
+        
         NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        //NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
     }
 
     public void StartLocalClient()
     {
         NetworkManager.Singleton.StartClient();
+
+        int sceneCount = SceneManager.sceneCount;
+
+        for (int i = 0; i < sceneCount; i++)
+        {
+            Debug.Log("Scene is loaded " + SceneManager.GetSceneAt(i).name);
+        }
+
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        Debug.Log("Client started");
     }
 
     public void StartHost()

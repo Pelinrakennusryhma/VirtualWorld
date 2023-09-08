@@ -8,6 +8,9 @@ public class MiniGameTriggerListener : MonoBehaviour
 {
     public ArcadeCabinetTrigger.CabinetType CurrentCabinet;
     public StarterAssetsInputs Inputs;
+    public MiniGamePrompt MiniGamePrompt;
+    public AdditiveSceneLauncher AdditiveSceneLauncher;
+
     public void OnEnteredArcadeCabinetTrigger(ArcadeCabinetTrigger.CabinetType cabinet)
     {
         CurrentCabinet = cabinet;
@@ -28,12 +31,12 @@ public class MiniGameTriggerListener : MonoBehaviour
 
             if (CurrentCabinet == ArcadeCabinetTrigger.CabinetType.TabletopInvaders) 
             {
-                AdditiveSceneLauncher.Instance.SetScene(1);
+                AdditiveSceneLauncher.SetScene(1);
             }
 
             else if (CurrentCabinet == ArcadeCabinetTrigger.CabinetType.GravityShip)
             {
-                AdditiveSceneLauncher.Instance.SetScene(2);
+                AdditiveSceneLauncher.SetScene(2);
             }
         }
     }

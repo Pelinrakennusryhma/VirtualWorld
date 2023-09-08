@@ -77,7 +77,7 @@ namespace Characters
             I_Interactable interactable = other.GetComponent<I_Interactable>();
 
             if (interactable != null)
-            {
+            {    
                 currentInteractable = interactable;
                 currentInteractableGO = other.gameObject;
                 EventInteractableDetected.Invoke(interactable, other.gameObject);

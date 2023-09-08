@@ -96,7 +96,7 @@ namespace StarterAssets
 
 		private bool _hasAnimator;
 
-
+		public bool IsTabletViewActive;
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -137,14 +137,18 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
+
+			
             Move();
 
         }
 
 		private void LateUpdate()
 		{
-
-			CameraRotation();
+			if (!IsTabletViewActive) 
+			{
+				CameraRotation();
+			}
 			
 		}
 
@@ -189,6 +193,11 @@ namespace StarterAssets
 
 		private void Move()
 		{
+            if (IsTabletViewActive)
+            {
+				return;
+            }
+
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -279,23 +288,26 @@ namespace StarterAssets
 					_verticalVelocity = -2f;
 				}
 
-				// Jump
-				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+				if (!IsTabletViewActive) 
 				{
-					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-
-					// update animator if using character
-					if (_hasAnimator)
+					// Jump
+					if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 					{
-						_animator.SetBool(_animIDJump, true);
+						// the square root of H * -2 * G = how much velocity needed to reach desired height
+						_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+						// update animator if using character
+						if (_hasAnimator)
+						{
+							_animator.SetBool(_animIDJump, true);
+						}
+					}
+
+					else
+					{
+
 					}
 				}
-
-                else
-                {
-
-                }
 
 				// jump timeout
 				if (_jumpTimeoutDelta >= 0.0f)
@@ -353,5 +365,18 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
+
+		public void OnTabletViewChanged(bool tabletViewIsActive)
+        {
+			IsTabletViewActive = tabletViewIsActive;
+
+            if (tabletViewIsActive)
+            {
+				// Set animators false
+
+				_animator.SetFloat(_animIDSpeed, 0);
+				_animator.SetFloat(_animIDMotionSpeed, 0);
+			}
+        }
 	}
 }
