@@ -40,7 +40,7 @@ public class PlayerActions : MonoBehaviour
         {
             if (CanExecute(queuedAction))
             {
-                queuedAction.Execute();
+                Execute(queuedAction);
             }
             else // Can't execute for some reason, make the queued action start with a delay to make it look less awkward after landing for example
             {
@@ -77,7 +77,8 @@ public class PlayerActions : MonoBehaviour
     IEnumerator DelayExecute(IPlayerAction action, float delay)
     {
         yield return new WaitForSeconds(delay);
-        action.Execute();
+        Execute(action);
+
     }
 
     void FindAllActions()
@@ -87,6 +88,12 @@ public class PlayerActions : MonoBehaviour
         {
             actions.Add(actionScript);
         }
+    }
+
+    void Execute(IPlayerAction action)
+    {
+        inputs.ClearExecuteInputs();
+        action.Execute();
     }
 
     // ---------- Action Key mapping On hold until solid input system ---------

@@ -117,6 +117,11 @@ namespace StarterAssets
 			interact = false;
 		}
 
+		public void ClearExecuteInputs()
+		{
+			action1 = false;
+		}
+
 		public void Action1Input(bool newAction1State)
 		{
 			action1 = newAction1State;

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 879631144487173268}
   - component: {fileID: 559182579878757208}
   - component: {fileID: 3417753724854554236}
-  - component: {fileID: 6965802832909400317}
   m_Layer: 0
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -46,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218abc94972f26746ac98091c063a212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainSceneName: 
 --- !u!114 &3417753724854554236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,23 +58,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenePath: Assets/Scenes/Playground.unity
---- !u!114 &6965802832909400317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2885148889960935903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1

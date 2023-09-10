@@ -38,7 +38,7 @@ namespace Characters
 
         private void Start()
         {
-            NetworkBehaviour networkBehaviour = transform.parent.GetComponent<NetworkBehaviour>();
+            NetworkBehaviour networkBehaviour = transform.root.GetComponent<NetworkBehaviour>();
             if (!networkBehaviour.isLocalPlayer)
             {
                 Destroy(this);
@@ -71,6 +71,7 @@ namespace Characters
 
         void Interact()
         {
+            input.ClearInteractInput();
             EventInteractionStarted.Invoke();
             currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => EventInteractableLost.Invoke()));
         }

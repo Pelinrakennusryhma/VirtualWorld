@@ -20,6 +20,7 @@ namespace Characters
         [SerializeField] UserSession userSession;
 
         [SerializeField] public InventoryController inventoryController { get; private set; }
+        [SerializeField] public PlayerEmitter PlayerEmitter { get; private set; }
 
         //public UnityEvent<Inventory> EventInventoryChanged;
 
@@ -37,8 +38,9 @@ namespace Characters
             }
         }
 
-        public void SetPlayerGameObject(GameObject go)
+        public void SetPlayerGameObject(PlayerEmitter playerEmitter, GameObject go)
         {
+            PlayerEmitter = playerEmitter;
             OwnedCharacter = go;
         }
 
@@ -79,6 +81,13 @@ namespace Characters
         void GetCharacterDataServer(string id)
         {
             wsConnection.GetCharacterData(id);
+        }
+
+        Vector3 cachedPos = Vector3.zero;
+        public void DisablePlayerCharacter()
+        {
+            cachedPos = OwnedCharacter.transform.position;
+            OwnedCharacter.SetActive(false);
         }
     }
 }

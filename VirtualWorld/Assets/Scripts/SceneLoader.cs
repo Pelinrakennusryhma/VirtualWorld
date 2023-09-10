@@ -141,7 +141,7 @@ namespace Scenes
                 {
                     GameObject player = Character.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
-                    player.SetActive(false);
+                    Character.Instance.PlayerEmitter.DisableCharacter();
                 }
                 else
                 {
@@ -151,16 +151,23 @@ namespace Scenes
                     {
                         if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == Character.Instance.OwnedCharacter)
                         {
-
+                            // move character to the new scene here?
                         }
                         else
                         {
-                            cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
-                            gameObject.SetActive(false);
+                            if (gameObject == Character.Instance.OwnedCharacter)
+                            {
+                                cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
+                                Character.Instance.PlayerEmitter.DisableCharacter();
+                            }
+                            else
+                            {
+                                cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
+                                gameObject.SetActive(false);
+                            }
                         }
                     }
                 }
-
             }
         }
 
@@ -170,7 +177,15 @@ namespace Scenes
             {
                 if (cachedGameObject.gameObject != null)
                 {
-                    cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+                    if (cachedGameObject.gameObject == Character.Instance.OwnedCharacter)
+                    {
+                        Character.Instance.PlayerEmitter.EnableCharacter();
+                    }
+                    else
+                    {
+                        cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+                    }
+
                 }
             }
 

@@ -9,14 +9,14 @@ using UnityEngine.SceneManagement;
 namespace Configuration
 {
     public class ServerInit : MonoBehaviour
-    { 
+    {
         [SerializeField] APICalls apiCalls;
         [SerializeField] ScenePicker mainScenePicker;
         public async UniTask Init(InitData data)
         {
             Debug.Log("--- SERVER INIT START ---");
 
-            if(data.processType == ProcessType.DEV_SERVER)
+            if (data.processType == ProcessType.DEV_SERVER)
             {
                 apiCalls.LogOut();
             }
