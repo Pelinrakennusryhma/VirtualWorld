@@ -55,7 +55,7 @@ namespace Scenes
     }
 
     [RequireComponent(typeof(ScenePicker))]
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader : NetworkBehaviour
     {
         public static SceneLoader Instance { get; private set; }
         [SerializeField] public string MainSceneName { get; private set; }
@@ -81,6 +81,33 @@ namespace Scenes
         {
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
+        }
+        [ClientRpc]
+        public void NewClientConnectedClientRpc(NetworkIdentity identity)
+        {
+            // if playing minigame, handle any new characters getting instantiated
+            ScenePackMode packMode = sceneLoadParams.scenePackMode;
+            if (cachedGameObjectList.Count > 0 && (packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER))
+            {
+                AddNewCachedObject(identity.gameObject);
+            }
+
+        }
+
+        void AddNewCachedObject(GameObject obj)
+        {
+            cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(MainSceneName));
+
+            if (obj.CompareTag("Player"))
+            {
+                PlayerEmitter playerEmitter = obj.GetComponent<PlayerEmitter>();
+                playerEmitter.DisableCharacter();
+            }
+            else
+            {
+                obj.SetActive(false);
+            }
         }
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
@@ -155,10 +182,11 @@ namespace Scenes
                         }
                         else
                         {
-                            if (gameObject == Character.Instance.OwnedCharacter)
+                            if (gameObject.CompareTag("Player"))
                             {
+                                PlayerEmitter playerEmitter = gameObject.GetComponent<PlayerEmitter>();
                                 cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
-                                Character.Instance.PlayerEmitter.DisableCharacter();
+                                playerEmitter.DisableCharacter();
                             }
                             else
                             {
@@ -177,9 +205,10 @@ namespace Scenes
             {
                 if (cachedGameObject.gameObject != null)
                 {
-                    if (cachedGameObject.gameObject == Character.Instance.OwnedCharacter)
+                    if (cachedGameObject.gameObject.CompareTag("Player"))
                     {
-                        Character.Instance.PlayerEmitter.EnableCharacter();
+                        PlayerEmitter playerEmitter = cachedGameObject.gameObject.GetComponent<PlayerEmitter>();
+                        playerEmitter.EnableCharacter();
                     }
                     else
                     {

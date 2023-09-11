@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
+using UnityEngine.Events;
+using Scenes;
+using System.Linq;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
@@ -13,6 +16,7 @@ public class VWNetworkManager : NetworkManager
     // Overrides the base singleton so we don't
     // have to cast to this type everywhere.
     public static new VWNetworkManager singleton { get; private set; }
+    [SerializeField] SceneLoader sceneLoader;
 
     /// <summary>
     /// Runs on both Server and Client
@@ -131,7 +135,10 @@ public class VWNetworkManager : NetworkManager
     /// <para>Unity calls this on the Server when a Client connects to the Server. Use an override to tell the NetworkManager what to do when a client connects to the server.</para>
     /// </summary>
     /// <param name="conn">Connection from client.</param>
-    public override void OnServerConnect(NetworkConnectionToClient conn) { }
+    public override void OnServerConnect(NetworkConnectionToClient conn)
+    {
+        base.OnServerConnect(conn);
+    }
 
     /// <summary>
     /// Called on the server when a client is ready.
@@ -151,6 +158,7 @@ public class VWNetworkManager : NetworkManager
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
+        sceneLoader.NewClientConnectedClientRpc(conn.identity);
     }
 
     /// <summary>

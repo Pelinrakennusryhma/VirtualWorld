@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using Scenes;
 
 namespace Characters
 {
@@ -24,6 +25,8 @@ namespace Characters
         [SerializeField] GameObject detector;
         [SerializeField] GameObject playerActions;
         [SerializeField] CharacterController characterController;
+        [SerializeField] Animator animator;
+        [SerializeField] NetworkAnimator nAnimator;
         void Start()
         {
             if (isLocalPlayer)
@@ -72,10 +75,16 @@ namespace Characters
         {
             geometry.SetActive(true);
             detector.SetActive(true);
-            inputs.enabled = true;
-            playerInput.enabled = true;
+            inputs.enabled = true;         
             playerActions.SetActive(true);
             characterController.enabled = true;
+            animator.enabled = true;
+            controller.enabled = true;
+            nAnimator.enabled = true;
+            if (isClient && isLocalPlayer)
+            {
+                playerInput.enabled = true;
+            }
         }
 
         public void DisableCharacter()
@@ -86,6 +95,9 @@ namespace Characters
             inputs.enabled = false;
             playerInput.enabled = false;
             characterController.enabled = false;
+            animator.enabled = false;
+            controller.enabled = false;
+            nAnimator.enabled = false;
         }
     }
 }

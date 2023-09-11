@@ -426,6 +426,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 3811171571511222540, guid: eae775e42506e024f8ce77da87c041e2,
+        type: 3}
+      propertyPath: sceneId
+      value: 2613994767
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -492,6 +497,7 @@ MonoBehaviour:
     deliveryTimeEmaDuration: 2
   connectionQualityInterval: 3
   timeInterpolationGui: 0
+  sceneLoader: {fileID: 1206251632}
 --- !u!4 &321055261
 Transform:
   m_ObjectHideFlags: 0
@@ -740,6 +746,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f385cea2709c6b14abc0ca05420e089a, type: 3}
+--- !u!114 &1206251632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 559182579878757208, guid: eae775e42506e024f8ce77da87c041e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 320731408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218abc94972f26746ac98091c063a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1318714939
 GameObject:
   m_ObjectHideFlags: 0

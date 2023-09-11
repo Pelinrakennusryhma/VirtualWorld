@@ -1469,6 +1469,8 @@ MonoBehaviour:
   detector: {fileID: 18521923272755399}
   playerActions: {fileID: 7584540462408899317}
   characterController: {fileID: 4416926081852918491}
+  animator: {fileID: 6982812146204527121}
+  nAnimator: {fileID: 2915872961303247666}
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0
