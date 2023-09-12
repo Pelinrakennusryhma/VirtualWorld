@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet.Object;
 
 public class DEBUG_Ball : NetworkBehaviour
 {
@@ -9,10 +9,4 @@ public class DEBUG_Ball : NetworkBehaviour
     {
         Debug.Log("--------- Playground Scene Loaded! ---------");
     }
-
-    void OnServerConnect(NetworkConnectionToClient conn)
-    {
-        Debug.Log($"---- CLIENT {conn.connectionId} CONNECTED ----");
-    }
-
 }

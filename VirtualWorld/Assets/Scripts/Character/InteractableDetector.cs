@@ -1,7 +1,7 @@
 using Authentication;
 using StarterAssets;
 using UI;
-using Mirror;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.Events;
 using WorldObjects;
@@ -39,7 +39,7 @@ namespace Characters
         private void Start()
         {
             NetworkBehaviour networkBehaviour = transform.root.GetComponent<NetworkBehaviour>();
-            if (!networkBehaviour.isLocalPlayer)
+            if (!networkBehaviour.IsOwner)
             {
                 Destroy(this);
                 return;

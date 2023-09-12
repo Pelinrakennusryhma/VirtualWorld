@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
+using FishNet;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -84,5 +84,5 @@ namespace BackendConnection
         public string type;
         public string data;
     }
-    
+
 }

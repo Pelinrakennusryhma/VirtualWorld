@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
+using FishNet;
 using UnityEngine;
 
 /*
-    Documentation: https://mirror-networking.gitbook.io/docs/components/network-authenticators
-    API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkAuthenticator.html
+    Documentation: https://FishNet-networking.gitbook.io/docs/components/network-authenticators
+    API Reference: https://FishNet-networking.com/docs/api/FishNet.NetworkAuthenticator.html
 */
 
 public class #SCRIPTNAME# : NetworkAuthenticator

@@ -1,13 +1,13 @@
 using UnityEngine;
-using Mirror;
+using FishNet;
 
 /*
-	Documentation: https://mirror-networking.gitbook.io/docs/components/network-room-manager
-	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkRoomManager.html
+	Documentation: https://FishNet-networking.gitbook.io/docs/components/network-room-manager
+	API Reference: https://FishNet-networking.com/docs/api/FishNet.NetworkRoomManager.html
 
 	See Also: NetworkManager
-	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
-	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
+	Documentation: https://FishNet-networking.gitbook.io/docs/components/network-manager
+	API Reference: https://FishNet-networking.com/docs/api/FishNet.NetworkManager.html
 */
 
 /// <summary>

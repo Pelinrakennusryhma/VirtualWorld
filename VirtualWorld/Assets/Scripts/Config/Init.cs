@@ -68,7 +68,7 @@ namespace Configuration
         void SetConfigData()
         {
             InitData initData;
-
+            Debug.Log("processTypeInSetConfigData: " + processType);
             switch (processType)
             {
                 case ProcessType.CLIENT:

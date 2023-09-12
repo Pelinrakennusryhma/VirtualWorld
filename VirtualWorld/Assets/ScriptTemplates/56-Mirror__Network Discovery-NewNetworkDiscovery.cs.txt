@@ -1,10 +1,10 @@
 using System.Net;
-using Mirror;
-using Mirror.Discovery;
+using FishNet;
+using FishNet.Discovery;
 
 /*
-    Documentation: https://mirror-networking.gitbook.io/docs/components/network-discovery
-    API Reference: https://mirror-networking.com/docs/api/Mirror.Discovery.NetworkDiscovery.html
+    Documentation: https://FishNet-networking.gitbook.io/docs/components/network-discovery
+    API Reference: https://FishNet-networking.com/docs/api/FishNet.Discovery.NetworkDiscovery.html
 */
 
 public struct DiscoveryRequest : NetworkMessage

@@ -1,11 +1,13 @@
 using StarterAssets;
 using UI;
-using Mirror;
+using FishNet;
 using UnityEngine;
 using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using Scenes;
+using FishNet.Object;
+using FishNet.Component.Animating;
 
 namespace Characters
 {
@@ -29,22 +31,23 @@ namespace Characters
         [SerializeField] NetworkAnimator nAnimator;
         void Start()
         {
-            if (isLocalPlayer)
+            //if (!IsOwner)
+            //{
+            //    return;
+            //}
+            Character.Instance.SetPlayerGameObject(this, gameObject);
+            UIManager.Instance.SetPlayerCharacter(gameObject);
+
+            controller.shouldAnimate = true;
+
+            UIManager.Instance.EventMenuToggled.AddListener(TogglePlayerInputs);
+
+            if (_cinemachineVirtualCamera == null)
             {
-                Character.Instance.SetPlayerGameObject(this, gameObject);
-                UIManager.Instance.SetPlayerCharacter(gameObject);
-
-                controller.shouldAnimate = true;
-
-                UIManager.Instance.EventMenuToggled.AddListener(TogglePlayerInputs);
-
-                if (_cinemachineVirtualCamera == null)
-                {
-                    _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-                }
-
-                EnableNetworkedControls();
+                _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
             }
+
+            EnableNetworkedControls();
         }
 
         private void Update()
@@ -63,7 +66,7 @@ namespace Characters
 
         void EnableNetworkedControls()
         {
-            if (isClient && isLocalPlayer)
+            if (IsClient && IsOwner)
             {
                 inputs.enabled = true;
                 playerInput.enabled = true;
@@ -75,13 +78,13 @@ namespace Characters
         {
             geometry.SetActive(true);
             detector.SetActive(true);
-            inputs.enabled = true;         
+            inputs.enabled = true;
             playerActions.SetActive(true);
             characterController.enabled = true;
             animator.enabled = true;
             controller.enabled = true;
             nAnimator.enabled = true;
-            if (isClient && isLocalPlayer)
+            if (IsClient && IsOwner)
             {
                 playerInput.enabled = true;
             }

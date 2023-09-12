@@ -10,11 +10,11 @@ using Newtonsoft;
 using Newtonsoft.Json;
 using UnityEngine.TextCore.Text;
 using UnityEngine.Events;
-using Mirror;
+using FishNet.Object;
 
 namespace BackendConnection
 {
-    public class WebSocketConnection : NetworkBehaviour
+    public class WebSocketConnection : MonoBehaviour
     {
         public static WebSocketConnection Instance { get; private set; }
         [SerializeField] string webSocketAddress;
@@ -41,22 +41,17 @@ namespace BackendConnection
             }
 
             apiCalls.OnAuthSuccess.AddListener((data) => superUserData = data);
-        }
-
-    //    public override void OnNetworkSpawn()
-    //    {
-    //        base.OnNetworkSpawn();
-    //#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-    //        Connect(superUserData);
-    //#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-    //    }
-
-        public void Start()
-        {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            Connect(superUserData);
+            apiCalls.OnAuthSuccess.AddListener((data) => Connect(data));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
+
+//        public void Start()
+//        {
+//#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+//            Connect(superUserData);
+//#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+//        }
 
         public void Init(string wsUrl)
         {
@@ -65,12 +60,13 @@ namespace BackendConnection
 
         async UniTask Connect(LoggedUserData loggedUserData)
         {
+            Debug.Log("LoggedUserData: " + loggedUserData);
+            //if (!IsServer)
+            //{
+            //    enabled = false;
+            //    return;
+            //}
 
-            if (!isServer)
-            {
-                this.enabled = false;
-                return;
-            }
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("user-agent", loggedUserData.token);
             websocket = new WebSocket(webSocketAddress, headers);
@@ -109,9 +105,9 @@ namespace BackendConnection
 
         void Update()
         {
-    #if !UNITY_WEBGL || UNITY_EDITOR
-            if(websocket != null) websocket.DispatchMessageQueue();
-    #endif
+#if !UNITY_WEBGL || UNITY_EDITOR
+            if (websocket != null) websocket.DispatchMessageQueue();
+#endif
         }
 
         async void SendWebSocketMessage()
@@ -128,7 +124,7 @@ namespace BackendConnection
 
         private async void OnApplicationQuit()
         {
-            if(websocket != null)
+            if (websocket != null)
             {
                 await websocket.Close();
             }

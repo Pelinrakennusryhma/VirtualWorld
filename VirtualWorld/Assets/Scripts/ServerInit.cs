@@ -3,8 +3,9 @@ using BackendConnection;
 using System;
 using Scenes;
 using Cysharp.Threading.Tasks;
-using Mirror;
-using UnityEngine.SceneManagement;
+using FishNet;
+using FishNet.Managing;
+using FishNet.Managing.Scened;
 
 namespace Configuration
 {
@@ -12,6 +13,8 @@ namespace Configuration
     {
         [SerializeField] APICalls apiCalls;
         [SerializeField] ScenePicker mainScenePicker;
+        [SerializeField] NetworkManager networkManager;
+        [SerializeField] SceneManager sceneManager;
         public async UniTask Init(InitData data)
         {
             Debug.Log("--- SERVER INIT START ---");
@@ -23,10 +26,14 @@ namespace Configuration
 
             await apiCalls.OnBeginLogin(data.username, data.password, false);
 
-            string mainSceneName = mainScenePicker.GetSceneName();
-            Debug.Log(mainSceneName);
+            networkManager.ServerManager.StartConnection();
 
-            VWNetworkManager.singleton.StartServer();
+            string mainSceneName = mainScenePicker.GetSceneName();
+            SceneLoadData sld = new SceneLoadData(mainSceneName);
+            sceneManager.LoadGlobalScenes(sld);
+
+            //unload launch scene as it's no longer needed
+            sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
             Debug.Log("--- SERVER INIT END ---");
         }
 

@@ -3,7 +3,7 @@ using BackendConnection;
 using Characters;
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
+using FishNet.Object;
 using UnityEngine;
 
 public class HostTool : NetworkBehaviour
@@ -21,7 +21,7 @@ public class HostTool : NetworkBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
     }
 

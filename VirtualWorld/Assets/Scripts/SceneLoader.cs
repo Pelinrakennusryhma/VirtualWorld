@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Mirror;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -55,7 +55,7 @@ namespace Scenes
     }
 
     [RequireComponent(typeof(ScenePicker))]
-    public class SceneLoader : NetworkBehaviour
+    public class SceneLoader : MonoBehaviour
     {
         public static SceneLoader Instance { get; private set; }
         [SerializeField] public string MainSceneName { get; private set; }
@@ -73,7 +73,7 @@ namespace Scenes
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
             }
         }
 
@@ -82,33 +82,33 @@ namespace Scenes
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
         }
-        [ClientRpc]
-        public void NewClientConnectedClientRpc(NetworkIdentity identity)
-        {
-            // if playing minigame, handle any new characters getting instantiated
-            ScenePackMode packMode = sceneLoadParams.scenePackMode;
-            if (cachedGameObjectList.Count > 0 && (packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER))
-            {
-                AddNewCachedObject(identity.gameObject);
-            }
+        //[ClientRpc]
+        //public void NewClientConnectedClientRpc(NetworkIdentity identity)
+        //{
+        //    // if playing minigame, handle any new characters getting instantiated
+        //    ScenePackMode packMode = sceneLoadParams.scenePackMode;
+        //    if (cachedGameObjectList.Count > 0 && (packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER))
+        //    {
+        //        AddNewCachedObject(identity.gameObject);
+        //    }
 
-        }
+        //}
 
-        void AddNewCachedObject(GameObject obj)
-        {
-            cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
-            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(MainSceneName));
+        //void AddNewCachedObject(GameObject obj)
+        //{
+        //    cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
+        //    SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(MainSceneName));
 
-            if (obj.CompareTag("Player"))
-            {
-                PlayerEmitter playerEmitter = obj.GetComponent<PlayerEmitter>();
-                playerEmitter.DisableCharacter();
-            }
-            else
-            {
-                obj.SetActive(false);
-            }
-        }
+        //    if (obj.CompareTag("Player"))
+        //    {
+        //        PlayerEmitter playerEmitter = obj.GetComponent<PlayerEmitter>();
+        //        playerEmitter.DisableCharacter();
+        //    }
+        //    else
+        //    {
+        //        obj.SetActive(false);
+        //    }
+        //}
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
@@ -132,21 +132,21 @@ namespace Scenes
         {
             PackScene(sceneLoadParams.scenePackMode);
 
-            AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             while (!async.isDone)
             {
                 yield return null;
             }
 
-            Scene subScene = SceneManager.GetSceneByName(sceneName);
+            Scene subScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
 
-            SceneManager.SetActiveScene(subScene);
+            UnityEngine.SceneManagement.SceneManager.SetActiveScene(subScene);
         }
 
         IEnumerator UnloadAsyncScene()
         {
-            AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            AsyncOperation op = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
 
             while (!op.isDone)
             {
@@ -155,14 +155,14 @@ namespace Scenes
 
             UnpackScene();
 
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
+            UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(MainSceneName));
         }
 
         void PackScene(ScenePackMode scenePackMode)
         {
             if (scenePackMode != ScenePackMode.NONE)
             {
-                Scene activeScene = SceneManager.GetActiveScene();
+                Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
                 if (scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {

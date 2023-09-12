@@ -5,11 +5,11 @@ using Authentication;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
-using Mirror;
+using FishNet.Object;
 
 namespace Authentication
 {
-    public class UserSession : NetworkBehaviour
+    public class UserSession : MonoBehaviour
     {
         public static UserSession Instance { get; private set; }
 

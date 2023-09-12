@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet;
 
 /*
-	Documentation: https://mirror-networking.gitbook.io/docs/guides/interest-management
-	API Reference: https://mirror-networking.com/docs/api/Mirror.InterestManagement.html
+	Documentation: https://FishNet-networking.gitbook.io/docs/guides/interest-management
+	API Reference: https://FishNet-networking.com/docs/api/FishNet.InterestManagement.html
 */
 
 // NOTE: Attach this component to the same object as your Network Manager.
@@ -84,7 +84,7 @@ public class #SCRIPTNAME# : InterestManagement
         // either for a specific object, a subset of objects, or all objects.
 
         // Review the code in the various Interest Management components
-        // included with Mirror for inspiration:
+        // included with FishNet for inspiration:
         // - Distance Interest Management
         // - Spatial Hash Interest Management
         // - Scene Interest Management

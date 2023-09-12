@@ -2,7 +2,7 @@ using Authentication;
 using BackendConnection;
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
+using FishNet;
 using UnityEngine;
 
 namespace Characters

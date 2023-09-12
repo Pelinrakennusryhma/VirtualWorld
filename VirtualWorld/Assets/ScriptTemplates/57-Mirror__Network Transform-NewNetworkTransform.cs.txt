@@ -1,11 +1,11 @@
 #define onlySyncOnChange_BANDWIDTH_SAVING
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet;
 
 /*
-    Documentation: https://mirror-networking.gitbook.io/docs/components/network-transform
-    API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkTransformBase.html
+    Documentation: https://FishNet-networking.gitbook.io/docs/components/network-transform
+    API Reference: https://FishNet-networking.com/docs/api/FishNet.NetworkTransformBase.html
 */
 
 public class #SCRIPTNAME# : NetworkTransformBase

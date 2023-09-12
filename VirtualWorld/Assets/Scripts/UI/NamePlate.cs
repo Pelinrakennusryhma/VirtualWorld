@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-using Mirror;
+using FishNet.Object;
 using UnityEngine;
 
 namespace Authentication
@@ -11,7 +11,7 @@ namespace Authentication
     public class Nameplate : NetworkBehaviour
     {
         [SerializeField] TMP_Text namePlate;
-        [SyncVar] string username;
+        string username;
 
         private void Awake()
         {
@@ -25,15 +25,17 @@ namespace Authentication
         {
             if (namePlate != null && UserSession.Instance.LoggedUserData.username != null)
             {
-                if (isLocalPlayer)
-                {
-                    username = UserSession.Instance.LoggedUserData.username;
-                }
-                else
+                //if (IsOwner)
+                //{
+                //    username = UserSession.Instance.LoggedUserData.username;
+                //}
+                //else
                 {
                     namePlate.text = username;
                 }
             }
         }
+
+        
     }
 }

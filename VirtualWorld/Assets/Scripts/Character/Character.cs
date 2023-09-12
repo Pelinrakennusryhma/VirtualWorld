@@ -5,7 +5,7 @@ using Authentication;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
-using Mirror;
+using FishNet.Object;
 
 namespace Characters
 {
@@ -33,7 +33,7 @@ namespace Characters
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                //DontDestroyOnLoad(gameObject);
                 inventoryController = GetComponent<InventoryController>();
             }
         }
@@ -71,13 +71,13 @@ namespace Characters
         //    }
         //}
 
-        [Command]
+        [ServerRpc]
         public void AddMoneyServer(string userId, int amount)
         {
             wsConnection.AddMoneyToCharacter(userId, amount);
         }
 
-        [Command]
+        [ServerRpc]
         void GetCharacterDataServer(string id)
         {
             wsConnection.GetCharacterData(id);

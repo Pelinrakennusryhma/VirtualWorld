@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2197454570324986040
 MonoBehaviour:
@@ -68,6 +68,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   apiCalls: {fileID: 0}
   mainScenePicker: {fileID: 6160112099515424281}
+  networkManager: {fileID: 0}
+  sceneManager: {fileID: 0}
 --- !u!114 &6160112099515424281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,3 +97,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   apiCalls: {fileID: 0}
   connectCanvas: {fileID: 0}
+  networkManager: {fileID: 0}
+  sceneManager: {fileID: 0}

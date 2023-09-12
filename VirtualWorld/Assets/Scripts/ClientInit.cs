@@ -1,8 +1,14 @@
 using UnityEngine;
-using Mirror;
+using FishNet;
 using BackendConnection;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using FishNet.Managing;
+using FishNet.Managing.Scened;
+using System.Collections;
+using FishNet.Connection;
+using FishNet.Object;
+using FishNet.Transporting;
 
 namespace Configuration
 {
@@ -10,19 +16,26 @@ namespace Configuration
     {
         [SerializeField] APICalls apiCalls;
         [SerializeField] GameObject connectCanvas;
+        [SerializeField] NetworkManager networkManager;
+        [SerializeField] FishNet.Managing.Scened.SceneManager sceneManager;
+
+        bool autoClient = false;
+        InitData data;
 
         public void Init(InitData data)
         {
             Debug.Log("--- CLIENT INIT START ---");
+            this.data = data;
+
             apiCalls.OnAuthSuccess.AddListener(EnableConnectCanvas);
             apiCalls.OnLogout.AddListener(DisableConnectCanvas);
 
-            if (data.processType == ProcessType.DEV_CLIENT)
+            if(data.processType == ProcessType.DEV_CLIENT)
             {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                autoClient = true;
                 AutoLog(data.username, data.password);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
+
             Debug.Log("--- CLIENT INIT END ---");
         }
 
@@ -30,8 +43,20 @@ namespace Configuration
         {
             apiCalls.LogOut();
             await apiCalls.OnBeginLogin(username, password, false);
-            VWNetworkManager.singleton.StartClient();
-            Debug.Log("client autostarted");
+            networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
+            networkManager.ClientManager.StartConnection();
+            //sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
+
+            //await UniTask.WaitUntil(() => connected == true);
+            ////Debug.Log("Owned: " + Owner);
+            //Scene launchScene = UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0);
+            //sceneManager.UnloadConnectionScenes(Owner, new SceneUnloadData(launchScene));
+            Debug.Log("client autologged");
+        }
+
+        private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs args)
+        {
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);
         }
 
         void EnableConnectCanvas(LoggedUserData dummyData)
@@ -46,7 +71,9 @@ namespace Configuration
 
         public void ConnectToServer()
         {
-            VWNetworkManager.singleton.StartClient();
+            networkManager.ClientManager.StartConnection();
+            Debug.Log(InstanceFinder.ClientManager.Connection);
+            sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
             Debug.Log("Client started by clicking connect button");
         }
     }
