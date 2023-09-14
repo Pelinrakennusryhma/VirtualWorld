@@ -18,6 +18,7 @@ namespace Configuration
         [SerializeField] GameObject connectCanvas;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] FishNet.Managing.Scened.SceneManager sceneManager;
+        [SerializeField] string username;
 
         InitData data;
 
@@ -31,7 +32,8 @@ namespace Configuration
 
             if(data.processType == ProcessType.DEV_CLIENT)
             {
-                AutoLog(data.username, data.password);
+                string username = this.username != "" ? this.username : data.username;
+                AutoLog(username, data.password);
             }
 
             Debug.Log("--- CLIENT INIT END ---");
