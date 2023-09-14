@@ -25,7 +25,6 @@ public class ViewWithinAViewRaycaster : MonoBehaviour
 
     public void ActivateRaycaster()
     {
-
         gameObject.SetActive(true);
     }
 

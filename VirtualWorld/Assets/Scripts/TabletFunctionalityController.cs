@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem;
 public class TabletFunctionalityController : NetworkBehaviour
 {
     public enum ViewId
@@ -11,22 +11,23 @@ public class TabletFunctionalityController : NetworkBehaviour
         None = 0,
         Map = 1,
         Inventory = 2,
-        NewsFeed = 3
+        NewsFeed = 3,
+        Calendar = 4
 
     }
 
     public ViewId CurrentView;
 
-    public Camera MapCamera;
-    public Camera InventoryCamera;
-    public Camera NewsFeedCamera;
+    //public Camera MapCamera;
+    //public Camera InventoryCamera;
+    //public Camera NewsFeedCamera;
 
-    public MeshRenderer ScreenMeshRenderer;
+    //public MeshRenderer ScreenMeshRenderer;
 
 
-    public Material MapMaterial;
-    public Material InventoryMaterial;
-    public Material NewsFeedMaterial;
+    //public Material MapMaterial;
+    //public Material InventoryMaterial;
+    //public Material NewsFeedMaterial;
 
     public ViewWithinAViewRaycaster Raycaster;
 
@@ -34,7 +35,11 @@ public class TabletFunctionalityController : NetworkBehaviour
     public GameObject NewsFeedButtonOriginalGlobal;
     public GameObject NewsFeedButtonParent;
 
+    public ViewWithAViewController ViewWithAViewController;
     public NewsFeedWindowChanger NewsFeedWindowChanger;
+    public CalendarWindowChanger CalendarWindowChanger;
+
+    public PlayerInput PlayerInput;
 
     private void Awake()
     {
@@ -44,16 +49,17 @@ public class TabletFunctionalityController : NetworkBehaviour
 
     public void OnTabletOpened()
     {
+        PlayerInput.enabled = false;
+        Debug.LogWarning("Disabled player input while the tablet is open to prevent unwanted interactions, like throwing a dice :)");
         ActivateProperView(CurrentView);
         Raycaster.ActivateRaycaster();
-        Debug.Log("Tablet was opened. React to that. " + Time.time);
     }
 
 
 
     public void OnNavigationButtonPressed(TabletNavigationButton.NavigationButtonID buttonID)
     {
-        Debug.Log("Tablet functionality knows we pressed navigation button " + buttonID + " at time " + Time.time);
+        //Debug.Log("Tablet functionality knows we pressed navigation button " + buttonID + " at time " + Time.time);
 
         if (buttonID == TabletNavigationButton.NavigationButtonID.Left)
         {
@@ -70,18 +76,25 @@ public class TabletFunctionalityController : NetworkBehaviour
     {
         ViewId newView = ViewId.None;
 
+        //Debug.Log("Current view is " + CurrentView.ToString());
+
+
         switch (CurrentView)
         {
             case ViewId.None:
                 break;
             case ViewId.Map:
-                newView = ViewId.NewsFeed;
+                newView = ViewId.Calendar;
                 break;
             case ViewId.Inventory:
                 newView = ViewId.Map;
                 break;
             case ViewId.NewsFeed:
                 newView = ViewId.Inventory;
+                break;
+
+            case ViewId.Calendar:
+                newView = ViewId.NewsFeed;
                 break;
             default:
                 break;
@@ -97,7 +110,7 @@ public class TabletFunctionalityController : NetworkBehaviour
             CurrentView = newView;
             ActivateProperView(CurrentView);
 
-            Debug.Log("Next view is " + newView);
+            //Debug.Log("Next view is " + newView);
         }
     }
 
@@ -105,6 +118,8 @@ public class TabletFunctionalityController : NetworkBehaviour
     {
         ViewId newView = ViewId.None;
 
+        //Debug.Log("Current view is " + CurrentView.ToString());
+
         switch (CurrentView)
         {
             case ViewId.None:
@@ -116,6 +131,9 @@ public class TabletFunctionalityController : NetworkBehaviour
                 newView = ViewId.NewsFeed;
                 break;
             case ViewId.NewsFeed:
+                newView = ViewId.Calendar;
+                break;
+            case ViewId.Calendar:
                 newView = ViewId.Map;
                 break;
             default:
@@ -132,62 +150,88 @@ public class TabletFunctionalityController : NetworkBehaviour
             CurrentView = newView;
             ActivateProperView(CurrentView);
 
-            Debug.Log("Next view is " + newView);
+            //Debug.Log("Next view is " + newView);
         }
     }
 
     public void ActivateProperView(ViewId viewId)
     {
-        NewsFeedController.Instance.OnNewsUpdated -= OnNewsUpdated;
 
-        Raycaster.InactivateRaycaster();
-
-
-        MapCamera.gameObject.SetActive(false);
-        InventoryCamera.gameObject.SetActive(false);
-        NewsFeedCamera.gameObject.SetActive(false);
-
-        switch (viewId)
+        if (viewId != ViewId.Calendar)
         {
-            case ViewId.None:
-                break;
-
-            case ViewId.Map:
-                MapCamera.gameObject.SetActive(true);
-                ScreenMeshRenderer.material = MapMaterial;
-
-                break;
-
-            case ViewId.Inventory:
-                InventoryCamera.gameObject.SetActive(true);
-                ScreenMeshRenderer.material = InventoryMaterial;
-                break;
-
-            case ViewId.NewsFeed:
-                NewsFeedCamera.gameObject.SetActive(true);
-                ScreenMeshRenderer.material = NewsFeedMaterial;
-                NewsFeedController.Instance.OnNewsUpdated += OnNewsUpdated;
-
-                InitializeNewsFeed();
-                Raycaster.ActivateRaycaster();
-                break;
-            default:
-                break;
+            CalendarWindowChanger.OnViewClosed();
         }
+
+        if (viewId == ViewId.NewsFeed)
+        {        
+            NewsFeedController.Instance.OnNewsUpdated -= OnNewsUpdated;
+            NewsFeedController.Instance.OnNewsUpdated += OnNewsUpdated;
+            InitializeNewsFeed();
+        }
+
+        else if (viewId == ViewId.Calendar)
+        {
+            InitializeCalendar();
+        }
+
+        ViewWithAViewController.OnViewChanged(viewId);
+
+        //return;
+
+        //Raycaster.InactivateRaycaster();
+
+        //MapCamera.gameObject.SetActive(false);
+        //InventoryCamera.gameObject.SetActive(false);
+        //NewsFeedCamera.gameObject.SetActive(false);
+
+        //switch (viewId)
+        //{
+        //    case ViewId.None:
+        //        break;
+
+        //    case ViewId.Map:
+        //        //MapCamera.gameObject.SetActive(true);
+        //        ScreenMeshRenderer.material = MapMaterial;
+
+        //        break;
+
+        //    case ViewId.Inventory:
+        //        //InventoryCamera.gameObject.SetActive(true);
+        //        ScreenMeshRenderer.material = InventoryMaterial;
+        //        break;
+
+        //    case ViewId.NewsFeed:
+        //        //NewsFeedCamera.gameObject.SetActive(true);
+        //        ScreenMeshRenderer.material = NewsFeedMaterial;
+        //        NewsFeedController.Instance.OnNewsUpdated += OnNewsUpdated;
+
+        //        InitializeNewsFeed();
+        //        Raycaster.ActivateRaycaster();
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public void OnTabletClosed()
     {
+
+        Debug.LogWarning("Enabled player inputs again, since the tablet is closed");
+        PlayerInput.enabled = true;
+
         NewsFeedController.Instance.OnNewsUpdated -= OnNewsUpdated;
 
         Raycaster.InactivateRaycaster();
         ActivateProperView(ViewId.None);
+        CalendarWindowChanger.OnViewClosed();
     }
 
 
-    // WHAT IF NEEDS IS UPDATED AND IDs CHANGED AFTER INITIALIZING AND DURING VIEWING THE NEWSFEED???
+
     private void InitializeNewsFeed()
     {
+        //Debug.Log("Initialize news feed");
+
         NewsFeedWindowChanger.ShowNewsList();
 
         Button[] childButtons = NewsFeedButtonParent.GetComponentsInChildren<Button>(true);
@@ -252,6 +296,11 @@ public class TabletFunctionalityController : NetworkBehaviour
         {
             InitializeNewsFeed();
         }
-        Debug.Log("News updated while the view is open " + Time.time);
+        //Debug.Log("News updated while the view is open " + Time.time);
+    }
+
+    public void InitializeCalendar()
+    {
+        CalendarWindowChanger.ShowCalendar();
     }
 }
