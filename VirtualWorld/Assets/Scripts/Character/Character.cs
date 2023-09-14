@@ -6,15 +6,20 @@ using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 using BackendConnection;
 using FishNet.Object;
+using FishNet;
+using FishNet.Managing.Scened;
+using System.Linq;
+using Scenes;
+using UnityEngine.SceneManagement;
 
 namespace Characters
 {
-    public class Character : NetworkBehaviour
+    public class Character : MonoBehaviour
     {
         public static Character Instance { get; private set; }
         [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
 
-        //[SerializeField] CharacterData characterData;
+        [SerializeField] CharacterData characterData;
 
         [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] UserSession userSession;
@@ -22,7 +27,7 @@ namespace Characters
         [SerializeField] public InventoryController inventoryController { get; private set; }
         [SerializeField] public PlayerEmitter PlayerEmitter { get; private set; }
 
-        //public UnityEvent<Inventory> EventInventoryChanged;
+        public UnityEvent<Inventory> EventInventoryChanged;
 
         private void Awake()
         {
@@ -33,8 +38,34 @@ namespace Characters
             else
             {
                 Instance = this;
-                //DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
                 inventoryController = GetComponent<InventoryController>();
+            }
+        }
+
+        private void Start()
+        {
+            InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoadEnd;
+            userSession = UserSession.Instance;
+            wsConnection = WebSocketConnection.Instance;
+            wsConnection.EventIncomingCharacterData.AddListener(OnIncomingCharacterDataClientRpc);
+        }
+
+        void OnSceneLoadEnd(SceneLoadEndEventArgs args)
+        {
+            bool mainSceneLoaded = false;
+            foreach (Scene scene in args.LoadedScenes)
+            {
+                if(scene.name == SceneLoader.Instance.MainSceneName)
+                {
+                    mainSceneLoaded = true;
+                    break;
+                }
+            }
+
+            if (mainSceneLoaded)
+            {
+                GetCharacterData(userSession.LoggedUserData.id);
             }
         }
 
@@ -57,37 +88,27 @@ namespace Characters
         //    }
         //}
 
-        //[ClientRpc]
-        //void OnIncomingCharacterDataClientRpc(CharacterData charData)
-        //{
-        //    if(charData.user == userSession.LoggedUserData.id)
-        //    {
-        //        characterData = charData;
-        //        EventInventoryChanged.Invoke(characterData.inventory);
-        //        Debug.Log("my data");
-        //    } else
-        //    {
-        //        Debug.Log("NOT my data");
-        //    }
-        //}
-
-        [ServerRpc]
+        void OnIncomingCharacterDataClientRpc(CharacterData charData)
+        {
+            if (charData.user == userSession.LoggedUserData.id)
+            {
+                characterData = charData;
+                EventInventoryChanged.Invoke(characterData.inventory);
+                Debug.Log("my data");
+            }
+            else
+            {
+                Debug.Log("NOT my data");
+            }
+        }
         public void AddMoneyServer(string userId, int amount)
         {
             wsConnection.AddMoneyToCharacter(userId, amount);
         }
 
-        [ServerRpc]
-        void GetCharacterDataServer(string id)
+        public void GetCharacterData(string id)
         {
             wsConnection.GetCharacterData(id);
-        }
-
-        Vector3 cachedPos = Vector3.zero;
-        public void DisablePlayerCharacter()
-        {
-            cachedPos = OwnedCharacter.transform.position;
-            OwnedCharacter.SetActive(false);
         }
     }
 }

@@ -15,9 +15,12 @@ namespace Configuration
         [SerializeField] ScenePicker mainScenePicker;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] SceneManager sceneManager;
+        [SerializeField] GameObject charControlObj;
         public async UniTask Init(InitData data)
         {
             Debug.Log("--- SERVER INIT START ---");
+            // Character Controller is not needed on server
+            charControlObj.SetActive(false);
 
             if (data.processType == ProcessType.DEV_SERVER)
             {

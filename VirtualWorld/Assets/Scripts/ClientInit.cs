@@ -19,7 +19,6 @@ namespace Configuration
         [SerializeField] NetworkManager networkManager;
         [SerializeField] FishNet.Managing.Scened.SceneManager sceneManager;
 
-        bool autoClient = false;
         InitData data;
 
         public void Init(InitData data)
@@ -32,7 +31,6 @@ namespace Configuration
 
             if(data.processType == ProcessType.DEV_CLIENT)
             {
-                autoClient = true;
                 AutoLog(data.username, data.password);
             }
 
@@ -54,6 +52,7 @@ namespace Configuration
             Debug.Log("client autologged");
         }
 
+        // unload launch scene when the main scene has been loaded
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs args)
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);

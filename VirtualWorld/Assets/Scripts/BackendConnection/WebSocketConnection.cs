@@ -20,9 +20,8 @@ namespace BackendConnection
         [SerializeField] string webSocketAddress;
         [SerializeField] APICalls apiCalls;
         WebSocket websocket;
-        LoggedUserData superUserData;
 
-        //public UnityEvent<CharacterData> EventIncomingCharacterData;
+        public UnityEvent<CharacterData> EventIncomingCharacterData;
 
         private void Awake()
         {
@@ -40,18 +39,10 @@ namespace BackendConnection
                 apiCalls = GetComponent<APICalls>();
             }
 
-            apiCalls.OnAuthSuccess.AddListener((data) => superUserData = data);
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             apiCalls.OnAuthSuccess.AddListener((data) => Connect(data));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
-
-//        public void Start()
-//        {
-//#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-//            Connect(superUserData);
-//#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-//        }
 
         public void Init(string wsUrl)
         {
@@ -61,11 +52,6 @@ namespace BackendConnection
         async UniTask Connect(LoggedUserData loggedUserData)
         {
             Debug.Log("LoggedUserData: " + loggedUserData);
-            //if (!IsServer)
-            //{
-            //    enabled = false;
-            //    return;
-            //}
 
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("user-agent", loggedUserData.token);
@@ -165,8 +151,8 @@ namespace BackendConnection
 
         void HandleIncomingCharacterData(string msg)
         {
-            //CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
-            //EventIncomingCharacterData.Invoke(charData);
+            CharacterData charData = JsonConvert.DeserializeObject<CharacterData>(msg);
+            EventIncomingCharacterData.Invoke(charData);
         }
     }
 }

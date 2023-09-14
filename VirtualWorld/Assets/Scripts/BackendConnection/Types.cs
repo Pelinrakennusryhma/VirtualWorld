@@ -50,35 +50,23 @@ namespace BackendConnection
             this.arg = arg;
         }
     }
-    //public struct Inventory : INetworkSerializable
-    //{
-    //    public int money;
+    public struct Inventory
+    {
+        public int money;
 
-    //    public Inventory(int money, string id)
-    //    {
-    //        this.money = money;
-    //    }
+        public Inventory(int money, string id)
+        {
+            this.money = money;
+        }
+    }
 
-    //    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-    //    {
-    //        serializer.SerializeValue(ref money);
-    //    }
+    public struct CharacterData
+    {
+        public Inventory inventory;
+        public string user;
+        public string id;
+    }
 
-    //}
-    //public struct CharacterData : INetworkSerializable
-    //{
-    //    public Inventory inventory;
-    //    public string user;
-    //    public string id;
-
-    //    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-    //    {
-    //        serializer.SerializeValue(ref inventory);
-    //        serializer.SerializeValue(ref user);
-    //        serializer.SerializeValue(ref id);
-    //    }
-
-    //}
     public struct WebSocketMessageIn
     {
         public string type;

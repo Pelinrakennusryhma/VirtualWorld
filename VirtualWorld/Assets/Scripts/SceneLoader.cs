@@ -73,7 +73,7 @@ namespace Scenes
             else
             {
                 Instance = this;
-                //DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
         }
 
@@ -168,7 +168,8 @@ namespace Scenes
                 {
                     GameObject player = Character.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
-                    Character.Instance.PlayerEmitter.DisableCharacter();
+                    player.SetActive(false);
+                    //Character.Instance.PlayerEmitter.DisableCharacter();
                 }
                 else
                 {
@@ -184,9 +185,10 @@ namespace Scenes
                         {
                             if (gameObject.CompareTag("Player"))
                             {
-                                PlayerEmitter playerEmitter = gameObject.GetComponent<PlayerEmitter>();
+                                //PlayerEmitter playerEmitter = gameObject.GetComponent<PlayerEmitter>();
                                 cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
-                                playerEmitter.DisableCharacter();
+                                //playerEmitter.DisableCharacter();
+                                gameObject.SetActive(false);
                             }
                             else
                             {
@@ -208,7 +210,8 @@ namespace Scenes
                     if (cachedGameObject.gameObject.CompareTag("Player"))
                     {
                         PlayerEmitter playerEmitter = cachedGameObject.gameObject.GetComponent<PlayerEmitter>();
-                        playerEmitter.EnableCharacter();
+                        //playerEmitter.EnableCharacter();
+                        cachedGameObject.gameObject.SetActive(true);
                     }
                     else
                     {

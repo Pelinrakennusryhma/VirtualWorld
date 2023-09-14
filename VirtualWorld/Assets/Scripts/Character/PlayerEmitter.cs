@@ -23,18 +23,23 @@ namespace Characters
         bool controlsDisabled = false;
 
         // stuff to disable when loading a minigamescene
-        [SerializeField] GameObject geometry;
-        [SerializeField] GameObject detector;
-        [SerializeField] GameObject playerActions;
-        [SerializeField] CharacterController characterController;
-        [SerializeField] Animator animator;
-        [SerializeField] NetworkAnimator nAnimator;
-        void Start()
+        //[SerializeField] GameObject geometry;
+        //[SerializeField] GameObject detector;
+        //[SerializeField] GameObject playerActions;
+        //[SerializeField] CharacterController characterController;
+        //[SerializeField] Animator animator;
+        //[SerializeField] NetworkAnimator nAnimator;
+
+
+        public override void OnStartClient()
         {
-            //if (!IsOwner)
-            //{
-            //    return;
-            //}
+            base.OnStartClient();
+
+            if (!IsOwner)
+            {
+                return;
+            }
+
             Character.Instance.SetPlayerGameObject(this, gameObject);
             UIManager.Instance.SetPlayerCharacter(gameObject);
 
@@ -74,33 +79,33 @@ namespace Characters
             }
         }
 
-        public void EnableCharacter()
-        {
-            geometry.SetActive(true);
-            detector.SetActive(true);
-            inputs.enabled = true;
-            playerActions.SetActive(true);
-            characterController.enabled = true;
-            animator.enabled = true;
-            controller.enabled = true;
-            nAnimator.enabled = true;
-            if (IsClient && IsOwner)
-            {
-                playerInput.enabled = true;
-            }
-        }
+        //public void EnableCharacter()
+        //{
+        //    geometry.SetActive(true);
+        //    detector.SetActive(true);
+        //    inputs.enabled = true;
+        //    playerActions.SetActive(true);
+        //    characterController.enabled = true;
+        //    animator.enabled = true;
+        //    controller.enabled = true;
+        //    nAnimator.enabled = true;
+        //    if (IsClient && IsOwner)
+        //    {
+        //        playerInput.enabled = true;
+        //    }
+        //}
 
-        public void DisableCharacter()
-        {
-            playerActions.SetActive(false);
-            geometry.SetActive(false);
-            detector.SetActive(false);
-            inputs.enabled = false;
-            playerInput.enabled = false;
-            characterController.enabled = false;
-            animator.enabled = false;
-            controller.enabled = false;
-            nAnimator.enabled = false;
-        }
+        //public void DisableCharacter()
+        //{
+        //    playerActions.SetActive(false);
+        //    geometry.SetActive(false);
+        //    detector.SetActive(false);
+        //    inputs.enabled = false;
+        //    playerInput.enabled = false;
+        //    characterController.enabled = false;
+        //    animator.enabled = false;
+        //    controller.enabled = false;
+        //    nAnimator.enabled = false;
+        //}
     }
 }
