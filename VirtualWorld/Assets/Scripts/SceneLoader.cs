@@ -112,7 +112,7 @@ namespace Scenes
         IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
             PackScene(sceneLoadParams.scenePackMode);
-      
+
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             while (!async.isDone)
@@ -141,16 +141,17 @@ namespace Scenes
 
         void PackScene(ScenePackMode scenePackMode)
         {
-            if(scenePackMode != ScenePackMode.NONE)
+            if (scenePackMode != ScenePackMode.NONE)
             {
                 Scene activeScene = SceneManager.GetActiveScene();
 
-                if(scenePackMode == ScenePackMode.PLAYER_ONLY)
+                if (scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {
                     GameObject player = Character.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
                     player.SetActive(false);
-                } else
+                }
+                else
                 {
                     GameObject[] allObjects = activeScene.GetRootGameObjects();
 
@@ -159,7 +160,8 @@ namespace Scenes
                         if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == Character.Instance.OwnedCharacter)
                         {
 
-                        } else
+                        }
+                        else
                         {
                             cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
                             gameObject.SetActive(false);
@@ -174,7 +176,10 @@ namespace Scenes
         {
             foreach (CachedGameObject cachedGameObject in cachedGameObjectList)
             {
-                cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+                if (cachedGameObject.gameObject != null)
+                {
+                    cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+                }
             }
 
             cachedGameObjectList.Clear();
@@ -208,7 +213,7 @@ namespace Scenes
         }
 
         IEnumerator LoadNewSubSceneAndUnloadOldSubScene(string incomingSceneName)
-        {            
+        {
             Scene oldSubScene = SceneManager.GetActiveScene();
 
             // Disable objects, so they won't mess up with FindObjectsOfType when a new scene is loaded
@@ -231,11 +236,11 @@ namespace Scenes
             {
                 yield return null;
             }
-       
-            Scene newSubScene = SceneManager.GetSceneByName(incomingSceneName);            
-            
-            oldMainCamera.gameObject.SetActive(false); 
-            
+
+            Scene newSubScene = SceneManager.GetSceneByName(incomingSceneName);
+
+            oldMainCamera.gameObject.SetActive(false);
+
             SceneManager.SetActiveScene(newSubScene);
             SceneManager.UnloadSceneAsync(oldSubScene);
         }

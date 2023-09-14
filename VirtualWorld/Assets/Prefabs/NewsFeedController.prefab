@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7585254186678106722
+--- !u!1 &6387497054512564859
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1354371888796518199}
-  - component: {fileID: 9049930026641708204}
-  - component: {fileID: 8268051767839732923}
+  - component: {fileID: 249790663053154032}
+  - component: {fileID: 3153517341080763623}
+  - component: {fileID: 3411911463170047447}
   m_Layer: 0
   m_Name: NewsFeedController
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1354371888796518199
+--- !u!4 &249790663053154032
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7585254186678106722}
+  m_GameObject: {fileID: 6387497054512564859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9049930026641708204
+--- !u!114 &3153517341080763623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7585254186678106722}
+  m_GameObject: {fileID: 6387497054512564859}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b9e0ceb581ae084aa82575953af6c3d, type: 3}
@@ -49,13 +49,13 @@ MonoBehaviour:
   RunningFreeID: 0
   GlobalNews: []
   RunningFreeGlobalID: 0
---- !u!114 &8268051767839732923
+--- !u!114 &3411911463170047447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7585254186678106722}
+  m_GameObject: {fileID: 6387497054512564859}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
