@@ -68,6 +68,8 @@ namespace BackendConnection
                 string text = await GetTextAsync(req);
                 Debug.Log(text);
                 LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
+                loggedUserData.token = jwt;
+                Debug.Log("loggedUserDataTokenInAPICALLS: " + loggedUserData.token);
                 OnAuthSuccess.Invoke(loggedUserData);
             }
             catch (UnityWebRequestException e)

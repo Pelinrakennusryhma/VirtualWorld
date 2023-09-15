@@ -51,7 +51,7 @@ namespace BackendConnection
 
         async UniTask Connect(LoggedUserData loggedUserData)
         {
-            Debug.Log("LoggedUserData: " + loggedUserData);
+            Debug.Log("LoggedUserData.token: " + loggedUserData.token);
 
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("user-agent", loggedUserData.token);

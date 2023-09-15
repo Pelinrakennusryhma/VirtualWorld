@@ -29,8 +29,9 @@ namespace Configuration
 
             apiCalls.OnAuthSuccess.AddListener(EnableConnectCanvas);
             apiCalls.OnLogout.AddListener(DisableConnectCanvas);
+            networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
 
-            if(data.processType == ProcessType.DEV_CLIENT)
+            if (data.processType == ProcessType.DEV_CLIENT)
             {
                 string username = this.username != "" ? this.username : data.username;
                 AutoLog(username, data.password);
@@ -43,7 +44,6 @@ namespace Configuration
         {
             apiCalls.LogOut();
             await apiCalls.OnBeginLogin(username, password, false);
-            networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
             networkManager.ClientManager.StartConnection();
             //sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
 
@@ -74,7 +74,6 @@ namespace Configuration
         {
             networkManager.ClientManager.StartConnection();
             Debug.Log(InstanceFinder.ClientManager.Connection);
-            sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
             Debug.Log("Client started by clicking connect button");
         }
     }

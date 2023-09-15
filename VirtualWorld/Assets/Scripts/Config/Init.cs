@@ -87,6 +87,7 @@ namespace Configuration
                     apiCalls.Init(https);
                     userSession.Init();
                     clientInit.Init(initData);
+                    wsConnection.Init(Config.wssUrl);
                     break;
                 case ProcessType.SERVER:
                     initData = new InitData(
@@ -99,7 +100,7 @@ namespace Configuration
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
                     apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.wsUrl);
+                    wsConnection.Init(Config.wssUrl);
                     serverInit.Init(initData);
                     break;
                 case ProcessType.DEV_CLIENT:
@@ -114,6 +115,7 @@ namespace Configuration
                         );
                     apiCalls.Init(Config.httpUrl);
                     clientInit.Init(initData);
+                    wsConnection.Init(Config.wsUrl);
                     break;
                 case ProcessType.DEV_CLIENT2:
                     string ip2 = Environment.GetEnvironmentVariable("UNITY_SERVER_IP");
@@ -132,6 +134,8 @@ namespace Configuration
                     apiCalls.Init(https2);
                     userSession.Init();
                     clientInit.Init(initData);
+                    wsConnection.Init(Config.wssUrl);
+                    Debug.Log(Config.wssUrl);
                     break;
                 case ProcessType.DEV_SERVER:
                     initData = new InitData(
