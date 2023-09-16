@@ -569,9 +569,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useWss: 1
   _sslConfiguration:
-    Enabled: 1
+    Enabled: 0
     CertificatePath: ./cert.pfx
-    CertificatePassword: HaapaFAARAO1!
+    CertificatePassword: 
     SslProtocol: 12288
   _mtu: 1023
   _port: 7001
@@ -1572,7 +1572,7 @@ PrefabInstance:
     - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
         type: 3}
       propertyPath: runAsClient
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
         type: 3}

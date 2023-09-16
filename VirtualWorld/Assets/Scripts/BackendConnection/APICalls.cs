@@ -14,7 +14,7 @@ namespace BackendConnection
         string baseURL = "https://localhost:3001";
         readonly string authRoute = "/api/auth/";
         readonly string loginRoute = "/api/login/";
-        readonly string registerRoute = "/api/users/";
+        readonly string registerRoute = "/api/user/";
         
         public static APICalls Instance { get; private set; }
 
