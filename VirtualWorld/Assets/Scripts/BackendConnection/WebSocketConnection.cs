@@ -18,7 +18,7 @@ namespace BackendConnection
     {
         public static WebSocketConnection Instance { get; private set; }
         [SerializeField] string webSocketAddress;
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
         WebSocket websocket;
 
         public UnityEvent<CharacterData> EventIncomingCharacterData;
@@ -34,13 +34,13 @@ namespace BackendConnection
                 Instance = this;
             }
 
-            if (apiCalls == null)
+            if (apiCalls_Client == null)
             {
-                apiCalls = GetComponent<APICalls>();
+                apiCalls_Client = GetComponent<APICalls_Client>();
             }
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-            apiCalls.OnAuthSuccess.AddListener((data) => Connect(data));
+            apiCalls_Client.OnAuthSuccess.AddListener((data) => Connect(data));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 

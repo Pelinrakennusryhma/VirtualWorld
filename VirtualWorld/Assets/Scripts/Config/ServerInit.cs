@@ -6,12 +6,14 @@ using Cysharp.Threading.Tasks;
 using FishNet;
 using FishNet.Managing;
 using FishNet.Managing.Scened;
+using System.Collections;
+using FishNet.Transporting;
 
 namespace Configuration
 {
     public class ServerInit : MonoBehaviour
     {
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
         [SerializeField] ScenePicker mainScenePicker;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] SceneManager sceneManager;
@@ -19,18 +21,23 @@ namespace Configuration
         public async UniTask Init(InitData data)
         {
             Debug.Log("--- SERVER INIT START ---");
-            // Character Controller is not needed on server
-            charControlObj.SetActive(false);
-
-            if (data.processType == ProcessType.DEV_SERVER)
-            {
-                apiCalls.LogOut();
-            }
-
-            await apiCalls.OnBeginLogin(data.username, data.password, false);
+            networkManager.ServerManager.OnServerConnectionState += OnServerStarted;
+            // Character Controller is not needed on server.. or is it?
+            //charControlObj.SetActive(false);
 
             networkManager.ServerManager.StartConnection();
+        }
 
+        void OnServerStarted(ServerConnectionStateArgs args)
+        {
+            if(args.ConnectionState == LocalConnectionState.Started)
+            {
+                LoadMainScene();
+            }
+        }
+
+        void LoadMainScene()
+        {
             string mainSceneName = mainScenePicker.GetSceneName();
             SceneLoadData sld = new SceneLoadData(mainSceneName);
             sceneManager.LoadGlobalScenes(sld);

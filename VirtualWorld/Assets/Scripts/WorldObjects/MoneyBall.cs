@@ -21,7 +21,7 @@ namespace WorldObjects
         public void Interact(string playerId, UnityAction dummy)
         {
             string userId = UserSession.Instance.LoggedUserData.id;
-            Character.Instance.AddMoneyServer(userId, moneyChangeAmount);
+            Character.Instance.AddMoneyServerRpc(userId, moneyChangeAmount);
         }
     }
 }

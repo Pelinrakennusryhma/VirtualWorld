@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4691509466571487088}
   - component: {fileID: 2845221288109614394}
   m_Layer: 0
-  m_Name: CharacterController
+  m_Name: CharacterManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4691509466571487088
 MonoBehaviour:
@@ -45,9 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2229f80b9db7775419198f4aa8033c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   <OwnedCharacter>k__BackingField: {fileID: 0}
-  wsConnection: {fileID: 0}
   userSession: {fileID: 0}
+  EventInventoryChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2845221288109614394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,4 +66,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 4691509466571487088}
-  wsConnection: {fileID: 0}

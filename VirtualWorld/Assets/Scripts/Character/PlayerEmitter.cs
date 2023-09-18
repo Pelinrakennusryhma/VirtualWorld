@@ -40,7 +40,7 @@ namespace Characters
                 return;
             }
 
-            Character.Instance.SetPlayerGameObject(this, gameObject);
+            //Character.Instance.SetPlayerGameObject(this, gameObject);
             UIManager.Instance.SetPlayerCharacter(gameObject);
 
             controller.shouldAnimate = true;

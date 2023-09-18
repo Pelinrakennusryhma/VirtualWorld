@@ -90,7 +90,7 @@ namespace UI
         {
             Debug.Log("Log out pressed");
             SceneManager.LoadScene(0);
-            APICalls.Instance.LogOut();
+            APICalls_Client.Instance.LogOut();
         }
 
         public void OnQuitPressed()

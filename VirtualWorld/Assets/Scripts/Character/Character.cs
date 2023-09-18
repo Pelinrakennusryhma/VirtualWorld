@@ -14,14 +14,13 @@ using UnityEngine.SceneManagement;
 
 namespace Characters
 {
-    public class Character : MonoBehaviour
+    public class Character : NetworkBehaviour
     {
         public static Character Instance { get; private set; }
         [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
 
         [SerializeField] CharacterData characterData;
 
-        [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] UserSession userSession;
 
         [SerializeField] public InventoryController inventoryController { get; private set; }
@@ -33,41 +32,43 @@ namespace Characters
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
-                inventoryController = GetComponent<InventoryController>();
             }
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            GetCharacterData(UserSession.Instance.LoggedUserData.id);
         }
 
         private void Start()
         {
-            InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoadEnd;
+            //InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoadEnd;
             userSession = UserSession.Instance;
-            wsConnection = WebSocketConnection.Instance;
-            wsConnection.EventIncomingCharacterData.AddListener(OnIncomingCharacterDataClientRpc);
         }
 
-        void OnSceneLoadEnd(SceneLoadEndEventArgs args)
-        {
-            bool mainSceneLoaded = false;
-            foreach (Scene scene in args.LoadedScenes)
-            {
-                if(scene.name == SceneLoader.Instance.MainSceneName)
-                {
-                    mainSceneLoaded = true;
-                    break;
-                }
-            }
+        //void OnSceneLoadEnd(SceneLoadEndEventArgs args)
+        //{
+        //    bool mainSceneLoaded = false;
+        //    foreach (Scene scene in args.LoadedScenes)
+        //    {
+        //        if(scene.name == SceneLoader.Instance.MainSceneName)
+        //        {
+        //            mainSceneLoaded = true;
+        //            break;
+        //        }
+        //    }
 
-            if (mainSceneLoaded)
-            {
-                GetCharacterData(userSession.LoggedUserData.id);
-            }
-        }
+        //    if (mainSceneLoaded)
+        //    {
+        //        GetCharacterData(userSession.LoggedUserData.id);
+        //    }
+        //}
 
         public void SetPlayerGameObject(PlayerEmitter playerEmitter, GameObject go)
         {
@@ -75,40 +76,15 @@ namespace Characters
             OwnedCharacter = go;
         }
 
-        //public override void OnNetworkSpawn()
-        //{
-        //    userSession = UserSession.Instance;
-        //    wsConnection = WebSocketConnection.Instance;
-
-        //    wsConnection.EventIncomingCharacterData.AddListener(OnIncomingCharacterDataClientRpc);
-
-        //    if (isClient)
-        //    {
-        //        GetCharacterDataServer(userSession.LoggedUserData.id);
-        //    }
-        //}
-
-        void OnIncomingCharacterDataClientRpc(CharacterData charData)
-        {
-            if (charData.user == userSession.LoggedUserData.id)
-            {
-                characterData = charData;
-                EventInventoryChanged.Invoke(characterData.inventory);
-                Debug.Log("my data");
-            }
-            else
-            {
-                Debug.Log("NOT my data");
-            }
-        }
-        public void AddMoneyServer(string userId, int amount)
-        {
-            wsConnection.AddMoneyToCharacter(userId, amount);
-        }
-
+        [ServerRpc]
         public void GetCharacterData(string id)
         {
-            wsConnection.GetCharacterData(id);
+
+        }
+
+        public void AddMoneyServerRpc(string userId, int moneyChangeAmount)
+        {
+
         }
     }
 }

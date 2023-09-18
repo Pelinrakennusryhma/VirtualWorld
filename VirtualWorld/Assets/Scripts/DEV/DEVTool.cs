@@ -8,7 +8,7 @@ namespace Dev
     public class DEVTool : MonoBehaviour
     {
         [Header("Helper dev script to automatically login a user, \nsuperUser for server(normal unity project)\nand a normal for client(cloned project).")]
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
 
         async void Start()
         {
@@ -35,8 +35,8 @@ namespace Dev
                 Debug.Log("CANCELLED DEV LOGIN: No username and/or password");
             }
 
-            apiCalls.LogOut();
-            await apiCalls.OnBeginLogin(username, password, false);
+            apiCalls_Client.LogOut();
+            await apiCalls_Client.OnBeginLogin(username, password, false);
 
             Debug.Log("FINISHED DEV LOGIN: completed in " + (Time.time - startTime) * 1000 + " milliseconds.");
         }

@@ -14,7 +14,7 @@ namespace Configuration
 {
     public class ClientInit : MonoBehaviour
     {
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
         [SerializeField] GameObject connectCanvas;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] FishNet.Managing.Scened.SceneManager sceneManager;
@@ -27,8 +27,8 @@ namespace Configuration
             Debug.Log("--- CLIENT INIT START ---");
             this.data = data;
 
-            apiCalls.OnAuthSuccess.AddListener(EnableConnectCanvas);
-            apiCalls.OnLogout.AddListener(DisableConnectCanvas);
+            apiCalls_Client.OnAuthSuccess.AddListener(EnableConnectCanvas);
+            apiCalls_Client.OnLogout.AddListener(DisableConnectCanvas);
             networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
 
             if (data.processType == ProcessType.DEV_CLIENT)
@@ -44,8 +44,8 @@ namespace Configuration
 
         async UniTask AutoLog(string username, string password)
         {
-            apiCalls.LogOut();
-            await apiCalls.OnBeginLogin(username, password, false);
+            apiCalls_Client.LogOut();
+            await apiCalls_Client.OnBeginLogin(username, password, false);
             networkManager.ClientManager.StartConnection();
             Debug.Log("client autologged");
         }

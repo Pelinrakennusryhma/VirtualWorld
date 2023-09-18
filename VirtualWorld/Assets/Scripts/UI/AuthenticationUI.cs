@@ -13,7 +13,7 @@ namespace Authentication
     public class AuthenticationUI : MonoBehaviour
     {
         [Header("Backend")]
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
 
         [Header("Shared")]
         [SerializeField] GameObject loginRegisterPanel;
@@ -41,18 +41,18 @@ namespace Authentication
 
         void Awake()
         {
-            if(apiCalls == null)
+            if(apiCalls_Client == null)
             {
-                apiCalls = FindAnyObjectByType<APICalls>();
+                apiCalls_Client = FindAnyObjectByType<APICalls_Client>();
             }
 
             OnEnableRegister();
 
-            loginButton.onClick.AddListener(async () => await apiCalls.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
-            registerButton.onClick.AddListener(async () => await apiCalls.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
-            apiCalls.OnAuthSuccess.AddListener(OnEnableLoggedIn);
-            apiCalls.OnNoLoggedUser.AddListener(OnEnableRegister);
-            apiCalls.OnAuthFailed.AddListener(OnAuthFailed);
+            loginButton.onClick.AddListener(async () => await apiCalls_Client.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
+            registerButton.onClick.AddListener(async () => await apiCalls_Client.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
+            apiCalls_Client.OnAuthSuccess.AddListener(OnEnableLoggedIn);
+            apiCalls_Client.OnNoLoggedUser.AddListener(OnEnableRegister);
+            apiCalls_Client.OnAuthFailed.AddListener(OnAuthFailed);
         }
 
         public void OnEnableLogin()
@@ -83,7 +83,7 @@ namespace Authentication
 
         public void OnLogOut()
         {
-            apiCalls.LogOut();
+            apiCalls_Client.LogOut();
             OnEnableLogin();
             loggedInPanel.SetActive(false);
         }

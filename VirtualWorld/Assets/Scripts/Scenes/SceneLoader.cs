@@ -82,33 +82,6 @@ namespace Scenes
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
         }
-        //[ClientRpc]
-        //public void NewClientConnectedClientRpc(NetworkIdentity identity)
-        //{
-        //    // if playing minigame, handle any new characters getting instantiated
-        //    ScenePackMode packMode = sceneLoadParams.scenePackMode;
-        //    if (cachedGameObjectList.Count > 0 && (packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER))
-        //    {
-        //        AddNewCachedObject(identity.gameObject);
-        //    }
-
-        //}
-
-        //void AddNewCachedObject(GameObject obj)
-        //{
-        //    cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
-        //    SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(MainSceneName));
-
-        //    if (obj.CompareTag("Player"))
-        //    {
-        //        PlayerEmitter playerEmitter = obj.GetComponent<PlayerEmitter>();
-        //        playerEmitter.DisableCharacter();
-        //    }
-        //    else
-        //    {
-        //        obj.SetActive(false);
-        //    }
-        //}
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {

@@ -8,7 +8,7 @@ using System;
 
 namespace BackendConnection
 {
-    public class APICalls : MonoBehaviour
+    public class APICalls_Client : MonoBehaviour
     {
         [SerializeField]
         string baseURL = "https://localhost:3001";
@@ -16,7 +16,7 @@ namespace BackendConnection
         readonly string loginRoute = "/api/login/";
         readonly string registerRoute = "/api/user/";
         
-        public static APICalls Instance { get; private set; }
+        public static APICalls_Client Instance { get; private set; }
 
         public UnityEvent<LoggedUserData> OnAuthSuccess;
         public UnityEvent OnNoLoggedUser;
@@ -41,35 +41,17 @@ namespace BackendConnection
             baseURL = httpsUrl;
         }
 
-        private UnityWebRequest CreateRequest(string path, RequestType type, object data = null)
-        {
-            Debug.Log("path: " + path);
-            UnityWebRequest request = new UnityWebRequest(path, type.ToString());
-
-            if(data != null)
-            {
-                string json = JsonUtility.ToJson(data);
-                byte[] jsonToSend = new UTF8Encoding().GetBytes(json);
-                request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-            }
-
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            return request;
-        }
-
         public async void AuthWithJWT(string jwt)
         {
             try
             {
-                UnityWebRequest req = CreateRequest(baseURL + authRoute, RequestType.POST, null);
+                UnityWebRequest req = Utils.CreateRequest(baseURL + authRoute, RequestType.POST, null);
                 req.SetRequestHeader("Authorization", "Bearer " + jwt);
                 string text = await GetTextAsync(req);
                 Debug.Log(text);
                 LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
                 loggedUserData.token = jwt;
-                Debug.Log("loggedUserDataTokenInAPICALLS: " + loggedUserData.token);
+                Debug.Log("loggedUserDataTokenInAPICalls_Client: " + loggedUserData.token);
                 OnAuthSuccess.Invoke(loggedUserData);
             }
             catch (UnityWebRequestException e)
@@ -92,7 +74,7 @@ namespace BackendConnection
             {
                 LoginUserData userData = new LoginUserData(username, password);
 
-                UnityWebRequest req = CreateRequest(baseURL + loginRoute, RequestType.POST, userData);
+                UnityWebRequest req = Utils.CreateRequest(baseURL + loginRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
 
@@ -120,7 +102,7 @@ namespace BackendConnection
                 LoginUserData userData = new LoginUserData();
                 userData.username = username;
                 userData.password = password;
-                UnityWebRequest req = CreateRequest(baseURL + registerRoute, RequestType.POST, userData);
+                UnityWebRequest req = Utils.CreateRequest(baseURL + registerRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
 

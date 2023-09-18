@@ -20,7 +20,7 @@ namespace Configuration
 
     public class Init : MonoBehaviour
     {
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
         [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] ServerInit serverInit;
         [SerializeField] ClientInit clientInit;
@@ -72,83 +72,67 @@ namespace Configuration
             switch (processType)
             {
                 case ProcessType.CLIENT:
-                    string ip = Config.prodIpForClient;
-                    string https = Config.httpsUrl;
-                    string wss = Config.wssUrl;
+                    string ip = Config.PROD_IpForClient;
+                    string https = Config.PROD_clientBackendUrl;
                     initData = new InitData(
                         processType,
                         ip,
                         Config.serverPort,
                         https,
-                        wss,
                         "",
                         ""
                         );
-                    apiCalls.Init(https);
+                    apiCalls_Client.Init(https);
                     userSession.Init();
                     clientInit.Init(initData);
-                    wsConnection.Init(Config.wssUrl);
                     break;
                 case ProcessType.SERVER:
                     initData = new InitData(
                         processType,
                         Config.ipForServer,
                         Config.serverPort,
-                        Config.httpUrl,
-                        Config.wsUrl,
+                        Config.serverBackendUrl,
                         Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
-                    apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.wssUrl);
                     serverInit.Init(initData);
                     break;
                 case ProcessType.DEV_CLIENT:
                     initData = new InitData(
                         processType,
-                        Config.devIpForClient,
+                        Config.DEV_IpForClient,
                         Config.serverPort,
-                        Config.httpUrl,
-                        Config.wsUrl,
+                        Config.DEV_clientBackendUrl,
                         Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME"),
                         Environment.GetEnvironmentVariable("UNITY_CLIENT_PASSWORD")
                         );
-                    apiCalls.Init(Config.httpUrl);
+                    apiCalls_Client.Init(Config.DEV_clientBackendUrl);
                     clientInit.Init(initData);
-                    wsConnection.Init(Config.wsUrl);
                     break;
                 case ProcessType.DEV_CLIENT2:
-                    string ip2 = Environment.GetEnvironmentVariable("UNITY_SERVER_IP");
-                    string https2 = Environment.GetEnvironmentVariable("UNITY_HTTPS_URL");
-                    string wss2 = Environment.GetEnvironmentVariable("UNITY_WSS_URL");
-                    Debug.Log("IP2 IN INIT: " + ip2);
+                    ip = Config.PROD_IpForClient;
+                    https = Config.PROD_clientBackendUrl;
                     initData = new InitData(
                         processType,
-                        ip2,
+                        ip,
                         Config.serverPort,
-                        https2,
-                        wss2,
+                        https,
                         "",
                         ""
                         );
-                    apiCalls.Init(https2);
+                    apiCalls_Client.Init(https);
                     userSession.Init();
                     clientInit.Init(initData);
-                    wsConnection.Init(Config.wssUrl);
-                    Debug.Log(Config.wssUrl);
                     break;
                 case ProcessType.DEV_SERVER:
                     initData = new InitData(
                         processType,
                         Config.ipForServer,
                         Config.serverPort,
-                        Config.httpUrl,
-                        Config.wsUrl,
+                        Config.serverBackendUrl,
                         Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
-                    apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.wsUrl);
                     serverInit.Init(initData);
                     break;
                 default:
