@@ -17,27 +17,27 @@ public class ArcadeCabinetTrigger : MonoBehaviour
     {
 
         return;
-        if (other.CompareTag("Player"))
-        {
-            MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
-            listener.OnEnteredArcadeCabinetTrigger(Cabinet);
-            listener.MiniGamePrompt.OnEnterMinigameTrigger(Cabinet);
-            Debug.Log("Player entered trigger area " + Time.time);
+        //if (other.CompareTag("Player"))
+        //{
+        //    MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
+        //    listener.OnEnteredArcadeCabinetTrigger(Cabinet);
+        //    listener.MiniGamePrompt.OnEnterMinigameTrigger(Cabinet);
+        //    Debug.Log("Player entered trigger area " + Time.time);
 
-        }
+        //}
     }
 
     public void OnTriggerExit(Collider other)
     {
 
         return;
-        if (other.CompareTag("Player"))
-        {
-            MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
-            listener.OnExitArcadeCabinetTrigger();
-            listener.MiniGamePrompt.OnExitMiniGameTrigger();
-            Debug.Log("Player exited trigger area " + Time.time);
+        //if (other.CompareTag("Player"))
+        //{
+        //    MiniGameTriggerListener listener = other.GetComponent<MiniGameTriggerListener>();
+        //    listener.OnExitArcadeCabinetTrigger();
+        //    listener.MiniGamePrompt.OnExitMiniGameTrigger();
+        //    Debug.Log("Player exited trigger area " + Time.time);
 
-        }
+        //}
     }
 }

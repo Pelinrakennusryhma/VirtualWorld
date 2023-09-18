@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 // Got help from here, but it just stopped working:
@@ -15,8 +16,15 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
     public Camera ViewWithinAViewCamera;
     public GraphicRaycaster Raycaster;
 
+    public TMP_InputField lastInteractedInputField;
 
+    public delegate void InputFieldSubmitted(string text);
+    public event InputFieldSubmitted OnInputFieldSubmitted;
 
+    public void SetRaycaster(GraphicRaycaster caster)
+    {
+        Raycaster = caster;
+    }
 
     // Called by Unity when a Raycaster should raycast because it extends BaseRaycaster.
     public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList)
@@ -66,13 +74,14 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
             Raycaster.Raycast(eventData, resultAppendList);
 
   
-            InteractWithScreen(resultAppendList);
+            InteractWithScreen(resultAppendList, eventData);
         }
     }
 
-    // A laborous attepmt at making things work
+    // A laborous attepmt at making things work, because it just stopped working like it should
     
-    private static void InteractWithScreen(List<RaycastResult> resultAppendList)
+    private void InteractWithScreen(List<RaycastResult> resultAppendList,
+                                    PointerEventData eventData)
     {
 
         for (int i = 0; i < resultAppendList.Count; i++)
@@ -92,6 +101,9 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
             if (button != null && Input.GetMouseButtonDown(0))
             {
                 button.onClick.Invoke();
+
+                lastInteractedInputField = null;
+                
                 //Debug.Log("Clicked button " + Time.time);
                 //Debug.Break();
             }
@@ -121,6 +133,33 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
                 //Debug.Log("Should DRAG");
             }
 
+            TMPro.TMP_InputField field = resultAppendList[i].gameObject.GetComponent<TMP_InputField>();
+
+            if (field != null)
+            {
+                //Debug.LogWarning("We are hitting tmpro input field");
+                
+                field.OnPointerClick(eventData);
+
+                lastInteractedInputField = field;
+
+
+            }
+        }
+
+        if(lastInteractedInputField != null 
+            && Input.GetKeyDown(KeyCode.Return))
+        {
+            lastInteractedInputField.OnSubmit(eventData);
+
+            if (OnInputFieldSubmitted != null)
+            {
+                OnInputFieldSubmitted(lastInteractedInputField.text);
+            }
+
+            lastInteractedInputField.text = "";
+
+            //Debug.Log("We pressed return");
         }
     }
 }

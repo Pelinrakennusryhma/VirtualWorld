@@ -85,6 +85,7 @@ namespace StarterAssets
 		public void OnInteract(InputValue value)
         {
 			InteractInput(value.isPressed);
+			Debug.Log("On interact");
         }
 
 
@@ -97,8 +98,9 @@ namespace StarterAssets
         public void OnAction1(InputValue value)
         {
 			Action1Input(value.isPressed);
+			Debug.Log("On action1");
 
-        }
+		}
 
 		public void OnMenu(InputValue value)
 		{
