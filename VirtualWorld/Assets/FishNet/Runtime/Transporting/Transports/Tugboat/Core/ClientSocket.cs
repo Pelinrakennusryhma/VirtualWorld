@@ -135,6 +135,7 @@ namespace FishNet.Transporting.Tugboat.Client
         /// <param name="pollTime"></param>
         internal bool StartConnection(string address, ushort port)
         {
+            Debug.Log(address + ": " + port);
             if (base.GetConnectionState() != LocalConnectionState.Stopped)
                 return false;
 

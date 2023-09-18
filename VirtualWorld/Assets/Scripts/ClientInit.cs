@@ -34,7 +34,9 @@ namespace Configuration
             if (data.processType == ProcessType.DEV_CLIENT)
             {
                 string username = this.username != "" ? this.username : data.username;
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 AutoLog(username, data.password);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
 
             Debug.Log("--- CLIENT INIT END ---");
@@ -45,12 +47,6 @@ namespace Configuration
             apiCalls.LogOut();
             await apiCalls.OnBeginLogin(username, password, false);
             networkManager.ClientManager.StartConnection();
-            //sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
-
-            //await UniTask.WaitUntil(() => connected == true);
-            ////Debug.Log("Owned: " + Owner);
-            //Scene launchScene = UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0);
-            //sceneManager.UnloadConnectionScenes(Owner, new SceneUnloadData(launchScene));
             Debug.Log("client autologged");
         }
 

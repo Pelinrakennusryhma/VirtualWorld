@@ -449,11 +449,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unreliableMTU: 1023
-  _ipv4BindAddress: 0.0.0.0
+  _ipv4BindAddress: 
   _ipv6BindAddress: 
   _port: 7000
   _maximumClients: 4095
-  _clientAddress: gameserver.hyvanmielenpelit.fi
+  _clientAddress: localhost
   _timeout: 15
 --- !u!114 &321055263
 MonoBehaviour:

@@ -47,12 +47,11 @@ namespace BackendConnection
         public void Init(string wsUrl)
         {
             webSocketAddress = wsUrl;
+            Debug.Log("wsUrl: " + wsUrl);
         }
 
         async UniTask Connect(LoggedUserData loggedUserData)
         {
-            Debug.Log("LoggedUserData.token: " + loggedUserData.token);
-
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("user-agent", loggedUserData.token);
             websocket = new WebSocket(webSocketAddress, headers);

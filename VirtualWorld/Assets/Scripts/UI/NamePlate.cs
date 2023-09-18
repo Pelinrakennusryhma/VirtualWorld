@@ -27,13 +27,13 @@ namespace Authentication
         //    nameplate.text = username;
         //}
 
-        public override void OnStartClient()
+        public override void OnStartNetwork()
         {
-            base.OnStartClient();
+            base.OnStartNetwork();
 
             if (nameplate != null)
             {
-                if (IsOwner && IsClient)
+                if (base.Owner.IsLocalClient)
                 {
                     SetNameServerRpc(UserSession.Instance.LoggedUserData.username);
                     nameplate.text = UserSession.Instance.LoggedUserData.username;
@@ -49,6 +49,9 @@ namespace Authentication
         {
             username = name;
             SetNameObserversRpc(name);
+
+            // for server only.. probably not necessary?
+            nameplate.text = name;
         }
         [ObserversRpc]
         void SetNameObserversRpc(string name)
