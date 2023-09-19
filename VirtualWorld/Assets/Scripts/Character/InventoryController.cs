@@ -13,6 +13,8 @@ namespace Characters
         [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] public Inventory Inventory { get; private set; }
 
+        [SerializeField] private InventoryHymisImplementation InventoryHymisImplementation;
+
         public override void OnNetworkSpawn()
         {
             wsConnection = WebSocketConnection.Instance;
@@ -24,6 +26,13 @@ namespace Characters
         {
             Inventory = inventory;
             Debug.Log("inventory changed!");
+        }
+
+        public void SetHymisInventory(InventoryHymisImplementation inventory)
+        {
+            InventoryHymisImplementation = inventory;
+
+            Debug.Log("Set a reference to inventory implemented by Hymi");
         }
     }
 }

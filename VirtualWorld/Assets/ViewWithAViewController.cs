@@ -44,7 +44,9 @@ public class ViewWithAViewController : MonoBehaviour
 
             case ViewId.Inventory:
                 InventoryCamera.gameObject.SetActive(true);
-                ViewWithinAViewUIRaycaster.SetRaycaster(InventoryRaycaster);
+
+                //ViewWithinAViewUIRaycaster.SetRaycaster(InventoryRaycaster);
+                ViewWithinAViewUIRaycaster.DisableRaycaster();
                 ScreenMeshRenderer.material = InventoryMaterial;
                 break;
 

@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool menu;
 
 
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -54,6 +55,7 @@ namespace StarterAssets
             LookInput(Vector2.zero);
             JumpInput(false);
             SprintInput(false);
+			TabletInput(false);
             InteractInput(false);
             Action1Input(false);
             MenuInput(false);

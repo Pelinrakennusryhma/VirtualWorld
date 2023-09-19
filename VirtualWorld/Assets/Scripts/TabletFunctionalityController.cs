@@ -39,7 +39,8 @@ public class TabletFunctionalityController : NetworkBehaviour
     public NewsFeedWindowChanger NewsFeedWindowChanger;
     public CalendarWindowChanger CalendarWindowChanger;
 
-    public PlayerInput PlayerInput;
+    public static TabletFunctionalityController Instance;
+    public bool IsTabletViewOpen;
 
     private void Awake()
     {
@@ -47,10 +48,23 @@ public class TabletFunctionalityController : NetworkBehaviour
         CurrentView = ViewId.Map;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        if (IsOwner)
+        {
+            Instance = this;
+
+            Debug.Log("Set instance to tablet view controller");
+        }
+    }
+
     public void OnTabletOpened()
     {
-        PlayerInput.enabled = false;
-        Debug.LogWarning("Disabled player input while the tablet is open to prevent unwanted interactions, like throwing a dice :)");
+        IsTabletViewOpen = true;
+        //PlayerInput.enabled = false;
+        //Debug.LogWarning("Disabled player input while the tablet is open to prevent unwanted interactions, like throwing a dice :)");
         ActivateProperView(CurrentView);
         Raycaster.ActivateRaycaster();
     }
@@ -216,14 +230,15 @@ public class TabletFunctionalityController : NetworkBehaviour
     public void OnTabletClosed()
     {
 
-        Debug.LogWarning("Enabled player inputs again, since the tablet is closed");
-        PlayerInput.enabled = true;
+        //Debug.LogWarning("Enabled player inputs again, since the tablet is closed");
+        //PlayerInput.enabled = true;
 
         NewsFeedController.Instance.OnNewsUpdated -= OnNewsUpdated;
 
         Raycaster.InactivateRaycaster();
         ActivateProperView(ViewId.None);
         CalendarWindowChanger.OnViewClosed();
+        IsTabletViewOpen = false;
     }
 
 

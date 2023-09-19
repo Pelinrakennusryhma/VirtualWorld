@@ -33,6 +33,7 @@ public class CalendarWindowChanger : MonoBehaviour
 
     private bool IsShowingDayView;
 
+
     public void Awake()
     {
         if (!HasBeenInitialized)
@@ -95,6 +96,8 @@ public class CalendarWindowChanger : MonoBehaviour
         NoteInputField.gameObject.SetActive(false);
         EnterANoteText.gameObject.SetActive(false);
     }
+
+
 
     public void ShowCalendar()
     {
