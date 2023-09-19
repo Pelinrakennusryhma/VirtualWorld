@@ -17,7 +17,6 @@ namespace Configuration
         [SerializeField] ScenePicker mainScenePicker;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] SceneManager sceneManager;
-        [SerializeField] GameObject charControlObj;
         public async UniTask Init(InitData data)
         {
             Debug.Log("--- SERVER INIT START ---");

@@ -139,7 +139,7 @@ namespace Scenes
 
                 if (scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {
-                    GameObject player = Character.Instance.OwnedCharacter;
+                    GameObject player = CharacterManager.Instance.OwnedCharacter;
                     cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
                     player.SetActive(false);
                     //Character.Instance.PlayerEmitter.DisableCharacter();
@@ -150,7 +150,7 @@ namespace Scenes
 
                     foreach (GameObject gameObject in allObjects)
                     {
-                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == Character.Instance.OwnedCharacter)
+                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == CharacterManager.Instance.OwnedCharacter)
                         {
                             // move character to the new scene here?
                         }

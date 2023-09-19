@@ -9,7 +9,6 @@ namespace Characters
 {
     public class InventoryController : MonoBehaviour
     {
-        [SerializeField] Character character;
         //[SerializeField] public Inventory Inventory { get; private set; }
 
         void Start()

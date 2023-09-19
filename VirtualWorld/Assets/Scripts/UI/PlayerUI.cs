@@ -11,7 +11,6 @@ namespace UI
 {
     public class PlayerUI : MonoBehaviour
     {
-        [SerializeField] Character character;
         [SerializeField] TMP_Text moneyText;
         [SerializeField] TextFlasher moneyTextFlasher;
         [SerializeField] string currencyIcon = "€";
@@ -20,17 +19,16 @@ namespace UI
 
         void Awake()
         {
-            character = Character.Instance;
-            if (character != null)
+            if (CharacterManager.Instance != null)
             {
-                character.EventInventoryChanged.AddListener(OnInventoryChanged);
+                CharacterManager.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
             }
         }
 
-        void OnInventoryChanged(Inventory inventory)
+        void OnCharacterDataSet(CharacterData data)
         {
             BigInteger amountMoney = 0;
-            foreach (InventoryItem item in inventory.items)
+            foreach (InventoryItem item in data.inventory.items)
             {
                 if(item.name == "money")
                 {

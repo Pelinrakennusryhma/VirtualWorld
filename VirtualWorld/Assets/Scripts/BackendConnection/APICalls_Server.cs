@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using Authentication;
 using System;
 using Newtonsoft.Json;
+using FishNet.Connection;
 
 namespace BackendConnection
 {
@@ -41,7 +42,7 @@ namespace BackendConnection
             baseURL = httpsUrl;
         }
 
-        public async UniTask GetCharacterData(string userId)
+        public async UniTask GetCharacterData(NetworkConnection conn, string userId, Action<NetworkConnection, CharacterData> callback)
         {
             try
             {
@@ -52,7 +53,8 @@ namespace BackendConnection
                 CharacterData characterData = JsonConvert.DeserializeObject<CharacterData>(text);//JsonUtility.FromJson<CharacterData>(text);
 
                 OnGetCharacterDataSuccess.Invoke(characterData);
-                Dev.Utils.DumpToConsole(characterData);
+                Debug.Log("GET CHARACTER DATA CALLED AND FINISHED");
+                callback.Invoke(conn, characterData);
             }
             catch (UnityWebRequestException e)
             {

@@ -1237,6 +1237,7 @@ GameObject:
   - component: {fileID: 6754441761737640934}
   - component: {fileID: -5302446421989521654}
   - component: {fileID: 1380390319464324189}
+  - component: {fileID: 4282351827315348862}
   m_Layer: 8
   m_Name: NetworkPlayer01
   m_TagString: Player
@@ -1533,9 +1534,10 @@ MonoBehaviour:
   - {fileID: 348981930951915376}
   - {fileID: 6754441761737640934}
   - {fileID: -5302446421989521654}
+  - {fileID: 4282351827315348862}
+  - {fileID: 8994700038354962107}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField:
-  - {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1545,7 +1547,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 12
+  <PrefabId>k__BackingField: 13
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -1639,6 +1641,25 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.93, z: 0}
+--- !u!114 &4282351827315348862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926081852918481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2229f80b9db7775419198f4aa8033c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 1331202860972523509}
+  _networkObjectCache: {fileID: 1331202860972523509}
+  <OwnedCharacter>k__BackingField: {fileID: 4416926081852918481}
+  EventCharacterDataSet:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,7 +2463,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Character Name
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2fa592d3dabc9c84fa49294df7d48eb7, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2fa592d3dabc9c84fa49294df7d48eb7, type: 2}
@@ -2523,10 +2544,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f16b97cbc7e8a4283c88602e1007d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
+  _componentIndexCache: 4
   _addedNetworkObject: {fileID: 1331202860972523509}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1331202860972523509}
   nameplate: {fileID: 1023138889214072506}
+  characterManager: {fileID: 4282351827315348862}
   username: 
 --- !u!1 &7367493597718985424
 GameObject:

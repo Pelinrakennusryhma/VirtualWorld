@@ -6,12 +6,15 @@ using Unity.Collections;
 using FishNet.Object;
 using UnityEngine;
 using FishNet.Object.Synchronizing;
+using Characters;
+using BackendConnection;
 
 namespace Authentication
 {
     public class Nameplate : NetworkBehaviour
     {
         [SerializeField] TMP_Text nameplate;
+        [SerializeField] CharacterManager characterManager;
         [SyncVar] string username;
 
         private void Awake()
@@ -20,27 +23,23 @@ namespace Authentication
             {
                 nameplate = GetComponentInChildren<TMP_Text>();
             }
+
+            characterManager.EventCharacterDataSet.AddListener(OnCharacterDataSet);
         }
 
-        //private void Start()
-        //{
-        //    nameplate.text = username;
-        //}
+        void OnCharacterDataSet(CharacterData data)
+        {
+            SetNameServerRpc(data.user.username);
+            nameplate.text = data.user.username;         
+        }
 
         public override void OnStartNetwork()
         {
             base.OnStartNetwork();
 
-            if (nameplate != null)
+            if (!base.Owner.IsLocalClient)
             {
-                if (base.Owner.IsLocalClient)
-                {
-                    SetNameServerRpc(UserSession.Instance.LoggedUserData.username);
-                    nameplate.text = UserSession.Instance.LoggedUserData.username;
-                } else
-                {
-                    nameplate.text = username;
-                }
+                nameplate.text = username;
             }
         }
 

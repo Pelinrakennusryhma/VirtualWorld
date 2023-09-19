@@ -1,5 +1,6 @@
 using BackendConnection;
 using FishNet;
+using FishNet.Observing;
 using FishNet.Transporting;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,18 +41,18 @@ public class NetworkObjectSpawner : MonoBehaviour
     {
         GameObject go = Instantiate(characterManagerPrefab);
         InstanceFinder.ServerManager.Spawn(go);
+
+        //void OnClientStarted(ClientConnectionStateArgs args)
+        //{
+        //    if (args.ConnectionState == LocalConnectionState.Started)
+        //    {
+        //        SpawnClientCharacterManager();
+        //    }
+        //}
+
+        //public void SpawnClientCharacterManager()
+        //{
+        //    Debug.Log("SPAWN CHARACTER MANAGER FOR CLIENT????");
+        //}
     }
-
-    //void OnClientStarted(ClientConnectionStateArgs args)
-    //{
-    //    if (args.ConnectionState == LocalConnectionState.Started)
-    //    {
-    //        SpawnClientCharacterManager();
-    //    }
-    //}
-
-    //public void SpawnClientCharacterManager()
-    //{
-    //    Debug.Log("SPAWN CHARACTER MANAGER FOR CLIENT????");
-    //}
 }
