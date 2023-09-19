@@ -428,6 +428,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85562834e9934f746b545133fd84d9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &292282156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5833031011013118128, guid: f385cea2709c6b14abc0ca05420e089a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2095079878}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92b379915998c8489a38664167258d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &321055258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,11 +1473,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4758697198650363456, guid: f385cea2709c6b14abc0ca05420e089a,
+    - target: {fileID: 8791103795521057354, guid: f385cea2709c6b14abc0ca05420e089a,
         type: 3}
-      propertyPath: webSocketAddress
+      propertyPath: apiCalls_Client
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 292282154}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1529,6 +1541,11 @@ PrefabInstance:
       propertyPath: apiCalls_Client
       value: 
       objectReference: {fileID: 292282154}
+    - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
+        type: 3}
+      propertyPath: apiCalls_Server
+      value: 
+      objectReference: {fileID: 292282156}
     - target: {fileID: 3491638929833096815, guid: 3e48d776751d4e04faf4d530264a03d0,
         type: 3}
       propertyPath: m_Name

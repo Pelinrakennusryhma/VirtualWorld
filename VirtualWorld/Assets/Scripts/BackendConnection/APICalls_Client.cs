@@ -32,7 +32,7 @@ namespace BackendConnection
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(this);
             }
         }
 
@@ -45,7 +45,7 @@ namespace BackendConnection
         {
             try
             {
-                UnityWebRequest req = Utils.CreateRequest(baseURL + authRoute, RequestType.POST, null);
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + authRoute, RequestType.POST, null);
                 req.SetRequestHeader("Authorization", "Bearer " + jwt);
                 string text = await GetTextAsync(req);
                 Debug.Log(text);
@@ -74,7 +74,7 @@ namespace BackendConnection
             {
                 LoginUserData userData = new LoginUserData(username, password);
 
-                UnityWebRequest req = Utils.CreateRequest(baseURL + loginRoute, RequestType.POST, userData);
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + loginRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
 
@@ -102,7 +102,7 @@ namespace BackendConnection
                 LoginUserData userData = new LoginUserData();
                 userData.username = username;
                 userData.password = password;
-                UnityWebRequest req = Utils.CreateRequest(baseURL + registerRoute, RequestType.POST, userData);
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + registerRoute, RequestType.POST, userData);
 
                 string text = await GetTextAsync(req);
 

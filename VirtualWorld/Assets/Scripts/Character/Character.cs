@@ -43,7 +43,7 @@ namespace Characters
         public override void OnStartClient()
         {
             base.OnStartClient();
-            GetCharacterData(UserSession.Instance.LoggedUserData.id);
+            GetCharacterDataServerRpc(UserSession.Instance.LoggedUserData.id);
         }
 
         private void Start()
@@ -76,10 +76,11 @@ namespace Characters
             OwnedCharacter = go;
         }
 
-        [ServerRpc]
-        public void GetCharacterData(string id)
+        [ServerRpc(RequireOwnership = false)]
+        public void GetCharacterDataServerRpc(string id)
         {
-
+            Debug.Log("brrrr???");
+            APICalls_Server.Instance.GetCharacterData(id);
         }
 
         public void AddMoneyServerRpc(string userId, int moneyChangeAmount)

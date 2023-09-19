@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace BackendConnection
 {
-    public static class Utils
+    public static class WebRequestUtils
     {
         public static UnityWebRequest CreateRequest(string path, RequestType type, object data = null)
         {
@@ -24,6 +25,13 @@ namespace BackendConnection
             request.SetRequestHeader("Content-Type", "application/json");
 
             return request;
+        }
+
+        // get async webrequest
+        public static async UniTask<string> GetTextAsync(UnityWebRequest req)
+        {
+            var op = await req.SendWebRequest();
+            return op.downloadHandler.text;
         }
     }
 }

@@ -22,8 +22,6 @@ namespace Configuration
         {
             Debug.Log("--- SERVER INIT START ---");
             networkManager.ServerManager.OnServerConnectionState += OnServerStarted;
-            // Character Controller is not needed on server.. or is it?
-            //charControlObj.SetActive(false);
 
             networkManager.ServerManager.StartConnection();
         }

@@ -57,9 +57,7 @@ namespace Authentication
         void OnAuthSuccess(LoggedUserData data)
         {
             LoggedUserData = data;
-
         }
-
     }
 }
 

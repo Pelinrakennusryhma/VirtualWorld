@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using FishNet;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -52,18 +53,25 @@ namespace BackendConnection
     }
     public struct Inventory
     {
-        public int money;
+        public List<InventoryItem> items;
+    }
 
-        public Inventory(int money, string id)
-        {
-            this.money = money;
-        }
+    public struct InventoryItem
+    {
+        public string id;
+        public string name;
+        public BigInteger amount;
     }
 
     public struct CharacterData
     {
+        public UserData user;
         public Inventory inventory;
-        public string user;
+    }
+
+    public struct UserData
+    {
+        public string username;
         public string id;
     }
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2144520432235108679}
   - component: {fileID: 6984877580260586142}
+  - component: {fileID: 5833031011013118128}
   - component: {fileID: 8791103795521057354}
   m_Layer: 0
   m_Name: BackendConnection
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6984877580260586142
 MonoBehaviour:
@@ -53,6 +54,31 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnAuthFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLogout:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5833031011013118128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371524691257417907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92b379915998c8489a38664167258d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseURL: https://localhost:3002
+  OnGetCharacterDataSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNoLoggedUser:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGetCharacterDataFailed:
     m_PersistentCalls:
       m_Calls: []
   OnLogout:

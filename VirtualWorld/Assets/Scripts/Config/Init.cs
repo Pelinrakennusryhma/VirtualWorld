@@ -21,6 +21,7 @@ namespace Configuration
     public class Init : MonoBehaviour
     {
         [SerializeField] APICalls_Client apiCalls_Client;
+        [SerializeField] APICalls_Server apiCalls_Server;
         [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] ServerInit serverInit;
         [SerializeField] ClientInit clientInit;
@@ -61,7 +62,6 @@ namespace Configuration
             }
 #endif
             Debug.Log("processType: " + processType.ToString());
-            Debug.Log("runAsClient: " + runAsClient);
         }
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -96,6 +96,7 @@ namespace Configuration
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
                     serverInit.Init(initData);
+                    apiCalls_Server.Init(initData.httpsUrl);
                     break;
                 case ProcessType.DEV_CLIENT:
                     initData = new InitData(
@@ -134,6 +135,7 @@ namespace Configuration
                         Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
                         );
                     serverInit.Init(initData);
+                    apiCalls_Server.Init(initData.httpsUrl);
                     break;
                 default:
                     throw new Exception("The impossible happened: Init failed!");

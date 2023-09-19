@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using Characters;
 using BackendConnection;
+using System.Numerics;
 
 namespace UI
 {
@@ -15,7 +16,7 @@ namespace UI
         [SerializeField] TextFlasher moneyTextFlasher;
         [SerializeField] string currencyIcon = "€";
 
-        int previousMoney;
+        BigInteger previousMoney;
 
         void Awake()
         {
@@ -28,14 +29,24 @@ namespace UI
 
         void OnInventoryChanged(Inventory inventory)
         {
-            moneyText.text = $"{inventory.money} {currencyIcon}";
+            BigInteger amountMoney = 0;
+            foreach (InventoryItem item in inventory.items)
+            {
+                if(item.name == "money")
+                {
+                    amountMoney = item.amount;
+                    break;
+                }
+            }
 
-            if (previousMoney != inventory.money)
+            moneyText.text = $"{amountMoney} {currencyIcon}";
+
+            if (previousMoney != amountMoney)
             {
                 moneyTextFlasher.FlashText();
             }
 
-            previousMoney = inventory.money;
+            previousMoney = amountMoney;
         }
     }
 }
