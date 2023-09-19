@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -60,7 +61,7 @@ namespace BackendConnection
     {
         public string id;
         public string name;
-        public BigInteger amount;
+        public int amount;
     }
 
     public struct CharacterData

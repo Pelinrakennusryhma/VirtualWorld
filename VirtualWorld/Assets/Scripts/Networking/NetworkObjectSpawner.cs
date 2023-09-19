@@ -24,9 +24,6 @@ public class NetworkObjectSpawner : MonoBehaviour
         InstanceFinder.ServerManager.OnServerConnectionState -= OnServerStarted;
         InstanceFinder.ServerManager.OnServerConnectionState += OnServerStarted;
 
-        //InstanceFinder.ClientManager.OnClientConnectionState -= OnClientStarted;
-        //InstanceFinder.ClientManager.OnClientConnectionState += OnClientStarted;
-
     }
 
     void OnServerStarted(ServerConnectionStateArgs args)
@@ -41,18 +38,5 @@ public class NetworkObjectSpawner : MonoBehaviour
     {
         GameObject go = Instantiate(characterManagerPrefab);
         InstanceFinder.ServerManager.Spawn(go);
-
-        //void OnClientStarted(ClientConnectionStateArgs args)
-        //{
-        //    if (args.ConnectionState == LocalConnectionState.Started)
-        //    {
-        //        SpawnClientCharacterManager();
-        //    }
-        //}
-
-        //public void SpawnClientCharacterManager()
-        //{
-        //    Debug.Log("SPAWN CHARACTER MANAGER FOR CLIENT????");
-        //}
     }
 }

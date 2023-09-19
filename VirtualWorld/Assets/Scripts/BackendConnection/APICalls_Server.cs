@@ -20,9 +20,7 @@ namespace BackendConnection
         public static APICalls_Server Instance { get; private set; }
 
         public UnityEvent<CharacterData> OnGetCharacterDataSuccess;
-        public UnityEvent OnNoLoggedUser;
         public UnityEvent<UnityWebRequestException> OnGetCharacterDataFailed;
-        public UnityEvent OnLogout;
 
         void Awake()
         {

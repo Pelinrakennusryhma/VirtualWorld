@@ -1237,7 +1237,6 @@ GameObject:
   - component: {fileID: 6754441761737640934}
   - component: {fileID: -5302446421989521654}
   - component: {fileID: 1380390319464324189}
-  - component: {fileID: 4282351827315348862}
   m_Layer: 8
   m_Name: NetworkPlayer01
   m_TagString: Player
@@ -1534,7 +1533,7 @@ MonoBehaviour:
   - {fileID: 348981930951915376}
   - {fileID: 6754441761737640934}
   - {fileID: -5302446421989521654}
-  - {fileID: 4282351827315348862}
+  - {fileID: 0}
   - {fileID: 8994700038354962107}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
@@ -1641,25 +1640,6 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.93, z: 0}
---- !u!114 &4282351827315348862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4416926081852918481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2229f80b9db7775419198f4aa8033c9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 3
-  _addedNetworkObject: {fileID: 1331202860972523509}
-  _networkObjectCache: {fileID: 1331202860972523509}
-  <OwnedCharacter>k__BackingField: {fileID: 4416926081852918481}
-  EventCharacterDataSet:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0
@@ -2548,7 +2528,6 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 1331202860972523509}
   _networkObjectCache: {fileID: 1331202860972523509}
   nameplate: {fileID: 1023138889214072506}
-  characterManager: {fileID: 4282351827315348862}
   username: 
 --- !u!1 &7367493597718985424
 GameObject:

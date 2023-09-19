@@ -15,19 +15,16 @@ namespace UI
         [SerializeField] TextFlasher moneyTextFlasher;
         [SerializeField] string currencyIcon = "€";
 
-        BigInteger previousMoney;
+        int previousMoney;
 
-        void Awake()
+        public void SetCharacterManager(CharacterManager characterManager)
         {
-            if (CharacterManager.Instance != null)
-            {
-                CharacterManager.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
-            }
+            characterManager.EventCharacterDataSet.AddListener(OnCharacterDataSet);
         }
 
         void OnCharacterDataSet(CharacterData data)
         {
-            BigInteger amountMoney = 0;
+            int amountMoney = 0;
             foreach (InventoryItem item in data.inventory.items)
             {
                 if(item.name == "money")

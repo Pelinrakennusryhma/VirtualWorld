@@ -15,6 +15,7 @@ using Dev;
 using FishNet.Connection;
 using FishNet.Observing;
 using FishNet.Component.Observing;
+using UI;
 
 namespace Characters
 {
@@ -32,16 +33,22 @@ namespace Characters
 
         private void Awake()
         {
-            Instance = this;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
 
-        public override void OnStartNetwork()
+        public override void OnStartClient()
         {
             base.OnStartClient();
-            if (base.Owner.IsLocalClient)
-            {
-                GetCharacterDataServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id);
-            }
+            PlayerUI playerUI = FindObjectOfType<PlayerUI>();
+            playerUI.SetCharacterManager(this);
+            GetCharacterDataServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id);
         }
 
         [ServerRpc(RequireOwnership = false)]

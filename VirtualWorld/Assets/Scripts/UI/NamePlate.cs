@@ -14,7 +14,6 @@ namespace Authentication
     public class Nameplate : NetworkBehaviour
     {
         [SerializeField] TMP_Text nameplate;
-        [SerializeField] CharacterManager characterManager;
         [SyncVar] string username;
 
         private void Awake()
@@ -24,13 +23,15 @@ namespace Authentication
                 nameplate = GetComponentInChildren<TMP_Text>();
             }
 
-            characterManager.EventCharacterDataSet.AddListener(OnCharacterDataSet);
+            CharacterManager.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
         }
 
         void OnCharacterDataSet(CharacterData data)
         {
-            SetNameServerRpc(data.user.username);
-            nameplate.text = data.user.username;         
+            if (IsOwner)
+            {
+                SetNameServerRpc(data.user.username);
+            }
         }
 
         public override void OnStartNetwork()
