@@ -1491,6 +1491,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5833031011013118128, guid: f385cea2709c6b14abc0ca05420e089a,
+        type: 3}
+      propertyPath: baseURL
+      value: http://localhost:3002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6984877580260586142, guid: f385cea2709c6b14abc0ca05420e089a,
+        type: 3}
+      propertyPath: baseURL
+      value: http://localhost:3001
+      objectReference: {fileID: 0}
     - target: {fileID: 8791103795521057354, guid: f385cea2709c6b14abc0ca05420e089a,
         type: 3}
       propertyPath: apiCalls_Client

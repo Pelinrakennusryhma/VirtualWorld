@@ -20,6 +20,12 @@ namespace UI
         public void SetCharacterManager(CharacterManager characterManager)
         {
             characterManager.EventCharacterDataSet.AddListener(OnCharacterDataSet);
+            characterManager.EventMoneyAmountChanged.AddListener(OnMoneyAmountChanged);
+        }
+
+        void OnMoneyAmountChanged(InventoryItem moneyItem)
+        {
+            UpdateMoney(moneyItem.amount);
         }
 
         void OnCharacterDataSet(CharacterData data)
@@ -27,21 +33,26 @@ namespace UI
             int amountMoney = 0;
             foreach (InventoryItem item in data.inventory.items)
             {
-                if(item.name == "money")
+                if (item.name == "money")
                 {
                     amountMoney = item.amount;
                     break;
                 }
             }
 
-            moneyText.text = $"{amountMoney} {currencyIcon}";
+            UpdateMoney(amountMoney);
+        }
 
-            if (previousMoney != amountMoney)
+        void UpdateMoney(int newAmount)
+        {
+            moneyText.text = $"{newAmount} {currencyIcon}";
+
+            if (previousMoney != newAmount)
             {
                 moneyTextFlasher.FlashText();
             }
 
-            previousMoney = amountMoney;
+            previousMoney = newAmount;
         }
     }
 }

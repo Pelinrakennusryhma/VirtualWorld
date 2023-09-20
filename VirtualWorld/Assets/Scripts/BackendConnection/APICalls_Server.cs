@@ -19,9 +19,6 @@ namespace BackendConnection
         
         public static APICalls_Server Instance { get; private set; }
 
-        public UnityEvent<CharacterData> OnGetCharacterDataSuccess;
-        public UnityEvent<UnityWebRequestException> OnGetCharacterDataFailed;
-
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -48,18 +45,32 @@ namespace BackendConnection
 
                 string text = await WebRequestUtils.GetTextAsync(req);
 
-                CharacterData characterData = JsonConvert.DeserializeObject<CharacterData>(text);//JsonUtility.FromJson<CharacterData>(text);
+                CharacterData characterData = JsonConvert.DeserializeObject<CharacterData>(text);
 
-                OnGetCharacterDataSuccess.Invoke(characterData);
-                Debug.Log("GET CHARACTER DATA CALLED AND FINISHED");
                 callback.Invoke(conn, characterData);
             }
             catch (UnityWebRequestException e)
             {
-                OnGetCharacterDataFailed.Invoke(e);
-                throw;
+                throw e;
             }
+        }
 
+        public async UniTask ModifyInventoryItemAmount(NetworkConnection conn, string userId, ModifyItemData data, Action<NetworkConnection, InventoryItem> callback)
+        {
+            try
+            {
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + inventoryRoute + userId, RequestType.PUT, data);
+
+                string text = await WebRequestUtils.GetTextAsync(req);
+
+                InventoryItem item = JsonConvert.DeserializeObject<InventoryItem>(text);
+
+                callback.Invoke(conn, item);
+            }
+            catch (UnityWebRequestException e)
+            {
+                throw e;
+            }
         }
     }
 }

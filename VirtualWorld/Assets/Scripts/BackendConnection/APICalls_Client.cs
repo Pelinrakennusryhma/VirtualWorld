@@ -90,7 +90,7 @@ namespace BackendConnection
             catch (UnityWebRequestException e)
             {
                 OnAuthFailed.Invoke(e);
-                throw;
+                throw e;
             }
 
         }
@@ -118,7 +118,7 @@ namespace BackendConnection
             catch (UnityWebRequestException e)
             {
                 OnAuthFailed.Invoke(e);
-                throw;
+                throw e;
             }
 
         }

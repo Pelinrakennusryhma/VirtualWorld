@@ -82,4 +82,25 @@ namespace BackendConnection
         public string data;
     }
 
+    public enum ModifyItemDataOperation
+    {
+        ADD,
+        REMOVE
+    }
+
+    public struct ModifyItemData
+    {
+        public string itemId;
+        public string itemName;
+        public string operation;
+        public int amount;
+        
+        public ModifyItemData(string itemId, string itemName, ModifyItemDataOperation operation, int amount)
+        {
+            this.itemId = itemId;
+            this.itemName = itemName;
+            this.operation = operation.ToString();
+            this.amount = amount;
+        }
+    }
 }
