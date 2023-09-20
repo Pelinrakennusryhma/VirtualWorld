@@ -6,15 +6,16 @@ TagManager:
   tags:
   - PickUpTrigger
   - FirstPersonCamera
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - MapOverlay
   - Water
   - UI
-  - 
-  - 
+  - AlwaysRenderOnTop
+  - ViewWithinAView
   - 
   - 
   - 

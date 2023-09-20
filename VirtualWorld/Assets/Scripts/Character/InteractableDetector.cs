@@ -50,7 +50,9 @@ namespace Characters
 
         private void Update()
         {
-            if (input.interact && currentInteractable != null)
+            if (input.interact 
+                && !TabletFunctionalityController.Instance.IsTabletViewOpen
+                && currentInteractable != null)
             {
                 Interact();
             }
@@ -82,7 +84,7 @@ namespace Characters
             I_Interactable interactable = other.GetComponent<I_Interactable>();
 
             if (interactable != null)
-            {
+            {    
                 currentInteractable = interactable;
                 currentInteractableGO = other.gameObject;
                 EventInteractableDetected.Invoke(interactable, other.gameObject);
