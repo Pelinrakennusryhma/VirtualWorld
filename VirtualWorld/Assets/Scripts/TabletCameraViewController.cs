@@ -55,6 +55,10 @@ public class TabletCameraViewController : NetworkBehaviour
 
     private TabletFunctionalityController TabletFunctionality;
 
+    public bool WentOverLeftShoulder;
+    public InventoryViewChanger InventoryViewChanger;
+
+
     private void Awake()
     {
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
@@ -106,6 +110,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
     private void SetupTabletForComingIn()
     {
+        InventoryViewChanger.CameraStartedTransitioning();
+
         TabletScaler.transform.localScale = Vector3.zero;
 
         ThirdPersonController.OnTabletViewChanged(true);
@@ -138,16 +144,21 @@ public class TabletCameraViewController : NetworkBehaviour
         if (magnitudeToPos1 <= magnitudeToPos2)
         {
             IsReachingToTransitionPos1 = true;
+            WentOverLeftShoulder = false;
         }
 
         else
         {
             IsReachingToTransitionPos1 = false;
+            WentOverLeftShoulder = true;
         }
+
+        InventoryViewChanger.SetWentOverLeftShoulder(WentOverLeftShoulder);
     }
 
     private void SetupTabletForGoingOut()
     {
+        InventoryViewChanger.CameraStartedTransitioning();
         RenderAlwaysOnTopCamera.DisableRenderOnTopCamera();
         HasReachedTransitionPos = false;
 
@@ -195,7 +206,7 @@ public class TabletCameraViewController : NetworkBehaviour
             return;
         }
 
-        SetMapCameraPostionAndRotation();
+        SetMapCameraPositionAndRotation();
 
         if (IsActiveTabletView)
         {
@@ -334,6 +345,12 @@ public class TabletCameraViewController : NetworkBehaviour
         if (magnitudeToTargetPos <= 0.005f)
         {
             IsTakenOverByCheapInterpolations = false;
+            RenderAlwaysOnTopCamera.transform.position = CloseupCamera.transform.position;
+            FlyCamera.transform.position = CloseupCamera.transform.position;
+            FlyCamera.transform.rotation = CloseupCamera.transform.rotation;
+            RenderAlwaysOnTopCamera.transform.rotation = CloseupCamera.transform.rotation;
+            InventoryViewChanger.CameraReachedTargetPosition();
+            //Debug.LogWarning("Reached to target pos");
         }
     }
 
@@ -401,7 +418,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
     #endregion
 
-    private void SetMapCameraPostionAndRotation()
+    private void SetMapCameraPositionAndRotation()
     {
         MapCamera.transform.position = ThirdPersonCamera.transform.position + Vector3.up * 600;
         MapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);

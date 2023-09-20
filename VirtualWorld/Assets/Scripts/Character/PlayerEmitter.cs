@@ -9,10 +9,15 @@ namespace Characters
     {
         StarterAssetsInputs inputs;
         bool controlsDisabled = false;
+
+        public InventoryHymisImplementation InventoryHymisImplementation;
+
         void Start()
         {
             if (IsOwner)
             {
+                Character.Instance.inventoryController.SetHymisInventory(InventoryHymisImplementation);
+
                 Character.Instance.SetPlayerGameObject(gameObject);
                 UIManager.Instance.SetPlayerCharacter(gameObject);
 

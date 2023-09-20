@@ -21,9 +21,17 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
     public delegate void InputFieldSubmitted(string text);
     public event InputFieldSubmitted OnInputFieldSubmitted;
 
+    public ItemScript LastInteractedItemScript;
+
     public void SetRaycaster(GraphicRaycaster caster)
     {
+        this.enabled = true;
         Raycaster = caster;
+    }
+
+    public void DisableRaycaster()
+    {
+        this.enabled = false;
     }
 
     // Called by Unity when a Raycaster should raycast because it extends BaseRaycaster.
@@ -122,6 +130,15 @@ public class ViewWithinAViewUIRaycaster : GraphicRaycaster
                     value = Mathf.Clamp(value, 0, 1.0f);
                     scroll.value = value;
                     //Debug.Log("Should DRAG");
+                }
+
+                else
+                {
+                    //if (Input.mouseScrollDelta.y >= 0.1f
+                    //    || Input.mouseScrollDelta.y <= 0.1f)
+                    //{
+                    //    scrollRect.OnScroll(eventData);
+                    //}
                 }
             }
 

@@ -31,7 +31,8 @@ public class PlayerActions : MonoBehaviour
 
     void Update()
     {
-        if (inputs.action1)
+        if (inputs.action1
+            && !TabletFunctionalityController.Instance.IsTabletViewOpen)
         {
             queuedAction = actions[0];
         }

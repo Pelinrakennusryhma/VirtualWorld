@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool menu;
 
 
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -54,6 +55,7 @@ namespace StarterAssets
             LookInput(Vector2.zero);
             JumpInput(false);
             SprintInput(false);
+			TabletInput(false);
             InteractInput(false);
             Action1Input(false);
             MenuInput(false);
@@ -85,7 +87,7 @@ namespace StarterAssets
 		public void OnInteract(InputValue value)
         {
 			InteractInput(value.isPressed);
-			Debug.Log("On interact");
+			//Debug.Log("On interact");
         }
 
 
@@ -98,7 +100,7 @@ namespace StarterAssets
         public void OnAction1(InputValue value)
         {
 			Action1Input(value.isPressed);
-			Debug.Log("On action1");
+			//Debug.Log("On action1");
 
 		}
 
