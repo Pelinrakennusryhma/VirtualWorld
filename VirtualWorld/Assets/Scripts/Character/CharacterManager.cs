@@ -45,6 +45,11 @@ namespace Characters
             }
         }
 
+        public void SetOwnedCharacter(GameObject obj)
+        {
+            OwnedCharacter = obj;
+        }
+
         public override void OnStartClient()
         {
             base.OnStartClient();

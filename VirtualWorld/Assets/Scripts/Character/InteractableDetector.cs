@@ -18,24 +18,6 @@ namespace Characters
         I_Interactable currentInteractable;
         GameObject currentInteractableGO;
 
-        //public override void OnNetworkSpawn()
-        //{
-        //    if (!IsOwner)
-        //    {
-        //        Destroy(this);
-        //        return;
-        //    }
-
-        //    if (isHost)
-        //    {
-        //        Invoke("FindAndInitUI", 1f);
-        //    } else
-        //    {
-        //        FindAndInitUI();
-        //    }
-
-        //}
-
         private void Start()
         {
             NetworkBehaviour networkBehaviour = transform.root.GetComponent<NetworkBehaviour>();
@@ -50,9 +32,7 @@ namespace Characters
 
         private void Update()
         {
-            if (input.interact 
-                && !TabletFunctionalityController.Instance.IsTabletViewOpen
-                && currentInteractable != null)
+            if (input.interact && currentInteractable != null)
             {
                 Interact();
             }
@@ -80,7 +60,6 @@ namespace Characters
 
         private void OnTriggerEnter(Collider other)
         {
-
             I_Interactable interactable = other.GetComponent<I_Interactable>();
 
             if (interactable != null)

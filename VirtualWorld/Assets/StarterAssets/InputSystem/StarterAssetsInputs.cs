@@ -13,7 +13,8 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool interact;
-		public bool action1;
+        public bool tablet;
+        public bool action1;
 		public bool menu;
 
 		[Header("Movement Settings")]
@@ -75,7 +76,13 @@ namespace StarterAssets
 			InteractInput(value.isPressed);
 		}
 
-		public void OnAction1(InputValue value)
+        public void OnTablet(InputValue value)
+        {
+            //Debug.Log("On tablet called " + Time.time);
+            TabletInput(value.isPressed);
+        }
+
+        public void OnAction1(InputValue value)
 		{
 			Action1Input(value.isPressed);
 		}
@@ -122,7 +129,17 @@ namespace StarterAssets
 			action1 = false;
 		}
 
-		public void Action1Input(bool newAction1State)
+        public void TabletInput(bool newTabletState)
+        {
+            tablet = newTabletState;
+        }
+
+        public void ClearTabletInput()
+        {
+            tablet = false;
+        }
+
+        public void Action1Input(bool newAction1State)
 		{
 			action1 = newAction1State;
 		}

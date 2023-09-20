@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
-using Unity.Netcode;
+using FishNet.Object;
 
 public class TabletCameraViewController : NetworkBehaviour
 {
@@ -64,8 +64,7 @@ public class TabletCameraViewController : NetworkBehaviour
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnStartClient()
     {
         OriginalScalerScale = TabletScaler.transform.localScale;
 

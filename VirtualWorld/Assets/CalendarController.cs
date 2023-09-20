@@ -2,62 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.Netcode;
+using FishNet.Object;
 
 public class CalendarController : NetworkBehaviour
 {
-
-    //[System.Serializable]
-    //public class CalendarItem
-    //{
-    //    public int Day;
-    //    public int Month;
-    //    public int Year;
-    //    public string Entry1;
-    //    public string Entry2;
-    //    public string Entry3;
-    //    public string Entry4;
-
-    //    public CalendarItem(int year,
-    //                        int month,
-    //                        int day,
-    //                        string entry1,
-    //                        string entry2,
-    //                        string entry3,
-    //                        string entry4)
-    //    {
-    //        Day = day;
-    //        Month = month;
-    //        Year = year;
-    //        Entry1 = entry1;
-    //        Entry2 = entry2;
-    //        Entry3 = entry3;
-    //        Entry4 = entry4;
-
-    //        if (Entry1 == null)
-    //        {
-    //            Entry1 = "";
-    //        }
-
-    //        if (Entry2 == null)
-    //        {
-    //            Entry2 = "";
-    //        }
-
-    //        if (Entry3 == null)
-    //        {
-    //            Entry3 = "";
-    //        }
-
-    //        if (Entry4 == null)
-    //        {
-    //            Entry4 = "";
-    //        }
-    //    }
-    //}
-
     [System.Serializable]
-    public struct CalendarItem : INetworkSerializeByMemcpy
+    public struct CalendarItem
     {
         public int Day;
         public int Month;
@@ -141,15 +91,7 @@ public class CalendarController : NetworkBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
-
-        else
-        {
-            DestroyImmediate(gameObject);
-            Debug.LogWarning("Destroyed an extra calendar controller");
-        }
-
 
         CalendarItems = new List<CalendarItem>();
         //CalendarItems.Add(new CalendarItem(2023, 9, 12, new string[]));

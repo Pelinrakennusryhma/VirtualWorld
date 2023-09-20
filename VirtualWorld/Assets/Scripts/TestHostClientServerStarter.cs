@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
+using FishNet;
 using TMPro;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
+using FishNet.Managing;
+using BackendConnection;
+using Configuration;
+using Scenes;
+using FishNet.Managing.Scened;
+using FishNet.Transporting;
 
 public class TestHostClientServerStarter : MonoBehaviour
 {
@@ -23,6 +28,8 @@ public class TestHostClientServerStarter : MonoBehaviour
 
     public TMP_InputField ClientIPInputField;
     public TMP_InputField ClientPortInputField;
+
+    [SerializeField] NetworkManager networkManager;
 
     public void Awake()
     {
@@ -83,88 +90,104 @@ public class TestHostClientServerStarter : MonoBehaviour
 
     public void StartLocalHost()
     {
-        NetworkManager.Singleton.StartHost();
+        networkManager.ClientManager.StartConnection();
 
-        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);        
+        networkManager.ServerManager.OnServerConnectionState += OnServerStarted;
         //NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
     }
 
     public void StartLocalServer()
     {
-        NetworkManager.Singleton.StartServer();
+        networkManager.ServerManager.OnServerConnectionState += OnServerStarted;
+        networkManager.ServerManager.StartConnection();
+        //NetworkManager.Singleton.StartServer();
         
-        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        //NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
         //NetworkManager.Singleton.SceneManager.SetClientSynchronizationMode(LoadSceneMode.Additive);
+    }
+
+    void OnServerStarted(ServerConnectionStateArgs args)
+    {
+        if (args.ConnectionState == LocalConnectionState.Started)
+        {
+            LoadMainScene();
+        }
+    }
+
+    void LoadMainScene()
+    {
+        SceneLoadData sld = new SceneLoadData(TestSceneName);
+        InstanceFinder.SceneManager.LoadGlobalScenes(sld);
+
+        //unload launch scene as it's no longer needed
+        InstanceFinder.SceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
     }
 
     public void StartLocalClient()
     {
-        NetworkManager.Singleton.StartClient();
+        networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
 
-        int sceneCount = SceneManager.sceneCount;
-
-        for (int i = 0; i < sceneCount; i++)
-        {
-            Debug.Log("Scene is loaded " + SceneManager.GetSceneAt(i).name);
-        }
-
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
-        Debug.Log("Client started");
+        networkManager.ClientManager.StartConnection();
     }
 
-    public void StartHost()
+    private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs args)
     {
-        SetServerData();
-        NetworkManager.Singleton.StartHost();
-
-        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);        
-        //NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = false;
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);
     }
 
-    public void StartClient()
-    {
-        SetClientData();
-        NetworkManager.Singleton.StartClient();
-    }
+    //public void StartHost()
+    //{
+    //    SetServerData();
+    //    NetworkManager.Singleton.StartHost();
 
-    public void StartServer()
-    {
-        SetServerData();
-        NetworkManager.Singleton.StartServer();
-        NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+    //    NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);        
+    //    //NetworkManager.Singleton.SceneManager.ActiveSceneSynchronizationEnabled = false;
+    //}
 
-    }
+    //public void StartClient()
+    //{
+    //    SetClientData();
+    //    NetworkManager.Singleton.StartClient();
+    //}
+
+    //public void StartServer()
+    //{
+    //    SetServerData();
+    //    NetworkManager.Singleton.StartServer();
+    //    NetworkManager.Singleton.SceneManager.LoadScene(TestSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
+
+    //}
 
     // Stolen from ClientDriven bite size sample
-    public void SetServerData()
-    {
-        var sanitizedIPText = Sanitize(NetworkManagerIP.text);
-        //sanitizedIPText = Sanitize("127.0.0.1");
-        var sanitizedPortText = Sanitize(ServerHostPortInputField.text);
+    //public void SetServerData()
+    //{
+    //    var sanitizedIPText = Sanitize(NetworkManagerIP.text);
+    //    //sanitizedIPText = Sanitize("127.0.0.1");
+    //    var sanitizedPortText = Sanitize(ServerHostPortInputField.text);
 
-        ushort.TryParse(sanitizedPortText, out var port);
+    //    ushort.TryParse(sanitizedPortText, out var port);
 
-        var utp = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
-        utp.SetConnectionData(sanitizedIPText, port);
-    }
+    //    var utp = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
+    //    utp.SetConnectionData(sanitizedIPText, port);
+    //}
 
     
-    public void SetClientData()
-    {
-        SetUtpConnectionData();
-    }
+    //public void SetClientData()
+    //{
+    //    SetUtpConnectionData();
+    //}
 
     // Stolen from Unity's ClientDriven bite size sample
-    void SetUtpConnectionData()
-    {
-        var sanitizedIPText = Sanitize(ClientIPInputField.text);
-        var sanitizedPortText = Sanitize(ClientPortInputField.text);
+    //void SetUtpConnectionData()
+    //{
+    //    var sanitizedIPText = Sanitize(ClientIPInputField.text);
+    //    var sanitizedPortText = Sanitize(ClientPortInputField.text);
 
-        ushort.TryParse(sanitizedPortText, out var port);
+    //    ushort.TryParse(sanitizedPortText, out var port);
 
-        var utp = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
-        utp.SetConnectionData(sanitizedIPText, port);
-    }
+    //    var utp = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
+    //    utp.SetConnectionData(sanitizedIPText, port);
+    //}
 
     // Stolen from Unity's ClientDriven bite size sample
     /// <summary>

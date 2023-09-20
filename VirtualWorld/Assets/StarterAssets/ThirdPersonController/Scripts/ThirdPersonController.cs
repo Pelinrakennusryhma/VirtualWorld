@@ -110,6 +110,8 @@ namespace StarterAssets
 
         private const float _threshold = 0.01f;
 
+        public bool IsTabletViewActive;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -388,6 +390,19 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        public void OnTabletViewChanged(bool tabletViewIsActive)
+        {
+            IsTabletViewActive = tabletViewIsActive;
+
+            if (tabletViewIsActive)
+            {
+                // Set animators false
+
+                _animator.SetFloat(_animIDSpeed, 0);
+                _animator.SetFloat(_animIDMotionSpeed, 0);
             }
         }
     }
