@@ -67,6 +67,24 @@ public class CalendarController : NetworkBehaviour
         public string Entry3;
         public string Entry4;
 
+        public List<string> Entries;
+
+        public CalendarItem(int year,
+                            int month,
+                            int day,
+                            List<string> entries)
+        {
+            Year = year;
+            Month = month;
+            Day = day;
+            Entries = entries;
+
+            Entry1 = "";
+            Entry2 = "";
+            Entry3 = "";
+            Entry4 = "";
+        }
+
         public CalendarItem(int year,
                             int month,
                             int day,
@@ -102,6 +120,12 @@ public class CalendarController : NetworkBehaviour
             {
                 Entry4 = "";
             }
+
+            Entries = new List<string>();
+            Entries.Add(Entry1);
+            Entries.Add(Entry2);
+            Entries.Add(Entry3);
+            Entries.Add(Entry4);
         }
     }
 
@@ -126,25 +150,26 @@ public class CalendarController : NetworkBehaviour
             Debug.LogWarning("Destroyed an extra calendar controller");
         }
 
-  
-        //CalendarItems = new List<CalendarItem>();
-        //CalendarItems.Add(new CalendarItem(2023, 9, 12, "Ohhlala", "whattodo", "plaah", "platku"));
-        //CalendarItems.Add(new CalendarItem(2023, 9, 16, "yada yada", "thisissparta", "huohjavoih", "platku6000"));
-        //CalendarItems.Add(new CalendarItem(2023, 9, 17, "a calendar entry", "", "", "just a really long message that makes no sense and holds no real information."));
-        //CalendarItems.Add(new CalendarItem(2023, 9, 18, "voila", "ällötyttävät tykyttävät tikit tikittävät tykyttävät tytöllä", "saippuanmyyjä", "ei ollut palindromi tuo edellinen, mutta sama informaatiosisältö kuin vastaavassa klassikkopalindromissa"));
-        //CalendarItems.Add(new CalendarItem(2023, 9, 20, "huihai kauhistus", "nötkönnötkönnöö", "kaikkionpilalla", "herranjestas"));
-        //CalendarItems.Add(new CalendarItem(2023, 9, 30, "mutta toisaalta", "kuka se oli? En tiedä, mutta joku sen täytyi olla!", "miten rakentaa data?", "ja noutaa sitä ja siirrellä edestakaisin?"));
+
+        CalendarItems = new List<CalendarItem>();
+        //CalendarItems.Add(new CalendarItem(2023, 9, 12, new string[]));
+        //CalendarItems.Add(new CalendarItem(2023, 9, 12, new List<string> { "Ohhlala", "whattodo", "plaah", "platku" }));
+        //CalendarItems.Add(new CalendarItem(2023, 9, 16, new List<string> { "yada yada", "huohjavoih", "platku6000" }));
+        //CalendarItems.Add(new CalendarItem(2023, 9, 17, new List<string> { "a calendar entry", "just a really long message that makes no sense and holds no real information." }));
+        //CalendarItems.Add(new CalendarItem(2023, 9, 18, new List<string> { "voila", "ällötyttävät tykyttävät tikit tikittävät tykyttävät tytöllä", "saippuanmyyjä", "ei ollut palindromi tuo edellinen, mutta sama informaatiosisältö kuin vastaavassa klassikkopalindromissa" }));
+        //CalendarItems.Add(new CalendarItem(2023, 9, 20, new List<string> { "huihai kauhistus", "nötkönnötkönnöö", "kaikkionpilalla", "herranjestas" }));
+        //CalendarItems.Add(new CalendarItem(2023, 9, 30, new List<string> { "mutta toisaalta", "kuka se oli? En tiedä, mutta joku sen täytyi olla!", "miten rakentaa data?", "ja noutaa sitä ja siirrellä edestakaisin?" }));
 
         CalendarDictionary = new Dictionary<DateTime, CalendarItem>();
 
-        //for (int i = 0; i < CalendarItems.Count; i++)
-        //{
-        //    int year = CalendarItems[i].Year;
-        //    int month = CalendarItems[i].Month;
-        //    int day = CalendarItems[i].Day;
+        for (int i = 0; i < CalendarItems.Count; i++)
+        {
+            int year = CalendarItems[i].Year;
+            int month = CalendarItems[i].Month;
+            int day = CalendarItems[i].Day;
 
-        //    CalendarDictionary.Add(new DateTime(year, month, day), CalendarItems[i]);
-        //}
+            CalendarDictionary.Add(new DateTime(year, month, day), CalendarItems[i]);
+        }
 
         int iterator = 0;
         foreach (var kvp in CalendarDictionary)
@@ -175,8 +200,27 @@ public class CalendarController : NetworkBehaviour
             return true;
         }
 
-        item = new CalendarItem(1, 1, 1, "", "", "", "");
+        item = new CalendarItem(1, 1, 1, new List<string> { ""});
         return false;
+    }
+
+    public void SaveIndividualDay(DateTime dateTime,
+                                  List<string> entries)
+    {
+        CalendarItem newCalendarItem = new CalendarItem(dateTime.Year,
+                                                        dateTime.Month,
+                                                        dateTime.Day,
+                                                        entries);
+
+        if (CalendarDictionary.ContainsKey(dateTime))
+        {
+            CalendarDictionary[dateTime] = newCalendarItem;
+        }
+
+        else
+        {
+            CalendarDictionary.Add(dateTime, newCalendarItem);
+        }
     }
 
     public void SaveIndividualDay(DateTime dateTime,

@@ -29,6 +29,8 @@ public class CalendarWindowChanger : MonoBehaviour
     public TMP_InputField NoteInputField;
     public GameObject EnterANoteText;
 
+    public ScrollRect ScrollView;
+
     public ViewWithinAViewUIRaycaster ViewWithinAViewUIRaycaster;
 
     private bool IsShowingDayView;
@@ -72,6 +74,7 @@ public class CalendarWindowChanger : MonoBehaviour
     public void OnCalendarCloseButtonPressed()
     {
         //Debug.Log("CalendarWindowChanger knows we pressed a button");
+
         DayViewCalendar.OnCloseIndividualDay();
         GoBackToPreviouslyShownMonth();
     }
@@ -95,6 +98,7 @@ public class CalendarWindowChanger : MonoBehaviour
         DayViewCalendar.gameObject.SetActive(false);
         NoteInputField.gameObject.SetActive(false);
         EnterANoteText.gameObject.SetActive(false);
+        //ScrollView.gameObject.SetActive(false);
     }
 
 
@@ -206,6 +210,7 @@ public class CalendarWindowChanger : MonoBehaviour
         DayViewCalendar.gameObject.SetActive(true);
         NoteInputField.gameObject.SetActive(true);
         EnterANoteText.gameObject.SetActive(true);
+        //ScrollView.gameObject.SetActive(true);
     }
 
     public void OnCalendarButtonPressed(DateTime date)
