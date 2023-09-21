@@ -28,6 +28,7 @@ namespace Characters
 
             if (!IsOwner)
             {
+                SceneLoader.Instance.NewMainSceneObjectAdded(gameObject);
                 return;
             }
 

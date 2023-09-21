@@ -64,6 +64,8 @@ namespace Scenes
 
         public SceneLoadParams sceneLoadParams;
 
+        bool InSoloScene { get { return cachedGameObjectList.Count > 0; } }
+
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -87,6 +89,32 @@ namespace Scenes
 
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
+        }
+        public void NewMainSceneObjectAdded(GameObject playerGO)
+        {
+            // if playing minigame, handle any new characters getting instantiated
+            Debug.Log("new client!");
+
+            if (InSoloScene)
+            {
+                AddNewCachedObject(playerGO);
+            }
+
+        }
+
+        void AddNewCachedObject(GameObject obj)
+        {
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(MainSceneName));
+            ScenePackMode packMode = sceneLoadParams.scenePackMode;
+            Debug.Log("new client is moved to main scene");
+
+            if(packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER)
+            {
+                Debug.Log("new client is disabled");
+                cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
+                obj.SetActive(false);
+            }
+
         }
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
