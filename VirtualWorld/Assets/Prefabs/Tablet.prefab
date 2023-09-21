@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 1062231836899658510}
   - component: {fileID: 2249500894888291117}
   - component: {fileID: 7949935133753534845}
+  - component: {fileID: 8950555724303000417}
   m_Layer: 6
   m_Name: Tablet
   m_TagString: Untagged
@@ -253,8 +254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
+  _addedNetworkObject: {fileID: 8950555724303000417}
+  _networkObjectCache: {fileID: 8950555724303000417}
   ThirdPersonCamera: {fileID: 0}
   CloseupCamera: {fileID: 6214813249504867188}
   TransitionPos1Camera: {fileID: 1845512910840174062}
@@ -294,8 +295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
+  _addedNetworkObject: {fileID: 8950555724303000417}
+  _networkObjectCache: {fileID: 8950555724303000417}
   CurrentView: 0
   Raycaster: {fileID: 0}
   NewsFeedButtonOriginalLocal: {fileID: 0}
@@ -305,6 +306,40 @@ MonoBehaviour:
   NewsFeedWindowChanger: {fileID: 0}
   CalendarWindowChanger: {fileID: 0}
   IsTabletViewOpen: 0
+--- !u!114 &8950555724303000417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2513942907068002653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 2249500894888291117}
+  - {fileID: 7949935133753534845}
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  SerializedTransformProperties:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    LocalScale: {x: 1, y: 1, z: 1}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 2147226649747020195
 --- !u!1 &3044982528255610943
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +981,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

@@ -9,7 +9,7 @@ using UnityEngine;
 public class NetworkObjectSpawner : MonoBehaviour
 {
     public static NetworkObjectSpawner Instance;
-    [SerializeField] GameObject characterManagerPrefab;
+    [SerializeField] GameObject[] objectsToSpawn;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,13 +30,11 @@ public class NetworkObjectSpawner : MonoBehaviour
     {
         if (args.ConnectionState == LocalConnectionState.Started)
         {
-            SpawnServerCharacterManager();
+            foreach (GameObject obj in objectsToSpawn)
+            {
+                GameObject go = Instantiate(obj);
+                InstanceFinder.ServerManager.Spawn(go);
+            }
         }
-    }
-
-    public void SpawnServerCharacterManager()
-    {
-        GameObject go = Instantiate(characterManagerPrefab);
-        InstanceFinder.ServerManager.Spawn(go);
     }
 }

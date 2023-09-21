@@ -23,16 +23,19 @@ public class NewsFeedController : NetworkBehaviour
     // Start is called before the first frame update
     public void Awake()
     {
-        if (Instance == null) 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
         {
             Debug.Log("Launched newsfeed controller");
 
             Instance = this;
 
             LocalNews = GenerateLocalNewsTestFunction();
-
-
         }
+
     }
 
     // This is called when a player is actually spawned as a client

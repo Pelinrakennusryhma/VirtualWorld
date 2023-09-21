@@ -1286,8 +1286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fcc525d2c545a34eb6df1cdd587ba84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterManagerPrefab: {fileID: 5585604776717508355, guid: 924e2a37c0da4e4449f68b1c281fdce7,
-    type: 3}
+  objectsToSpawn:
+  - {fileID: 5585604776717508355, guid: 924e2a37c0da4e4449f68b1c281fdce7, type: 3}
+  - {fileID: 6387497054512564859, guid: 3d7c87069226cdf4b9711e65ca69f709, type: 3}
+  - {fileID: 6465798137122035726, guid: 80a47dd51a0751944882a960861fbcb3, type: 3}
 --- !u!1 &2087433850
 GameObject:
   m_ObjectHideFlags: 0

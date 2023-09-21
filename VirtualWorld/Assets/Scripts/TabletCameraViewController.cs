@@ -62,6 +62,8 @@ public class TabletCameraViewController : NetworkBehaviour
     private void Awake()
     {
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
+        ThirdPersonCamera = Camera.main;
+        CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
     }
 
     public override void OnStartClient()

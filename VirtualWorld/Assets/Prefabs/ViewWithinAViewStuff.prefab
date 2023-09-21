@@ -327,7 +327,7 @@ Transform:
   - {fileID: 7932382861152342065}
   - {fileID: 1004997475837639151}
   - {fileID: 7110497243689769543}
-  - {fileID: 1631271296031127096}
+  - {fileID: 3781067948778911118}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -347,16 +347,16 @@ MonoBehaviour:
   MapCamera: {fileID: 9021692001966314186}
   InventoryCamera: {fileID: 3701498952532353868}
   NewsFeedCamera: {fileID: 4983719272424539575}
-  CalendarCamera: {fileID: 6807398906501827168}
+  CalendarCamera: {fileID: 8980952679006177750}
   InventoryRaycaster: {fileID: 3951301763464107285}
   NewsFeedRaycaster: {fileID: 412686586345537672}
-  CalendarRaycaster: {fileID: 0}
+  CalendarRaycaster: {fileID: 4337339066536316137}
   ViewWithinAViewUIRaycaster: {fileID: 0}
   ScreenMeshRenderer: {fileID: 0}
   MapMaterial: {fileID: 2100000, guid: 310b687a70009814da3e64efc969e187, type: 2}
-  InventoryMaterial: {fileID: 2100000, guid: 7e3d631ff58b46246b380924417ae7e6, type: 2}
+  InventoryMaterial: {fileID: 2100000, guid: 54fe5e26ef35be043ab9013f30f64330, type: 2}
   NewsFeedMaterial: {fileID: 2100000, guid: 367a4259b894b7549873b300d3c46015, type: 2}
-  CalendarMaterial: {fileID: 2100000, guid: 657c48ad760dfdd418559a4d2855c15d, type: 2}
+  CalendarMaterial: {fileID: 2100000, guid: 9f8a0e09b9002d246ae907ecf61b3b1f, type: 2}
 --- !u!1 &1170395885114600996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,7 +3422,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4969135830296763455}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7621237116425329951
+--- !u!1001 &5412885962342588073
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -3438,7 +3438,7 @@ PrefabInstance:
     - target: {fileID: 5896683154082692541, guid: 1761a6cf019efd74fb52b420e214597b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9180414523796106023, guid: 1761a6cf019efd74fb52b420e214597b,
         type: 3}
@@ -3550,15 +3550,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1761a6cf019efd74fb52b420e214597b, type: 3}
---- !u!224 &1631271296031127096 stripped
+--- !u!224 &3781067948778911118 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9180414523796106023, guid: 1761a6cf019efd74fb52b420e214597b,
     type: 3}
-  m_PrefabInstance: {fileID: 7621237116425329951}
+  m_PrefabInstance: {fileID: 5412885962342588073}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &6807398906501827168 stripped
+--- !u!114 &4337339066536316137 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8588151167906910784, guid: 1761a6cf019efd74fb52b420e214597b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5412885962342588073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!20 &8980952679006177750 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4016278457123166079, guid: 1761a6cf019efd74fb52b420e214597b,
     type: 3}
-  m_PrefabInstance: {fileID: 7621237116425329951}
+  m_PrefabInstance: {fileID: 5412885962342588073}
   m_PrefabAsset: {fileID: 0}
