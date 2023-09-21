@@ -177,7 +177,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2045472653524975248}
-  - component: {fileID: 8196371363484098945}
   m_Layer: 8
   m_Name: MapBlips
   m_TagString: Untagged
@@ -200,21 +199,5 @@ Transform:
   - {fileID: 8893510601063538431}
   - {fileID: 3805480243116844985}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8196371363484098945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9189011233060346355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb6be507e33b2c445b52d71c7b855596, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GreenBlip: {fileID: 26669989274517248}
-  YellowBlip: {fileID: 6737318182854964393}
-  GreenBlipWasActive: 0
-  YellowBlipWasActive: 0

@@ -63,7 +63,12 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
         ThirdPersonCamera = Camera.main;
-        CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
+
+        if(ThirdPersonCamera != null)
+        {
+            CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
+        }
+
     }
 
     public override void OnStartClient()
@@ -76,11 +81,10 @@ public class TabletCameraViewController : NetworkBehaviour
         CloseupCamera.gameObject.SetActive(false);
         MapCamera.gameObject.SetActive(false);
 
-        if (!IsOwner)
-        {
-            YellowBlip.gameObject.SetActive(true);
-            GreenBlip.gameObject.SetActive(false);
-        }
+
+        YellowBlip.gameObject.SetActive(!IsOwner);
+        GreenBlip.gameObject.SetActive(IsOwner);
+
 
         RenderAlwaysOnTopCamera.DisableRenderOnTopCamera();
 
