@@ -26,6 +26,7 @@ namespace Characters
         {
             base.OnStartClient();
 
+            // if not our own character, notify the minigame loading system about a new gameobject being instantiated
             if (!IsOwner)
             {
                 SceneLoader.Instance.NewMainSceneObjectAdded(gameObject);

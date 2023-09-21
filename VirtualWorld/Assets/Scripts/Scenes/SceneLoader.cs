@@ -23,9 +23,10 @@ namespace Scenes
     {
         public Vector3 origo;
         public Quaternion rotation;
-        public object sceneData;
+        public object sceneData; // any type of data that might need to be moved to a loaded soloscene
         public ScenePackMode scenePackMode;
 
+        // constructor used if we care about the player's position in the world, E.g. when throwing dice in the world
         public SceneLoadParams(Vector3 origo, Quaternion rotation, ScenePackMode scenePackMode, object sceneData = null)
         {
             this.origo = origo;
@@ -83,18 +84,10 @@ namespace Scenes
         {
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
-
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneLoaded += OnSceneLoaded;
-
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
         public void NewMainSceneObjectAdded(GameObject playerGO)
         {
-            // if playing minigame, handle any new characters getting instantiated
-            Debug.Log("new client!");
-
+            // if playing minigame, handle any new objects getting instantiated
             if (InSoloScene)
             {
                 AddNewCachedObject(playerGO);
@@ -106,11 +99,10 @@ namespace Scenes
         {
             SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(MainSceneName));
             ScenePackMode packMode = sceneLoadParams.scenePackMode;
-            Debug.Log("new client is moved to main scene");
 
+            // in most cases we want to disable the game object, but not when throwing dice out in the main scene for example
             if(packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER)
             {
-                Debug.Log("new client is disabled");
                 cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
                 obj.SetActive(false);
             }
@@ -139,7 +131,7 @@ namespace Scenes
         {
             PackScene(sceneLoadParams.scenePackMode);
 
-            AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             while (!async.isDone)
             {
@@ -148,12 +140,12 @@ namespace Scenes
 
             Scene subScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
 
-            UnityEngine.SceneManagement.SceneManager.SetActiveScene(subScene);
+            SceneManager.SetActiveScene(subScene);
         }
 
         IEnumerator UnloadAsyncScene()
         {
-            AsyncOperation op = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+            AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
             while (!op.isDone)
             {
@@ -162,7 +154,7 @@ namespace Scenes
 
             UnpackScene();
 
-            UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(MainSceneName));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
         }
 
         void PackScene(ScenePackMode scenePackMode)
@@ -277,21 +269,6 @@ namespace Scenes
             SceneManager.SetActiveScene(newSubScene);
             SceneManager.UnloadSceneAsync(oldSubScene);
         }
-        public void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-        {
-            Debug.Log("On scene loaded " + scene.name);
-        }
-
-        public void OnSceneUnloaded(Scene scene)
-        {
-            Debug.Log("Unloaded scene " + scene.name);
-
-            if (scene.name.Equals(MainSceneName))
-            {
-                Debug.Log("We just unloaded main scene. This is not cool.");
-            }
-        }
-
     }
 }
 
