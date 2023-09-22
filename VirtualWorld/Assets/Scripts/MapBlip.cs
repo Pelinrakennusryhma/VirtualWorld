@@ -4,74 +4,62 @@ using UnityEngine;
 
 public class MapBlip : MonoBehaviour
 {
-    [SerializeField] GameObject blipParent;
+    public GameObject GreenBlip;
+    public GameObject YellowBlip;
 
-    private void OnEnable()
+    public bool GreenBlipWasActive;
+    public bool YellowBlipWasActive;
+
+
+
+    public void DisableBlips()
     {
-        blipParent.SetActive(true);
+        if (GreenBlip.gameObject.activeSelf)
+        {
+            GreenBlipWasActive = true;
+        }
+
+        else
+        {
+            GreenBlipWasActive = false;
+        }
+
+        if (YellowBlip.gameObject.activeSelf)
+        {
+            YellowBlipWasActive = true;
+        }
+
+        else
+        {
+            YellowBlipWasActive = false;
+        }
+
+        GreenBlip.SetActive(false);
+        YellowBlip.SetActive(false);
     }
 
-    private void OnDisable()
+    public void ReEnableBlips()
     {
-        blipParent.SetActive(false);
+        if (GreenBlipWasActive)
+        {
+            GreenBlip.SetActive(true);
+        }
+
+        if (YellowBlipWasActive)
+        {
+            YellowBlip.SetActive(true);
+        }
     }
 
-    //public GameObject GreenBlip;
-    //public GameObject YellowBlip;
+    public void EnableGreenBlip()
+    {
+        GreenBlip.SetActive(true);
+        YellowBlip.SetActive(false);
+    }
 
-    //public bool GreenBlipWasActive;
-    //public bool YellowBlipWasActive;
-
-
-
-    //public void DisableBlips()
-    //{
-    //    if (GreenBlip.gameObject.activeSelf)
-    //    {
-    //        GreenBlipWasActive = true;
-    //    }
-
-    //    else
-    //    {
-    //        GreenBlipWasActive = false;
-    //    }
-
-    //    if (YellowBlip.gameObject.activeSelf)
-    //    {
-    //        YellowBlipWasActive = true;
-    //    }
-
-    //    else
-    //    {
-    //        YellowBlipWasActive = false;
-    //    }
-
-    //    GreenBlip.SetActive(false);
-    //    YellowBlip.SetActive(false);
-    //}
-
-    //public void ReEnableBlips()
-    //{
-    //    if (GreenBlipWasActive)
-    //    {
-    //        GreenBlip.SetActive(true);
-    //    }
-
-    //    if (YellowBlipWasActive)
-    //    {
-    //        YellowBlip.SetActive(true);
-    //    }
-    //}
-
-    //public void EnableGreenBlip()
-    //{
-    //    GreenBlip.SetActive(true);
-    //    YellowBlip.SetActive(false);
-    //}
-
-    //public void EnableYellowBlip()
-    //{
-    //    GreenBlip.SetActive(false);
-    //    YellowBlip.SetActive(true);
-    //}
+    public void EnableYellowBlip()
+    {
+        GreenBlip.SetActive(false);
+        YellowBlip.SetActive(true);
+    }
 }

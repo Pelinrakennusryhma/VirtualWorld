@@ -8,6 +8,7 @@ using System.Threading;
 using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using StarterAssets;
 
 namespace Scenes
 {
@@ -60,6 +61,7 @@ namespace Scenes
     {
         public static SceneLoader Instance { get; private set; }
         [SerializeField] public string MainSceneName { get; private set; }
+        [SerializeField] StarterAssetsInputs inputs;
 
         List<CachedGameObject> cachedGameObjectList = new List<CachedGameObject>();
 
@@ -85,6 +87,12 @@ namespace Scenes
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
         }
+
+        public void SetInputs(StarterAssetsInputs inputs)
+        {
+            this.inputs = inputs;
+        }
+
         public void NewMainSceneObjectAdded(GameObject playerGO)
         {
             // if playing minigame, handle any new objects getting instantiated
@@ -138,7 +146,11 @@ namespace Scenes
                 yield return null;
             }
 
-            Scene subScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
+#if UNITY_WEBGL
+            inputs.UnlockCursor();
+#endif
+
+            Scene subScene = SceneManager.GetSceneByName(sceneName);
 
             SceneManager.SetActiveScene(subScene);
         }
@@ -155,6 +167,9 @@ namespace Scenes
             UnpackScene();
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
+#if UNITY_WEBGL
+            inputs.LockCursor();
+#endif
         }
 
         void PackScene(ScenePackMode scenePackMode)

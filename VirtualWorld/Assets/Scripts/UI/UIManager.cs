@@ -72,12 +72,17 @@ namespace UI
                 playerUI.SetActive(false);
                 menu.SetActive(true);
                 EventMenuToggled.Invoke(true);
+#if UNITY_WEBGL
+                playerInputs.UnlockCursor();
+#endif
             } else
             {
-
                 playerUI.SetActive(true);
                 menu.SetActive(false);
                 EventMenuToggled.Invoke(false);
+#if UNITY_WEBGL
+                playerInputs.LockCursor();
+#endif
             }
         }
 

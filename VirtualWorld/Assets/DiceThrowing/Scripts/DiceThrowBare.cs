@@ -8,6 +8,7 @@ namespace DiceMinigame
 {
     public class DiceThrowBare : MonoBehaviour
     {
+        // how far in front of the character does the dice scene load when throwing dice in the world
         [SerializeField] float forwardOffset = 4f;
         [SerializeField] CamMover camMover;
         [SerializeField] GameObject environments;

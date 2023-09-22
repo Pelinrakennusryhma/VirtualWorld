@@ -103,11 +103,17 @@ public class TabletCameraViewController : NetworkBehaviour
         {
             SetupTabletForComingIn();
             TabletFunctionality.OnTabletOpened();
+#if UNITY_WEBGL
+            Inputs.UnlockCursor();
+#endif
         }
 
         else
         {
             SetupTabletForGoingOut();
+#if UNITY_WEBGL
+            Inputs.LockCursor();
+#endif
         }
     }
 

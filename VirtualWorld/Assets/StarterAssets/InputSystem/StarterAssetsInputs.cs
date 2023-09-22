@@ -148,16 +148,28 @@ namespace StarterAssets
 		{
 			menu = newMenuState;
 		}
+#if UNITY_WEBGL
 
-		private void OnApplicationFocus(bool hasFocus)
+		private void Start()
 		{
-			// SetCursorState(cursorLocked);
-		}
+            LockCursor();
+        }
+#endif
 
-		private void SetCursorState(bool newState)
+        private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+
+		public void LockCursor()
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+		}
+
+        public void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 
 }
