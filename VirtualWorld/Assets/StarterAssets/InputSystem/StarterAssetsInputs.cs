@@ -11,7 +11,7 @@ namespace StarterAssets
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
-		public bool sprint;
+		[field:SerializeField] public bool Sprint { get; private set; }
 		public bool interact;
         public bool tablet;
         public bool action1;
@@ -28,9 +28,9 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
-			ClearInteractInput();
-			Action1Input(false);
-			MenuInput(false);
+			//ClearInteractInput();
+			//Action1Input(false);
+			//MenuInput(false);
 		}
 
 		private void OnDisable()
@@ -48,48 +48,49 @@ namespace StarterAssets
 			Action1Input(false);
 			MenuInput(false);
 		}
-		public void OnMove(InputValue value)
+		public void OnMove(InputAction.CallbackContext value)
 		{
-			MoveInput(value.Get<Vector2>());
+			MoveInput(value.ReadValue<Vector2>());
 		}
 
-		public void OnLook(InputValue value)
+		public void OnLook(InputAction.CallbackContext value)
 		{
 			if (cursorInputForLook)
 			{
-				LookInput(value.Get<Vector2>());
+				LookInput(value.ReadValue<Vector2>());
 			}
 		}
 
-		public void OnJump(InputValue value)
+		public void OnJump(InputAction.CallbackContext value)
 		{
-			JumpInput(value.isPressed);
+			JumpInput(value.performed);
 		}
 
-		public void OnSprint(InputValue value)
+		public void OnSprint(InputAction.CallbackContext value)
 		{
-			SprintInput(value.isPressed);
+			Debug.Log("performed: " + value.performed);
+			SprintInput(value.performed);
 		}
 
-		public void OnInteract(InputValue value)
+		public void OnInteract(InputAction.CallbackContext value)
 		{
-			InteractInput(value.isPressed);
+			InteractInput(value.performed);
 		}
 
-        public void OnTablet(InputValue value)
+        public void OnTablet(InputAction.CallbackContext value)
         {
             //Debug.Log("On tablet called " + Time.time);
-            TabletInput(value.isPressed);
+            TabletInput(value.performed);
         }
 
-        public void OnAction1(InputValue value)
+        public void OnAction1(InputAction.CallbackContext value)
 		{
-			Action1Input(value.isPressed);
+			Action1Input(value.performed);
 		}
 
-		public void OnMenu(InputValue value)
+		public void OnMenu(InputAction.CallbackContext value)
 		{
-			MenuInput(value.isPressed);
+			MenuInput(value.performed);
 		}
 #endif
 
@@ -111,7 +112,7 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
+			Sprint = newSprintState;
 		}
 
 		public void InteractInput(bool newInteractState)

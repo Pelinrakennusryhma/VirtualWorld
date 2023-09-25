@@ -570,7 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useWss: 1
   _sslConfiguration:
-    Enabled: 1
+    Enabled: 0
     CertificatePath: ./cert.pfx
     CertificatePassword: 
     SslProtocol: 12288
