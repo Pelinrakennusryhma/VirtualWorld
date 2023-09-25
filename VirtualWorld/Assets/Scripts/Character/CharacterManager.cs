@@ -1,21 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Authentication;
 using UnityEngine.Events;
-using Cysharp.Threading.Tasks;
 using BackendConnection;
 using FishNet.Object;
-using FishNet;
-using FishNet.Managing.Scened;
-using System.Linq;
-using Scenes;
-using UnityEngine.SceneManagement;
 using Dev;
-using FishNet.Connection;
-using FishNet.Observing;
-using FishNet.Component.Observing;
 using UI;
+using FishNet.Connection;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Characters
@@ -101,7 +91,7 @@ namespace Characters
         [TargetRpc]
         public void ModifyItemTargetRpc(NetworkConnection conn, InventoryItem item)
         {
-            if(item.id == "000")
+            if (item.id == "000")
             {
                 EventMoneyAmountChanged.Invoke(item);
             }

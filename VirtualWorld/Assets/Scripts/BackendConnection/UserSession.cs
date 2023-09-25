@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Authentication;
-using UnityEngine.Events;
-using Cysharp.Threading.Tasks;
 using BackendConnection;
-using FishNet.Object;
+using UnityEngine;
 
 namespace Authentication
 {

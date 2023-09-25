@@ -22,7 +22,6 @@ namespace Configuration
     {
         [SerializeField] APICalls_Client apiCalls_Client;
         [SerializeField] APICalls_Server apiCalls_Server;
-        [SerializeField] WebSocketConnection wsConnection;
         [SerializeField] ServerInit serverInit;
         [SerializeField] ClientInit clientInit;
         [SerializeField] UserSession userSession;
@@ -78,9 +77,7 @@ namespace Configuration
                         processType,
                         ip,
                         Config.serverPort,
-                        https,
-                        "",
-                        ""
+                        https
                         );
                     apiCalls_Client.Init(https);
                     userSession.Init();
@@ -91,9 +88,7 @@ namespace Configuration
                         processType,
                         Config.ipForServer,
                         Config.serverPort,
-                        Config.serverBackendUrl,
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
+                        Config.serverBackendUrl
                         );
                     serverInit.Init(initData);
                     apiCalls_Server.Init(initData.httpsUrl);
@@ -103,9 +98,7 @@ namespace Configuration
                         processType,
                         Config.DEV_IpForClient,
                         Config.serverPort,
-                        Config.DEV_clientBackendUrl,
-                        Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME"),
-                        Environment.GetEnvironmentVariable("UNITY_CLIENT_PASSWORD")
+                        Config.DEV_clientBackendUrl
                         );
                     apiCalls_Client.Init(Config.DEV_clientBackendUrl);
                     clientInit.Init(initData);
@@ -117,9 +110,7 @@ namespace Configuration
                         processType,
                         ip,
                         Config.serverPort,
-                        https,
-                        "",
-                        ""
+                        https
                         );
                     apiCalls_Client.Init(https);
                     userSession.Init();
@@ -130,9 +121,7 @@ namespace Configuration
                         processType,
                         Config.ipForServer,
                         Config.serverPort,
-                        Config.serverBackendUrl,
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
+                        Config.serverBackendUrl
                         );
                     serverInit.Init(initData);
                     apiCalls_Server.Init(initData.httpsUrl);

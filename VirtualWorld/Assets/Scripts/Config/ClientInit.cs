@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using FishNet;
 using BackendConnection;
 using Cysharp.Threading.Tasks;
@@ -33,9 +34,9 @@ namespace Configuration
 
             if (data.processType == ProcessType.DEV_CLIENT)
             {
-                string username = this.username != "" ? this.username : data.username;
+                string username = this.username != "" ? this.username : Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME");
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                AutoLog(username, data.password);
+                AutoLog(username, Environment.GetEnvironmentVariable("UNITY_CLIENT_PASSWORD"));
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
 
