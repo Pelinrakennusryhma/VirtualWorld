@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using StarterAssets;
 using FishNet.Object;
+using UnityEngine.Events;
 
 public class TabletCameraViewController : NetworkBehaviour
 {
@@ -58,6 +59,8 @@ public class TabletCameraViewController : NetworkBehaviour
     public bool WentOverLeftShoulder;
     public InventoryViewChanger InventoryViewChanger;
 
+    private UnityAction inputsCallback;
+
 
     private void Awake()
     {
@@ -89,32 +92,37 @@ public class TabletCameraViewController : NetworkBehaviour
         RenderAlwaysOnTopCamera.DisableRenderOnTopCamera();
 
         FlyCamera.enabled = false;
+
+        Inputs.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
+        Inputs.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
     }
 
-    public void OnTabletPressed()
+    public void OnOpenTabletPressed()
     {
-        //Debug.Log("Tablet button was pressed " + Time.time);
-        //Inputs.ClearTabletInput();
-
-
         IsTakenOverByCheapInterpolations = true;
 
         if (!IsActiveTabletView)
         {
+            inputsCallback = null;
             SetupTabletForComingIn();
             TabletFunctionality.OnTabletOpened();
 #if UNITY_WEBGL
             Inputs.UnlockCursor();
 #endif
         }
+    }
 
-        else
-        {
-            SetupTabletForGoingOut();
+    // callback is called once camera has done zooming back to change StarterAssetsInputs' gameState enum
+    public void OnCloseTabletPressed(UnityAction callback)
+    {
+        IsTakenOverByCheapInterpolations = true;
+
+        inputsCallback = callback;
+        SetupTabletForGoingOut();
 #if UNITY_WEBGL
-            Inputs.LockCursor();
+        Inputs.LockCursor();
 #endif
-        }
+      
     }
 
     #region SetupTransitionBeginnings
@@ -202,15 +210,15 @@ public class TabletCameraViewController : NetworkBehaviour
             return;
         }
 
-        if (Inputs.tablet)
-        {
-            Inputs.ClearTabletInput();
+        //if (Inputs.tablet)
+        //{
+        //    Inputs.ClearTabletInput();
 
-            if (ThirdPersonController.Grounded) 
-            {
-                OnTabletPressed();
-            }
-        }
+        //    if (ThirdPersonController.Grounded) 
+        //    {
+        //        OnTabletPressed();
+        //    }
+        //}
 
         if (!IsTakenOverByCheapInterpolations)
         {
@@ -291,6 +299,8 @@ public class TabletCameraViewController : NetworkBehaviour
             //Debug.Log("Third person eueler rot is " + ThirdPersonCamera.transform.rotation.eulerAngles + " virtual camera rot is " + MainVirtualCamera.transform.rotation.eulerAngles);
             StopMessingWithCameras();
             TabletFunctionality.OnTabletClosed();
+            // once camera has reached its return position, invoke the callback function in StarterAssetsInputs to set its gameState back to FREE
+            inputsCallback?.Invoke();
         }
 
         if (magnitudeToTargetPos <= 0.01f)

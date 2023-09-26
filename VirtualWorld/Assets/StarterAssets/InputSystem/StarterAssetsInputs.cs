@@ -1,10 +1,20 @@
+using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.CompilerServices;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
 namespace StarterAssets
 {
+	public enum GAME_STATE
+	{
+		FREE,
+		MENU,
+		TABLET
+	}
 	public class StarterAssetsInputs : MonoBehaviour
 	{
 		[Header("Character Input Values")]
@@ -15,7 +25,6 @@ namespace StarterAssets
 		public bool interact;
         public bool tablet;
         public bool action1;
-		public bool menu;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -23,6 +32,12 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+
+		public GAME_STATE gameState = GAME_STATE.FREE;
+
+		public UnityEvent EventMenuPressed;
+		public UnityEvent EventOpenTabletPressed;
+		public UnityEvent<UnityAction> EventCloseTabletPressed;
 
 #if ENABLE_INPUT_SYSTEM
 
@@ -46,56 +61,161 @@ namespace StarterAssets
 			SprintInput(false);
 			InteractInput(false);
 			Action1Input(false);
-			MenuInput(false);
 		}
 		public void OnMove(InputAction.CallbackContext value)
 		{
-			MoveInput(value.ReadValue<Vector2>());
+			switch (gameState)
+			{
+				case GAME_STATE.FREE:
+                    MoveInput(value.ReadValue<Vector2>());
+                    break;
+				case GAME_STATE.MENU:
+					break;
+				case GAME_STATE.TABLET:
+					break;
+				default:
+					break;
+			}
 		}
 
 		public void OnLook(InputAction.CallbackContext value)
 		{
-			if (cursorInputForLook)
-			{
-				LookInput(value.ReadValue<Vector2>());
-			}
+            switch (gameState)
+            {
+                case GAME_STATE.FREE:
+                    if (cursorInputForLook)
+                    {
+                        LookInput(value.ReadValue<Vector2>());
+                    }
+                    break;
+                case GAME_STATE.MENU:
+                    break;
+                case GAME_STATE.TABLET:
+                    break;
+                default:
+                    break;
+            }
+
 		}
 
 		public void OnJump(InputAction.CallbackContext value)
 		{
-			JumpInput(value.performed);
-		}
+            switch (gameState)
+            {
+                case GAME_STATE.FREE:
+                    JumpInput(value.performed);
+                    break;
+                case GAME_STATE.MENU:
+                    break;
+                case GAME_STATE.TABLET:
+                    break;
+                default:
+                    break;
+            }
+        }
 
 		public void OnSprint(InputAction.CallbackContext value)
 		{
-			Debug.Log("performed: " + value.performed);
-			SprintInput(value.performed);
-		}
+            switch (gameState)
+            {
+                case GAME_STATE.FREE:
+                    SprintInput(value.performed);
+                    break;
+                case GAME_STATE.MENU:
+                    break;
+                case GAME_STATE.TABLET:
+                    break;
+                default:
+                    break;
+            }
+        }
 
 		public void OnInteract(InputAction.CallbackContext value)
-		{
-			InteractInput(value.performed);
-		}
+		{	
+            switch (gameState)
+            {
+                case GAME_STATE.FREE:
+                    InteractInput(value.performed);
+                    break;
+                case GAME_STATE.MENU:
+                    break;
+                case GAME_STATE.TABLET:
+                    break;
+                default:
+                    break;
+            }
+        }
 
         public void OnTablet(InputAction.CallbackContext value)
         {
-            //Debug.Log("On tablet called " + Time.time);
-            TabletInput(value.performed);
+            if (value.action.WasPerformedThisFrame())
+            {
+                switch (gameState)
+                {
+                    case GAME_STATE.FREE:
+                        ZeroInputs();
+                        SetGameState(GAME_STATE.TABLET);
+                        EventOpenTabletPressed.Invoke();
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET: // callback function to set gamestate once tablet script is done zooming out
+                        EventCloseTabletPressed.Invoke(() => SetGameState(GAME_STATE.FREE));
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public void OnAction1(InputAction.CallbackContext value)
 		{
-			Action1Input(value.performed);
-		}
+            switch (gameState)
+            {
+                case GAME_STATE.FREE:
+                    Action1Input(value.performed);
+                    break;
+                case GAME_STATE.MENU:
+                    break;
+                case GAME_STATE.TABLET:
+                    break;
+                default:
+                    break;
+            }
+        }
 
 		public void OnMenu(InputAction.CallbackContext value)
 		{
-			MenuInput(value.performed);
+			if(value.action.WasPerformedThisFrame())
+			{
+                switch (gameState)
+                {
+                    case GAME_STATE.FREE:
+                        ZeroInputs();
+                        EventMenuPressed.Invoke();
+                        SetGameState(GAME_STATE.MENU);
+                        break;
+                    case GAME_STATE.MENU:
+                        EventMenuPressed.Invoke();
+                        SetGameState(GAME_STATE.FREE);
+                        break;
+                    case GAME_STATE.TABLET:
+                        EventCloseTabletPressed.Invoke(() => SetGameState(GAME_STATE.FREE));
+                        break;
+                    default:
+                        break;
+                }
+            }
 		}
+
+        public void SetGameState(GAME_STATE newState)
+        {
+            gameState = newState;
+        }
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		}
@@ -145,10 +265,6 @@ namespace StarterAssets
 			action1 = newAction1State;
 		}
 
-		public void MenuInput(bool newMenuState)
-		{
-			menu = newMenuState;
-		}
 #if UNITY_WEBGL
 
 		private void Start()

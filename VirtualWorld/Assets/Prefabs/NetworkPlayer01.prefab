@@ -2708,10 +2708,12 @@ MonoBehaviour:
   interact: 0
   tablet: 0
   action1: 0
-  menu: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
+  EventMenuPressed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5210023488652878839
 MonoBehaviour:
   m_ObjectHideFlags: 0

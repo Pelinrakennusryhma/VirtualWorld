@@ -45,24 +45,6 @@ namespace UI
             ResetMenuPanels();
         }
 
-        void Update()
-        {
-            CheckInputs();
-        }
-
-        void CheckInputs()
-        {
-            if (playerInputs == null)
-            {
-                return;
-            }
-
-            if (playerInputs.menu)
-            {
-                ToggleUIComponents();
-            }
-        }
-
         void ToggleUIComponents()
         {
             if (playerUI.activeSelf)
@@ -89,6 +71,13 @@ namespace UI
         public void SetPlayerCharacter(GameObject playerGO)
         {
             playerInputs = playerGO.GetComponentInChildren<StarterAssetsInputs>();
+
+            playerInputs.EventMenuPressed.AddListener(OnMenuPressed);
+        }
+
+        void OnMenuPressed() 
+        {
+            ToggleUIComponents();
         }
 
         public void OnLogOutPressed()

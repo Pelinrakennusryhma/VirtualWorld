@@ -20,7 +20,6 @@ namespace Characters
 
         [SerializeField] Transform cameraFollowTarget;
         private CinemachineVirtualCamera _cinemachineVirtualCamera;
-        bool controlsDisabled = false;
 
         public override void OnStartClient()
         {
@@ -39,28 +38,12 @@ namespace Characters
 
             controller.shouldAnimate = true;
 
-            UIManager.Instance.EventMenuToggled.AddListener(TogglePlayerInputs);
-
             if (_cinemachineVirtualCamera == null)
             {
                 _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
             }
 
             EnableNetworkedControls();
-        }
-
-        private void Update()
-        {
-            if (controlsDisabled)
-            {
-                inputs.ZeroInputs();
-            }
-        }
-
-        void TogglePlayerInputs(bool menuEnabled)
-        {
-            controlsDisabled = menuEnabled;
-            Debug.Log("Inputs enabled: " + !menuEnabled);
         }
 
         void EnableNetworkedControls()
