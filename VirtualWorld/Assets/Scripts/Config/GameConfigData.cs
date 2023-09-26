@@ -10,6 +10,7 @@ namespace Configuration
     {
         public string DEV_IpForClient;
         public string PROD_IpForClient;
+        public string PROD_URLForClient;
         public string ipForServer;
         public ushort serverPort;
         public string DEV_clientBackendUrl;

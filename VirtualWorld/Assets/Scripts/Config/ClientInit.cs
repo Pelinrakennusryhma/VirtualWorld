@@ -18,21 +18,17 @@ namespace Configuration
         [SerializeField] APICalls_Client apiCalls_Client;
         [SerializeField] GameObject connectCanvas;
         [SerializeField] NetworkManager networkManager;
-        [SerializeField] FishNet.Managing.Scened.SceneManager sceneManager;
         [SerializeField] string username;
 
-        InitData data;
-
-        public void Init(InitData data)
+        public void Init(bool autolog = false)
         {
             Debug.Log("--- CLIENT INIT START ---");
-            this.data = data;
 
             apiCalls_Client.OnAuthSuccess.AddListener(EnableConnectCanvas);
             apiCalls_Client.OnLogout.AddListener(DisableConnectCanvas);
             networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
 
-            if (data.processType == ProcessType.DEV_CLIENT)
+            if (autolog)
             {
                 string username = this.username != "" ? this.username : Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME");
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -47,7 +43,7 @@ namespace Configuration
         {
             apiCalls_Client.LogOut();
             await apiCalls_Client.OnBeginLogin(username, password, false);
-            networkManager.ClientManager.StartConnection();
+            InstanceFinder.ClientManager.StartConnection();
             Debug.Log("client autologged");
         }
 
@@ -69,9 +65,7 @@ namespace Configuration
 
         public void ConnectToServer()
         {
-            networkManager.ClientManager.StartConnection();
-            Debug.Log(InstanceFinder.ClientManager.Connection);
-            Debug.Log("Client started by clicking connect button");
+            InstanceFinder.ClientManager.StartConnection();
         }
     }
 }

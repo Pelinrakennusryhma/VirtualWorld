@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using BackendConnection;
 using Authentication;
+using FishNet.Transporting.Tugboat;
+using FishNet.Transporting.Bayou;
 #if UNITY_EDITOR
 using ParrelSync;
 #endif
@@ -25,6 +27,8 @@ namespace Configuration
         [SerializeField] ServerInit serverInit;
         [SerializeField] ClientInit clientInit;
         [SerializeField] UserSession userSession;
+        [SerializeField] Tugboat tugboat;
+        [SerializeField] Bayou bayou;
         [SerializeField] TextAsset configFile;
 
         [Tooltip("Used in development to start a client that connects to the production server.")]
@@ -66,70 +70,50 @@ namespace Configuration
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         void SetConfigData()
         {
-            InitData initData;
-
             switch (processType)
             {
                 case ProcessType.CLIENT:
                     string ip = Config.PROD_IpForClient;
                     string https = Config.PROD_clientBackendUrl;
-                    initData = new InitData(
-                        processType,
-                        ip,
-                        Config.serverPort,
-                        https
-                        );
+                    InitBayuo(Config.PROD_URLForClient);
                     apiCalls_Client.Init(https);
                     userSession.Init();
-                    clientInit.Init(initData);
+                    clientInit.Init(false);
                     break;
                 case ProcessType.SERVER:
-                    initData = new InitData(
-                        processType,
-                        Config.ipForServer,
-                        Config.serverPort,
-                        Config.serverBackendUrl
-                        );
-                    serverInit.Init(initData);
-                    apiCalls_Server.Init(initData.httpsUrl);
+                    serverInit.Init();
+                    apiCalls_Server.Init(Config.serverBackendUrl);
                     break;
                 case ProcessType.DEV_CLIENT:
-                    initData = new InitData(
-                        processType,
-                        Config.DEV_IpForClient,
-                        Config.serverPort,
-                        Config.DEV_clientBackendUrl
-                        );
                     apiCalls_Client.Init(Config.DEV_clientBackendUrl);
-                    clientInit.Init(initData);
+                    clientInit.Init(true);
                     break;
                 case ProcessType.DEV_CLIENT2:
                     ip = Config.PROD_IpForClient;
                     https = Config.PROD_clientBackendUrl;
-                    initData = new InitData(
-                        processType,
-                        ip,
-                        Config.serverPort,
-                        https
-                        );
+                    InitTugboat(Config.PROD_IpForClient);
                     apiCalls_Client.Init(https);
                     userSession.Init();
-                    clientInit.Init(initData);
+                    clientInit.Init(false);
                     break;
                 case ProcessType.DEV_SERVER:
-                    initData = new InitData(
-                        processType,
-                        Config.ipForServer,
-                        Config.serverPort,
-                        Config.serverBackendUrl
-                        );
-                    serverInit.Init(initData);
-                    apiCalls_Server.Init(initData.httpsUrl);
+                    serverInit.Init();
+                    apiCalls_Server.Init(Config.serverBackendUrl);
                     break;
                 default:
                     throw new Exception("The impossible happened: Init failed!");
             }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        }
+
+        void InitTugboat(string serverAddress)
+        {
+            tugboat.SetClientAddress(serverAddress);
+        }
+
+        void InitBayuo(string serverAddress)
+        {
+            bayou.SetClientAddress(serverAddress);
         }
     }
 }

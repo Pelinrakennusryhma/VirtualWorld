@@ -17,7 +17,7 @@ namespace Configuration
         [SerializeField] ScenePicker mainScenePicker;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] SceneManager sceneManager;
-        public async UniTask Init(InitData data)
+        public async UniTask Init()
         {
             Debug.Log("--- SERVER INIT START ---");
             networkManager.ServerManager.OnServerConnectionState += OnServerStarted;
@@ -40,7 +40,7 @@ namespace Configuration
             sceneManager.LoadGlobalScenes(sld);
 
             //unload launch scene as it's no longer needed
-            sceneManager.UnloadConnectionScenes(new SceneUnloadData(UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(0)));
+            sceneManager.UnloadConnectionScenes(new SceneUnloadData("Launch"));
             Debug.Log("--- SERVER INIT END ---");
         }
 
