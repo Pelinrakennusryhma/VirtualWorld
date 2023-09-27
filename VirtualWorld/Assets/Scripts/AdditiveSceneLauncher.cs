@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 using Unity.Netcode;
 using Scenes;
 
+// TO BE DELETED, REMOVED AND POSSIBLY THE LAST
+// FUNCTIONALITY IT HAS PUT INTO A BETTER CLASS?
+
+
 public class AdditiveSceneLauncher : NetworkBehaviour
 {
 

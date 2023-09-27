@@ -4,6 +4,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
+
+// TO BE REFACTORED: THAT IS _DELETED_ BECAUSE -------------------------
+// THIS SHOULDN'T BE USED, BECAUSE THERE IS A UI
+// RAYCASTER THAT SERVES THE SAME PURPOSE
+// EVEN THOUGH IT DOESN'T WORK COMPLETELY LIKE IT SHOULD
+// SEEMS LIKE THIS WAS ONLY EVER FIT FOR INITIAL TESTING PURPOSES
+//----------------------------------------------------------------------
+
+
 public class ViewWithinAViewRaycaster : MonoBehaviour
 {
     public Camera FlyCamera;
@@ -92,12 +102,7 @@ public class ViewWithinAViewRaycaster : MonoBehaviour
                 }
             }
 
-            // And UI elements
 
-            //unityeven
-
-            //ClearRaycastArray();
-            //GraphicRaycaster.Raycast();
 
         }
     }

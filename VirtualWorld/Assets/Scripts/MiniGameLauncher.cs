@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
 
+// TO BE DELETED, REMOVED AND POSSIBLY THE LAST
+// FUNCTIONALITY IT HAS PUT INTO A BETTER CLASS?
+
+
 public class MiniGameLauncher : NetworkBehaviour
 {
     public static MiniGameLauncher Instance;
