@@ -1514,7 +1514,7 @@ PrefabInstance:
     - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
         type: 3}
       propertyPath: runAsClient
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
         type: 3}

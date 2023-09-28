@@ -20,13 +20,6 @@ namespace Characters
 
         private void Start()
         {
-            NetworkBehaviour networkBehaviour = transform.root.GetComponent<NetworkBehaviour>();
-            if (!networkBehaviour.IsOwner)
-            {
-                Destroy(this);
-                return;
-            }
-
             FindAndInitUI();
         }
 
