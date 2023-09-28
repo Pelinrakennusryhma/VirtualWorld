@@ -15,7 +15,6 @@ namespace UI
         [SerializeField] PaletteColor textClickedColor;
         [SerializeField] PaletteColor textSelectedColor;
         [SerializeField] PaletteColor textDisabledColor;
-        //[SerializeField] bool keepClickedColor;
         [SerializeField] float clickFlashDuration = 0.1f;
         [SerializeField] GameObject panelToOpen;
 
@@ -30,45 +29,21 @@ namespace UI
         UIColorTheme theme;
         UIManager uiManager;
 
-        public void OnPointerEnter(PointerEventData eventData)
+        #region Init
+        public void Init(UIColorTheme theme, UIManager uiManager)
         {
-            Debug.Log("enter?");
-            if (frozen)
-            {
-                return;
-            }
-            text.color = theme.GetColorFromPalette(textHoverColor);
-        }
+            this.theme = theme;
+            this.uiManager = uiManager;
 
-        IEnumerator FlashTextColor()
-        {
-            returnColor = text.color;
-            text.color = theme.GetColorFromPalette(textClickedColor);
-            yield return new WaitForSeconds(clickFlashDuration);
-            text.color = returnColor;
-        }
+            button = GetComponent<Button>();
+            image = GetComponent<Image>();
+            bg = GetComponent<ButtonGroup>();
+            text = transform.GetChild(0).GetComponent<TMP_Text>();
+            button.onClick.AddListener(OnTextClick);
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            Debug.Log("exit?");
-            if (frozen)
-            {
-                return;
-            }
-            text.color = theme.GetColorFromPalette(textColor);
-            returnColor = text.color;
-        }
-
-        void OnTextClick()
-        {
-            Debug.Log("click?");
-            if (frozen)
-            {
-                return;
-            }
-
-            uiManager.OpenMenuPanel(panelToOpen);
-            StartCoroutine(FlashTextColor());
+            SetImageColor();
+            SetButtonColors();
+            SetTextColor();
         }
 
         void SetButtonColors()
@@ -91,22 +66,51 @@ namespace UI
         {
             image.color = theme.GetColorFromPalette(color);
         }
+        #endregion
 
-        public void Init(UIColorTheme theme, UIManager uiManager)
+        #region Pointer And Clicking
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            this.theme = theme;
-            this.uiManager = uiManager;
-
-            button = GetComponent<Button>();
-            image = GetComponent<Image>();
-            bg = GetComponent<ButtonGroup>();
-            text = transform.GetChild(0).GetComponent<TMP_Text>();
-            button.onClick.AddListener(OnTextClick);
-
-            SetImageColor();
-            SetButtonColors();
-            SetTextColor();
+            if (frozen)
+            {
+                return;
+            }
+            text.color = theme.GetColorFromPalette(textHoverColor);
         }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (frozen)
+            {
+                return;
+            }
+            text.color = theme.GetColorFromPalette(textColor);
+            returnColor = text.color;
+        }
+
+        void OnTextClick()
+        {
+            if (frozen)
+            {
+                return;
+            }
+
+            StartCoroutine(FlashTextColor());
+
+            // optional panel to open with click, eg. specific settings tab or credits
+            uiManager.OpenMenuPanel(panelToOpen);
+        }
+
+        IEnumerator FlashTextColor()
+        {
+            returnColor = text.color;
+            text.color = theme.GetColorFromPalette(textClickedColor);
+            yield return new WaitForSeconds(clickFlashDuration);
+            text.color = returnColor;
+        }
+        #endregion
+
+        #region Methods for parent ButtonGroup
 
         public void FreezeAndDecorate()
         {
@@ -133,9 +137,10 @@ namespace UI
                     bg.ActiveChild.Unfreeze();
                 }
                 bg.HideButtons();
-
             }
         }
+
+        #endregion
     }
 }
 

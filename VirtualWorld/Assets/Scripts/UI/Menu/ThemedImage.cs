@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class ThemedComponent : MonoBehaviour, IThemedComponent
+    public class ThemedImage : MonoBehaviour, IThemedComponent
     {
         [SerializeField] PaletteColor color;
         Image image;

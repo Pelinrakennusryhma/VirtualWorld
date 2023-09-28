@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace UI
 {
@@ -17,10 +18,9 @@ namespace UI
 
         void RefreshThemedChildren()
         {
-            Debug.Log("Refresh children " + gameObject.name);
             Theme.CreatePalette();
 
-            IThemedComponent[] components = GetComponentsInChildren<IThemedComponent>();
+            IEnumerable<IThemedComponent> components = FindObjectsOfType<MonoBehaviour>(true).OfType<IThemedComponent>();
 
             foreach (IThemedComponent component in components)
             {

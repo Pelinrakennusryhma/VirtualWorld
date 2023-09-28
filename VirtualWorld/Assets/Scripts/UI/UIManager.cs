@@ -40,9 +40,6 @@ namespace UI
         {
             playerUI.SetActive(true);
             menu.SetActive(false);
-
-            ResetButtonGroups();
-            ResetMenuPanels();
         }
 
         void ToggleUIComponents()
@@ -50,7 +47,6 @@ namespace UI
             if (playerUI.activeSelf)
             {
                 ResetMenuPanels();
-                ResetButtonGroups();
                 playerUI.SetActive(false);
                 menu.SetActive(true);
                 EventMenuToggled.Invoke(true);
@@ -114,12 +110,6 @@ namespace UI
             {
                 menuPanel.gameObject.SetActive(false);
             }
-        }
-
-        void ResetButtonGroups()
-        {
-            ButtonGroup firstBg = menu.GetComponentInChildren<ButtonGroup>(true);
-            firstBg.ResetGroup();
         }
     }
 }
