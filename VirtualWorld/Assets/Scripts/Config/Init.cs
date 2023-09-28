@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using BackendConnection;
 using Authentication;
+using FishNet.Transporting.Tugboat;
+using FishNet.Transporting.Bayou;
 #if UNITY_EDITOR
 using ParrelSync;
 #endif
@@ -20,11 +22,13 @@ namespace Configuration
 
     public class Init : MonoBehaviour
     {
-        [SerializeField] APICalls apiCalls;
-        [SerializeField] WebSocketConnection wsConnection;
+        [SerializeField] APICalls_Client apiCalls_Client;
+        [SerializeField] APICalls_Server apiCalls_Server;
         [SerializeField] ServerInit serverInit;
         [SerializeField] ClientInit clientInit;
         [SerializeField] UserSession userSession;
+        [SerializeField] Tugboat tugboat;
+        [SerializeField] Bayou bayou;
         [SerializeField] TextAsset configFile;
 
         [Tooltip("Used in development to start a client that connects to the production server.")]
@@ -61,96 +65,55 @@ namespace Configuration
             }
 #endif
             Debug.Log("processType: " + processType.ToString());
-            Debug.Log("runAsClient: " + runAsClient);
         }
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         void SetConfigData()
         {
-            InitData initData;
-
             switch (processType)
             {
                 case ProcessType.CLIENT:
-                    string ip = Config.prodIpForClient;
-                    string https = Config.httpsUrl;
-                    string wss = Config.wssUrl;
-                    initData = new InitData(
-                        processType,
-                        ip,
-                        Config.serverPort,
-                        https,
-                        wss,
-                        "",
-                        ""
-                        );
-                    apiCalls.Init(https);
+                    string ip = Config.PROD_IpForClient;
+                    string https = Config.PROD_clientBackendUrl;
+                    InitBayuo(Config.PROD_URLForClient);
+                    apiCalls_Client.Init(https);
                     userSession.Init();
-                    clientInit.Init(initData);
+                    clientInit.Init(false);
                     break;
                 case ProcessType.SERVER:
-                    initData = new InitData(
-                        processType,
-                        Config.ipForServer,
-                        Config.serverPort,
-                        Config.httpUrl,
-                        Config.wsUrl,
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
-                        );
-                    apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.wsUrl);
-                    serverInit.Init(initData);
+                    serverInit.Init();
+                    apiCalls_Server.Init(Config.serverBackendUrl);
                     break;
                 case ProcessType.DEV_CLIENT:
-                    initData = new InitData(
-                        processType,
-                        Config.devIpForClient,
-                        Config.serverPort,
-                        Config.httpUrl,
-                        Config.wsUrl,
-                        Environment.GetEnvironmentVariable("UNITY_CLIENT_USERNAME"),
-                        Environment.GetEnvironmentVariable("UNITY_CLIENT_PASSWORD")
-                        );
-                    apiCalls.Init(Config.httpUrl);
-                    clientInit.Init(initData);
+                    apiCalls_Client.Init(Config.DEV_clientBackendUrl);
+                    clientInit.Init(true);
                     break;
                 case ProcessType.DEV_CLIENT2:
-                    string ip2 = Environment.GetEnvironmentVariable("UNITY_SERVER_IP");
-                    string https2 = Environment.GetEnvironmentVariable("UNITY_HTTPS_URL");
-                    string wss2 = Environment.GetEnvironmentVariable("UNITY_WSS_URL");
-                    Debug.Log("IP2 IN INIT: " + ip2);
-                    initData = new InitData(
-                        processType,
-                        ip2,
-                        Config.serverPort,
-                        https2,
-                        wss2,
-                        "",
-                        ""
-                        );
-                    apiCalls.Init(https2);
+                    ip = Config.PROD_IpForClient;
+                    https = Config.PROD_clientBackendUrl;
+                    InitTugboat(Config.PROD_IpForClient);
+                    apiCalls_Client.Init(https);
                     userSession.Init();
-                    clientInit.Init(initData);
+                    clientInit.Init(false);
                     break;
                 case ProcessType.DEV_SERVER:
-                    initData = new InitData(
-                        processType,
-                        Config.ipForServer,
-                        Config.serverPort,
-                        Config.httpUrl,
-                        Config.wsUrl,
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_USERNAME"),
-                        Environment.GetEnvironmentVariable("UNITY_SERVER_PASSWORD")
-                        );
-                    apiCalls.Init(Config.httpUrl);
-                    wsConnection.Init(Config.wsUrl);
-                    serverInit.Init(initData);
+                    serverInit.Init();
+                    apiCalls_Server.Init(Config.serverBackendUrl);
                     break;
                 default:
                     throw new Exception("The impossible happened: Init failed!");
             }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        }
+
+        void InitTugboat(string serverAddress)
+        {
+            tugboat.SetClientAddress(serverAddress);
+        }
+
+        void InitBayuo(string serverAddress)
+        {
+            bayou.SetClientAddress(serverAddress);
         }
     }
 }

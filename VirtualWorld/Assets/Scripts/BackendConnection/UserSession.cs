@@ -1,21 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Authentication;
-using UnityEngine.Events;
-using Cysharp.Threading.Tasks;
 using BackendConnection;
-using Unity.Netcode;
+using UnityEngine;
 
 namespace Authentication
 {
-    public class UserSession : NetworkBehaviour
+    public class UserSession : MonoBehaviour
     {
         public static UserSession Instance { get; private set; }
 
         public LoggedUserData LoggedUserData { get; private set; }
 
-        [SerializeField] APICalls apiCalls;
+        [SerializeField] APICalls_Client apiCalls_Client;
 
         private void Awake()
         {
@@ -28,11 +22,11 @@ namespace Authentication
                 Instance = this;
             }
 
-            if (apiCalls == null)
+            if (apiCalls_Client == null)
             {
-                apiCalls = GetComponent<APICalls>();
+                apiCalls_Client = GetComponent<APICalls_Client>();
             }
-            apiCalls.OnAuthSuccess.AddListener(OnAuthSuccess);
+            apiCalls_Client.OnAuthSuccess.AddListener(OnAuthSuccess);
         }
 
         public void Init()
@@ -46,20 +40,18 @@ namespace Authentication
 
             if (jwt != "")
             {
-                apiCalls.AuthWithJWT(jwt);
+                apiCalls_Client.AuthWithJWT(jwt);
             }
             else
             {
-                apiCalls.OnNoLoggedUser.Invoke();
+                apiCalls_Client.OnNoLoggedUser.Invoke();
             }
         }
 
         void OnAuthSuccess(LoggedUserData data)
         {
             LoggedUserData = data;
-
         }
-
     }
 }
 

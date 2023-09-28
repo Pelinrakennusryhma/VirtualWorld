@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using System.Numerics;
+using FishNet;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -50,39 +52,55 @@ namespace BackendConnection
             this.arg = arg;
         }
     }
-    public struct Inventory : INetworkSerializable
+    public struct Inventory
     {
-        public int money;
-
-        public Inventory(int money, string id)
-        {
-            this.money = money;
-        }
-
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-        {
-            serializer.SerializeValue(ref money);
-        }
-
+        public List<InventoryItem> items;
     }
-    public struct CharacterData : INetworkSerializable
+
+    public struct InventoryItem
     {
-        public Inventory inventory;
-        public string user;
         public string id;
-
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-        {
-            serializer.SerializeValue(ref inventory);
-            serializer.SerializeValue(ref user);
-            serializer.SerializeValue(ref id);
-        }
-
+        public string name;
+        public int amount;
     }
+
+    public struct CharacterData
+    {
+        public UserData user;
+        public Inventory inventory;
+    }
+
+    public struct UserData
+    {
+        public string username;
+        public string id;
+    }
+
     public struct WebSocketMessageIn
     {
         public string type;
         public string data;
     }
-    
+
+    public enum ModifyItemDataOperation
+    {
+        ADD,
+        REMOVE
+    }
+
+    public struct ModifyItemData
+    {
+        public string itemId;
+        public string itemName;
+        public string operation;
+        public int amount;
+        
+        public ModifyItemData(string itemId, string itemName, ModifyItemDataOperation operation, int amount)
+        {
+            this.itemId = itemId;
+            this.itemName = itemName;
+            this.operation = operation.ToString();
+            this.amount = amount;
+        }
+    }
 }

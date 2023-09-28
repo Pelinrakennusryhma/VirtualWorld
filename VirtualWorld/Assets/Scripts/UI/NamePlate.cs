@@ -3,49 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-using Unity.Netcode;
+using FishNet.Object;
 using UnityEngine;
+using FishNet.Object.Synchronizing;
+using Characters;
+using BackendConnection;
 
 namespace Authentication
 {
     public class Nameplate : NetworkBehaviour
     {
-        [SerializeField] TMP_Text namePlate;
-        [SerializeField] NetworkVariable<FixedString32Bytes> userName = 
-            new NetworkVariable<FixedString32Bytes>
-            (
-                "", 
-                NetworkVariableReadPermission.Everyone, 
-                NetworkVariableWritePermission.Owner
-            );
+        [SerializeField] TMP_Text nameplate;
+        [SyncVar] string username;
 
         private void Awake()
         {
-            if(namePlate == null)
+            if (nameplate == null)
             {
-                namePlate = GetComponent<TMP_Text>();
+                nameplate = GetComponentInChildren<TMP_Text>();
             }
 
-            userName.OnValueChanged += OnUserNameSet;
+            CharacterManager.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
         }
 
-        void OnUserNameSet(FixedString32Bytes previous, FixedString32Bytes current)
+        void OnCharacterDataSet(CharacterData data)
         {
-            namePlate.text = current.ToString();
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            if(namePlate != null && UserSession.Instance.LoggedUserData.username != null)
+            if (IsOwner)
             {
-                if (IsOwner)
-                {
-                    userName.Value = UserSession.Instance.LoggedUserData.username;
-                } else
-                {
-                    namePlate.text = userName.Value.ToString();
-                }
+                SetNameServerRpc(data.user.username);
             }
+        }
+
+        public override void OnStartNetwork()
+        {
+            base.OnStartNetwork();
+
+            if (!base.Owner.IsLocalClient)
+            {
+                nameplate.text = username;
+            }
+        }
+
+        [ServerRpc]
+        void SetNameServerRpc(string name)
+        {
+            username = name;
+            SetNameObserversRpc(name);
+
+            // for server only.. probably not necessary?
+            nameplate.text = name;
+        }
+        [ObserversRpc]
+        void SetNameObserversRpc(string name)
+        {
+            nameplate.text = name;
         }
     }
 }

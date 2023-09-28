@@ -1,45 +1,59 @@
 using StarterAssets;
 using UI;
-using Unity.Netcode;
+using FishNet;
 using UnityEngine;
+using Cinemachine;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
+using Scenes;
+using FishNet.Object;
+using FishNet.Component.Animating;
 
 namespace Characters
 {
     public class PlayerEmitter : NetworkBehaviour
     {
-        StarterAssetsInputs inputs;
-        bool controlsDisabled = false;
+        [SerializeField] StarterAssetsInputs inputs;
+        [SerializeField] PlayerInput playerInput;
 
-        public InventoryHymisImplementation InventoryHymisImplementation;
+        [SerializeField] ThirdPersonController controller;
 
-        void Start()
+        [SerializeField] Transform cameraFollowTarget;
+        private CinemachineVirtualCamera _cinemachineVirtualCamera;
+
+        public override void OnStartClient()
         {
-            if (IsOwner)
+            base.OnStartClient();
+
+            // if not our own character, notify the minigame loading system about a new gameobject being instantiated
+            if (!IsOwner)
             {
-                Character.Instance.inventoryController.SetHymisInventory(InventoryHymisImplementation);
+                SceneLoader.Instance.NewMainSceneObjectAdded(gameObject);
+                return;
+            }
 
-                Character.Instance.SetPlayerGameObject(gameObject);
-                UIManager.Instance.SetPlayerCharacter(gameObject);
+            UIManager.Instance.SetPlayerCharacter(gameObject);
+            CharacterManager.Instance.SetOwnedCharacter(gameObject);
+            SceneLoader.Instance.SetInputs(GetComponent<StarterAssetsInputs>());
 
-                inputs = GetComponentInChildren<StarterAssetsInputs>();
+            controller.shouldAnimate = true;
 
-                UIManager.Instance.EventMenuToggled.AddListener(TogglePlayerInputs);
+            if (_cinemachineVirtualCamera == null)
+            {
+                _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+            }
+
+            EnableNetworkedControls();
+        }
+
+        void EnableNetworkedControls()
+        {
+            if (IsClient && IsOwner)
+            {
+                inputs.enabled = true;
+                playerInput.enabled = true;
+                _cinemachineVirtualCamera.Follow = cameraFollowTarget;
             }
         }
-
-        private void Update()
-        {
-            if (controlsDisabled)
-            {
-                inputs.ZeroInputs();
-            }
-        }
-
-        void TogglePlayerInputs(bool menuEnabled)
-        {
-            controlsDisabled = menuEnabled;
-            Debug.Log("Inputs enabled: " + !menuEnabled);
-        }
-
     }
 }

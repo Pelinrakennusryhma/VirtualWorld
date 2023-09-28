@@ -10,6 +10,8 @@ public class MapBlip : MonoBehaviour
     public bool GreenBlipWasActive;
     public bool YellowBlipWasActive;
 
+
+
     public void DisableBlips()
     {
         if (GreenBlip.gameObject.activeSelf)

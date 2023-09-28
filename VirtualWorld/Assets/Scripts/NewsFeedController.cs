@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
+using FishNet.Object;
 using System.Linq;
+using FishNet.Connection;
 
 public class NewsFeedController : NetworkBehaviour
 {
@@ -22,23 +23,19 @@ public class NewsFeedController : NetworkBehaviour
     // Start is called before the first frame update
     public void Awake()
     {
-        if (Instance == null) 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
         {
             Debug.Log("Launched newsfeed controller");
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             LocalNews = GenerateLocalNewsTestFunction();
-
-
         }
 
-        else
-        {
-            DestroyImmediate(gameObject);
-            Debug.Log("Destroyed extra newsfeed");
-        }
     }
 
     // This is called when a player is actually spawned as a client
@@ -46,17 +43,10 @@ public class NewsFeedController : NetworkBehaviour
     // to call this, but at least OnNetworkSpawn is called there.
     // Maybe this is an architectural problem, this implementation
     // of this newsfeed -thingie. Maybe some refactoring should take place?
-    public void OnClientPlayerSpawned()
+    public override void OnStartClient()
     {
         RequestGlobalNewsServerRpc();
         //Debug.Log("Player spawned, should update global news at startup. Probably the call is in the wrong place at Additive Scene Launcher");
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public List<NewsFeedItem> GetLocalNews()
@@ -243,7 +233,7 @@ public class NewsFeedController : NetworkBehaviour
                                       item.Content);
     }
 
-    [ClientRpc]
+    [ObserversRpc]
     public void UpdateGlobalNewsItemClientRpc(int priority,
                                               int id,
                                               string header,

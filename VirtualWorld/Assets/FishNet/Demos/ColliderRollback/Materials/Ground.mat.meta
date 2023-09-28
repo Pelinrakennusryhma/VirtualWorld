@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:VirtualWorld/Assets/FishNet/Demos/ColliderRollback/Materials/Ground.mat.meta
+guid: 3d329b71ccd856144ab8753e70f69e4e
+|||||||| 42eb39b:VirtualWorld/Assets/TableTopInvaders/SkySeries Freebie/ExampleScenes/SceneObjects/8_10.mat.meta
+guid: 964f6a34e2240bf45940918b112ce7be
+timeCreated: 1509071497
+licenseType: Store
+========
+guid: 657c48ad760dfdd418559a4d2855c15d
+>>>>>>>> main:VirtualWorld/Assets/Materials/CalendarScreen.mat.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

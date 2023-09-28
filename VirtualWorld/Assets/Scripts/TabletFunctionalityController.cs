@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
+using FishNet.Object;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 public class TabletFunctionalityController : NetworkBehaviour
@@ -48,9 +48,9 @@ public class TabletFunctionalityController : NetworkBehaviour
         CurrentView = ViewId.Map;
     }
 
-    public override void OnNetworkSpawn()
+    public override void OnStartClient()
     {
-        base.OnNetworkSpawn();
+        base.OnStartClient();
 
         if (IsOwner)
         {

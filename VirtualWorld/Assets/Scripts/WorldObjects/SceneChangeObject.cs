@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Scenes;
 using UnityEngine.Events;
-using Unity.Netcode;
+using FishNet;
 
 namespace WorldObjects
 {
@@ -24,7 +24,7 @@ namespace WorldObjects
         public void Interact(string playerId, UnityAction callback)
         {
             callback?.Invoke();
-            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(ScenePackMode.ALL, "ShowWorlds"));
+            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(ScenePackMode.ALL, "ShowEnvironment"));
         }
     }
 }

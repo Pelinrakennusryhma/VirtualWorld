@@ -28,8 +28,6 @@ public class GameManagerGravityShip : MonoBehaviour
 
         if (Instance == null)
         {
-            MiniGameLauncher.Instance.ActiveSceneName = "GravityShip_TitleScreen";
-
             RelaunchingTheSameScene = false;
             Instance = this;
             DontDestroyOnLoad(gameObject);
