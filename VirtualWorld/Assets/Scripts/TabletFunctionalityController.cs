@@ -24,7 +24,8 @@ public class TabletFunctionalityController : NetworkBehaviour
         Map = 1,
         Inventory = 2,
         NewsFeed = 3,
-        Calendar = 4
+        Calendar = 4,
+        QuestLog = 5
 
     }
 
@@ -76,6 +77,9 @@ public class TabletFunctionalityController : NetworkBehaviour
     // Set in the inspector. Found in PlayerObjects/ViewWithinAViewStuff/CalendarCameraPlaceholder
     public CalendarWindowChanger CalendarWindowChanger;
 
+    // An instance of a controller class that displays quest log
+    // Set in the inspector. Found in PlayerObjects/ViewWithinAViewStuff/QuestLogCameraPlaceholder
+    public QuestLogViewChanger QuestLogViewChanger;
 
     // TO BE REFACTORED: away completely with this-----------------------------------------------
     // probably due to be rewritten input system
@@ -165,7 +169,7 @@ public class TabletFunctionalityController : NetworkBehaviour
             case ViewId.None:
                 break;
             case ViewId.Map:
-                newView = ViewId.Calendar;
+                newView = ViewId.QuestLog;
                 break;
             case ViewId.Inventory:
                 newView = ViewId.Map;
@@ -177,6 +181,11 @@ public class TabletFunctionalityController : NetworkBehaviour
             case ViewId.Calendar:
                 newView = ViewId.NewsFeed;
                 break;
+
+            case ViewId.QuestLog:
+                newView = ViewId.Calendar;
+                break;
+
             default:
                 break;
         }
@@ -220,6 +229,10 @@ public class TabletFunctionalityController : NetworkBehaviour
                 newView = ViewId.Calendar;
                 break;
             case ViewId.Calendar:
+                newView = ViewId.QuestLog;
+                break;
+
+            case ViewId.QuestLog:
                 newView = ViewId.Map;
                 break;
             default:
@@ -273,6 +286,11 @@ public class TabletFunctionalityController : NetworkBehaviour
             CalendarWindowChanger.ShowCurrentMonth();
         }
 
+        else if (viewId == ViewId.QuestLog)
+        {
+            QuestLogViewChanger.OnViewActivated();
+        }
+
         // Tell the view within a view controller to activate/deactivate
         // needed objects to show the current view
         ViewWithAViewController.OnViewChanged(viewId);
@@ -296,6 +314,7 @@ public class TabletFunctionalityController : NetworkBehaviour
         {
             CalendarWindowChanger.OnViewClosed();
         }
+
 
         // Activate view as none, so any camera will be disabled.
         ActivateProperView(ViewId.None);

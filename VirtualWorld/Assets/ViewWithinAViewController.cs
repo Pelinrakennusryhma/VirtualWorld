@@ -40,17 +40,32 @@ public class ViewWithinAViewController : MonoBehaviour
     // Calendar canvas and objects are children of this camera
     public Camera CalendarCamera;
 
+
+    // This camera is used to display the quest log.
+    // Quest log canvas and objects int it are children of this camera
+    public Camera QuestLogCamera;
+
+
+
+
     // A reference to the raycaster on the inventory canvas
-    // We need this to enable the interactivity render teture with ViewWithAViewUIRaycaster
+    // We need this to enable the interactivity of render texture with ViewWithAViewUIRaycaster
     public GraphicRaycaster InventoryRaycaster;
 
     // A reference to the raycaster on the newsfeed canvas
-    // We need this to enable the interactivity render teture with ViewWithAViewUIRaycaster
+    // We need this to enable the interactivity of render texture with ViewWithAViewUIRaycaster
     public GraphicRaycaster NewsFeedRaycaster;
 
     // A reference to the raycaster on the calendar canvas
-    // We need this to enable the interactivity render teture with ViewWithAViewUIRaycaster
+    // We need this to enable the interactivity of render texture with ViewWithAViewUIRaycaster
     public GraphicRaycaster CalendarRaycaster;
+
+
+    // A reference to the raycaster on the quest log canvas
+    // We need this to enable the interactivity of render texture with ViewWithAViewUIRaycaster
+    public GraphicRaycaster QuestLogRaycaster;
+
+
 
     // This raycaster enables us to make a render texture interactive
     // Tablet screen meshrenderer has this component.
@@ -71,8 +86,8 @@ public class ViewWithinAViewController : MonoBehaviour
     // A dedicated material for the calendar. Has render texture.
     public Material CalendarMaterial;
 
-
-
+    // A dedicated material for the quest log. Has render texture.
+    public Material QuestLogMaterial;
 
     // Called when tablet navigation buttons are pressed
     // and the view should be changed
@@ -84,6 +99,7 @@ public class ViewWithinAViewController : MonoBehaviour
         InventoryCamera.gameObject.SetActive(false);
         NewsFeedCamera.gameObject.SetActive(false);
         CalendarCamera.gameObject.SetActive(false);
+        QuestLogCamera.gameObject.SetActive(false);
 
         // Determine what should be done, based on the viewId
         switch (viewId)
@@ -149,6 +165,21 @@ public class ViewWithinAViewController : MonoBehaviour
                 // because it has the render texture the calendar camera renders on
                 ScreenMeshRenderer.material = CalendarMaterial;
 
+
+                break;
+
+            case ViewId.QuestLog:
+
+                // We need quest log camera, so we set it active
+                QuestLogCamera.gameObject.SetActive(true);
+
+                // View within a view raycaster needs a reference to the
+                // raycaster on the quest log canvas, so we sest it.
+                ViewWithinAViewUIRaycaster.SetRaycaster(QuestLogRaycaster);
+
+                // Assing the tablet screen renderer material to be the quest log
+                // material so we have a correct render texture
+                ScreenMeshRenderer.material = QuestLogMaterial;
 
                 break;
 
