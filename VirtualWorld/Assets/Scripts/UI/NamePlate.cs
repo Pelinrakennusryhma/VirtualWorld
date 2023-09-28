@@ -23,7 +23,7 @@ namespace Authentication
                 nameplate = GetComponentInChildren<TMP_Text>();
             }
 
-            CharacterManager.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
+            CharacterManager.Instance?.EventCharacterDataSet.AddListener(OnCharacterDataSet);
         }
 
         void OnCharacterDataSet(CharacterData data)

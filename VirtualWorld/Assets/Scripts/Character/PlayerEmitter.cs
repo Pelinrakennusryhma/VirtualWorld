@@ -33,7 +33,7 @@ namespace Characters
             }
 
             UIManager.Instance.SetPlayerCharacter(gameObject);
-            CharacterManager.Instance.SetOwnedCharacter(gameObject);
+            CharacterManager.Instance?.SetOwnedCharacter(gameObject);
             SceneLoader.Instance.SetInputs(GetComponent<StarterAssetsInputs>());
 
             controller.shouldAnimate = true;
