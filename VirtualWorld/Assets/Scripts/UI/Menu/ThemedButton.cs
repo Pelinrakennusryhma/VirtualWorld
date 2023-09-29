@@ -10,16 +10,22 @@ namespace UI
     {
 
         [SerializeField] PaletteColor color;
+        [SerializeField] PaletteColor buttonHoverColor;
+        [SerializeField] PaletteColor buttonClickedColor;
+        [SerializeField] PaletteColor buttonSelectedColor;
+        [SerializeField] PaletteColor buttonDisabledColor;
+
         [SerializeField] PaletteColor textColor;
         [SerializeField] PaletteColor textHoverColor;
         [SerializeField] PaletteColor textClickedColor;
         [SerializeField] PaletteColor textSelectedColor;
         [SerializeField] PaletteColor textDisabledColor;
         [SerializeField] float clickFlashDuration = 0.1f;
+
         [SerializeField] GameObject panelToOpen;
 
         ButtonGroup bg;
-        bool frozen = false;
+        bool frozen = false; // set true when the button opens a ButtonGroup; bunch of child buttons
         Color returnColor;
         Image image;
         TMP_Text text;
@@ -50,10 +56,10 @@ namespace UI
         {
             ColorBlock cb = button.colors;
             cb.normalColor = theme.GetColorFromPalette(color);
-            cb.disabledColor = theme.GetColorFromPalette(color);
-            cb.selectedColor = theme.GetColorFromPalette(color);
-            cb.pressedColor = theme.GetColorFromPalette(color);
-            cb.highlightedColor = theme.GetColorFromPalette(color);
+            cb.disabledColor = theme.GetColorFromPalette(buttonDisabledColor);
+            cb.selectedColor = theme.GetColorFromPalette(buttonSelectedColor);
+            cb.pressedColor = theme.GetColorFromPalette(buttonClickedColor);
+            cb.highlightedColor = theme.GetColorFromPalette(buttonHoverColor);
             button.colors = cb;
         }
 
@@ -95,10 +101,13 @@ namespace UI
                 return;
             }
 
-            StartCoroutine(FlashTextColor());
+            if(textColor != textClickedColor)
+            {
+                StartCoroutine(FlashTextColor());
+            }
 
             // optional panel to open with click, eg. specific settings tab or credits
-            uiManager.OpenMenuPanel(panelToOpen);
+            uiManager?.OpenMenuPanel(panelToOpen);
         }
 
         IEnumerator FlashTextColor()

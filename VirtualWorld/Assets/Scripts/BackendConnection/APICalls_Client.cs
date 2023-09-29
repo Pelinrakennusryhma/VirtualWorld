@@ -51,7 +51,6 @@ namespace BackendConnection
                 Debug.Log(text);
                 LoggedUserData loggedUserData = JsonUtility.FromJson<LoggedUserData>(text);
                 loggedUserData.token = jwt;
-                Debug.Log("loggedUserDataTokenInAPICalls_Client: " + loggedUserData.token);
                 OnAuthSuccess.Invoke(loggedUserData);
             }
             catch (UnityWebRequestException e)
