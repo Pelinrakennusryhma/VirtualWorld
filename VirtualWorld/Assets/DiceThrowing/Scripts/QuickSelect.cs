@@ -80,7 +80,7 @@ namespace DiceMinigame
                 options.Add(optionData);
             }
 
-            TMP_Dropdown.OptionData addNewOption = new TMP_Dropdown.OptionData("                    Add new");
+            TMP_Dropdown.OptionData addNewOption = new TMP_Dropdown.OptionData("            Add new");
             options.Add(addNewOption);
 
             dropdown.AddOptions(options);

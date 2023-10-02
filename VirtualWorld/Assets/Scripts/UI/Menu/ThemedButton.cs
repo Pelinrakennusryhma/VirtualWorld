@@ -10,17 +10,20 @@ namespace UI
     {
 
         [SerializeField] PaletteColor color;
+        [SerializeField] PaletteColor buttonHoverColor;
+        [SerializeField] PaletteColor buttonClickedColor;
+        [SerializeField] PaletteColor buttonSelectedColor;
+        [SerializeField] PaletteColor buttonDisabledColor;
+
         [SerializeField] PaletteColor textColor;
         [SerializeField] PaletteColor textHoverColor;
         [SerializeField] PaletteColor textClickedColor;
         [SerializeField] PaletteColor textSelectedColor;
         [SerializeField] PaletteColor textDisabledColor;
-        //[SerializeField] bool keepClickedColor;
         [SerializeField] float clickFlashDuration = 0.1f;
-        [SerializeField] GameObject panelToOpen;
 
         ButtonGroup bg;
-        bool frozen = false;
+        bool frozen = false; // set true when the button opens a ButtonGroup; bunch of child buttons
         Color returnColor;
         Image image;
         TMP_Text text;
@@ -30,68 +33,7 @@ namespace UI
         UIColorTheme theme;
         UIManager uiManager;
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            Debug.Log("enter?");
-            if (frozen)
-            {
-                return;
-            }
-            text.color = theme.GetColorFromPalette(textHoverColor);
-        }
-
-        IEnumerator FlashTextColor()
-        {
-            returnColor = text.color;
-            text.color = theme.GetColorFromPalette(textClickedColor);
-            yield return new WaitForSeconds(clickFlashDuration);
-            text.color = returnColor;
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            Debug.Log("exit?");
-            if (frozen)
-            {
-                return;
-            }
-            text.color = theme.GetColorFromPalette(textColor);
-            returnColor = text.color;
-        }
-
-        void OnTextClick()
-        {
-            Debug.Log("click?");
-            if (frozen)
-            {
-                return;
-            }
-
-            uiManager.OpenMenuPanel(panelToOpen);
-            StartCoroutine(FlashTextColor());
-        }
-
-        void SetButtonColors()
-        {
-            ColorBlock cb = button.colors;
-            cb.normalColor = theme.GetColorFromPalette(color);
-            cb.disabledColor = theme.GetColorFromPalette(color);
-            cb.selectedColor = theme.GetColorFromPalette(color);
-            cb.pressedColor = theme.GetColorFromPalette(color);
-            cb.highlightedColor = theme.GetColorFromPalette(color);
-            button.colors = cb;
-        }
-
-        void SetTextColor()
-        {
-            text.color = theme.GetColorFromPalette(textColor);
-        }
-
-        void SetImageColor()
-        {
-            image.color = theme.GetColorFromPalette(color);
-        }
-
+        #region Init
         public void Init(UIColorTheme theme, UIManager uiManager)
         {
             this.theme = theme;
@@ -107,6 +49,72 @@ namespace UI
             SetButtonColors();
             SetTextColor();
         }
+
+        void SetButtonColors()
+        {
+            ColorBlock cb = button.colors;
+            cb.normalColor = theme.GetColorFromPalette(color);
+            cb.disabledColor = theme.GetColorFromPalette(buttonDisabledColor);
+            cb.selectedColor = theme.GetColorFromPalette(buttonSelectedColor);
+            cb.pressedColor = theme.GetColorFromPalette(buttonClickedColor);
+            cb.highlightedColor = theme.GetColorFromPalette(buttonHoverColor);
+            button.colors = cb;
+        }
+
+        void SetTextColor()
+        {
+            text.color = theme.GetColorFromPalette(textColor);
+        }
+
+        void SetImageColor()
+        {
+            image.color = theme.GetColorFromPalette(color);
+        }
+        #endregion
+
+        #region Pointer And Clicking
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (frozen)
+            {
+                return;
+            }
+            text.color = theme.GetColorFromPalette(textHoverColor);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (frozen)
+            {
+                return;
+            }
+            text.color = theme.GetColorFromPalette(textColor);
+            returnColor = text.color;
+        }
+
+        void OnTextClick()
+        {
+            if (frozen)
+            {
+                return;
+            }
+
+            if(textColor != textClickedColor)
+            {
+                StartCoroutine(FlashTextColor());
+            }
+        }
+
+        IEnumerator FlashTextColor()
+        {
+            returnColor = text.color;
+            text.color = theme.GetColorFromPalette(textClickedColor);
+            yield return new WaitForSeconds(clickFlashDuration);
+            text.color = returnColor;
+        }
+        #endregion
+
+        #region Methods for parent ButtonGroup
 
         public void FreezeAndDecorate()
         {
@@ -133,9 +141,10 @@ namespace UI
                     bg.ActiveChild.Unfreeze();
                 }
                 bg.HideButtons();
-
             }
         }
+
+        #endregion
     }
 }
 

@@ -9,9 +9,10 @@ public class ThemedText : MonoBehaviour, IThemedComponent
     TMP_Text text;
     UIColorTheme theme;
 
-    void SetImageColor()
+    void SetTextColor()
     {
         text.color = theme.GetColorFromPalette(color);
+        Debug.Log(color);
     }
 
     public void Init(UIColorTheme theme, UIManager uiManager)
@@ -20,6 +21,6 @@ public class ThemedText : MonoBehaviour, IThemedComponent
 
         text = GetComponent<TMP_Text>();
 
-        SetImageColor();
+        SetTextColor();
     }
 }
