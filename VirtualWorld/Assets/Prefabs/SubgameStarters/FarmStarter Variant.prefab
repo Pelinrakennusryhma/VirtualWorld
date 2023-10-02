@@ -8,10 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5663450271855237275, guid: ec84b4af132bd714daa50eecfc2b44b1,
+        type: 3}
+      propertyPath: <DetectionMessage>k__BackingField
+      value: Go To Farm
+      objectReference: {fileID: 0}
     - target: {fileID: 6736336384394182627, guid: ec84b4af132bd714daa50eecfc2b44b1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6736336384394182627, guid: ec84b4af132bd714daa50eecfc2b44b1,
         type: 3}
