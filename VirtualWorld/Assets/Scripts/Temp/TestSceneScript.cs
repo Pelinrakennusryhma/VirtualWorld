@@ -10,7 +10,9 @@ public class TestSceneScript : MonoBehaviour
 
     void Start()
     {
-        leaveButton.onClick.AddListener(SceneLoader.Instance.UnloadScene);
+        if(SceneLoader.Instance != null)
+        {
+            leaveButton.onClick.AddListener(SceneLoader.Instance.UnloadScene);
+        }
     }
-
 }
