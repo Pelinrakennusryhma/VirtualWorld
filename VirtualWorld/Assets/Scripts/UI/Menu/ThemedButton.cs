@@ -22,8 +22,6 @@ namespace UI
         [SerializeField] PaletteColor textDisabledColor;
         [SerializeField] float clickFlashDuration = 0.1f;
 
-        [SerializeField] GameObject panelToOpen;
-
         ButtonGroup bg;
         bool frozen = false; // set true when the button opens a ButtonGroup; bunch of child buttons
         Color returnColor;
@@ -105,9 +103,6 @@ namespace UI
             {
                 StartCoroutine(FlashTextColor());
             }
-
-            // optional panel to open with click, eg. specific settings tab or credits
-            uiManager?.OpenMenuPanel(panelToOpen);
         }
 
         IEnumerator FlashTextColor()

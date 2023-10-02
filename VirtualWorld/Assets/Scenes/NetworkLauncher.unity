@@ -3135,25 +3135,25 @@ PrefabInstance:
     - target: {fileID: 7102567711367913610, guid: 8039653a1e0635f438128236504290fd,
         type: 3}
       propertyPath: objectsToSpawn.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7102567711367913610, guid: 8039653a1e0635f438128236504290fd,
         type: 3}
       propertyPath: objectsToSpawn.Array.data[0]
       value: 
-      objectReference: {fileID: 6387497054512564859, guid: 3d7c87069226cdf4b9711e65ca69f709,
+      objectReference: {fileID: 5585604776717508355, guid: 924e2a37c0da4e4449f68b1c281fdce7,
         type: 3}
     - target: {fileID: 7102567711367913610, guid: 8039653a1e0635f438128236504290fd,
         type: 3}
       propertyPath: objectsToSpawn.Array.data[1]
       value: 
-      objectReference: {fileID: 6465798137122035726, guid: 80a47dd51a0751944882a960861fbcb3,
+      objectReference: {fileID: 6387497054512564859, guid: 3d7c87069226cdf4b9711e65ca69f709,
         type: 3}
     - target: {fileID: 7102567711367913610, guid: 8039653a1e0635f438128236504290fd,
         type: 3}
       propertyPath: objectsToSpawn.Array.data[2]
       value: 
-      objectReference: {fileID: 5585604776717508355, guid: 924e2a37c0da4e4449f68b1c281fdce7,
+      objectReference: {fileID: 6465798137122035726, guid: 80a47dd51a0751944882a960861fbcb3,
         type: 3}
     - target: {fileID: 8936141075798305593, guid: 8039653a1e0635f438128236504290fd,
         type: 3}
