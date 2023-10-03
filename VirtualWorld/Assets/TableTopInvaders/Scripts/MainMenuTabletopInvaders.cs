@@ -43,5 +43,10 @@ public class MainMenuTabletopInvaders : MonoBehaviour
 
         //MiniGameLauncher.Instance.GoBackToPlayground(true);
         SceneLoader.Instance.UnloadScene();
+
+        if (GameFlowManager.Instance != null)
+        {
+            Destroy(GameFlowManager.Instance.gameObject);
+        }
     }
 }

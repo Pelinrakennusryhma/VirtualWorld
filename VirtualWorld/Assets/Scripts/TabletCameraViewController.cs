@@ -101,10 +101,10 @@ public class TabletCameraViewController : NetworkBehaviour
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
         ThirdPersonCamera = Camera.main;
 
-        if(ThirdPersonCamera != null)
-        {
-            CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
-        }
+        //if(ThirdPersonCamera != null)
+        //{
+        //    CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
+        //}
 
     }
 
@@ -177,8 +177,6 @@ public class TabletCameraViewController : NetworkBehaviour
     // callback is called once camera has done zooming back to change StarterAssetsInputs' gameState enum
     public void OnCloseTabletPressed(UnityAction callback)
     {
-        IsTakenOverByCheapInterpolations = true;
-
         inputsCallback = callback;
         SetupTabletForGoingOut();
 #if UNITY_WEBGL
@@ -297,14 +295,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
 
 
-        // TO BE REFACTORED or not? ----------------------------------------
-
-        // We need to inform invenotry about which shoulder we are passing
-        // so the canvas objects can be set properly on x-axis
-        // An unfortunate hackish solution, but the best I could do.
-        InventoryViewChanger.SetWentOverLeftShoulder(!IsReachingToTransitionPos1);
-        // -----------------------------------------------------------------
-
+ 
 
 
 

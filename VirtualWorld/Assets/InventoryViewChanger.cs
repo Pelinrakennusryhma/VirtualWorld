@@ -34,21 +34,8 @@ public class InventoryViewChanger : MonoBehaviour
     // of rendering inventory to a render texture
     public Camera InventoryCamera;
 
-    // We need to know which shoulder we went over
-    // because for some unknown reason the canvas
-    // objects are displaced slightly depending
-    // on the path that camera took to the tablet view.
-    // Couldn't figure out why, so this hackish solution
-    // is used for now
-    private bool WentOverLeftShoulder;
 
-    // We need to know if we went over left or right shoulder
-    // of the character to reach the closeup position
-    // See the comment about WentOverLeftShoulder above
-    public void SetWentOverLeftShoulder(bool wentOverLeftShoulder)
-    {
-        WentOverLeftShoulder = wentOverLeftShoulder;
-    }
+
 
     // Camera has started transitioning
     public void CameraStartedTransitioning()
@@ -79,17 +66,10 @@ public class InventoryViewChanger : MonoBehaviour
         // It just doesn't stay centered properly depending from the direction
         // the fly camera came in from. Don't know a reason for this
         // so this hackish solution is used for now.
-        if (WentOverLeftShoulder)
-        {
-            InventoryObjectsHolder.transform.localPosition = new Vector3(0.97f, 3.2f, 0);
-            InventoryObjectsHolder.transform.localScale = new Vector3(1, 1, 1);
-        }
 
-        else
-        {
-            InventoryObjectsHolder.transform.localPosition = new Vector3(22.26f, 5.23f, 0);
-            InventoryObjectsHolder.transform.localScale = new Vector3(1, 1, 1);
-        }
+        InventoryObjectsHolder.transform.localPosition = new Vector3(10.36f, 3.2f, 0);
+        InventoryObjectsHolder.transform.localScale = new Vector3(1.077f, 1.075f, 1);
+        
 
         // Set inventory canvas to render as screen space overlay
         InventoryCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
