@@ -40,6 +40,7 @@ namespace Characters
             }
             else
             {
+                // I can't remember why this is delayed.. for host purposes I'd guess?
                 Invoke("FindAndInitUI", 1f);
             }
         }

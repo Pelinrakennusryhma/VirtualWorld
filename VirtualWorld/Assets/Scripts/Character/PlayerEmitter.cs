@@ -36,6 +36,7 @@ namespace Characters
             CharacterManager.Instance?.SetOwnedCharacter(gameObject);
             SceneLoader.Instance.SetInputs(GetComponent<StarterAssetsInputs>());
 
+            controller.Init();
             controller.shouldAnimate = true;
 
             if (_cinemachineVirtualCamera == null)

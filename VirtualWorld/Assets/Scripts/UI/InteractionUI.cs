@@ -11,13 +11,18 @@ namespace UI
         [SerializeField] TMP_Text promptText;
         [SerializeField] TextFlasher promptTextFlasher;
         GameObject currentInteractableGO;
+        I_Interactable currentInteractable;
 
+        private void OnDisable()
+        {
+            promptTextFlasher.Reset();
+        }
 
         private void Update()
         {
             if (currentInteractableGO != null)
             {
-                SetCanvasPosition(currentInteractableGO.transform.position);
+                SetCanvasPosition(currentInteractableGO.transform.position + currentInteractable.DetectionMessageOffSet);
             }
         }
         public void InitDetector(InteractableDetector interactableDetector)
@@ -30,8 +35,9 @@ namespace UI
         void OnInteractableDetected(I_Interactable interactable, GameObject interactableObj)
         {
             currentInteractableGO = interactableObj;
+            currentInteractable = interactable;
             SetPromptText(interactable.DetectionMessage);
-            SetCanvasPosition(interactableObj.transform.position);
+            SetCanvasPosition(interactableObj.transform.position + interactable.DetectionMessageOffSet);
             promptText.gameObject.SetActive(true);
         }
 

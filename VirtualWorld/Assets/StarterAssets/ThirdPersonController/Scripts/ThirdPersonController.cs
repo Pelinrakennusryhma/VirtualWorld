@@ -125,7 +125,7 @@ namespace StarterAssets
         }
 
 
-        private void Awake()
+        public void Init()
         {
             // get a reference to our main camera
             if (_mainCamera == null)
@@ -133,11 +133,11 @@ namespace StarterAssets
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
 
-            _animator = GetComponent<Animator>();
         }
 
         private void Start()
         {
+            _animator = GetComponent<Animator>();
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _controller = GetComponent<CharacterController>();

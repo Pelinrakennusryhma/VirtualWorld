@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-
+using FishNet.Object;
 namespace Characters
 {
-    public class NPC : MonoBehaviour
+    public class AnimControllerServer : NetworkBehaviour
     {
-        [field: SerializeField] public string Name { get; private set; }
-        [SerializeField] TMP_Text nameplate;
         Animator _animator;
 
         // animation IDs
@@ -18,9 +15,9 @@ namespace Characters
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
-        void Start()
+        public override void OnStartServer()
         {
-            nameplate.text = Name;
+            base.OnStartServer();
             _animator = GetComponent<Animator>();
             AssignAnimationIDs();
             SetIdle();
@@ -43,4 +40,3 @@ namespace Characters
         }
     }
 }
-

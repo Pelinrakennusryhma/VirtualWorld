@@ -137,6 +137,7 @@ namespace Scenes
 
         IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
+            inputs.SetGameState(GAME_STATE.MINIGAME);
             PackScene(sceneLoadParams.scenePackMode);
 
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -146,10 +147,6 @@ namespace Scenes
                 yield return null;
             }
 
-#if UNITY_WEBGL
-            inputs.UnlockCursor();
-#endif
-
             Scene subScene = SceneManager.GetSceneByName(sceneName);
 
             SceneManager.SetActiveScene(subScene);
@@ -157,6 +154,7 @@ namespace Scenes
 
         IEnumerator UnloadAsyncScene()
         {
+            inputs.SetGameState(GAME_STATE.FREE);
             AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
             while (!op.isDone)
@@ -167,9 +165,6 @@ namespace Scenes
             UnpackScene();
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
-#if UNITY_WEBGL
-            inputs.LockCursor();
-#endif
         }
 
         void PackScene(ScenePackMode scenePackMode)

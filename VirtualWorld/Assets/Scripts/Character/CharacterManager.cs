@@ -22,6 +22,8 @@ namespace Characters
 
         public UnityEvent<CharacterData> EventCharacterDataSet;
         public UnityEvent<InventoryItem> EventMoneyAmountChanged;
+        public UnityEvent<NPC> EventDialogOpened;
+        public UnityEvent EventDialogClosed;
 
         private void Awake()
         {
@@ -34,6 +36,28 @@ namespace Characters
                 Instance = this;
             }
         }
+
+        #region EventCalls
+        public void CallEventCharacterDataSet(CharacterData data)
+        {
+            EventCharacterDataSet.Invoke(data);
+        }
+
+        public void CallEventMoneyAmountChanged(InventoryItem inventoryItem)
+        {
+            EventMoneyAmountChanged.Invoke(inventoryItem);
+        }
+        public void CallEventDialogOpened(NPC npc)
+        {
+            EventDialogOpened.Invoke(npc);
+        }
+
+        public void CallEventDialogClosed()
+        {
+            EventDialogClosed.Invoke();
+        }
+
+        #endregion
 
         public void SetOwnedCharacter(GameObject obj)
         {
@@ -61,7 +85,7 @@ namespace Characters
         {
             Debug.Log("TARGET RPC CALLED");
             Utils.DumpToConsole(characterData);
-            EventCharacterDataSet.Invoke(characterData);
+            CallEventCharacterDataSet(characterData);
         }
 
         public void AddMoney(int amount)
@@ -93,7 +117,7 @@ namespace Characters
         {
             if (item.id == "000")
             {
-                EventMoneyAmountChanged.Invoke(item);
+                CallEventMoneyAmountChanged(item);
             }
         }
     }

@@ -1,3 +1,4 @@
+using Characters;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.CompilerServices;
 using System;
@@ -13,7 +14,9 @@ namespace StarterAssets
 	{
 		FREE,
 		MENU,
-		TABLET
+		TABLET,
+        DIALOG,
+        MINIGAME
 	}
 	public class StarterAssetsInputs : MonoBehaviour
 	{
@@ -35,13 +38,38 @@ namespace StarterAssets
 
 		public GAME_STATE gameState = GAME_STATE.FREE;
 
-		public UnityEvent EventMenuPressed;
+        public UnityEvent<GAME_STATE> EventGameStateChanged;
 		public UnityEvent EventOpenTabletPressed;
 		public UnityEvent<UnityAction> EventCloseTabletPressed;
 
 #if ENABLE_INPUT_SYSTEM
 
-		private void LateUpdate()
+        private void Start()
+        {
+            CharacterManager.Instance.EventDialogOpened.AddListener(OnDialogOpened);
+            CharacterManager.Instance.EventDialogClosed.AddListener(OnDialogClosed);
+
+#if UNITY_WEBGL
+            LockCursor();
+#endif
+        }
+
+        void CallEventGameStateChanged(GAME_STATE newState)
+        {
+            EventGameStateChanged.Invoke(newState);
+        }
+
+        void OnDialogOpened(NPC dummyNpc)
+        {
+            SetGameState(GAME_STATE.DIALOG);
+        }
+
+        void OnDialogClosed()
+        {
+            SetGameState(GAME_STATE.FREE);
+        }
+
+        private void LateUpdate()
 		{
 			//ClearInteractInput();
 			//Action1Input(false);
@@ -73,6 +101,8 @@ namespace StarterAssets
 					break;
 				case GAME_STATE.TABLET:
 					break;
+                case GAME_STATE.DIALOG:
+                    break;
 				default:
 					break;
 			}
@@ -92,6 +122,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -109,6 +141,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -125,6 +159,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -140,6 +176,8 @@ namespace StarterAssets
                 case GAME_STATE.MENU:
                     break;
                 case GAME_STATE.TABLET:
+                    break;
+                case GAME_STATE.DIALOG:
                     break;
                 default:
                     break;
@@ -162,6 +200,8 @@ namespace StarterAssets
                     case GAME_STATE.TABLET: // callback function to set gamestate once tablet script is done zooming out
                         EventCloseTabletPressed.Invoke(() => SetGameState(GAME_STATE.FREE));
                         break;
+                    case GAME_STATE.DIALOG:
+                        break;
                     default:
                         break;
                 }
@@ -179,6 +219,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -192,15 +234,16 @@ namespace StarterAssets
                 {
                     case GAME_STATE.FREE:
                         ZeroInputs();
-                        EventMenuPressed.Invoke();
                         SetGameState(GAME_STATE.MENU);
                         break;
                     case GAME_STATE.MENU:
-                        EventMenuPressed.Invoke();
                         SetGameState(GAME_STATE.FREE);
                         break;
                     case GAME_STATE.TABLET:
                         EventCloseTabletPressed.Invoke(() => SetGameState(GAME_STATE.FREE));
+                        break;
+                    case GAME_STATE.DIALOG:
+                        SetGameState(GAME_STATE.FREE);
                         break;
                     default:
                         break;
@@ -211,6 +254,30 @@ namespace StarterAssets
         public void SetGameState(GAME_STATE newState)
         {
             gameState = newState;
+            CallEventGameStateChanged(newState);
+
+#if UNITY_WEBGL
+            switch (newState)
+            {
+                case GAME_STATE.FREE:
+                    LockCursor();
+                    break;
+                case GAME_STATE.MENU:
+                    UnlockCursor();
+                    break;
+                case GAME_STATE.TABLET:
+                    UnlockCursor();
+                    break;
+                case GAME_STATE.DIALOG:
+                    UnlockCursor();
+                    break;
+                case GAME_STATE.MINIGAME:
+                    UnlockCursor();
+                    break;
+                default:
+                    break;
+            }
+#endif
         }
 #endif
 
@@ -265,23 +332,10 @@ namespace StarterAssets
 			action1 = newAction1State;
 		}
 
-#if UNITY_WEBGL
-
-		private void Start()
-		{
-            LockCursor();
+        public void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
-#endif
-
-        private void SetCursorState(bool newState)
-		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-		}
-
-		public void LockCursor()
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-		}
 
         public void UnlockCursor()
         {

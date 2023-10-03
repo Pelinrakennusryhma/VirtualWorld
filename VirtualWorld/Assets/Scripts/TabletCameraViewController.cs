@@ -106,9 +106,6 @@ public class TabletCameraViewController : NetworkBehaviour
             inputsCallback = null;
             SetupTabletForComingIn();
             TabletFunctionality.OnTabletOpened();
-#if UNITY_WEBGL
-            Inputs.UnlockCursor();
-#endif
         }
     }
 
@@ -118,11 +115,7 @@ public class TabletCameraViewController : NetworkBehaviour
         IsTakenOverByCheapInterpolations = true;
 
         inputsCallback = callback;
-        SetupTabletForGoingOut();
-#if UNITY_WEBGL
-        Inputs.LockCursor();
-#endif
-      
+        SetupTabletForGoingOut();    
     }
 
     #region SetupTransitionBeginnings
