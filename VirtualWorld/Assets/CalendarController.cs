@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.Netcode;
+using FishNet.Object;
 
 
 // TO BE REFACTORED:--------------------------------------
@@ -14,8 +14,6 @@ using Unity.Netcode;
 // This controller is used to keep track of calendar things.
 public class CalendarController : NetworkBehaviour
 {
-
-
 
     // A struct for saving data about a day
     // with a string list of calendar entries
@@ -34,6 +32,7 @@ public class CalendarController : NetworkBehaviour
     // ALSO: how about timezones?
     //
     //----------------------------------------------------------
+
 
     [System.Serializable]
     public struct CalendarItem
@@ -78,33 +77,28 @@ public class CalendarController : NetworkBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            // We set the instance to this one, so we can access the static field
-            Instance = this;
-
-            // Make sure the gameObject is not destroyed.
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
 
         else
         {
-            // In case we already had an Instance, we destroy this object.
-            // If there is not multiple ones ever, due to a proper
-            // structuring of the project. This shouldn't ever even happen.
-            DestroyImmediate(gameObject);
-            Debug.LogWarning("Destroyed an extra calendar controller");
+            // We set the instance to this one, so we can access the static field
+            Instance = this;
         }
 
+        CalendarItems = new List<CalendarItem>();
+      
+
+        // Just a bunch of items that were there for testing purposes
+        // Maybe we'll leave it there commented out, if we need them to resurface 
 
         // TO BE REFACTORED:------------------------------------------------------------------------------------------
         // These seem to have been here for testing purposes, so it should be fine to
         // get rid of it all.
         // Including the list. 
 
-
-        // Just a bunch of items that were there for testing purposes
-        // Maybe we'll leave it there commented out, if we need them to resurface 
 
         //CalendarItems.Add(new CalendarItem(2023, 9, 12, new string[]));
         //CalendarItems.Add(new CalendarItem(2023, 9, 12, new List<string> { "Ohhlala", "whattodo", "plaah", "platku" }));

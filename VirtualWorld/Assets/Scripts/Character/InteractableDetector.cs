@@ -1,14 +1,14 @@
 using Authentication;
 using StarterAssets;
 using UI;
-using Unity.Netcode;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.Events;
 using WorldObjects;
 
 namespace Characters
 {
-    public class InteractableDetector : NetworkBehaviour
+    public class InteractableDetector : MonoBehaviour
     {
         public UnityEvent<I_Interactable, GameObject> EventInteractableDetected;
         public UnityEvent EventInteractableLost;
@@ -18,38 +18,14 @@ namespace Characters
         I_Interactable currentInteractable;
         GameObject currentInteractableGO;
 
-        public override void OnNetworkSpawn()
-        {
-            if (!IsOwner)
-            {
-                Destroy(this);
-                return;
-            }
-
-            if (IsHost)
-            {
-                Invoke("FindAndInitUI", 1f);
-            } else
-            {
-                FindAndInitUI();
-            }
-
-        }
-
         private void Start()
         {
-            if(Camera.main == null)
-            {
-                Destroy(this);
-                return;
-            }
+            FindAndInitUI();
         }
 
         private void Update()
         {
-            if (input.interact 
-                && !TabletFunctionalityController.Instance.IsTabletViewOpen
-                && currentInteractable != null)
+            if (input.interact && currentInteractable != null)
             {
                 Interact();
             }
@@ -61,7 +37,8 @@ namespace Characters
             if (ui != null)
             {
                 ui.InitDetector(this);
-            } else
+            }
+            else
             {
                 Invoke("FindAndInitUI", 1f);
             }
@@ -69,13 +46,13 @@ namespace Characters
 
         void Interact()
         {
+            input.ClearInteractInput();
             EventInteractionStarted.Invoke();
             currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => EventInteractableLost.Invoke()));
         }
 
         private void OnTriggerEnter(Collider other)
         {
-
             I_Interactable interactable = other.GetComponent<I_Interactable>();
 
             if (interactable != null)
@@ -88,7 +65,7 @@ namespace Characters
 
         private void OnTriggerExit(Collider other)
         {
-            if(other.gameObject == currentInteractableGO)
+            if (other.gameObject == currentInteractableGO)
             {
                 currentInteractable = null;
                 currentInteractableGO = null;

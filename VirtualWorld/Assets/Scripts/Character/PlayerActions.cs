@@ -31,8 +31,7 @@ public class PlayerActions : MonoBehaviour
 
     void Update()
     {
-        if (inputs.action1
-            && !TabletFunctionalityController.Instance.IsTabletViewOpen)
+        if (inputs.action1)
         {
             queuedAction = actions[0];
         }
@@ -41,14 +40,15 @@ public class PlayerActions : MonoBehaviour
         {
             if (CanExecute(queuedAction))
             {
-                queuedAction.Execute();
+                Execute(queuedAction);
             }
             else // Can't execute for some reason, make the queued action start with a delay to make it look less awkward after landing for example
             {
                 queuedDelayedAction = queuedAction;
                 queuedAction = null;
             }
-        } else if (queuedDelayedAction != null)
+        }
+        else if (queuedDelayedAction != null)
         {
             if (CanExecute(queuedDelayedAction))
             {
@@ -67,7 +67,8 @@ public class PlayerActions : MonoBehaviour
         else if (thirdPersonController.Grounded || !action.RequireGrounded)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -76,7 +77,8 @@ public class PlayerActions : MonoBehaviour
     IEnumerator DelayExecute(IPlayerAction action, float delay)
     {
         yield return new WaitForSeconds(delay);
-        action.Execute();
+        Execute(action);
+
     }
 
     void FindAllActions()
@@ -86,6 +88,12 @@ public class PlayerActions : MonoBehaviour
         {
             actions.Add(actionScript);
         }
+    }
+
+    void Execute(IPlayerAction action)
+    {
+        inputs.ClearExecuteInputs();
+        action.Execute();
     }
 
     // ---------- Action Key mapping On hold until solid input system ---------

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:VirtualWorld/Assets/FishNet/Demos/Prediction V1/Materials/GroundMat.mat.meta
+guid: 0bb31cf72dfcef449a1a4a5aab857f63
+|||||||| 42eb39b:VirtualWorld/Assets/TableTopInvaders/SkySeries Freebie/ExampleScenes/SceneObjects/6_10.mat.meta
+guid: abcc3c67b7d0a794f8bb91be4e85abdd
+timeCreated: 1509071508
+licenseType: Store
+========
+guid: 7e3d631ff58b46246b380924417ae7e6
+>>>>>>>> main:VirtualWorld/Assets/Materials/InventoryScreen.mat.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

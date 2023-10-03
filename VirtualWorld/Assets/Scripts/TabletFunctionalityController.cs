@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
+using FishNet.Object;
 using UnityEngine.UI;
 
 
@@ -106,12 +106,14 @@ public class TabletFunctionalityController : NetworkBehaviour
         CurrentView = ViewId.Map;
     }
 
-    // The player is spawned and this object with it.
+
+
+     // The player is spawned and this object with it.
     // There will be multiple instances on the players,
     // so we set the static instance to be that of the owner player's
-    public override void OnNetworkSpawn()
+    public override void OnStartClient()
     {
-        base.OnNetworkSpawn();
+        base.OnStartClient();
 
         if (IsOwner)
         {

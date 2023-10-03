@@ -45,24 +45,6 @@ namespace UI
             ResetMenuPanels();
         }
 
-        void Update()
-        {
-            CheckInputs();
-        }
-
-        void CheckInputs()
-        {
-            if (playerInputs == null)
-            {
-                return;
-            }
-
-            if (playerInputs.menu)
-            {
-                ToggleUIComponents();
-            }
-        }
-
         void ToggleUIComponents()
         {
             if (playerUI.activeSelf)
@@ -72,25 +54,37 @@ namespace UI
                 playerUI.SetActive(false);
                 menu.SetActive(true);
                 EventMenuToggled.Invoke(true);
+#if UNITY_WEBGL
+                playerInputs.UnlockCursor();
+#endif
             } else
             {
-
                 playerUI.SetActive(true);
                 menu.SetActive(false);
                 EventMenuToggled.Invoke(false);
+#if UNITY_WEBGL
+                playerInputs.LockCursor();
+#endif
             }
         }
 
         public void SetPlayerCharacter(GameObject playerGO)
         {
             playerInputs = playerGO.GetComponentInChildren<StarterAssetsInputs>();
+
+            playerInputs.EventMenuPressed.AddListener(OnMenuPressed);
+        }
+
+        void OnMenuPressed() 
+        {
+            ToggleUIComponents();
         }
 
         public void OnLogOutPressed()
         {
             Debug.Log("Log out pressed");
             SceneManager.LoadScene(0);
-            APICalls.Instance.LogOut();
+            APICalls_Client.Instance.LogOut();
         }
 
         public void OnQuitPressed()

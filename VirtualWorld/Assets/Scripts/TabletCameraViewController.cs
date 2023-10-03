@@ -1,6 +1,7 @@
 using UnityEngine;
 using StarterAssets;
-using Unity.Netcode;
+using FishNet.Object;
+using UnityEngine.Events;
 
 
 // This component is in charge of moving and changing cameras,
@@ -92,14 +93,22 @@ public class TabletCameraViewController : NetworkBehaviour
     // is adjusted on x-dimension depending over which shoulder we passed through
     public InventoryViewChanger InventoryViewChanger;
 
+    private UnityAction inputsCallback;
+
 
     private void Awake()
     {
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
+        ThirdPersonCamera = Camera.main;
+
+        if(ThirdPersonCamera != null)
+        {
+            CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
+        }
+
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnStartClient()
     {
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
@@ -121,17 +130,16 @@ public class TabletCameraViewController : NetworkBehaviour
         // TO BE REFACTORED --------------------------------
         MapCamera.gameObject.SetActive(false);
 
-        // We check whether or not we are the owner of this
-        // controller. According to that we either set
+
+
+        // According to if we are the owner we either set
         // yellow or green map blip active, so we 
         // see ourselves as the green one and others
         // as yellow on the map
-        if (!IsOwner)
-        {
-            YellowBlip.gameObject.SetActive(true);
-            GreenBlip.gameObject.SetActive(false);
-        }
+        YellowBlip.gameObject.SetActive(!IsOwner);
+        GreenBlip.gameObject.SetActive(IsOwner);
         //-----------------------------------
+
 
 
 
@@ -143,28 +151,40 @@ public class TabletCameraViewController : NetworkBehaviour
 
         // We don't use the FlyCamera yet, so disable it.
         FlyCamera.enabled = false;
+
+        Inputs.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
+        Inputs.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
     }
+
+
 
     // Now we know that the tablet button was pressed succesfully
     // Act according to that
     // We either setup needed things to come in or to go out
-    public void OnTabletPressed()
+    public void OnOpenTabletPressed()
     {
-        //Debug.Log("Tablet button was pressed " + Time.time);
-        //Inputs.ClearTabletInput();
-
-
-
         if (!IsActiveTabletView)
         {
+            inputsCallback = null;
             SetupTabletForComingIn();
             TabletFunctionality.OnTabletOpened();
+#if UNITY_WEBGL
+            Inputs.UnlockCursor();
+#endif
         }
+    }
 
-        else
-        {
-            SetupTabletForGoingOut();
-        }
+    // callback is called once camera has done zooming back to change StarterAssetsInputs' gameState enum
+    public void OnCloseTabletPressed(UnityAction callback)
+    {
+        IsTakenOverByCheapInterpolations = true;
+
+        inputsCallback = callback;
+        SetupTabletForGoingOut();
+#if UNITY_WEBGL
+        Inputs.LockCursor();
+#endif
+      
     }
 
     // This region is for setupping the transition beginnings
@@ -352,18 +372,17 @@ public class TabletCameraViewController : NetworkBehaviour
             return;
         }
 
-        // Check input and if we are grounded,
-        // if so, we have a succesfull tablet press
-        // And can start moving in or out
-        if (Inputs.tablet)
-        {
-            Inputs.ClearTabletInput();
 
-            if (ThirdPersonController.Grounded) 
-            {
-                OnTabletPressed();
-            }
-        }
+        //if (Inputs.tablet)
+        //{
+        //    Inputs.ClearTabletInput();
+
+
+        //    if (ThirdPersonController.Grounded) 
+        //    {
+        //        OnTabletPressed();
+        //    }
+        //}
 
         // If we are not doing any transitions, just stop now
         if (!IsInterpolating)
@@ -455,6 +474,8 @@ public class TabletCameraViewController : NetworkBehaviour
         {
             StopMessingWithCameras();
             TabletFunctionality.OnTabletClosed();
+            // once camera has reached its return position, invoke the callback function in StarterAssetsInputs to set its gameState back to FREE
+            inputsCallback?.Invoke();
         }
     }
 
