@@ -49,8 +49,11 @@ namespace UI
 
         void SetCanvasPosition(Vector3 pos)
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
-            promptText.rectTransform.position = screenPos;
+            if(Camera.main != null)
+            {
+                Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
+                promptText.rectTransform.position = screenPos;
+            }
         }
 
         void SetPromptText(string msg)

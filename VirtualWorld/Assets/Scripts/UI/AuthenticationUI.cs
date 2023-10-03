@@ -50,6 +50,8 @@ namespace Authentication
 
             loginButton.onClick.AddListener(async () => await apiCalls_Client.OnBeginLogin(loginNameField.text, loginPasswordField.text, rememberMeToggle.isOn));
             registerButton.onClick.AddListener(async () => await apiCalls_Client.OnBeginRegister(registerNameField.text, registerPasswordField.text, rememberMeToggle.isOn));
+            loginSwitch.onClick.AddListener(OnEnableLogin);
+            registerSwitch.onClick.AddListener(OnEnableRegister);
             apiCalls_Client.OnAuthSuccess.AddListener(OnEnableLoggedIn);
             apiCalls_Client.OnNoLoggedUser.AddListener(OnEnableRegister);
             apiCalls_Client.OnAuthFailed.AddListener(OnAuthFailed);

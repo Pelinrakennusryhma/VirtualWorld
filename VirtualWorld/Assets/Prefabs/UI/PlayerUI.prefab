@@ -67,10 +67,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "100 \u20AC"
+  m_text: 100 c
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3bc171d17282bda4d8f5fd9b3f8d5cce, type: 2}
+  m_sharedMaterial: {fileID: 7043242631258803246, guid: 3bc171d17282bda4d8f5fd9b3f8d5cce,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -188,7 +189,7 @@ RectTransform:
   - {fileID: 2022708880950516605}
   - {fileID: 8223923237102483991}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -270,10 +271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1282c705db91e41b008c125e5603d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
   moneyText: {fileID: 1104779697628334639}
   moneyTextFlasher: {fileID: 8848730576444235774}
-  currencyIcon: "\u20AC"
+  currencyIcon: C
 --- !u!114 &5585759261996631978
 MonoBehaviour:
   m_ObjectHideFlags: 0
