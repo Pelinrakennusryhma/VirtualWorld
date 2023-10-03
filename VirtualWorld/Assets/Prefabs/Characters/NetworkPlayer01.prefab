@@ -2672,6 +2672,7 @@ MonoBehaviour:
   CameraAngleOverride: 0
   LockCameraPosition: 0
   shouldAnimate: 0
+  _mainCamera: {fileID: 2271347982470511039}
   IsTabletViewActive: 0
 --- !u!114 &1414959847196493918
 MonoBehaviour:
@@ -2713,7 +2714,7 @@ MonoBehaviour:
   cursorLocked: 1
   cursorInputForLook: 1
   gameState: 0
-  EventMenuPressed:
+  EventGameStateChanged:
     m_PersistentCalls:
       m_Calls: []
   EventOpenTabletPressed:
@@ -2900,6 +2901,11 @@ MonoBehaviour:
   playerInput: {fileID: 5210023488652878839}
   controller: {fileID: 429117104875671004}
   cameraFollowTarget: {fileID: 5205055235256969101}
+  _cinemachineVirtualCamera: {fileID: 2094086316618808760}
+  ownedObjects:
+  - {fileID: 2271347982470511039}
+  - {fileID: 2094086316618808390}
+  - {fileID: 4134661236143131968}
 --- !u!114 &5114944315837095853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3344,6 +3350,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerFollowCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8,
         type: 3}
       propertyPath: m_RootOrder
@@ -3409,11 +3420,34 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 5205055235256969101}
+    - target: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8,
+        type: 3}
+      propertyPath: m_Priority
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+--- !u!1 &2094086316618808390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8,
+    type: 3}
+  m_PrefabInstance: {fileID: 122397494692311745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2094086316618808760 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8,
+    type: 3}
+  m_PrefabInstance: {fileID: 122397494692311745}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094086316618808390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2094086316618808761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8,
@@ -3543,6 +3577,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ViewWithinAViewStuff
+      objectReference: {fileID: 0}
+    - target: {fileID: 550426618906552691, guid: 51c6cf26ba93e6645b991ea35387e3ef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1716981158167982525, guid: 51c6cf26ba93e6645b991ea35387e3ef,
         type: 3}
@@ -4250,9 +4289,24 @@ PrefabInstance:
       objectReference: {fileID: 4476911140908217729}
     - target: {fileID: 2249500894888291117, guid: 717a51610d091ef4c87777076a2fe025,
         type: 3}
+      propertyPath: CinemachineBrain
+      value: 
+      objectReference: {fileID: 2187281521723065762}
+    - target: {fileID: 2249500894888291117, guid: 717a51610d091ef4c87777076a2fe025,
+        type: 3}
       propertyPath: PlayerCameraRoot
       value: 
       objectReference: {fileID: 4134661236143131968}
+    - target: {fileID: 2249500894888291117, guid: 717a51610d091ef4c87777076a2fe025,
+        type: 3}
+      propertyPath: MainVirtualCamera
+      value: 
+      objectReference: {fileID: 2094086316618808760}
+    - target: {fileID: 2249500894888291117, guid: 717a51610d091ef4c87777076a2fe025,
+        type: 3}
+      propertyPath: ThirdPersonCamera
+      value: 
+      objectReference: {fileID: 2271347982470511037}
     - target: {fileID: 2249500894888291117, guid: 717a51610d091ef4c87777076a2fe025,
         type: 3}
       propertyPath: _addedNetworkObject
@@ -4455,6 +4509,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_RootOrder
@@ -4515,6 +4574,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
+--- !u!114 &2187281521723065762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9078993845375825671, guid: f6d148d888ffbf54b9afe9936dfaec1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7180382916772442789}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271347982470511039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2271347982470511034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
@@ -4524,6 +4595,12 @@ Transform:
 --- !u!20 &2271347982470511037 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7180382916772442789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2271347982470511039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f,
     type: 3}
   m_PrefabInstance: {fileID: 7180382916772442789}
   m_PrefabAsset: {fileID: 0}

@@ -106,7 +106,7 @@ namespace StarterAssets
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
-        private GameObject _mainCamera;
+        [SerializeField] private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
 
@@ -125,19 +125,13 @@ namespace StarterAssets
         }
 
 
-        public void Init()
+        public void Awake()
         {
-            // get a reference to our main camera
-            if (_mainCamera == null)
-            {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            }
-
+            _animator = GetComponent<Animator>();
         }
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _controller = GetComponent<CharacterController>();
