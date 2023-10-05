@@ -817,6 +817,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1500969495609664347, guid: 088d5417f05ccf1489fa98936a060139,
+        type: 3}
+      propertyPath: _remoteServerTimeout
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1775127400137708202, guid: 088d5417f05ccf1489fa98936a060139,
         type: 3}
       propertyPath: _setActiveScene
@@ -901,7 +906,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _playerPrefab
       value: 
-      objectReference: {fileID: 5114944315837095853, guid: 34f10dafe4211af49bd0ece68fc2000b,
+      objectReference: {fileID: 6723520626843087359, guid: 34f10dafe4211af49bd0ece68fc2000b,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
