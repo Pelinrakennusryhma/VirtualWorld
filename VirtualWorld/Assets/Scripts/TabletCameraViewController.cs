@@ -2,43 +2,44 @@ using UnityEngine;
 using StarterAssets;
 using FishNet.Object;
 using UnityEngine.Events;
+using Characters;
 
 
 // This component is in charge of moving and changing cameras,
 // when tablet view is activated
 
 public class TabletCameraViewController : NetworkBehaviour
-{   
+{
     // The main camera
-    public Camera ThirdPersonCamera; 
+    public Camera ThirdPersonCamera;
 
     // This gameobjects's position and rotation is to reach when the tablet view is activated
-    public GameObject CloseupCamera; 
+    public GameObject CloseupCamera;
 
     // This gameobject is transition pos on right shoulder of the character,
     // that is passed through while reaching to the actual closeup position
-    public GameObject TransitionPos1Camera; 
+    public GameObject TransitionPos1Camera;
 
     // This gameobject is transition pos on left shoulder of the character,
     // that is passed through while reaching to the actual closeup position
-    public GameObject TransitionPos2Camera; 
+    public GameObject TransitionPos2Camera;
 
     // Just a reference to inputs, to know if the tablet button
     // has been pressed and the view is active
-    public StarterAssetsInputs Inputs; 
+    public StarterAssetsInputs Inputs;
 
     // Just a bool that tracks whether or not the tablet view is active
-    public bool IsActiveTabletView; 
+    public bool IsActiveTabletView;
 
     // A bool to keep track if we have reached TransitionPos1Camera's
     // or TransitionPos2Camera's position and rotation
-    public bool HasReachedTransitionPos; 
+    public bool HasReachedTransitionPos;
 
     // A bool to keep track which transition pos was chosen
     public bool IsReachingToTransitionPos1;
-    
+
     // Are we reaching to something and interpolating towards a position?
-    public bool IsInterpolating; 
+    public bool IsInterpolating;
 
     public GameObject PlayerCameraRoot;
 
@@ -58,13 +59,13 @@ public class TabletCameraViewController : NetworkBehaviour
     // This is to prevent a situation where tablet is opened next to a wall for example
     // and the tablet is rendered inside the wall.
     // Children of the FlyCamera
-    public RenderAlwaysOnTopCamera RenderAlwaysOnTopCamera; 
+    public RenderAlwaysOnTopCamera RenderAlwaysOnTopCamera;
 
     // This is the camera that gets activated as the actual flying camera.
     // The main camera (ThirdPersonCamera) is lef as is, because it's under
     // control of Cinemachine brain, and it's easier to just do the view
     // transitions without messing with the main camera
-    public Camera FlyCamera; 
+    public Camera FlyCamera;
 
     // Reference to the third person controller, so we can check if we are grounded
     // when the tablet button is pressed
@@ -99,25 +100,18 @@ public class TabletCameraViewController : NetworkBehaviour
     private void Awake()
     {
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
-        ThirdPersonCamera = Camera.main;
-
-        //if(ThirdPersonCamera != null)
-        //{
-        //    CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
-        //}
-
     }
 
     public override void OnStartClient()
     {
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
-        OriginalScalerScale = TabletScaler.transform.localScale; 
-        
+        OriginalScalerScale = TabletScaler.transform.localScale;
+
         // We don't ever start with the tablet view active
         // Make sure the bool is false
         IsActiveTabletView = false;
-        
+
         // Just disable objects that we don't need
         TabletScaler.gameObject.SetActive(false);
 
@@ -152,8 +146,8 @@ public class TabletCameraViewController : NetworkBehaviour
         // We don't use the FlyCamera yet, so disable it.
         FlyCamera.enabled = false;
 
-        Inputs.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
-        Inputs.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
+        PlayerEvents.Instance.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
+        PlayerEvents.Instance.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
     }
 
 
@@ -168,9 +162,6 @@ public class TabletCameraViewController : NetworkBehaviour
             inputsCallback = null;
             SetupTabletForComingIn();
             TabletFunctionality.OnTabletOpened();
-#if UNITY_WEBGL
-            Inputs.UnlockCursor();
-#endif
         }
     }
 
@@ -179,10 +170,6 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         inputsCallback = callback;
         SetupTabletForGoingOut();
-#if UNITY_WEBGL
-        Inputs.LockCursor();
-#endif
-      
     }
 
     // This region is for setupping the transition beginnings
@@ -295,7 +282,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
 
 
- 
+
 
 
 
@@ -450,7 +437,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
         // How far we are from the target position?
         float magnitudeToTargetPos = (FlyCamera.transform.position - targetPos).magnitude;
-        
+
         // What is the angle between current rotation and target rotation?
         float angleBetweenRots = Quaternion.Angle(FlyCamera.transform.rotation, targetRot);
 
@@ -530,8 +517,8 @@ public class TabletCameraViewController : NetworkBehaviour
             IsInterpolating = false;
 
             FlyCamera.transform.position = targetPos;
-            FlyCamera.transform.rotation = targetRot;           
-            
+            FlyCamera.transform.rotation = targetRot;
+
 
 
             // TO BE REFACTORED?------------------------------------
@@ -570,7 +557,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
         // Interpolate FlyCamera's position towards the target position
         FlyCamera.transform.position = Vector3.Lerp(FlyCamera.transform.position, targetPos, Time.deltaTime * 5.0f);
-        
+
         // How far we are from the target?
         float distanceToTargetPos = (FlyCamera.transform.position - targetPos).magnitude;
 

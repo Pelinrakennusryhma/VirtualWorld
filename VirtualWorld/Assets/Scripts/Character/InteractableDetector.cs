@@ -10,9 +10,6 @@ namespace Characters
 {
     public class InteractableDetector : MonoBehaviour
     {
-        public UnityEvent<I_Interactable, GameObject> EventInteractableDetected;
-        public UnityEvent EventInteractableLost;
-        public UnityEvent EventInteractionStarted;
         [SerializeField] StarterAssetsInputs input;
         [SerializeField] InteractionUI ui;
         I_Interactable currentInteractable;
@@ -40,6 +37,7 @@ namespace Characters
             }
             else
             {
+                // I can't remember why this is delayed.. for host purposes I'd guess?
                 Invoke("FindAndInitUI", 1f);
             }
         }
@@ -47,8 +45,8 @@ namespace Characters
         void Interact()
         {
             input.ClearInteractInput();
-            EventInteractionStarted.Invoke();
-            currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => EventInteractableLost.Invoke()));
+            PlayerEvents.Instance.CallEventInteractionStarted();
+            currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
         }
 
         private void OnTriggerEnter(Collider other)
@@ -59,7 +57,7 @@ namespace Characters
             {    
                 currentInteractable = interactable;
                 currentInteractableGO = other.gameObject;
-                EventInteractableDetected.Invoke(interactable, other.gameObject);
+                PlayerEvents.Instance.CallEventInteractableDetected(interactable, other.gameObject);
             }
         }
 
@@ -69,7 +67,7 @@ namespace Characters
             {
                 currentInteractable = null;
                 currentInteractableGO = null;
-                EventInteractableLost.Invoke();
+                PlayerEvents.Instance.CallEventInteractableLost();
             }
         }
     }

@@ -13,15 +13,13 @@ namespace Characters
     public class CharacterManager : NetworkBehaviour
     {
         public static CharacterManager Instance { get; private set; }
+        public GAME_STATE gameState = GAME_STATE.FREE;
         [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
 
         [SerializeField] CharacterData characterData;
 
         [SerializeField] public InventoryController inventoryController { get; private set; }
         [SerializeField] public PlayerEmitter PlayerEmitter { get; private set; }
-
-        public UnityEvent<CharacterData> EventCharacterDataSet;
-        public UnityEvent<InventoryItem> EventMoneyAmountChanged;
 
         private void Awake()
         {
@@ -35,6 +33,12 @@ namespace Characters
             }
         }
 
+        public void SetGameState(GAME_STATE newState)
+        {
+            CharacterManager.Instance.gameState = newState;
+            PlayerEvents.Instance.CallEventGameStateChanged(newState);
+        }
+
         public void SetOwnedCharacter(GameObject obj)
         {
             OwnedCharacter = obj;
@@ -43,8 +47,6 @@ namespace Characters
         public override void OnStartClient()
         {
             base.OnStartClient();
-            PlayerUI playerUI = FindObjectOfType<PlayerUI>();
-            playerUI.SetCharacterManager(this);
             GetCharacterDataServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id);
         }
 
@@ -61,7 +63,7 @@ namespace Characters
         {
             Debug.Log("TARGET RPC CALLED");
             Utils.DumpToConsole(characterData);
-            EventCharacterDataSet.Invoke(characterData);
+            PlayerEvents.Instance.CallEventCharacterDataSet(characterData);
         }
 
         public void AddMoney(int amount)
@@ -93,7 +95,7 @@ namespace Characters
         {
             if (item.id == "000")
             {
-                EventMoneyAmountChanged.Invoke(item);
+                PlayerEvents.Instance.CallEventMoneyAmountChanged(item);
             }
         }
     }

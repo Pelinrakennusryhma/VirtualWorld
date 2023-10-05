@@ -13,11 +13,11 @@ namespace UI
     {
         [SerializeField] GameObject playerUI;
         [SerializeField] GameObject menu;
+        [SerializeField] GameObject dialogUI;
+        [SerializeField] DialogPanel dialogPanel;
 
         StarterAssetsInputs playerInputs;
         public static UIManager Instance;
-
-        public UnityEvent<bool> EventMenuToggled;
 
         [SerializeField] Transform menuPanelParent;
         GameObject currentOpenMenuPanel;
@@ -40,40 +40,66 @@ namespace UI
         {
             playerUI.SetActive(true);
             menu.SetActive(false);
-        }
-
-        void ToggleUIComponents()
-        {
-            if (playerUI.activeSelf)
-            {
-                ResetMenuPanels();
-                playerUI.SetActive(false);
-                menu.SetActive(true);
-                EventMenuToggled.Invoke(true);
-#if UNITY_WEBGL
-                playerInputs.UnlockCursor();
-#endif
-            } else
-            {
-                playerUI.SetActive(true);
-                menu.SetActive(false);
-                EventMenuToggled.Invoke(false);
-#if UNITY_WEBGL
-                playerInputs.LockCursor();
-#endif
-            }
+            dialogUI.SetActive(false);
         }
 
         public void SetPlayerCharacter(GameObject playerGO)
         {
             playerInputs = playerGO.GetComponentInChildren<StarterAssetsInputs>();
 
-            playerInputs.EventMenuPressed.AddListener(OnMenuPressed);
+            PlayerEvents.Instance.EventGameStateChanged.AddListener(OnGameStateChanged);
+            PlayerEvents.Instance.EventDialogOpened.AddListener(OnDialogOpen);
         }
 
-        void OnMenuPressed() 
+        void OnGameStateChanged(GAME_STATE gameState) 
         {
-            ToggleUIComponents();
+            ToggleUIComponents(gameState);
+        }
+
+        // toggle between PlayerUI and menu
+        void ToggleUIComponents(GAME_STATE gameState)
+        {
+            switch (gameState)
+            {
+                case GAME_STATE.FREE:
+                    playerUI.SetActive(true);
+                    menu.SetActive(false);
+                    dialogUI.SetActive(false);
+                    break;
+                case GAME_STATE.MENU:
+                    ResetMenuPanels();
+                    playerUI.SetActive(false);
+                    menu.SetActive(true);
+                    break;
+                case GAME_STATE.TABLET:
+                    playerUI.SetActive(false);
+                    menu.SetActive(false);
+                    dialogUI.SetActive(false);
+                    break;
+                case GAME_STATE.DIALOG:
+                    dialogUI.SetActive(true);
+                    playerUI.SetActive(false);
+                    menu.SetActive(false);
+                    break;
+                case GAME_STATE.MINIGAME:
+                    playerUI.SetActive(false);
+                    menu.SetActive(false);
+                    dialogUI.SetActive(false);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void OnDialogOpen(NPC npc)
+        {
+            dialogPanel.Setup(npc);
+        }
+
+        public void OnDialogClosePressed()
+        {
+            dialogUI.SetActive(false);
+            PlayerEvents.Instance.CallEventDialogClosed();
         }
 
         public void OnLogOutPressed()

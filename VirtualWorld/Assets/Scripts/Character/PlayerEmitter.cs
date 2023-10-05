@@ -18,30 +18,32 @@ namespace Characters
 
         [SerializeField] ThirdPersonController controller;
 
-        [SerializeField] Transform cameraFollowTarget;
-        private CinemachineVirtualCamera _cinemachineVirtualCamera;
+        [SerializeField] CinemachineVirtualCamera _cinemachineVirtualCamera;
+        [SerializeField] GameObject interactableDetector;
 
+        private void Awake()
+        {
+            interactableDetector.SetActive(false);
+        }
         public override void OnStartClient()
         {
             base.OnStartClient();
 
-            // if not our own character, notify the minigame loading system about a new gameobject being instantiated
+            // if not our own character notify the minigame loading system about a new gameobject being instantiated
             if (!IsOwner)
             {
                 SceneLoader.Instance.NewMainSceneObjectAdded(gameObject);
                 return;
             }
 
+            // owned character is made priority for camera
+            _cinemachineVirtualCamera.Priority = 100;
+
             UIManager.Instance.SetPlayerCharacter(gameObject);
             CharacterManager.Instance?.SetOwnedCharacter(gameObject);
-            SceneLoader.Instance.SetInputs(GetComponent<StarterAssetsInputs>());
+            interactableDetector.SetActive(true);
 
             controller.shouldAnimate = true;
-
-            if (_cinemachineVirtualCamera == null)
-            {
-                _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-            }
 
             EnableNetworkedControls();
         }
@@ -52,7 +54,6 @@ namespace Characters
             {
                 inputs.enabled = true;
                 playerInput.enabled = true;
-                _cinemachineVirtualCamera.Follow = cameraFollowTarget;
             }
         }
     }
