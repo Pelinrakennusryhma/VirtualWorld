@@ -2,6 +2,7 @@ using UnityEngine;
 using StarterAssets;
 using FishNet.Object;
 using UnityEngine.Events;
+using Characters;
 
 
 // This component is in charge of moving and changing cameras,
@@ -145,8 +146,8 @@ public class TabletCameraViewController : NetworkBehaviour
         // We don't use the FlyCamera yet, so disable it.
         FlyCamera.enabled = false;
 
-        Inputs.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
-        Inputs.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
+        PlayerEvents.Instance.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
+        PlayerEvents.Instance.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
     }
 
 

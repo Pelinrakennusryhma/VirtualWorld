@@ -18,9 +18,13 @@ namespace Characters
 
         [SerializeField] ThirdPersonController controller;
 
-        [SerializeField] Transform cameraFollowTarget;
         [SerializeField] CinemachineVirtualCamera _cinemachineVirtualCamera;
+        [SerializeField] GameObject interactableDetector;
 
+        private void Awake()
+        {
+            interactableDetector.SetActive(false);
+        }
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -37,14 +41,9 @@ namespace Characters
 
             UIManager.Instance.SetPlayerCharacter(gameObject);
             CharacterManager.Instance?.SetOwnedCharacter(gameObject);
-            SceneLoader.Instance.SetInputs(GetComponent<StarterAssetsInputs>());
+            interactableDetector.SetActive(true);
 
             controller.shouldAnimate = true;
-
-            if (_cinemachineVirtualCamera == null)
-            {
-                _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-            }
 
             EnableNetworkedControls();
         }
@@ -55,7 +54,6 @@ namespace Characters
             {
                 inputs.enabled = true;
                 playerInput.enabled = true;
-                _cinemachineVirtualCamera.Follow = cameraFollowTarget;
             }
         }
     }

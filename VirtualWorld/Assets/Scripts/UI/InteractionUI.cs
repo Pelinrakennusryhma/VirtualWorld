@@ -27,9 +27,9 @@ namespace UI
         }
         public void InitDetector(InteractableDetector interactableDetector)
         {
-            interactableDetector.EventInteractableDetected.AddListener(OnInteractableDetected);
-            interactableDetector.EventInteractableLost.AddListener(OnInteractableLost);
-            interactableDetector.EventInteractionStarted.AddListener(OnInteractionStarted);
+            PlayerEvents.Instance.EventInteractableDetected.AddListener(OnInteractableDetected);
+            PlayerEvents.Instance.EventInteractableLost.AddListener(OnInteractableLost);
+            PlayerEvents.Instance.EventInteractionStarted.AddListener(OnInteractionStarted);
         }
 
         void OnInteractableDetected(I_Interactable interactable, GameObject interactableObj)

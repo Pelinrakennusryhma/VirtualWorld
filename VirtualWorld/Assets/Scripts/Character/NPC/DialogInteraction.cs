@@ -25,10 +25,8 @@ namespace Characters
 
         public void Interact(string playerId, UnityAction callback)
         {
-            CharacterManager.Instance.CallEventDialogOpened(npc);
+            PlayerEvents.Instance.CallEventDialogOpened(npc);
         }
-
-
     }
 }
 
