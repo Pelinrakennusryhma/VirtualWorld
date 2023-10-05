@@ -38,11 +38,7 @@ public class NewsFeedController : NetworkBehaviour
 
     }
 
-    // This is called when a player is actually spawned as a client
-    // Additive scene laucnher -component is probably an unfortunate place
-    // to call this, but at least OnNetworkSpawn is called there.
-    // Maybe this is an architectural problem, this implementation
-    // of this newsfeed -thingie. Maybe some refactoring should take place?
+
     public override void OnStartClient()
     {
         RequestGlobalNewsServerRpc();
@@ -239,6 +235,8 @@ public class NewsFeedController : NetworkBehaviour
                                               string header,
                                               string content)
     {
+        Debug.Log("Observers rpc is called");
+
         for (int i = 0; i < GlobalNews.Count; i++)
         {
             if (GlobalNews[i].ID == id)
@@ -253,7 +251,7 @@ public class NewsFeedController : NetworkBehaviour
         item.Header = header;
         item.Content = content;
         GlobalNews.Add(item);
-        //Debug.Log("Updating client global news " + item.Header);
+        Debug.Log("Updating client global news " + item.Header);
 
         if (OnNewsUpdated != null)
         {
@@ -264,7 +262,7 @@ public class NewsFeedController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RequestGlobalNewsServerRpc()
     {
-        //Debug.Log("Requesting global news");
+        Debug.Log("Requesting global news");
 
         for (int i = 0; i < GlobalNews.Count; i++)
         {

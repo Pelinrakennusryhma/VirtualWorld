@@ -34,6 +34,8 @@ public class NetworkObjectSpawner : MonoBehaviour
             {
                 GameObject go = Instantiate(obj);
                 InstanceFinder.ServerManager.Spawn(go);
+
+                Debug.Log("Spawned " + go.name);
             }
         }
     }

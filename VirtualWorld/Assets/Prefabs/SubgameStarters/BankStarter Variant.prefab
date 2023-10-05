@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1571408573391888585
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.96492493
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.26252607
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 265229351357083169, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 319295556373524868, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: scenePath
+      value: Assets/Bank/Scenes/BankScene.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173910033515841881, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: <DetectionMessage>k__BackingField
+      value: Go To Bank
+      objectReference: {fileID: 0}
+    - target: {fileID: 2970954694228239436, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_Name
+      value: BankStarter Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5889490346083777857, guid: 73fe2dab398ec35448e21d4f26110703,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d9357f9610b4df44a2279276e9fa60c, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73fe2dab398ec35448e21d4f26110703, type: 3}

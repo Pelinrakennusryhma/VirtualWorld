@@ -285,9 +285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Week: 0
   Day: 0
-  textMeshProUGUI: {fileID: 8738681153545533835}
+  dayNumberUGUI: {fileID: 8738681153545533835}
   exclamationMarkUGUI: {fileID: 4090399550717840212}
-  IsInteractable: 0
 --- !u!1 &8846354887757511389
 GameObject:
   m_ObjectHideFlags: 0
