@@ -6192,6 +6192,12 @@ PrefabInstance:
       propertyPath: Transport
       value: 
       objectReference: {fileID: 2103693293}
+    - target: {fileID: 8879086120321150333, guid: 088d5417f05ccf1489fa98936a060139,
+        type: 3}
+      propertyPath: _playerPrefab
+      value: 
+      objectReference: {fileID: 6723520626843087359, guid: 34f10dafe4211af49bd0ece68fc2000b,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 1630396444112232771, guid: 088d5417f05ccf1489fa98936a060139, type: 3}
     - {fileID: 3669823828670497429, guid: 088d5417f05ccf1489fa98936a060139, type: 3}

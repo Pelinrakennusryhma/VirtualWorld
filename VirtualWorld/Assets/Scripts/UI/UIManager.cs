@@ -47,8 +47,8 @@ namespace UI
         {
             playerInputs = playerGO.GetComponentInChildren<StarterAssetsInputs>();
 
-            playerInputs.EventGameStateChanged.AddListener(OnGameStateChanged);
-            CharacterManager.Instance.EventDialogOpened.AddListener(OnDialogOpen);
+            PlayerEvents.Instance.EventGameStateChanged.AddListener(OnGameStateChanged);
+            PlayerEvents.Instance.EventDialogOpened.AddListener(OnDialogOpen);
         }
 
         void OnGameStateChanged(GAME_STATE gameState) 
@@ -99,7 +99,7 @@ namespace UI
         public void OnDialogClosePressed()
         {
             dialogUI.SetActive(false);
-            CharacterManager.Instance.CallEventDialogClosed();
+            PlayerEvents.Instance.CallEventDialogClosed();
         }
 
         public void OnLogOutPressed()

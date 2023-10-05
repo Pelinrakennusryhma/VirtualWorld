@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using Scenes;
 using FishNet.Object;
 using FishNet.Component.Animating;
+using System.Collections.Generic;
 
 namespace Characters
 {
@@ -18,9 +19,16 @@ namespace Characters
 
         [SerializeField] ThirdPersonController controller;
 
-        [SerializeField] Transform cameraFollowTarget;
         [SerializeField] CinemachineVirtualCamera _cinemachineVirtualCamera;
+        [SerializeField] List<GameObject> ownedObjects;
 
+        private void Awake()
+        {
+            foreach (GameObject gameObject in ownedObjects)
+            {
+                gameObject.SetActive(false);
+            }
+        }
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -37,14 +45,12 @@ namespace Characters
 
             UIManager.Instance.SetPlayerCharacter(gameObject);
             CharacterManager.Instance?.SetOwnedCharacter(gameObject);
-            SceneLoader.Instance.SetInputs(GetComponent<StarterAssetsInputs>());
+            foreach (GameObject gameObject in ownedObjects)
+            {
+                gameObject.SetActive(true);
+            }
 
             controller.shouldAnimate = true;
-
-            if (_cinemachineVirtualCamera == null)
-            {
-                _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-            }
 
             EnableNetworkedControls();
         }
@@ -55,7 +61,6 @@ namespace Characters
             {
                 inputs.enabled = true;
                 playerInput.enabled = true;
-                _cinemachineVirtualCamera.Follow = cameraFollowTarget;
             }
         }
     }

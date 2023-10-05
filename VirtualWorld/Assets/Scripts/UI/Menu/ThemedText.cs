@@ -12,7 +12,6 @@ public class ThemedText : MonoBehaviour, IThemedComponent
     void SetTextColor()
     {
         text.color = theme.GetColorFromPalette(color);
-        Debug.Log(color);
     }
 
     public void Init(UIColorTheme theme, UIManager uiManager)

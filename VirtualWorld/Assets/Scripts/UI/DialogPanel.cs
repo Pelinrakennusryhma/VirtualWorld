@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DialogPanel : MonoBehaviour
+namespace UI
 {
-    [SerializeField] TMP_Text nameText;
-    [SerializeField] TMP_Text titleText;
-    [SerializeField] TMP_Text description;
-    public void Setup(NPC npc)
+    public class DialogPanel : MonoBehaviour
     {
-        nameText.text = npc.Data.fullName;
-        titleText.text = npc.Data.title;
+        [SerializeField] TMP_Text nameText;
+        [SerializeField] TMP_Text titleText;
+        [SerializeField] TMP_Text description;
+        public void Setup(NPC npc)
+        {
+            nameText.text = npc.Data.fullName;
+            titleText.text = npc.Data.title;
+        }
     }
 }
+
+

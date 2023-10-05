@@ -17,10 +17,14 @@ namespace UI
 
         int previousMoney;
 
-        public void SetCharacterManager(CharacterManager characterManager)
+        void Start()
         {
-            characterManager.EventCharacterDataSet.AddListener(OnCharacterDataSet);
-            characterManager.EventMoneyAmountChanged.AddListener(OnMoneyAmountChanged);
+            // skip on server
+            if(PlayerEvents.Instance != null)
+            {
+                PlayerEvents.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
+                PlayerEvents.Instance.EventMoneyAmountChanged.AddListener(OnMoneyAmountChanged);
+            }
         }
 
         void OnMoneyAmountChanged(InventoryItem moneyItem)
