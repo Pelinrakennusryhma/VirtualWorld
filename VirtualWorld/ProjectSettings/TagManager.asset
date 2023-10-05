@@ -7,6 +7,15 @@ TagManager:
   - PickUpTrigger
   - FirstPersonCamera
   - CinemachineTarget
+  - StockInfo
+  - StockInventoryItem
+  - Cropitem
+  - Ingredient
+  - Order
+  - Wall
+  - Kuula
+  - Keila
+  - Test1
   layers:
   - Default
   - TransparentFX

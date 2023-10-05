@@ -50,6 +50,11 @@ public class MainMenuGravityShip : MonoBehaviour
 
         //MiniGameLauncher.Instance.GoBackToPlayground(true);
         SceneLoader.Instance.UnloadScene();
+
+        if (GameManagerGravityShip.Instance != null)
+        {
+            Destroy(GameManagerGravityShip.Instance.gameObject);
+        }
     }
 
 
