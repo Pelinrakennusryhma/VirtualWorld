@@ -24,16 +24,6 @@ namespace Characters
             }
         }
 
-        //void OnDialogOpened(NPC dummyNpc)
-        //{
-        //    SetGameState(GAME_STATE.DIALOG);
-        //}
-
-        //void OnDialogClosed()
-        //{
-        //    SetGameState(GAME_STATE.FREE);
-        //}
-
         #region CharacterData
         public UnityEvent<CharacterData> EventCharacterDataSet;
         public void CallEventCharacterDataSet(CharacterData data)
@@ -64,10 +54,10 @@ namespace Characters
             EventOpenTabletPressed.Invoke();
         }
 
-        public UnityEvent<UnityAction> EventCloseTabletPressed;
-        public void CallEventCloseTabletPressed(UnityAction callback)
+        public UnityEvent EventCloseTabletPressed;
+        public void CallEventCloseTabletPressed()
         {
-            EventCloseTabletPressed.Invoke(callback);
+            EventCloseTabletPressed.Invoke();
         }
 
         public UnityEvent<NPC> EventDialogOpened;

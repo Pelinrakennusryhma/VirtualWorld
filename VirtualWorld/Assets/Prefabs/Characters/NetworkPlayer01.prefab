@@ -3124,7 +3124,10 @@ MonoBehaviour:
   playerInput: {fileID: 413210824276420739}
   controller: {fileID: 7279262954481719501}
   _cinemachineVirtualCamera: {fileID: 4395321836587321181}
-  interactableDetector: {fileID: 5531011658549054286}
+  ownedObjects:
+  - {fileID: 828501038496082298}
+  - {fileID: 4395321836587320995}
+  - {fileID: 5531011658549054286}
 --- !u!114 &6723520626843087359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3743,6 +3746,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+--- !u!1 &4395321836587320995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2324480125516089380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4395321836587321180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8,
@@ -3755,7 +3764,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2324480125516089380}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4395321836587320995}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}

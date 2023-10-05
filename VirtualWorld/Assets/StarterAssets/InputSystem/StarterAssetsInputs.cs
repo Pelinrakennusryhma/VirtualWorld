@@ -195,7 +195,7 @@ namespace StarterAssets
                     case GAME_STATE.MENU:
                         break;
                     case GAME_STATE.TABLET: // callback function to set gamestate once tablet script is done zooming out
-                        PlayerEvents.Instance.CallEventCloseTabletPressed(() => CharacterManager.Instance.SetGameState(GAME_STATE.FREE));
+                        PlayerEvents.Instance.CallEventCloseTabletPressed();
                         break;
                     case GAME_STATE.DIALOG:
                         break;
@@ -236,7 +236,7 @@ namespace StarterAssets
                         CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
                         break;
                     case GAME_STATE.TABLET:
-                        PlayerEvents.Instance.CallEventCloseTabletPressed(() => CharacterManager.Instance.SetGameState(GAME_STATE.FREE));
+                        PlayerEvents.Instance.CallEventCloseTabletPressed();
                         break;
                     case GAME_STATE.DIALOG:
                         CharacterManager.Instance.SetGameState(GAME_STATE.FREE);

@@ -94,9 +94,6 @@ public class TabletCameraViewController : NetworkBehaviour
     // is adjusted on x-dimension depending over which shoulder we passed through
     public InventoryViewChanger InventoryViewChanger;
 
-    private UnityAction inputsCallback;
-
-
     private void Awake()
     {
         TabletFunctionality = GetComponent<TabletFunctionalityController>();
@@ -159,16 +156,14 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         if (!IsActiveTabletView)
         {
-            inputsCallback = null;
             SetupTabletForComingIn();
             TabletFunctionality.OnTabletOpened();
         }
     }
 
     // callback is called once camera has done zooming back to change StarterAssetsInputs' gameState enum
-    public void OnCloseTabletPressed(UnityAction callback)
+    public void OnCloseTabletPressed()
     {
-        inputsCallback = callback;
         SetupTabletForGoingOut();
     }
 
@@ -452,8 +447,8 @@ public class TabletCameraViewController : NetworkBehaviour
         {
             StopMessingWithCameras();
             TabletFunctionality.OnTabletClosed();
-            // once camera has reached its return position, invoke the callback function in StarterAssetsInputs to set its gameState back to FREE
-            inputsCallback?.Invoke();
+            // once camera has reached its return position, set gameState to free
+            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
         }
     }
 
