@@ -1465,6 +1465,15 @@ MonoBehaviour:
   EventDialogClosed:
     m_PersistentCalls:
       m_Calls: []
+  EventInteractableDetected:
+    m_PersistentCalls:
+      m_Calls: []
+  EventInteractableLost:
+    m_PersistentCalls:
+      m_Calls: []
+  EventInteractionStarted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1436262487
 Transform:
   m_ObjectHideFlags: 0
@@ -2386,6 +2395,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4418033920468830230, guid: 9da558cb8eecef042acfd6e532b1cd71,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4495848082943913849, guid: 9da558cb8eecef042acfd6e532b1cd71,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2444,6 +2458,11 @@ PrefabInstance:
     - target: {fileID: 5619424053252635327, guid: 9da558cb8eecef042acfd6e532b1cd71,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708097384068799521, guid: 9da558cb8eecef042acfd6e532b1cd71,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5921373960296542324, guid: 9da558cb8eecef042acfd6e532b1cd71,

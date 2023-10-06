@@ -101,6 +101,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
     public override void OnStartClient()
     {
+
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
         OriginalScalerScale = TabletScaler.transform.localScale;

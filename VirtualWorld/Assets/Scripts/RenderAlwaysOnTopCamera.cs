@@ -19,6 +19,10 @@ public class RenderAlwaysOnTopCamera : MonoBehaviour
 
     public void DisableRenderOnTopCamera()
     {
+        if(RenderOnTopCamera == null)
+        {
+            RenderOnTopCamera = GetComponent<Camera>();
+        }
         RenderOnTopCamera.enabled = false;
     }
 

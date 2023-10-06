@@ -13,6 +13,14 @@ namespace UI
         GameObject currentInteractableGO;
         I_Interactable currentInteractable;
 
+        void Awake()
+        {
+            // interaction prompt text object needs to be enabled in awake
+            // or else tablet breaks it..
+            // the object is also disabled later in the InitDetector method just for clarity
+            promptText.gameObject.SetActive(true);
+        }
+
         private void OnDisable()
         {
             promptTextFlasher.Reset();
@@ -30,6 +38,8 @@ namespace UI
             PlayerEvents.Instance.EventInteractableDetected.AddListener(OnInteractableDetected);
             PlayerEvents.Instance.EventInteractableLost.AddListener(OnInteractableLost);
             PlayerEvents.Instance.EventInteractionStarted.AddListener(OnInteractionStarted);
+
+            promptText.gameObject.SetActive(false);
         }
 
         void OnInteractableDetected(I_Interactable interactable, GameObject interactableObj)
