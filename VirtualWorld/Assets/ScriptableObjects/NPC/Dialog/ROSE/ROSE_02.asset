@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a54e04fbb51c14b8208bf73f2f6edf, type: 3}
-  m_Name: NPC_TEST_01
+  m_Script: {fileID: 11500000, guid: 159a7cfd5ea15844d81371834080d61e, type: 3}
+  m_Name: ROSE_02
   m_EditorClassIdentifier: 
-  fullName: Rose
-  title: Robot greeter
+  parentDialogChoice: {fileID: 11400000, guid: d43c53a48d542b24f861a5686bff386d, type: 2}
+  title: Activities
+  text: There's plenty to do around here!
+  childDialogChoices: []
