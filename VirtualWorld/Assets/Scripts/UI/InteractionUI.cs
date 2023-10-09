@@ -74,7 +74,7 @@ namespace UI
 
         void SetPromptText(string msg)
         {
-            promptText.text = $"[{interactionButton}] {msg}";
+            promptText.text = "{" + interactionButton + "}" + msg;
         }
 
         void ClearPromptText()

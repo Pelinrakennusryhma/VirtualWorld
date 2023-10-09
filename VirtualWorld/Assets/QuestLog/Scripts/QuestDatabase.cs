@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestDatabase : MonoBehaviour
+namespace HymiQuests
 {
-    public List<Quest> quests = new List<Quest>();
-    private void Awake()
+    public class QuestDatabase : MonoBehaviour
     {
-        BuildDatabase();
-    }
-    public Quest GetQuest(int id)
-    {
-        return quests.Find(quest => quest.id == id);
-    }
-    void BuildDatabase()
-    {
-        //new Quest(id, name, category, {Askeleen kuvaus, Kuinka monta jotakin tarvtisee}
-        quests = new List<Quest>
+        public List<Quest> quests = new List<Quest>();
+        private void Awake()
+        {
+            BuildDatabase();
+        }
+        public Quest GetQuest(int id)
+        {
+            return quests.Find(quest => quest.id == id);
+        }
+        void BuildDatabase()
+        {
+            //new Quest(id, name, category, {Askeleen kuvaus, Kuinka monta jotakin tarvtisee}
+            quests = new List<Quest>
         {
             new Quest(0, "Main Quest 1", "Main Quest",
             new Dictionary<string, int>
@@ -52,5 +54,6 @@ public class QuestDatabase : MonoBehaviour
                 {"Side Quest 2 Second Step", 1},
             }),
         };
+        }
     }
 }

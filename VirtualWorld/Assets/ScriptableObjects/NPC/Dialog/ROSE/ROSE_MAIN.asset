@@ -24,3 +24,5 @@ MonoBehaviour:
   childDialogChoices:
   - {fileID: 11400000, guid: 6c4c4eb5258a0a64ca912e4cc96f26ee, type: 2}
   - {fileID: 11400000, guid: 4c9ef78e01f3e6b4281d500f6c8d544a, type: 2}
+  quests:
+  - {fileID: 11400000, guid: f585e4f51f535fb40b1e55785efcaede, type: 2}

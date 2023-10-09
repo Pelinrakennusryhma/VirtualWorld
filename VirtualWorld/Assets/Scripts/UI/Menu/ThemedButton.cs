@@ -36,7 +36,6 @@ namespace UI
         #region Init
         public void Init(UIColorTheme theme, UIManager uiManager)
         {
-            Debug.Log("gameObjectName " + gameObject.name);
             this.theme = theme;
             this.uiManager = uiManager;
 

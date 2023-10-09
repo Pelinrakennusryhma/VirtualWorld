@@ -1,4 +1,5 @@
 using BackendConnection;
+using Quests;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -92,6 +93,25 @@ namespace Characters
         public void CallEventInteractionStarted()
         {
             EventInteractionStarted.Invoke();
+        }
+        #endregion
+
+        #region Quests
+
+        public UnityEvent<Quest> EventQuestAccepted;
+
+        public void CallEventQuestAccepted(Quest quest)
+        {
+            EventQuestAccepted.Invoke(quest);
+        }
+        #endregion
+
+        #region UIDisplay
+        public UnityEvent<string> EventInformationReceived;
+
+        public void CallEventInformationReceived(string info)
+        {
+            EventInformationReceived.Invoke(info);
         }
         #endregion
     }

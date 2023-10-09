@@ -201,12 +201,6 @@ public class TabletCameraViewController : NetworkBehaviour
 
 
 
-
-
-        // TO BE REFACTORED? -----------------------------
-        ThirdPersonController.OnTabletViewChanged(true);
-        // -----------------------------------------------
-
         // TO BE REFACTORED? -----------------------------
         // This method is only ever called on the owner,
         // so we set the gree blip active so we can see
@@ -635,15 +629,6 @@ public class TabletCameraViewController : NetworkBehaviour
         //-------------------------------------------------
 
 
-
-
-        // TO BE REFACTORED? ---------------------------------------
-        // Inform third person controller that tablet view is not active anymore.
-        ThirdPersonController.OnTabletViewChanged(false);
-        //----------------------------------------------------------
-
-
     }
-
 
 }

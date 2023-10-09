@@ -1,5 +1,6 @@
 using BackendConnection;
 using Characters;
+using Dialog;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;

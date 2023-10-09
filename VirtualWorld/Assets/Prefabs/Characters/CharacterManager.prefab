@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2845221288109614394}
   - component: {fileID: 5635476881906859497}
   - component: {fileID: 1746309532049967265}
+  - component: {fileID: -5884827464413810290}
   m_Layer: 0
   m_Name: CharacterManager
   m_TagString: Untagged
@@ -50,10 +51,8 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 5635476881906859497}
   _networkObjectCache: {fileID: 5635476881906859497}
+  gameState: 0
   <OwnedCharacter>k__BackingField: {fileID: 0}
-  EventCharacterDataSet:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2845221288109614394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,11 +93,11 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 2
+  <PrefabId>k__BackingField: 20
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 4439346975013716106
+  <AssetPathHash>k__BackingField: 17848322328521722956
 --- !u!114 &1746309532049967265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,3 +113,16 @@ MonoBehaviour:
   _overrideType: 2
   _updateHostVisibility: 1
   _observerConditions: []
+--- !u!114 &-5884827464413810290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6553fdf948d1e4dab7aeea08eab640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allQuests: []

@@ -386,18 +386,5 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
-
-        public void OnTabletViewChanged(bool tabletViewIsActive)
-        {
-            IsTabletViewActive = tabletViewIsActive;
-
-            if (tabletViewIsActive)
-            {
-                // Set animators false
-
-                _animator.SetFloat(_animIDSpeed, 0);
-                _animator.SetFloat(_animIDMotionSpeed, 0);
-            }
-        }
     }
 }
