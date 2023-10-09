@@ -9,10 +9,10 @@ namespace UI
 {
     public class DialogPanel : MonoBehaviour
     {
-        [SerializeField] TMP_Text npcNameText;
-        [SerializeField] TMP_Text npcTitleText;
-        [SerializeField] TMP_Text dialogTitleText;
-        [SerializeField] TMP_Text description;
+        [SerializeField] TMP_Text title0;
+        [SerializeField] TMP_Text subTitle0;
+        [SerializeField] TMP_Text title1;
+        [SerializeField] TMP_Text mainText;
         [SerializeField] GameObject dialogChoiceButtonPrefab;
         [SerializeField] Transform dialogContainer;
         [SerializeField] Button backButton;
@@ -20,27 +20,31 @@ namespace UI
         NPC currentNpc;
         List<GameObject> subDialogs = new List<GameObject>();
 
-        public void Setup(string name, string title, DialogChoice mainDialog, NPC npc = null)
+        // Root/start view of a npc dialog
+        public void SetupRootDialog(NPC npc)
         {
-            if(npc != null)
-            {
-                currentNpc = npc;
-                npcNameText.text = npc.Data.fullName;
-                npcTitleText.text = npc.Data.title;
-                dialogTitleText.text = "";
-            } else
-            {
-                dialogTitleText.text = name;
-                npcNameText.text = "";
-                npcTitleText.text = "";
-            }
+            currentNpc = npc;
+            title0.text = npc.Data.fullName;
+            subTitle0.text = npc.Data.title;
+            title1.text = "";
 
-
-            description.text = mainDialog.text;
+            DialogChoice mainDialog = npc.Data.mainDialog;
+            mainText.text = mainDialog.text;
 
             SetupButtons(mainDialog);
-
             SetupSubDialogs(mainDialog);
+        }
+
+        // A sub dialog view, something that is clicked open in root dialog
+        void SetupSubDialog(DialogChoice dialog)
+        {
+            title0.text = "";
+            subTitle0.text = "";
+            title1.text = dialog.title;
+            mainText.text = dialog.text;
+
+            SetupButtons(dialog);
+            SetupSubDialogs(dialog);
         }
 
         void SetupButtons(DialogChoice mainDialog)
@@ -57,7 +61,15 @@ namespace UI
             } else
             {
                 backButton.onClick.RemoveAllListeners();
-                backButton.onClick.AddListener(() => Setup(currentNpc.Data.fullName, currentNpc.Data.title, parent));
+                // parent is root
+                if(parent.parentDialogChoice == null)
+                {
+                    backButton.onClick.AddListener(() => SetupRootDialog(currentNpc));
+                } else
+                {
+                    backButton.onClick.AddListener(() => SetupSubDialog(parent));
+                }
+
                 backButton.gameObject.SetActive(true);
 
                 // probably check here if this is a quest dialog and add a proper listener
@@ -66,21 +78,28 @@ namespace UI
             }
         }
 
+        // clickable text buttons/links to sub dialogs
         void SetupSubDialogs(DialogChoice mainDialog)
         {
             ClearSubDialogs();
 
             foreach (DialogChoice childDialog in mainDialog.childDialogChoices)
             {
+                // instantiate
                 GameObject buttonObj = Instantiate(dialogChoiceButtonPrefab, dialogContainer);
                 subDialogs.Add(buttonObj);
+
+                // styling to match the other text
                 ThemedButton themedButton = buttonObj.GetComponent<ThemedButton>();
                 UIPalette uiPalette = UIManager.Instance.GetComponent<UIPalette>();
                 themedButton.Init(uiPalette.Theme, UIManager.Instance);
+
+                // content and functionality - title is used as link text and
+                // onClick opens the dialog
                 TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
                 text.text = childDialog.title;
                 Button button = buttonObj.GetComponent<Button>();
-                button.onClick.AddListener(() => Setup(childDialog.title, "", childDialog));
+                button.onClick.AddListener(() => SetupSubDialog(childDialog));
             }
         }
 

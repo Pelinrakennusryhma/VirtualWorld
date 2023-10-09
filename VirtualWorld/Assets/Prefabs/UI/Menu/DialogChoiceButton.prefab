@@ -15,6 +15,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 364361932346058455, guid: 0e6940ab5d8228b41a4354edff9c5ca3,
         type: 3}
+      propertyPath: textHoverColor
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 364361932346058455, guid: 0e6940ab5d8228b41a4354edff9c5ca3,
+        type: 3}
       propertyPath: textClickedColor
       value: 3
       objectReference: {fileID: 0}

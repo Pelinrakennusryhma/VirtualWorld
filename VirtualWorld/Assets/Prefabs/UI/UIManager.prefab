@@ -446,6 +446,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3838931980868172871}
     m_Modifications:
+    - target: {fileID: 574173589953550057, guid: 65a2895040155624a88c1e0bed7d630e,
+        type: 3}
+      propertyPath: color
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2691591320218355686, guid: 65a2895040155624a88c1e0bed7d630e,
         type: 3}
       propertyPath: m_text
@@ -611,6 +616,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ThemedParagraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 6659166618563230401, guid: fb169106e49650c4d9f6b91dcaa97498,
+        type: 3}
+      propertyPath: color
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6952829562188297487, guid: fb169106e49650c4d9f6b91dcaa97498,
         type: 3}
@@ -1313,10 +1323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51357d0601856a42beae8545093e387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcNameText: {fileID: 7850623320708179653}
-  npcTitleText: {fileID: 3419719032920477594}
-  dialogTitleText: {fileID: 8707523588077823597}
-  description: {fileID: 8377812412149112587}
+  title0: {fileID: 7850623320708179653}
+  subTitle0: {fileID: 3419719032920477594}
+  title1: {fileID: 8707523588077823597}
+  mainText: {fileID: 8377812412149112587}
   dialogChoiceButtonPrefab: {fileID: 1447935144760796420, guid: 62c7834351a859d45afeab5c2612b884,
     type: 3}
   dialogContainer: {fileID: 6479669623332395782}
@@ -2848,6 +2858,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3838931980868172871}
     m_Modifications:
+    - target: {fileID: 574173589953550057, guid: 65a2895040155624a88c1e0bed7d630e,
+        type: 3}
+      propertyPath: color
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2691591320218355686, guid: 65a2895040155624a88c1e0bed7d630e,
         type: 3}
       propertyPath: m_text
@@ -3459,6 +3474,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3838931980868172871}
     m_Modifications:
+    - target: {fileID: 574173589953550057, guid: 65a2895040155624a88c1e0bed7d630e,
+        type: 3}
+      propertyPath: color
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2691591320218355686, guid: 65a2895040155624a88c1e0bed7d630e,
         type: 3}
       propertyPath: m_text

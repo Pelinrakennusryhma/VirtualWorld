@@ -93,7 +93,7 @@ namespace UI
 
         public void OnDialogOpen(NPC npc)
         {
-            dialogPanel.Setup(npc.Data.fullName, npc.Data.title, npc.Data.mainDialog, npc);
+            dialogPanel.SetupRootDialog(npc);
         }
 
         public void OnDialogClosePressed()
