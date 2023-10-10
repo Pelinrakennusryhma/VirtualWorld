@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159a7cfd5ea15844d81371834080d61e, type: 3}
+  m_Script: {fileID: 11500000, guid: 73b6ecd200543e0478aa0c772bec0957, type: 3}
   m_Name: ROSE_01_01
   m_EditorClassIdentifier: 
-  parentDialogChoice: {fileID: 11400000, guid: 6c4c4eb5258a0a64ca912e4cc96f26ee, type: 2}
+  text: Unfortunately I can't answer that question yet. Someone would need to feed
+    me the suitable data so I can form an answer.
   title: What is this place?
-  text: Unfortunately I can't answer that yet. Someone needs to feed me suitable
-    data so I can form an answer
+  parentDialogChoice: {fileID: 11400000, guid: 6c4c4eb5258a0a64ca912e4cc96f26ee, type: 2}
   childDialogChoices: []

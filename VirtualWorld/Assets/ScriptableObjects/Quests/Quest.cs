@@ -7,7 +7,7 @@ namespace Quests
 {
 
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Quests/Quest", order = 1)]
-    public class Quest : DialogChoice
+    public class Quest : DialogChoiceWithTitle
     {
         public List<QuestStep> steps;
 

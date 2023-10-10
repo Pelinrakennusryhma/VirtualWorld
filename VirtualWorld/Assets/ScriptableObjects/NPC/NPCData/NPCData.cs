@@ -10,7 +10,7 @@ namespace Characters
     {
         public string fullName;
         public string title;
-        public DialogChoice mainDialog;
+        public DialogChoiceRoot mainDialog;
 
     }
 }

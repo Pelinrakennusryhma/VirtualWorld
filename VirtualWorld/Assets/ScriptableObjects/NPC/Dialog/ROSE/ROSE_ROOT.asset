@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d07b0d25a724c142a91a236929cb33a, type: 3}
+  m_Name: ROSE_ROOT
+  m_EditorClassIdentifier: 
+  text: Hi, I'm Rose and I'm here to help you get started. Lorem ipsum dolor sit
+    amet, consectetur adipiscing elit. Curabitur dapibus enim et elit vestibulum,
+    id volutpat magna aliquet. Vivamus dapibus id ante id mollis. Sed consectetur
+    pretium lacus, eget egestas turpis. Donec rutrum lorem sit amet arcu mollis vulputate.
+  childDialogChoices:
+  - {fileID: 11400000, guid: 6c4c4eb5258a0a64ca912e4cc96f26ee, type: 2}
+  - {fileID: 11400000, guid: 8a55da562a053d74fa9bf82b9d2fbd2d, type: 2}
+  quests:
+  - {fileID: 11400000, guid: f585e4f51f535fb40b1e55785efcaede, type: 2}

@@ -94,7 +94,7 @@ namespace UI
 
         public void OnDialogOpen(NPC npc)
         {
-            dialogPanel.SetupRootDialog(npc);
+            dialogPanel.Setup(npc.Data.mainDialog, npc);
         }
 
         public void OnDialogClosePressed()

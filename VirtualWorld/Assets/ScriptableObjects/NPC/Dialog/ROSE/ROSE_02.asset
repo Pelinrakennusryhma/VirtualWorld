@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159a7cfd5ea15844d81371834080d61e, type: 3}
+  m_Script: {fileID: 11500000, guid: 73b6ecd200543e0478aa0c772bec0957, type: 3}
   m_Name: ROSE_02
   m_EditorClassIdentifier: 
-  parentDialogChoice: {fileID: 11400000, guid: d43c53a48d542b24f861a5686bff386d, type: 2}
-  title: Activities
   text: There's plenty to do around here!
+  title: Activities
+  parentDialogChoice: {fileID: 11400000, guid: 3e3c282aa70d7d846a79be383d854b55, type: 2}
   childDialogChoices: []
