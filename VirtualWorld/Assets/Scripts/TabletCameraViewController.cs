@@ -76,19 +76,6 @@ public class TabletCameraViewController : NetworkBehaviour
     [SerializeField] private ViewWithinAViewController ViewWithinAViewController;
 
 
-
-    private void Awake()
-    {
-
-        //Debug.LogWarning("Third person camera dragged in editor, to be sure the right one is used");
-
-        //if(ThirdPersonCamera != null)
-        //{
-        //    CinemachineBrain = ThirdPersonCamera.GetComponent<CinemachineBrain>();
-        //}
-
-    }
-
     public override void OnStartClient()
     {
         // Save the tablet scaler object's original scale, because we are about to 
@@ -102,6 +89,15 @@ public class TabletCameraViewController : NetworkBehaviour
         // Just disable objects that we don't need
         TabletMainScaler.gameObject.SetActive(false);
 
+        if (IsOwner) 
+        {
+            ViewWithinAViewController.Init();
+            // Subscribe to events about button presses
+            PlayerEvents.Instance.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
+            PlayerEvents.Instance.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
+        }
+
+        //Debug.LogWarning("Starting client. Isowner " + IsOwner);
 
         ViewWithinAViewController.SetupMapBlips(IsOwner,
                                                 !IsOwner);
@@ -111,9 +107,10 @@ public class TabletCameraViewController : NetworkBehaviour
         // We don't use the FlyCamera yet, so disable it.
         FlyingCam.EnableDisableCameras(false, false);
 
-        // Subscribe to events about button presses
-        PlayerEvents.Instance.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
-        PlayerEvents.Instance.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
+
+
+
+        Debug.Log("On start client called. isowner " + IsOwner);
     }
 
     #region ButtonPresses
@@ -173,7 +170,7 @@ public class TabletCameraViewController : NetworkBehaviour
         // This method is only ever called on the owner,
         // so we set the green blip active so we can see
         // ourselves as the green one
-        ViewWithinAViewController.SetupMapBlips(true, false);
+        //ViewWithinAViewController.SetupMapBlips(true, false);
 
 
   
@@ -504,7 +501,7 @@ public class TabletCameraViewController : NetworkBehaviour
     // Called when we should return to normal game play view
     private void StopMessingWithCameras()
     {
-        ViewWithinAViewController.SetupMapBlips(false, false);
+        //ViewWithinAViewController.SetupMapBlips(false, false);
 
         // Disable FlyCamera...
         FlyingCam.EnableDisableCameras(false, false);

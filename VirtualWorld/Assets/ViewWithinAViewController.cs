@@ -62,11 +62,13 @@ public class ViewWithinAViewController : MonoBehaviour
     // An instance of a controller class that displays things about the calendar, months or days.
     private CalendarViewChanger CalendarViewChanger;
 
+
     // An instance of a controller class that displays quest log
     private QuestLogViewChanger QuestLogViewChanger;
 
+
     // An instance of a controller class that displays inventory
-     private InventoryViewChanger InventoryViewChanger;
+    private InventoryViewChanger InventoryViewChanger;
 
     // A reference to the raycaster on the inventory canvas
     // We would need this to enable the interactivity of render texture with ViewWithAViewUIRaycaster
@@ -91,27 +93,35 @@ public class ViewWithinAViewController : MonoBehaviour
 
     private void Awake()
     {
-        if (!HasBeenInitted) 
-        {
-            Init();
-        }
+        //if (!HasBeenInitted) 
+        //{
+        //    Init();
+        //}
     }
 
     public void Init()
     {
         HasBeenInitted = true;
 
+
+
         MapCamera.targetTexture = OutputRenderTexture;
 
-        InventoryRaycaster = InventoryCanvas.GetComponent<GraphicRaycaster>();
-        NewsFeedRaycaster = NewsFeedCanvas.GetComponent<GraphicRaycaster>();
-        CalendarRaycaster = CalendarCanvas.GetComponent<GraphicRaycaster>();
-        QuestLogRaycaster = QuestLogCanvas.GetComponent<GraphicRaycaster>();
+        bool wasActive = gameObject.activeSelf;
 
-        NewsFeedViewChanger = NewsFeedCanvas.GetComponent<NewsFeedViewChanger>();
-        CalendarViewChanger = CalendarCanvas.GetComponent<CalendarViewChanger>();
-        QuestLogViewChanger = QuestLogCanvas.GetComponent<QuestLogViewChanger>();
-        InventoryViewChanger = InventoryCanvas.GetComponent<InventoryViewChanger>();
+        gameObject.SetActive(true);
+
+        InventoryRaycaster = InventoryCanvas.GetComponentInChildren<GraphicRaycaster>(true);
+        NewsFeedRaycaster = NewsFeedCanvas.GetComponentInChildren<GraphicRaycaster>(true);
+        CalendarRaycaster = CalendarCanvas.GetComponentInChildren<GraphicRaycaster>(true);
+        QuestLogRaycaster = QuestLogCanvas.GetComponentInChildren<GraphicRaycaster>(true);
+
+        NewsFeedViewChanger = NewsFeedCanvas.GetComponentInChildren<NewsFeedViewChanger>(true);
+        CalendarViewChanger = CalendarCanvas.GetComponentInChildren<CalendarViewChanger>(true);
+        QuestLogViewChanger = QuestLogCanvas.GetComponentInChildren<QuestLogViewChanger>(true);
+        InventoryViewChanger = InventoryCanvas.GetComponentInChildren<InventoryViewChanger>(true);
+
+        gameObject.SetActive(wasActive);
 
         InventoryRaycaster.enabled = false;
         NewsFeedRaycaster.enabled = false;
@@ -236,7 +246,7 @@ public class ViewWithinAViewController : MonoBehaviour
         }
     }
 
-    #region Refactor TabletFunctionalityController away
+    #region Refactored TabletFunctionalityController away
 
     // Sets the map camera position and rotation
     public void SetupMapCamera(Vector3 originPos)
@@ -249,7 +259,7 @@ public class ViewWithinAViewController : MonoBehaviour
     }
 
     public void SetupMapBlips(bool activateGreen,
-                      bool activateYellow)
+                              bool activateYellow)
     {
         MapBlips.SetMapBlip(activateGreen, activateYellow);
         //Debug.Log("Setupping map blips. Green is active " + activateGreen + " yellow is active " + activateYellow);
@@ -257,6 +267,11 @@ public class ViewWithinAViewController : MonoBehaviour
 
     public void OnCameraStartedTransitioning()
     {
+        if (InventoryViewChanger == null)
+        {
+            Debug.LogError("Inventory view changer is null");
+        }
+
         InventoryViewChanger.CameraStartedTransitioning();
     }
 
