@@ -17,49 +17,152 @@ public class DayViewCalendar : MonoBehaviour
     // gets instantiated and filled to an entry in 
     // the calendar.
     // Dropped in the inspector: "CalendarEntry" -prefab.
-    public CalendarEntry CalendarEntryObjectOriginal;
-    
+    [SerializeField] private CalendarEntry CalendarEntryObjectOriginal;
+
     // A reference to the content object of the viewport
     // where calendar entries are spawned.
     // Set in the inspector.
-    public GameObject ViewportContent;
+    [SerializeField] private GameObject ViewportContent;
 
     // This is the text component, where current date is displayed
     // Reference dropped in the inspector
-    public TextMeshProUGUI DateText;
+    [SerializeField] private TextMeshProUGUI DateText;
 
     // Which DateTime is in the view
     private DateTime currentShownDateTime;
 
     // Text to inform that there are no diary entries yet.
     // Reference dropped in the inspector
-    public GameObject NoDiaryEntriesYet;
+    [SerializeField] private GameObject NoDiaryEntriesYet;
 
     // A parent object of an input field and associated text
     // Where a player can input the calendar entry
     // Reference dropped in the inspector
-    public GameObject InputFieldHolder;
+    [SerializeField] private GameObject InputFieldHolder;
+
+    [SerializeField] private TMP_InputField InputField;
 
     // A list of calendar entries that are currently on display.
     private List<CalendarEntry> currentShownCalendarEntries = new List<CalendarEntry>();
 
+    [SerializeField] private CalendarViewChanger CalendarViewChanger;
+
+
+    public void DeactivateDayView()
+    {
+        gameObject.SetActive(false);
+    }
+
+    // This day is closed, so we react to that
+    public void OnCloseIndividualDay()
+    {
+        SaveDateEntries();
+        DeactivateDayView();
+    }
+
+    public void RefreshDayView(DateTime date)
+    {
+        ActivateDayView();
+        UpdateDayViewDate(date);
+
+        CalendarController.CalendarItem item;
+
+        // We check CalendarController's singleton instance if we have some diary entries for this date
+        bool hasEntry = CalendarController.Instance.CheckForACalendarItem(date, out item);
+
+        // If we had an entry for the date, update DayViewCalendar view's texts...
+        if (hasEntry)
+        {
+            UpdateAllTexts(item);
+        }
+
+        // ...otherwise just reset the view
+        else
+        {
+            ResetView();
+        }
+
+    }
+
+    // The player pressed the trashcan button and an entry
+    // should be removed.
+    public void OnDestroyItemPressed(CalendarEntry entry)
+    {
+        // Remove the entry from the list of currently shown calendar entries
+        currentShownCalendarEntries.Remove(entry);
+
+        // Destroy the gameObject, so the Viewport content restructures
+        // The remaining entries.
+        Destroy(entry.gameObject);
+
+        // Make the remaining entries' numbers reflect their order
+        // in the view
+        for (int i = 0; i < currentShownCalendarEntries.Count; i++)
+        {
+            currentShownCalendarEntries[i].Number.text = (i + 1).ToString();
+
+            //Debug.Log("Calendar entries at " + i + " is " + currentShownCalendarEntries[i].Entry.text);
+        }
+
+        // In the case we didn't have any more entries left
+        // We inform the player with a text that there
+        // arenot any calendar entries to display.
+        if (currentShownCalendarEntries.Count <= 0)
+        {
+            NoDiaryEntriesYet.gameObject.SetActive(true);
+        }
+
+        SaveDateEntries();
+    }
+
+    public void OnInputFieldSubmitted()
+    {
+        //Debug.Log("Submitted input field with: " + InputField.text);
+        //CalendarViewChanger.OnInputFieldSubmitted(InputField.text);
+
+        if (InputField.text != null
+            && !InputField.text.Equals(""))
+        {
+            UpdateEntryText(InputField.text);
+        }
+
+        InputField.text = "";
+
+    }
+
+    public void OnInputFieldDeselected()
+    {
+        //Debug.Log("Deselected input field. Text is " + InputField.text);
+        InputField.text = "";
+    }
+
+    // Makes sure the objects needed to display an individual day
+    // are activated properly.
+    private void ActivateDayView()
+    {
+        gameObject.SetActive(true);
+        ViewportContent.SetActive(true);
+        DateText.gameObject.SetActive(true);
+        InputFieldHolder.gameObject.SetActive(true);
+        InputField.text = "";
+    }
+
     // Set the date we are about to display
-    public void UpdateDayViewDate(DateTime date)
+    private void UpdateDayViewDate(DateTime date)
     {
         // Save the DateTime
         currentShownDateTime = date;
 
         // Display year, month and day as well as day of week on the text field
-        DateText.text = date.Year + " " + CalendarWindowChanger.GetMonthString(date.Month) + " " + date.Day + "\n" + date.DayOfWeek.ToString();
+        DateText.text = date.Year + " " + CalendarViewChanger.GetMonthString(date.Month) + " " + date.Day + "\n" + date.DayOfWeek.ToString();
     }
 
     // We are about to update and populate the day view
     // with calendar entries
-    public void UpdateAllTexts(CalendarController.CalendarItem item)
+    private void UpdateAllTexts(CalendarController.CalendarItem item)
     {
         // Do whatever needs to be done
         // to make the view empty...
-        Debug.Log("We updated all texts and we are about to reset the view");
         ResetView();
 
         // ... and then populate the view with data found in the item
@@ -105,9 +208,9 @@ public class DayViewCalendar : MonoBehaviour
         }
     }
 
-    public void ResetView()
+    private void ResetView()
     {
-        // Destroy the preview entry gameObjects that
+        // Destroy the previous entry gameObjects that
         // are children of the ViewPortContent object.
         for (int i = 0; i < currentShownCalendarEntries.Count; i++)
         {
@@ -125,17 +228,17 @@ public class DayViewCalendar : MonoBehaviour
     }
 
 
-    // Player just submitted an netry text to the
+    // Player just submitted an entry text to the
     // diary entry input field. So we need to
     // update the view accordingly
-    public void UpdateEntryText(string entryText)
+    private void UpdateEntryText(string entryText)
     {
         // We check just in case that we didn't
         // get a null or empty string
         if (entryText == null
             || entryText.Equals(""))
         {
-            Debug.LogWarning("Tried to submit a null or an empty string");
+            //Debug.Log("Tried to submit a null or an empty string");
             return;
         }
 
@@ -161,6 +264,8 @@ public class DayViewCalendar : MonoBehaviour
         // so it can be used later
         CalendarController.Instance.SaveIndividualDay(currentShownDateTime, item.CalendarEntries);
 
+
+
         // Make sure to clear the view...
         ResetView();
 
@@ -168,8 +273,10 @@ public class DayViewCalendar : MonoBehaviour
         PopulateView(item);
     }
 
-    // This day is closed, so we react to that
-    public void OnCloseIndividualDay()
+
+
+    // Saving the current date entries.
+    private void SaveDateEntries()
     {
         // If we had entries currently showing...
         if (currentShownCalendarEntries.Count > 0)
@@ -193,51 +300,11 @@ public class DayViewCalendar : MonoBehaviour
         // the player deleted all or didn't fill them in the first place...
         else
         {
-            Debug.LogWarning("All empty calendar for this day. Remove the date");
+            //Debug.LogWarning("All empty calendar for this day. Remove the date");
 
             // ...we ask CalendarController to remove the current date from the dictionary          
             CalendarController.Instance.RemoveIndividualDay(currentShownDateTime);
         }
 
-
     }
-
-    // The player pressed the trashcan button and an entry
-    // should be removed.
-    public void OnDestroyItemPressed(CalendarEntry entry)
-    {
-        // Remove the entry from the list of currently shown calendar entries
-        currentShownCalendarEntries.Remove(entry);
-
-        // Destroy the gameObject, so the Viewport content restructures
-        // The remaining entries.
-        Destroy(entry.gameObject);
-
-        // Make the remaining entries' numbers reflect their order
-        // in the view
-        for (int i = 0; i < currentShownCalendarEntries.Count; i++)
-        {
-            currentShownCalendarEntries[i].Number.text = (i + 1).ToString();
-        }
-
-        // In the case we didn't have any more entries left
-        // We inform the player with a text that there
-        // arenot any calendar entries to display.
-        if (currentShownCalendarEntries.Count <= 0)
-        {
-            NoDiaryEntriesYet.gameObject.SetActive(true);
-        }
-    }
-
-
-
-
-
-    // TO BE DELETED PROBABLY, BECAUSE IT IS NOT USED----------------------------------------------
-    public void OnRemoveCalendarItemButtonPressed(int id)
-    {
-
-    }
-    //------------------------------------------------------------------------------------
-
 }

@@ -8,14 +8,9 @@ using UnityEngine.UI;
 
 public class CalendarDayButton : MonoBehaviour
 {
-    // TO BE REMOVED, BECAUSE NOT USED?
-    public int Week; // From 1 to 6. Set in the inspector.
-
-    // TO BE REMOVED, BECAUSE NOT USED?
-    public int Day; // 1 is monday, 2 is tuesday, 7 is sunday. Set in the inspector.
-
     // A reference to the window changer controller 
-    private CalendarWindowChanger changer;
+    private CalendarViewChanger changer;
+
 
     // Which date this button is supposed to represent?
     private DateTime dateTime;
@@ -37,7 +32,7 @@ public class CalendarDayButton : MonoBehaviour
     private bool isInteractable;
 
     // Initialize the button to make it ready to be used.
-    public void Init(CalendarWindowChanger calendarWindowChanger)
+    public void Init(CalendarViewChanger calendarWindowChanger)
     {
         // Set a reference to the calendar window changer controller
         // so we can inform it when the date button has been clicked.
@@ -109,7 +104,7 @@ public class CalendarDayButton : MonoBehaviour
         {
             // Inform the calendar window changer controller object that
             // a day button has been clicked
-            changer.OnCalendarButtonPressed(dateTime);
+            changer.OnCalendarDayButtonPressed(dateTime);
         }
     }
 }
