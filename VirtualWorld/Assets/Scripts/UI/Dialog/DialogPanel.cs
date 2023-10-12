@@ -27,6 +27,9 @@ namespace Dialog
         [SerializeField] Transform dialogContainer;
         [SerializeField] Button backButton;
         [SerializeField] Button acceptButton;
+        [SerializeField] Button proceedButton;
+        [SerializeField] Button completeButton;
+
         NPC currentNpc;
         List<GameObject> subDialogButtons = new List<GameObject>();
 
@@ -52,12 +55,20 @@ namespace Dialog
                 SetupButtons(subDialog);
             }
 
-            if (dialog is Quest)
+            if(dialog is DialogChoiceWithQuestStepTrigger)
             {
-                Quest questDialog = (Quest)dialog;
-                SetupDialog("", "", questDialog.title, questDialog.text);
-                SetupButtons(questDialog);
+                DialogChoiceWithQuestStepTrigger questTrigger = (DialogChoiceWithQuestStepTrigger)dialog;
+                SetupDialog("", "", questTrigger.title, questTrigger.text);
+                SetupSubDialogLinks(null);
+                SetupButtons(questTrigger);
             }
+        }
+
+        void Setup(Quest quest)
+        {
+            SetupDialog("", "", quest.title, quest.text);
+            SetupButtons(quest);
+            SetupSubDialogLinks(null);
         }
 
         void SetupDialog(string title0, string subTitle0, string title1, string mainText)
@@ -72,31 +83,46 @@ namespace Dialog
         {
             ClearList(subDialogButtons);
 
-
-            //List<DialogChoiceBase> dialogsAndQuests = new List<DialogChoiceBase>(subDialogs.Concat(quests));
-
-            foreach (DialogChoiceWithTitle childDialog in subDialogs)
+            if(subDialogs != null)
             {
-                // instantiate, different prefab depending on if quest or not
-                GameObject buttonObj = Instantiate(dialogChoiceButtonPrefab, dialogContainer);
-                subDialogButtons.Add(buttonObj);
-                TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
-                text.text = childDialog.title;
-                Button button = buttonObj.GetComponent<Button>();
-                button.onClick.AddListener(() => Setup(childDialog));
+                foreach (DialogChoiceWithTitle childDialog in subDialogs)
+                {
+                    bool isQuestTrigger = childDialog is DialogChoiceWithQuestStepTrigger;
+
+                    if (isQuestTrigger)
+                    {
+                        DialogChoiceWithQuestStepTrigger questTrigger = (DialogChoiceWithQuestStepTrigger)childDialog;
+                        if (!QuestManager.Instance.IsOnQuestStep(questTrigger.questStep))
+                        {
+                            continue;
+                        }
+                    }
+
+                    // instantiate, different prefab depending on if quest or not
+                    GameObject buttonObj = isQuestTrigger
+                        ? Instantiate(questChoiceButtonPrefab, dialogContainer)
+                        : Instantiate(dialogChoiceButtonPrefab, dialogContainer);
+                    subDialogButtons.Add(buttonObj);
+                    TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
+                    text.text = childDialog.title;
+                    Button button = buttonObj.GetComponent<Button>();
+                    button.onClick.AddListener(() => Setup(childDialog));
+                }
             }
 
             if(quests != null)
             {
                 foreach (Quest quest in quests)
                 {
-                    // instantiate, different prefab depending on if quest or not
-                    GameObject buttonObj = Instantiate(questChoiceButtonPrefab, dialogContainer);
-                    subDialogButtons.Add(buttonObj);
-                    TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
-                    text.text = "! " + quest.title + " !";
-                    Button button = buttonObj.GetComponent<Button>();
-                    button.onClick.AddListener(() => Setup(quest));
+                    if (QuestManager.Instance.CanAcceptQuest(quest))
+                    {
+                        GameObject buttonObj = Instantiate(questChoiceButtonPrefab, dialogContainer);
+                        subDialogButtons.Add(buttonObj);
+                        TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
+                        text.text = "! " + quest.title + " !";
+                        Button button = buttonObj.GetComponent<Button>();
+                        button.onClick.AddListener(() => Setup(quest));
+                    }
                 }
             }
 
@@ -112,139 +138,71 @@ namespace Dialog
 
         void SetupButtons(DialogChoiceRoot dialog)
         {
-            acceptButton.onClick.RemoveAllListeners();
             acceptButton.gameObject.SetActive(false);
-
-            backButton.onClick.RemoveAllListeners();
+            completeButton.gameObject.SetActive(false);
             backButton.gameObject.SetActive(false);
+            proceedButton.gameObject.SetActive(false);
         }
 
         void SetupButtons(DialogChoiceSub dialog)
         {
-            acceptButton.onClick.RemoveAllListeners();
             acceptButton.gameObject.SetActive(false);
+
+            completeButton.gameObject.SetActive(false);
 
             backButton.onClick.RemoveAllListeners();
             backButton.gameObject.SetActive(true);
             backButton.onClick.AddListener(() => Setup(dialog.parentDialogChoice));
+
+            proceedButton.gameObject.SetActive(false);
         }
 
-        void SetupButtons(Quest dialog)
+        void SetupButtons(DialogChoiceWithQuestStepTrigger questTrigger)
+        {
+            acceptButton.onClick.RemoveAllListeners();
+            acceptButton.gameObject.SetActive(false);
+
+            // this is merely a step and a followup dialog should open
+            if(questTrigger.followupStep != null)
+            {
+                completeButton.gameObject.SetActive(false);
+
+                proceedButton.onClick.RemoveAllListeners();
+                proceedButton.gameObject.SetActive(true);
+                proceedButton.onClick.AddListener(() => QuestManager.Instance.UpdateStep(questTrigger.questStep, 1));
+                proceedButton.onClick.AddListener(() => Setup(questTrigger.followupStep));
+            } else
+            {
+                proceedButton.gameObject.SetActive(false);
+
+                completeButton.onClick.RemoveAllListeners();
+                completeButton.gameObject.SetActive(true);
+                completeButton.onClick.AddListener(() => QuestManager.Instance.UpdateStep(questTrigger.questStep, 1));
+            }
+
+
+
+
+
+            backButton.onClick.RemoveAllListeners();
+            backButton.gameObject.SetActive(true);
+            backButton.onClick.AddListener(() => Setup(questTrigger.parentDialogChoice));
+        }
+
+        void SetupButtons(Quest quest)
         {
             acceptButton.onClick.RemoveAllListeners();
             acceptButton.gameObject.SetActive(true);
-            acceptButton.onClick.AddListener(() => QuestManager.Instance.AcceptQuest(dialog as Quest));
+            acceptButton.onClick.AddListener(() => QuestManager.Instance.AcceptQuest(quest));
+
+            completeButton.gameObject.SetActive(false);
 
             backButton.onClick.RemoveAllListeners();
             backButton.gameObject.SetActive(true);
             backButton.onClick.AddListener(() => Setup(currentNpc.Data.mainDialog));
+
+            proceedButton.gameObject.SetActive(false);
         }
-
-        //void SetupSubDialogsAndQuests(DialogChoiceBase mainDialog)
-        //{
-        //    ClearSubDialogs();
-
-        //    List<DialogChoiceBase> dialogsAndQuests = new List<DialogChoiceBase>(mainDialog.childDialogChoices.Concat(mainDialog.quests));
-
-        //    foreach (DialogChoiceBase childDialog in dialogsAndQuests)
-        //    {
-        //        bool isQuest = IsQuest(childDialog);
-        //        // instantiate, different prefab depending on if quest or not
-        //        GameObject buttonObj = isQuest
-        //            ? Instantiate(questChoiceButtonPrefab, dialogContainer)
-        //            : Instantiate(dialogChoiceButtonPrefab, dialogContainer);
-        //        subDialogs.Add(buttonObj);
-
-        //        // styling to match the other text
-        //        ThemedButton themedButton = buttonObj.GetComponent<ThemedButton>();
-        //        UIPalette uiPalette = UIManager.Instance.GetComponent<UIPalette>();
-        //        themedButton.Init(uiPalette.Theme, UIManager.Instance);
-
-        //        // content and functionality - title is used as link text and
-        //        // onClick opens the dialog
-        //        TMP_Text text = buttonObj.GetComponentInChildren<TMP_Text>();
-        //        text.text = isQuest ? $"! {childDialog.title} !" : childDialog.title;
-        //        Button button = buttonObj.GetComponent<Button>();
-        //        button.onClick.AddListener(() => SetupSubDialog(childDialog));
-        //    }
-        //}
-
-        // Root/start view of a npc dialog
-        //public void SetupRootDialog(NPC npc)
-        //{
-        //    currentNpc = npc;
-        //    title0.text = npc.Data.fullName;
-        //    subTitle0.text = npc.Data.title;
-        //    title1.text = "";
-
-        //    DialogChoiceBase mainDialog = npc.Data.mainDialog;
-        //    mainText.text = mainDialog.text;
-
-        //    //SetupButtons(mainDialog);
-        //    //SetupSubDialogsAndQuests(mainDialog);
-        //}
-
-        // A sub dialog view, something that is clicked open in root dialog
-        //void SetupSubDialog(DialogChoiceBase dialog)
-        //{
-        //    title0.text = "";
-        //    subTitle0.text = "";
-        //    //title1.text = dialog.title;
-        //    mainText.text = dialog.text;
-
-        //    if (IsQuest(dialog))
-        //    {
-        //        Quest quest = dialog as Quest;
-        //        mainText.text += "\n\n" + quest.steps[0].objectiveDescLong;
-        //    }
-
-        //    //SetupButtons(dialog);
-        //    //SetupSubDialogsAndQuests(dialog);
-        //}
-
-        //void SetupButtons(DialogChoiceBase dialog)
-        //{
-        //    // sub dialog
-        //    if(IsSub(dialog))
-        //    {
-        //        // Quest view
-        //        if (IsQuest(dialog))
-        //        {
-        //            acceptButton.onClick.AddListener(() => QuestManager.Instance.AcceptQuest(dialog as Quest));
-        //            acceptButton.gameObject.SetActive(true);
-
-        //            backButton.onClick.RemoveAllListeners();
-        //            backButton.onClick.AddListener(() => SetupRootDialog(currentNpc));
-        //            backButton.gameObject.SetActive(true);
-
-        //        }
-        //        else // root dialog view
-        //        {
-        //            acceptButton.onClick.RemoveAllListeners();
-        //            acceptButton.gameObject.SetActive(false);
-
-        //            backButton.onClick.RemoveAllListeners();
-        //            backButton.gameObject.SetActive(false);
-        //        }
-        //    } else // sub dialog view
-        //    {
-        //        backButton.onClick.RemoveAllListeners();
-        //        // parent is root
-        //        DialogChoiceBase parent = dialog.parent
-        //        if(parent.parentDialogChoice == null)
-        //        {
-        //            backButton.onClick.AddListener(() => SetupRootDialog(currentNpc));
-        //        } else
-        //        {
-        //            backButton.onClick.AddListener(() => SetupSubDialog(parent));
-        //        }
-
-        //        backButton.gameObject.SetActive(true);
-        //    }
-        //}
-
-        // clickable text buttons/links to sub dialogs
-
 
         void ClearList(List<GameObject> list)
         {

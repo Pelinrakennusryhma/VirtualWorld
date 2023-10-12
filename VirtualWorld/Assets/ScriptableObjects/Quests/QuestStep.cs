@@ -12,23 +12,6 @@ namespace Quests
         public string objectiveDescLong;
         public string objectiveDescShort;
         public int requiredObjectives;
-        public int completedObjectives;
-        public bool Completed { get => Completed; private set => Completed = value; }
-        public UnityEvent<QuestStep> OnComplete;
-
-        public string CompletionStatus { get => $"{objectiveDescShort} {completedObjectives} / {requiredObjectives}"; }
-
-        public void Advance(int byAmount)
-        {
-            requiredObjectives++;
-            Complete();
-        }
-
-        public void Complete()
-        {
-            Completed = true;
-            OnComplete.Invoke(this);
-        }
     }
 }
 

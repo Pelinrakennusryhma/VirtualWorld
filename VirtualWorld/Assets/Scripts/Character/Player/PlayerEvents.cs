@@ -16,12 +16,12 @@ namespace Characters
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(gameObject);
+                Destroy(this);
             }
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(this);
             }
         }
 
@@ -98,11 +98,25 @@ namespace Characters
 
         #region Quests
 
-        public UnityEvent<Quest> EventQuestAccepted;
+        public UnityEvent<Quest> EventQuestCompleted;
 
-        public void CallEventQuestAccepted(Quest quest)
+        public void CallEventQuestCompleted(Quest quest)
         {
-            EventQuestAccepted.Invoke(quest);
+            EventQuestCompleted.Invoke(quest);
+        }
+
+        public UnityEvent<QuestStep, int> EventQuestStepUpdated;
+
+        public void CallEventQuestStepUpdated(QuestStep step, int byAmount)
+        {
+            EventQuestStepUpdated.Invoke(step, byAmount);
+        }
+
+        public UnityEvent<QuestStep> EventQuestStepCompleted;
+
+        public void CallEventQuestStepCompleted(QuestStep step)
+        {
+            EventQuestStepCompleted.Invoke(step);
         }
         #endregion
 

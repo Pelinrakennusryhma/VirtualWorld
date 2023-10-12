@@ -1230,7 +1230,7 @@ GameObject:
   - component: {fileID: 8295644382676027320}
   - component: {fileID: 2846622880478681344}
   - component: {fileID: 7351076942195331988}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1253,7 +1253,7 @@ Transform:
   - {fileID: 5255082199052384258}
   - {fileID: 8293114218220628355}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5615815007780928290
 Animator:
@@ -1322,8 +1322,8 @@ MonoBehaviour:
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
-    Position: {x: 0, y: 0, z: 0}
-    Rotation: {x: 0, y: 0, z: 0, w: 1}
+    Position: {x: -1.5487199, y: -12.353742, z: 3.2124295}
+    Rotation: {x: -0, y: 0.84029263, z: -0, w: 0.54213315}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
   _isGlobal: 0
@@ -2160,7 +2160,7 @@ GameObject:
   - component: {fileID: 1444716720921713927}
   - component: {fileID: 5452056874408352119}
   - component: {fileID: 4574047003286574670}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: NameplateCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2435,7 +2435,7 @@ GameObject:
   - component: {fileID: 8428063825055609811}
   - component: {fileID: 3550025859111271402}
   - component: {fileID: 292023279813053977}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Nameplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2702,7 +2702,7 @@ GameObject:
   - component: {fileID: 8031212392060446282}
   - component: {fileID: 6410573289911681269}
   - component: {fileID: 881823148737536640}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Titleplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

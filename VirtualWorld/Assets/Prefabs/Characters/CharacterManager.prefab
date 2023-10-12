@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5635476881906859497}
   - component: {fileID: 1746309532049967265}
   - component: {fileID: -5884827464413810290}
+  - component: {fileID: 4795944927257741184}
   m_Layer: 0
   m_Name: CharacterManager
   m_TagString: Untagged
@@ -125,4 +126,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6553fdf948d1e4dab7aeea08eab640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allQuests: []
+--- !u!114 &4795944927257741184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be65cb14f51238d45884e87d6c7e4fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EventCharacterDataSet:
+    m_PersistentCalls:
+      m_Calls: []
+  EventMoneyAmountChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  EventGameStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  EventOpenTabletPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  EventCloseTabletPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  EventDialogOpened:
+    m_PersistentCalls:
+      m_Calls: []
+  EventDialogClosed:
+    m_PersistentCalls:
+      m_Calls: []
+  EventInteractableDetected:
+    m_PersistentCalls:
+      m_Calls: []
+  EventInteractableLost:
+    m_PersistentCalls:
+      m_Calls: []
+  EventInteractionStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  EventQuestAccepted:
+    m_PersistentCalls:
+      m_Calls: []
+  EventQuestCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  EventQuestStepUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  EventQuestStepCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  EventInformationReceived:
+    m_PersistentCalls:
+      m_Calls: []
