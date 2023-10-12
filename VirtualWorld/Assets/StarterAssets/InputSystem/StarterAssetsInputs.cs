@@ -1,3 +1,4 @@
+using Characters;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.CompilerServices;
 using System;
@@ -9,12 +10,6 @@ using UnityEngine.InputSystem;
 
 namespace StarterAssets
 {
-	public enum GAME_STATE
-	{
-		FREE,
-		MENU,
-		TABLET
-	}
 	public class StarterAssetsInputs : MonoBehaviour
 	{
 		[Header("Character Input Values")]
@@ -33,15 +28,45 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-		public GAME_STATE gameState = GAME_STATE.FREE;
-
-		public UnityEvent EventMenuPressed;
-		public UnityEvent EventOpenTabletPressed;
-		public UnityEvent<UnityAction> EventCloseTabletPressed;
-
 #if ENABLE_INPUT_SYSTEM
 
-		private void LateUpdate()
+        private void Start()
+        {
+            PlayerEvents.Instance.EventGameStateChanged.AddListener(OnGameStateChanged);
+
+            LockCursor();
+        }
+
+        void OnGameStateChanged(GAME_STATE newState)
+        {
+            switch (newState)
+            {
+                case GAME_STATE.FREE:
+                    LockCursor();
+                    break;
+                case GAME_STATE.MENU:
+                    UnlockCursor();
+                    ZeroInputs();
+                    break;
+                case GAME_STATE.TABLET:
+                    UnlockCursor();
+                    ZeroInputs();
+                    break;
+                case GAME_STATE.DIALOG:
+                    UnlockCursor();
+                    ZeroInputs();
+                    break;
+                case GAME_STATE.MINIGAME:
+                    UnlockCursor();
+                    ZeroInputs();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        private void LateUpdate()
 		{
 			//ClearInteractInput();
 			//Action1Input(false);
@@ -64,7 +89,7 @@ namespace StarterAssets
 		}
 		public void OnMove(InputAction.CallbackContext value)
 		{
-			switch (gameState)
+			switch (CharacterManager.Instance.gameState)
 			{
 				case GAME_STATE.FREE:
                     MoveInput(value.ReadValue<Vector2>());
@@ -73,6 +98,8 @@ namespace StarterAssets
 					break;
 				case GAME_STATE.TABLET:
 					break;
+                case GAME_STATE.DIALOG:
+                    break;
 				default:
 					break;
 			}
@@ -80,7 +107,7 @@ namespace StarterAssets
 
 		public void OnLook(InputAction.CallbackContext value)
 		{
-            switch (gameState)
+            switch (CharacterManager.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     if (cursorInputForLook)
@@ -92,6 +119,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -100,7 +129,7 @@ namespace StarterAssets
 
 		public void OnJump(InputAction.CallbackContext value)
 		{
-            switch (gameState)
+            switch (CharacterManager.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     JumpInput(value.performed);
@@ -109,6 +138,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -116,7 +147,7 @@ namespace StarterAssets
 
 		public void OnSprint(InputAction.CallbackContext value)
 		{
-            switch (gameState)
+            switch (CharacterManager.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     SprintInput(value.performed);
@@ -125,6 +156,8 @@ namespace StarterAssets
                     break;
                 case GAME_STATE.TABLET:
                     break;
+                case GAME_STATE.DIALOG:
+                    break;
                 default:
                     break;
             }
@@ -132,7 +165,7 @@ namespace StarterAssets
 
 		public void OnInteract(InputAction.CallbackContext value)
 		{	
-            switch (gameState)
+            switch (CharacterManager.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     InteractInput(value.performed);
@@ -140,6 +173,8 @@ namespace StarterAssets
                 case GAME_STATE.MENU:
                     break;
                 case GAME_STATE.TABLET:
+                    break;
+                case GAME_STATE.DIALOG:
                     break;
                 default:
                     break;
@@ -150,17 +185,19 @@ namespace StarterAssets
         {
             if (value.action.WasPerformedThisFrame())
             {
-                switch (gameState)
+                switch (CharacterManager.Instance.gameState)
                 {
                     case GAME_STATE.FREE:
                         ZeroInputs();
-                        SetGameState(GAME_STATE.TABLET);
-                        EventOpenTabletPressed.Invoke();
+                        CharacterManager.Instance.SetGameState(GAME_STATE.TABLET);
+                        PlayerEvents.Instance.CallEventOpenTabletPressed();
                         break;
                     case GAME_STATE.MENU:
                         break;
                     case GAME_STATE.TABLET: // callback function to set gamestate once tablet script is done zooming out
-                        EventCloseTabletPressed.Invoke(() => SetGameState(GAME_STATE.FREE));
+                        PlayerEvents.Instance.CallEventCloseTabletPressed();
+                        break;
+                    case GAME_STATE.DIALOG:
                         break;
                     default:
                         break;
@@ -170,7 +207,7 @@ namespace StarterAssets
 
         public void OnAction1(InputAction.CallbackContext value)
 		{
-            switch (gameState)
+            switch (CharacterManager.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     Action1Input(value.performed);
@@ -178,6 +215,8 @@ namespace StarterAssets
                 case GAME_STATE.MENU:
                     break;
                 case GAME_STATE.TABLET:
+                    break;
+                case GAME_STATE.DIALOG:
                     break;
                 default:
                     break;
@@ -188,30 +227,25 @@ namespace StarterAssets
 		{
 			if(value.action.WasPerformedThisFrame())
 			{
-                switch (gameState)
+                switch (CharacterManager.Instance.gameState)
                 {
                     case GAME_STATE.FREE:
-                        ZeroInputs();
-                        EventMenuPressed.Invoke();
-                        SetGameState(GAME_STATE.MENU);
+                        CharacterManager.Instance.SetGameState(GAME_STATE.MENU);
                         break;
                     case GAME_STATE.MENU:
-                        EventMenuPressed.Invoke();
-                        SetGameState(GAME_STATE.FREE);
+                        CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
                         break;
                     case GAME_STATE.TABLET:
-                        EventCloseTabletPressed.Invoke(() => SetGameState(GAME_STATE.FREE));
+                        PlayerEvents.Instance.CallEventCloseTabletPressed();
+                        break;
+                    case GAME_STATE.DIALOG:
+                        CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
                         break;
                     default:
                         break;
                 }
             }
 		}
-
-        public void SetGameState(GAME_STATE newState)
-        {
-            gameState = newState;
-        }
 #endif
 
 
@@ -265,23 +299,10 @@ namespace StarterAssets
 			action1 = newAction1State;
 		}
 
-#if UNITY_WEBGL
-
-		private void Start()
-		{
-            LockCursor();
+        public void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
-#endif
-
-        private void SetCursorState(bool newState)
-		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-		}
-
-		public void LockCursor()
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-		}
 
         public void UnlockCursor()
         {

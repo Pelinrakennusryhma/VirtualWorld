@@ -13,6 +13,8 @@ namespace WorldObjects
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
 
+        public Vector3 DetectionMessageOffSet { get => Vector3.zero; }
+
         void Start()
         {
             DetectionMessage = DetectionMessage.Replace("%%amount%%", Mathf.Abs(moneyChangeAmount).ToString());

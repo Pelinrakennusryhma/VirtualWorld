@@ -2,6 +2,7 @@ using UnityEngine;
 using StarterAssets;
 using FishNet.Object;
 using UnityEngine.Events;
+using Characters;
 
 // DOES THIS NEED TO BE A NetworkBehaviour?
 // Probably not, other than checking for ownership.
@@ -74,13 +75,12 @@ public class TabletCameraViewController : NetworkBehaviour
 
     [SerializeField] private ViewWithinAViewController ViewWithinAViewController;
 
-    private UnityAction inputsCallback;
 
 
     private void Awake()
     {
 
-        Debug.LogWarning("Third person camera dragged in editor, to be sure the right one is used");
+        //Debug.LogWarning("Third person camera dragged in editor, to be sure the right one is used");
 
         //if(ThirdPersonCamera != null)
         //{
@@ -112,8 +112,8 @@ public class TabletCameraViewController : NetworkBehaviour
         FlyingCam.EnableDisableCameras(false, false);
 
         // Subscribe to events about button presses
-        Inputs.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
-        Inputs.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
+        PlayerEvents.Instance.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
+        PlayerEvents.Instance.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
     }
 
     #region ButtonPresses
@@ -125,7 +125,7 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         if (!isActiveTabletView)
         {
-            inputsCallback = null;
+ 
             SetupTabletForComingIn();
             ViewWithinAViewController.OnTabletOpened();
 
@@ -136,14 +136,11 @@ public class TabletCameraViewController : NetworkBehaviour
     }
 
     // callback is called once camera has done zooming back to change StarterAssetsInputs' gameState enum
-    public void OnCloseTabletPressed(UnityAction callback)
+    public void OnCloseTabletPressed()
     {
-        inputsCallback = callback;
+
         SetupTabletForGoingOut();
-#if UNITY_WEBGL
-        Inputs.LockCursor();
-#endif
-      
+  
     }
 
     #endregion
@@ -349,8 +346,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
             ViewWithinAViewController.OnTabletClosed();
 
-            // once camera has reached its return position, invoke the callback function in StarterAssetsInputs to set its gameState back to FREE
-            inputsCallback?.Invoke();
+            // once camera has reached its return position, set gameState to free
+            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
         }
     }
 

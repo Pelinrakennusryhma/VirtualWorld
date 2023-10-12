@@ -61,7 +61,6 @@ namespace Scenes
     {
         public static SceneLoader Instance { get; private set; }
         [SerializeField] public string MainSceneName { get; private set; }
-        [SerializeField] StarterAssetsInputs inputs;
 
         List<CachedGameObject> cachedGameObjectList = new List<CachedGameObject>();
 
@@ -86,11 +85,6 @@ namespace Scenes
         {
             string mainScenePath = GetComponent<ScenePicker>().scenePath;
             MainSceneName = ParseSceneName(mainScenePath);
-        }
-
-        public void SetInputs(StarterAssetsInputs inputs)
-        {
-            this.inputs = inputs;
         }
 
         public void NewMainSceneObjectAdded(GameObject playerGO)
@@ -137,6 +131,7 @@ namespace Scenes
 
         IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
+            CharacterManager.Instance.SetGameState(GAME_STATE.MINIGAME);
             PackScene(sceneLoadParams.scenePackMode);
 
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -146,10 +141,6 @@ namespace Scenes
                 yield return null;
             }
 
-#if UNITY_WEBGL
-            inputs.UnlockCursor();
-#endif
-
             Scene subScene = SceneManager.GetSceneByName(sceneName);
 
             SceneManager.SetActiveScene(subScene);
@@ -157,6 +148,7 @@ namespace Scenes
 
         IEnumerator UnloadAsyncScene()
         {
+            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
             AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
             while (!op.isDone)
@@ -167,9 +159,6 @@ namespace Scenes
             UnpackScene();
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
-#if UNITY_WEBGL
-            inputs.LockCursor();
-#endif
         }
 
         void PackScene(ScenePackMode scenePackMode)

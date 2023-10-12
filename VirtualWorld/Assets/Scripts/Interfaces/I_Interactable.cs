@@ -8,7 +8,8 @@ namespace WorldObjects
 {
     public interface I_Interactable
     {
-        public string DetectionMessage { get; set; }
+        public string DetectionMessage { get; }
+        public Vector3 DetectionMessageOffSet { get; }
         public void Interact(string playerId, UnityAction callback);
     }
 }

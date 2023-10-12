@@ -11,27 +11,43 @@ namespace UI
         [SerializeField] TMP_Text promptText;
         [SerializeField] TextFlasher promptTextFlasher;
         GameObject currentInteractableGO;
+        I_Interactable currentInteractable;
 
+        void Awake()
+        {
+            // interaction prompt text object needs to be enabled in awake
+            // or else tablet breaks it..
+            // the object is also disabled later in the InitDetector method just for clarity
+            promptText.gameObject.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            promptTextFlasher.Reset();
+        }
 
         private void Update()
         {
             if (currentInteractableGO != null)
             {
-                SetCanvasPosition(currentInteractableGO.transform.position);
+                SetCanvasPosition(currentInteractableGO.transform.position + currentInteractable.DetectionMessageOffSet);
             }
         }
         public void InitDetector(InteractableDetector interactableDetector)
         {
-            interactableDetector.EventInteractableDetected.AddListener(OnInteractableDetected);
-            interactableDetector.EventInteractableLost.AddListener(OnInteractableLost);
-            interactableDetector.EventInteractionStarted.AddListener(OnInteractionStarted);
+            PlayerEvents.Instance.EventInteractableDetected.AddListener(OnInteractableDetected);
+            PlayerEvents.Instance.EventInteractableLost.AddListener(OnInteractableLost);
+            PlayerEvents.Instance.EventInteractionStarted.AddListener(OnInteractionStarted);
+
+            promptText.gameObject.SetActive(false);
         }
 
         void OnInteractableDetected(I_Interactable interactable, GameObject interactableObj)
         {
             currentInteractableGO = interactableObj;
+            currentInteractable = interactable;
             SetPromptText(interactable.DetectionMessage);
-            SetCanvasPosition(interactableObj.transform.position);
+            SetCanvasPosition(interactableObj.transform.position + interactable.DetectionMessageOffSet);
             promptText.gameObject.SetActive(true);
         }
 

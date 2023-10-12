@@ -29,7 +29,11 @@ namespace UI
 
         public void FlashText()
         {
-            StartCoroutine(IEFlashText());
+            // in hopes of fixing an error about failing to start coroutine because object is not active
+            if (enabled && gameObject.activeSelf)
+            {
+                StartCoroutine(IEFlashText());
+            }
         }
 
         IEnumerator IEFlashText()
