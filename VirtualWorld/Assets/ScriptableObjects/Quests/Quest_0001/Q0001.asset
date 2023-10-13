@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557a1d3acc42a7c449dad78087a77506, type: 3}
   m_Name: Q0001
   m_EditorClassIdentifier: 
+  title: Welcome Quest
   text: This is a test quest's description text. It is of utmost importance that
     you complete this utmost important task with utmost haste.
-  title: Welcome Quest
   steps:
   - {fileID: 11400000, guid: d35ff0441df327a4088aefa96b70d7a5, type: 2}

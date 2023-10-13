@@ -17,4 +17,3 @@ MonoBehaviour:
   parentDialogChoice: {fileID: 11400000, guid: c6f4533be28201743bb7e3fe25677679, type: 2}
   childDialogChoices: []
   questStep: {fileID: 11400000, guid: 5b47f90cbb47b1e4ba8149180c86be82, type: 2}
-  followupStep: {fileID: 0}

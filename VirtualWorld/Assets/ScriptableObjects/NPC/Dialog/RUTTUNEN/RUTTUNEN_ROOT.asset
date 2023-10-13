@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d07b0d25a724c142a91a236929cb33a, type: 3}
   m_Name: RUTTUNEN_ROOT
   m_EditorClassIdentifier: 
-  text: Hi
+  text: I am Ruttunen. How can I help you?
   childDialogChoices:
   - {fileID: 11400000, guid: aa0c7274f47229144a1370a2a1fe18ee, type: 2}
-  quests: []
+  quests:
+  - {fileID: 11400000, guid: c4e0ac8adef786c44a2e5315b019606c, type: 2}

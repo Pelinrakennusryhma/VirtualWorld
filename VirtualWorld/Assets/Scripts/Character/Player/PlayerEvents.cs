@@ -61,10 +61,10 @@ namespace Characters
             EventCloseTabletPressed.Invoke();
         }
 
-        public UnityEvent<NPC> EventDialogOpened;
-        public void CallEventDialogOpened(NPC npc)
+        public UnityEvent<NPC, Quest> EventDialogOpened;
+        public void CallEventDialogOpened(NPC npc, Quest quest = null)
         {
-            EventDialogOpened.Invoke(npc);
+            EventDialogOpened.Invoke(npc, quest);
             CharacterManager.Instance.SetGameState(GAME_STATE.DIALOG);
         }
 

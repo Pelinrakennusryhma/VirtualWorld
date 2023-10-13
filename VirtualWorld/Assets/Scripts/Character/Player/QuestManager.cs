@@ -35,7 +35,6 @@ public class QuestManager : MonoBehaviour
         {
             if(activeQuest.Quest == quest)
             {
-                Debug.Log("removing quest?");
                 activeQuests.Remove(activeQuest);
                 completedQuests.Add(quest);
                 PlayerEvents.Instance.CallEventInformationReceived($"Completed Quest \"{quest.title}\"");
@@ -51,11 +50,20 @@ public class QuestManager : MonoBehaviour
         PlayerEvents.Instance.CallEventInformationReceived($"Started Quest \"{quest.title}\"");
     }
 
+    /// <summary>
+    /// Checks whether the quest should be shown as an acceptable one, 
+    /// e.g. it's not already completed or picked up and prerequisite has been completed.
+    /// </summary>
     public bool CanAcceptQuest(Quest quest)
     {
         bool canAccept = true;
 
         if (activeQuests.Find(q => q.Quest == quest) != null || completedQuests.Contains(quest))
+        {
+            canAccept = false;
+        }
+
+        if(quest.preRequisiteQuest != null && !completedQuests.Contains(quest.preRequisiteQuest))
         {
             canAccept = false;
         }

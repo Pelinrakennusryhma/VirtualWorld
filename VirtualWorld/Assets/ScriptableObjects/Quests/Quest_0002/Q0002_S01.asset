@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf5c58f7b8456943bddee3e8108e053, type: 3}
   m_Name: Q0002_S01
   m_EditorClassIdentifier: 
-  objectiveDescLong: Talk with the suspicious box.
-  objectiveDescShort: Talk with the box.
+  objectiveDescLong: Investigate the mysterious red area.
+  objectiveDescShort: Investigate the red area.
   requiredObjectives: 1

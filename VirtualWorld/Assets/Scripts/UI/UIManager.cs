@@ -1,6 +1,7 @@
 using BackendConnection;
 using Characters;
 using Dialog;
+using Quests;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,26 @@ namespace UI
             playerUI.SetActive(true);
             menu.SetActive(false);
             dialogUI.SetActive(false);
+
+            PlayerEvents.Instance.EventQuestCompleted.AddListener(OnQuestCompleted);
+        }
+
+        void OnQuestCompleted(Quest quest)
+        {
+            if(dialogPanel.CurrentNpc == null)
+            {
+                return;
+            }
+
+            foreach (Quest npcQuest in dialogPanel.CurrentNpc.Data.mainDialog.quests)
+            {
+                if(npcQuest.preRequisiteQuest == quest)
+                {
+                    Debug.Log("prequest done, open dialog panel!");
+                    PlayerEvents.Instance.CallEventDialogOpened(dialogPanel.CurrentNpc, npcQuest);
+                }
+            }
+
         }
 
         public void SetPlayerCharacter(GameObject playerGO)
@@ -92,9 +113,9 @@ namespace UI
             }
         }
 
-        public void OnDialogOpen(NPC npc)
+        public void OnDialogOpen(NPC npc, Quest quest)
         {
-            dialogPanel.Setup(npc.Data.mainDialog, npc);
+            dialogPanel.Setup(npc.Data.mainDialog, npc, quest);
         }
 
         public void OnDialogClosePressed()

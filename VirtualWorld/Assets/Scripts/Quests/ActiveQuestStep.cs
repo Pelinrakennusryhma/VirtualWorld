@@ -46,7 +46,6 @@ namespace Quests
 
         void CompleteStep()
         {
-            Debug.Log("step completed here right???");
             PlayerEvents.Instance.CallEventQuestStepCompleted(QuestStep);
         }
 

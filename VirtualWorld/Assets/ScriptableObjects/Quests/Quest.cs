@@ -13,6 +13,8 @@ namespace Quests
         [TextArea(3, 30)]
         public string text;
         public List<QuestStep> steps;
+        [Tooltip("Quest which must be completed in order for this one to show up")]
+        public Quest preRequisiteQuest;
     }
 }
 

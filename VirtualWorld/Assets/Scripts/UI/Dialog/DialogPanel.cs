@@ -30,20 +30,27 @@ namespace Dialog
         [SerializeField] Button proceedButton;
         [SerializeField] Button completeButton;
 
-        NPC currentNpc;
+        public NPC CurrentNpc { get => _currentNpc; private set => _currentNpc = value; }
+        NPC _currentNpc;
         List<GameObject> subDialogButtons = new List<GameObject>();
 
-        public void Setup(DialogChoiceBase dialog, NPC npc = null)
+        public void Setup(DialogChoiceBase dialog, NPC npc = null, Quest quest = null)
         {
             if (npc != null)
             {
-                currentNpc = npc;
+                CurrentNpc = npc;
+            }
+
+            if(quest != null)
+            {
+                Setup(quest);
+                return;
             }
 
             if (dialog is DialogChoiceRoot)
             {
-                SetupDialog(currentNpc.Data.fullName, currentNpc.Data.title, "", currentNpc.Data.mainDialog.text);
-                SetupSubDialogLinks(currentNpc.Data.mainDialog.childDialogChoices, currentNpc.Data.mainDialog.quests);
+                SetupDialog(CurrentNpc.Data.fullName, CurrentNpc.Data.title, "", CurrentNpc.Data.mainDialog.text);
+                SetupSubDialogLinks(CurrentNpc.Data.mainDialog.childDialogChoices, CurrentNpc.Data.mainDialog.quests);
                 SetupButtons((DialogChoiceRoot)dialog);
             }
 
@@ -162,26 +169,11 @@ namespace Dialog
             acceptButton.onClick.RemoveAllListeners();
             acceptButton.gameObject.SetActive(false);
 
-            // this is merely a step and a followup dialog should open
-            if(questTrigger.followupStep != null)
-            {
-                completeButton.gameObject.SetActive(false);
+            proceedButton.gameObject.SetActive(false);
 
-                proceedButton.onClick.RemoveAllListeners();
-                proceedButton.gameObject.SetActive(true);
-                proceedButton.onClick.AddListener(() => QuestManager.Instance.UpdateStep(questTrigger.questStep, 1));
-                proceedButton.onClick.AddListener(() => Setup(questTrigger.followupStep));
-            } else
-            {
-                proceedButton.gameObject.SetActive(false);
-
-                completeButton.onClick.RemoveAllListeners();
-                completeButton.gameObject.SetActive(true);
-                completeButton.onClick.AddListener(() => QuestManager.Instance.UpdateStep(questTrigger.questStep, 1));
-            }
-
-
-
+            completeButton.onClick.RemoveAllListeners();
+            completeButton.gameObject.SetActive(true);
+            completeButton.onClick.AddListener(() => QuestManager.Instance.UpdateStep(questTrigger.questStep, 1));
 
 
             backButton.onClick.RemoveAllListeners();
@@ -199,7 +191,7 @@ namespace Dialog
 
             backButton.onClick.RemoveAllListeners();
             backButton.gameObject.SetActive(true);
-            backButton.onClick.AddListener(() => Setup(currentNpc.Data.mainDialog));
+            backButton.onClick.AddListener(() => Setup(CurrentNpc.Data.mainDialog));
 
             proceedButton.gameObject.SetActive(false);
         }
