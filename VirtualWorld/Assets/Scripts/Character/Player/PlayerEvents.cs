@@ -16,12 +16,12 @@ namespace Characters
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(this);
+                DontDestroyOnLoad(gameObject);
             }
         }
 
@@ -117,6 +117,27 @@ namespace Characters
         public void CallEventQuestStepCompleted(QuestStep step)
         {
             EventQuestStepCompleted.Invoke(step);
+        }
+
+        public UnityEvent<ActiveQuest> EventFocusedQuestUpdated;
+
+        public void CallEventFocusedQuestUpdated(ActiveQuest quest)
+        {
+            EventFocusedQuestUpdated.Invoke(quest);
+        }
+
+        public UnityEvent<ActiveQuest> EventActiveQuestUpdated;
+
+        public void CallEventActiveQuestUpdated(ActiveQuest quest)
+        {
+            EventActiveQuestUpdated.Invoke(quest);
+        }
+
+        public UnityEvent<ActiveQuestStep> EventActiveQuestStepUpdated;
+
+        public void CallEventActiveQuestStepUpdated(ActiveQuestStep step)
+        {
+            EventActiveQuestStepUpdated.Invoke(step);
         }
         #endregion
 

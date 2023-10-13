@@ -40,6 +40,8 @@ namespace Quests
                 }
             }
 
+            //PlayerEvents.Instance.CallEventActiveQuestUpdated(this);
+
         }
     }
 }

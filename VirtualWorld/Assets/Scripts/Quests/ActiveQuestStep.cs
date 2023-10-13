@@ -14,7 +14,7 @@ namespace Quests
         public int completedObjectives = 0;
         public bool Completed { get => Completed; private set => Completed = value; }
 
-        public string CompletionStatus { get => $"{QuestStep.objectiveDescShort} {completedObjectives} / {QuestStep.requiredObjectives}"; }
+        public string CompletionStatus { get => $"{completedObjectives} / {QuestStep.requiredObjectives}"; }
 
         public ActiveQuestStep(QuestStep questStep)
         {
@@ -22,6 +22,8 @@ namespace Quests
             completedObjectives = 0;
 
             PlayerEvents.Instance.EventQuestStepUpdated.AddListener(OnQuestStepUpdated);
+
+            UpdateStep();
         }
 
         void OnQuestStepUpdated(QuestStep step, int byAmount)
@@ -51,7 +53,7 @@ namespace Quests
 
         void UpdateStep()
         {
-            //PlayerEvents.Instance.CallEventQuestEventUpdated(this);
+            PlayerEvents.Instance.CallEventActiveQuestStepUpdated(this);
         }
         
     }

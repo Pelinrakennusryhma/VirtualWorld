@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400a20b8b98ec27418e8db967c780b55, type: 3}
   m_Name: RUTTUNEN_01
   m_EditorClassIdentifier: 
-  text: Rose told you to talk to me? Very well.
+  text: Rose told you to talk to me? Very well. I could indeed use some outsider
+    help with a problem.
   title: Welcome Quest
   parentDialogChoice: {fileID: 11400000, guid: c622012b7080ef648bef02efe66f5338, type: 2}
   childDialogChoices: []

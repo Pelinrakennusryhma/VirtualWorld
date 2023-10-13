@@ -9,6 +9,10 @@ public class QuestManager : MonoBehaviour
     public static QuestManager Instance { get; private set; }
     List<ActiveQuest> activeQuests = new List<ActiveQuest>();
     List<Quest> completedQuests = new List<Quest>();
+    public ActiveQuest FocusedQuest { get; private set; }
+
+    // this should be added to settings for player to toggle
+    public bool autoFocusQuest = true;
 
     private void Awake()
     {
@@ -38,9 +42,27 @@ public class QuestManager : MonoBehaviour
                 activeQuests.Remove(activeQuest);
                 completedQuests.Add(quest);
                 PlayerEvents.Instance.CallEventInformationReceived($"Completed Quest \"{quest.title}\"");
+
+                if(activeQuest == FocusedQuest)
+                {
+                    ResetFocusedQuest();
+                }
+
                 break;
             }
         }
+    }
+
+    void SetFocusedQuest(ActiveQuest quest)
+    {
+        FocusedQuest = quest;
+        PlayerEvents.Instance.CallEventFocusedQuestUpdated(quest);
+    }
+
+    void ResetFocusedQuest()
+    {
+        FocusedQuest = null;
+        PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
     }
 
     public void AcceptQuest(Quest quest)
@@ -48,6 +70,11 @@ public class QuestManager : MonoBehaviour
         ActiveQuest activeQuest = new ActiveQuest(quest);
         activeQuests.Add(activeQuest);
         PlayerEvents.Instance.CallEventInformationReceived($"Started Quest \"{quest.title}\"");
+
+        if (autoFocusQuest)
+        {
+            SetFocusedQuest(activeQuest);
+        }
     }
 
     /// <summary>

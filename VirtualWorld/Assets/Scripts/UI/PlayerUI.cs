@@ -6,6 +6,7 @@ using UnityEngine;
 using Characters;
 using BackendConnection;
 using System.Numerics;
+using Quests;
 
 namespace UI
 {
@@ -15,15 +16,23 @@ namespace UI
         [SerializeField] TextFlasher moneyTextFlasher;
         [SerializeField] string currencyIcon = "€";
 
+        [Header("Focused Quest")]
+        [SerializeField] GameObject focusedQuestContainer;
+        [SerializeField] TMP_Text focusedQuestTitle;
+        [SerializeField] TMP_Text focusedQuestObjective;
+        [SerializeField] TMP_Text focusedQuestProgress;
+
         int previousMoney;
 
         void Start()
         {
-            // skip on server
+            focusedQuestContainer.SetActive(false);
+            // skip on server.. somehow? should PlayerEvents be instantiated from the player prefab or something?
             if(PlayerEvents.Instance != null)
             {
                 PlayerEvents.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
                 PlayerEvents.Instance.EventMoneyAmountChanged.AddListener(OnMoneyAmountChanged);
+                PlayerEvents.Instance.EventFocusedQuestUpdated.AddListener(OnFocusedQuestUpdated);
             }
         }
 
@@ -57,6 +66,22 @@ namespace UI
             }
 
             previousMoney = newAmount;
+        }
+
+        void OnFocusedQuestUpdated(ActiveQuest quest)
+        {
+            if(quest == null)
+            {
+                focusedQuestContainer.SetActive(false);
+            } 
+            else
+            {
+                focusedQuestContainer.SetActive(true);
+
+                focusedQuestTitle.text = quest.Quest.title;
+                focusedQuestObjective.text = quest.CurrentStep.QuestStep.objectiveDescShort;
+                focusedQuestProgress.text = quest.CurrentStep.CompletionStatus;
+            }
         }
     }
 }
