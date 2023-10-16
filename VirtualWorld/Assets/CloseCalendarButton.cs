@@ -7,7 +7,7 @@ public class CloseCalendarButton : MonoBehaviour
     // A reference to the controller object that
     // changes the calendar view.
     // Set in the inspector.
-    public CalendarWindowChanger changer;
+    public CalendarViewChanger changer;
 
     // Set in the inspector unity eventthat listens
     // to a button press
@@ -16,6 +16,6 @@ public class CloseCalendarButton : MonoBehaviour
         // Inform the calendar window changer controller
         // that we should close the view in question.
         // That is, the displayed individual day.
-        changer.OnCalendarCloseButtonPressed();
+        changer.OnIndividualCalendarDayCloseButtonPressed();
     }
 }

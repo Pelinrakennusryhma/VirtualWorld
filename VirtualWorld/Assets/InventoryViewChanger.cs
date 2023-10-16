@@ -13,8 +13,6 @@ public class InventoryViewChanger : MonoBehaviour
 {
 
     // A reference to the inventory objects parent
-    // This object is moved according to which
-    // path the camera took to the closeup tablet view
     public GameObject InventoryObjectsHolder;
 
     // Reference to the invenotry canvas
@@ -47,14 +45,14 @@ public class InventoryViewChanger : MonoBehaviour
 
         // Change inventory objects parent position and location
         // to match the tablet screen dimensions nicely
-        // Invenotry is visible as a render tecture, on the tablet screen on two cases:
+        // Invenotry is visible as a render texture, on the tablet screen on two cases:
         // 1. We are transitioning out from the closeup view and we left inventory screen
         // as the last open view on the tablet. 2.We are transitioning in to closeup
         // position and inventory was the last viewed screen when the tablet was open
         // last time.
         InventoryObjectsHolder.transform.localPosition = new Vector3(15.59f, 2.24f, 0);
         InventoryObjectsHolder.transform.localScale = new Vector3(1.3f, 1.3f, 1);
-        //Debug.LogWarning("Should set inventory to view within a view.");
+        //Debug.Log("Should set inventory to view within a view. Object name is " + gameObject.name);
     }
 
     // We have reached closeup view of tablet, so we switch from
@@ -62,11 +60,9 @@ public class InventoryViewChanger : MonoBehaviour
     // a screen space overlay.
     public void CameraReachedTargetPosition()
     {
-        // Displace the inventory object holder parent, because
-        // It just doesn't stay centered properly depending from the direction
-        // the fly camera came in from. Don't know a reason for this
-        // so this hackish solution is used for now.
 
+
+        // Displace the inventory object holder parent
         InventoryObjectsHolder.transform.localPosition = new Vector3(10.36f, 3.2f, 0);
         InventoryObjectsHolder.transform.localScale = new Vector3(1.077f, 1.075f, 1);
         
@@ -87,5 +83,7 @@ public class InventoryViewChanger : MonoBehaviour
         InventoryCanvasScaler.matchWidthOrHeight = 1.0f;
 
         InventoryCanvasScaler.referencePixelsPerUnit = 100;
+
+        //Debug.Log("Inventory does things related to reaching target position " + gameObject.name);
     }
 }

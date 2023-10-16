@@ -89,6 +89,7 @@ public class QuestListQuest : MonoBehaviour
     //Kutsutaan QuestLog.cs kautta
     public Quest AbandonQuest()
     {
+
         foreach (Transform transform in gameObject.transform.parent.transform.GetComponentInChildren<Transform>())
         {
             transform.GetComponent<Image>().color = new Color(0.757f, 0.757f, 0.757f);
@@ -101,6 +102,9 @@ public class QuestListQuest : MonoBehaviour
                 Destroy(stepTransform.gameObject);
             }
         }
+
+
+
         return quest;
     }
     public void PinQuest()

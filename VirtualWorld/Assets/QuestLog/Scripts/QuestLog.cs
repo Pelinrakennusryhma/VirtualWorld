@@ -72,6 +72,7 @@ public class QuestLog : MonoBehaviour
 
     public void AbandonQuest()
     {
+
         SetButtonsInactive();
         abandonConfirmation.gameObject.SetActive(false);
         Quest quest = selectedQuestListQuest.AbandonQuest();

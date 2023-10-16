@@ -10,7 +10,7 @@ public class RemoveCalendarItemButton : MonoBehaviour
     public void OnButtonPressed()
     {
         Debug.LogWarning("On calendar trashcan icon pressed. id is " + ID + " " + Time.time);
-        DayViewCalendar.OnRemoveCalendarItemButtonPressed(ID);
+
     }
 
     public void ShowButton()

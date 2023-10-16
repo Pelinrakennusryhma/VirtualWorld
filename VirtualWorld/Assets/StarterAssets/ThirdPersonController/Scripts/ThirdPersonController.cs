@@ -387,17 +387,6 @@ namespace StarterAssets
             }
         }
 
-        public void OnTabletViewChanged(bool tabletViewIsActive)
-        {
-            IsTabletViewActive = tabletViewIsActive;
 
-            if (tabletViewIsActive)
-            {
-                // Set animators false
-
-                _animator.SetFloat(_animIDSpeed, 0);
-                _animator.SetFloat(_animIDMotionSpeed, 0);
-            }
-        }
     }
 }
