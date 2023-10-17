@@ -21,6 +21,7 @@ namespace UI
         [SerializeField] TMP_Text focusedQuestTitle;
         [SerializeField] TMP_Text focusedQuestObjective;
         [SerializeField] TMP_Text focusedQuestProgress;
+        [SerializeField] TextFlasher focusedQuestFlasher;
 
         int previousMoney;
 
@@ -80,7 +81,25 @@ namespace UI
 
                 focusedQuestTitle.text = quest.Quest.title;
                 focusedQuestObjective.text = quest.CurrentStep.QuestStep.objectiveDescShort;
-                focusedQuestProgress.text = quest.CurrentStep.CompletionStatus;
+
+                // only show objectives that require more than one, e.g. never 0/1 progression status
+                if(quest.CurrentStep.QuestStep.requiredObjectives > 1)
+                {
+                    focusedQuestProgress.text = quest.CurrentStep.CompletionStatus;
+                    focusedQuestProgress.gameObject.SetActive(true);
+
+                    // flash the text only when progress updates, not when the status initially shows up
+                    // because that looks awkward
+                    if(quest.CurrentStep.completedObjectives > 0)
+                    {
+                        focusedQuestFlasher.FlashText();
+                    }
+
+                }
+                else
+                {
+                    focusedQuestProgress.gameObject.SetActive(false);
+                }
             }
         }
     }

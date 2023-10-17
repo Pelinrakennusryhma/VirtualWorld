@@ -37,11 +37,9 @@ namespace Quests
                 else
                 {
                     CurrentStep = new ActiveQuestStep(Quest.steps[currentStepId]);
+                    PlayerEvents.Instance.CallEventActiveQuestUpdated(this);
                 }
             }
-
-            //PlayerEvents.Instance.CallEventActiveQuestUpdated(this);
-
         }
     }
 }

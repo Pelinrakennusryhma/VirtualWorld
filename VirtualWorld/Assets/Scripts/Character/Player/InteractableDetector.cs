@@ -49,15 +49,36 @@ namespace Characters
             currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
         }
 
-        private void OnTriggerEnter(Collider other)
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    I_Interactable interactable = other.GetComponent<I_Interactable>();
+
+        //    if (interactable != null && interactable.IsActive)
+        //    {    
+        //        currentInteractable = interactable;
+        //        currentInteractableGO = other.gameObject;
+        //        PlayerEvents.Instance.CallEventInteractableDetected(interactable, other.gameObject);
+        //    }
+        //}
+
+        private void OnTriggerStay(Collider other)
         {
             I_Interactable interactable = other.GetComponent<I_Interactable>();
 
             if (interactable != null)
-            {    
-                currentInteractable = interactable;
-                currentInteractableGO = other.gameObject;
-                PlayerEvents.Instance.CallEventInteractableDetected(interactable, other.gameObject);
+            {
+                if (interactable.IsActive)
+                {
+                    currentInteractable = interactable;
+                    currentInteractableGO = other.gameObject;
+                    PlayerEvents.Instance.CallEventInteractableDetected(interactable, other.gameObject);
+                } else
+                {
+                    // trigger exit to disable the scanner when interactable becomes inactive
+                    // e.g. quest object when active quest step changes
+                    OnTriggerExit(other);
+                }
+
             }
         }
 

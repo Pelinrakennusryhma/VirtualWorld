@@ -105,11 +105,11 @@ namespace Characters
             EventQuestCompleted.Invoke(quest);
         }
 
-        public UnityEvent<QuestStep, int> EventQuestStepUpdated;
+        public UnityEvent<QuestStep, int> EventQuestStepProgressed;
 
-        public void CallEventQuestStepUpdated(QuestStep step, int byAmount)
+        public void CallEventQuestStepProgressed(QuestStep step, int byAmount)
         {
-            EventQuestStepUpdated.Invoke(step, byAmount);
+            EventQuestStepProgressed.Invoke(step, byAmount);
         }
 
         public UnityEvent<QuestStep> EventQuestStepCompleted;

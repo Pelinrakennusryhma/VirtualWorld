@@ -10,6 +10,8 @@ namespace WorldObjects
     {
         public string DetectionMessage { get; }
         public Vector3 DetectionMessageOffSet { get; }
+        // used for toggling the interaction prompt on and off
+        public bool IsActive { get; }
         public void Interact(string playerId, UnityAction callback);
     }
 }

@@ -35,7 +35,7 @@ Transform:
   - {fileID: 191749877653966337}
   - {fileID: 3003749249267435730}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6181239124702374364
 MonoBehaviour:
@@ -2879,6 +2879,11 @@ PrefabInstance:
       propertyPath: focusedQuestTitle
       value: 
       objectReference: {fileID: 5758627661739973749}
+    - target: {fileID: 7377086358264412579, guid: a160aa343e842c2469f991f58d3f6118,
+        type: 3}
+      propertyPath: focusedQuestFlasher
+      value: 
+      objectReference: {fileID: 1584005314157029140}
     - target: {fileID: 7377086358264412579, guid: a160aa343e842c2469f991f58d3f6118,
         type: 3}
       propertyPath: focusedQuestProgress
@@ -5824,8 +5829,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4689744625293925740, guid: 65a2895040155624a88c1e0bed7d630e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1584005314157029140}
   m_SourcePrefab: {fileID: 100100000, guid: 65a2895040155624a88c1e0bed7d630e, type: 3}
+--- !u!1 &3943592307977441153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4689744625293925740, guid: 65a2895040155624a88c1e0bed7d630e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8624153236162761453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1584005314157029140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943592307977441153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93795ce8f28c524f806908798ea4642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 5977773860121449739}
+  flashTextDuration: 0.09
+  flashFontColor: {r: 1, g: 1, b: 1, a: 1}
+  flashFontSize: 28
 --- !u!224 &5498771027563056074 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4314636121634986279, guid: 65a2895040155624a88c1e0bed7d630e,
@@ -5838,7 +5869,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8624153236162761453}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3943592307977441153}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}

@@ -173,7 +173,7 @@ namespace Dialog
 
             completeButton.onClick.RemoveAllListeners();
             completeButton.gameObject.SetActive(true);
-            completeButton.onClick.AddListener(() => QuestManager.Instance.UpdateStep(questTrigger.questStep, 1));
+            completeButton.onClick.AddListener(() => QuestManager.Instance.ProgressStep(questTrigger.questStep, 1));
 
 
             backButton.onClick.RemoveAllListeners();

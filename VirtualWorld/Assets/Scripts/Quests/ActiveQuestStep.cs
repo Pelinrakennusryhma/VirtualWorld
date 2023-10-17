@@ -21,12 +21,12 @@ namespace Quests
             QuestStep = questStep;
             completedObjectives = 0;
 
-            PlayerEvents.Instance.EventQuestStepUpdated.AddListener(OnQuestStepUpdated);
+            PlayerEvents.Instance.EventQuestStepProgressed.AddListener(OnQuestStepProgressed);
 
             UpdateStep();
         }
 
-        void OnQuestStepUpdated(QuestStep step, int byAmount)
+        void OnQuestStepProgressed(QuestStep step, int byAmount)
         {
             if(step == QuestStep)
             {

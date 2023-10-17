@@ -31,6 +31,8 @@ public class QuestManager : MonoBehaviour
     private void Start()
     {
         PlayerEvents.Instance.EventQuestCompleted.AddListener(OnQuestCompleted);
+        PlayerEvents.Instance.EventActiveQuestUpdated.AddListener(OnActiveQuestUpdated);
+        PlayerEvents.Instance.EventActiveQuestStepUpdated.AddListener(OnActiveQuestStepUpdated);
     }
 
     void OnQuestCompleted(Quest quest)
@@ -50,6 +52,22 @@ public class QuestManager : MonoBehaviour
 
                 break;
             }
+        }
+    }
+
+    void OnActiveQuestUpdated(ActiveQuest quest)
+    {
+        if(quest == FocusedQuest)
+        {
+            PlayerEvents.Instance.CallEventFocusedQuestUpdated(quest);
+        }
+    }
+
+    void OnActiveQuestStepUpdated(ActiveQuestStep step)
+    {
+        if (FocusedQuest != null && step == FocusedQuest.CurrentStep)
+        {
+            PlayerEvents.Instance.CallEventFocusedQuestUpdated(FocusedQuest);
         }
     }
 
@@ -110,9 +128,9 @@ public class QuestManager : MonoBehaviour
         return false;
     }
 
-    public void UpdateStep(QuestStep step, int byAmount)
+    public void ProgressStep(QuestStep step, int byAmount)
     {
-        PlayerEvents.Instance.CallEventQuestStepUpdated(step, byAmount);
+        PlayerEvents.Instance.CallEventQuestStepProgressed(step, byAmount);
     }
 
     public void CompleteStep(QuestStep step)
