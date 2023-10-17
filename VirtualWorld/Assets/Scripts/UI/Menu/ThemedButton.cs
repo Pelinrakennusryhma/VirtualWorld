@@ -99,7 +99,7 @@ namespace UI
                 return;
             }
 
-            if(textColor != textClickedColor)
+            if(textHoverColor != textClickedColor)
             {
                 StartCoroutine(FlashTextColor());
             }

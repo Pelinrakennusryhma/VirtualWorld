@@ -71,18 +71,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    void SetFocusedQuest(ActiveQuest quest)
-    {
-        FocusedQuest = quest;
-        PlayerEvents.Instance.CallEventFocusedQuestUpdated(quest);
-    }
-
-    void ResetFocusedQuest()
-    {
-        FocusedQuest = null;
-        PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
-    }
-
     public void AcceptQuest(Quest quest)
     {
         ActiveQuest activeQuest = new ActiveQuest(quest);
@@ -133,8 +121,22 @@ public class QuestManager : MonoBehaviour
         PlayerEvents.Instance.CallEventQuestStepProgressed(step, byAmount);
     }
 
-    public void CompleteStep(QuestStep step)
+    public void ClearQuests()
     {
-        Debug.Log("completed step: " + step.objectiveDescLong);
+        activeQuests.Clear();
+        completedQuests.Clear();
+        ResetFocusedQuest();
+    }
+
+    void SetFocusedQuest(ActiveQuest quest)
+    {
+        FocusedQuest = quest;
+        PlayerEvents.Instance.CallEventFocusedQuestUpdated(quest);
+    }
+
+    void ResetFocusedQuest()
+    {
+        FocusedQuest = null;
+        PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
     }
 }
