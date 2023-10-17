@@ -22,7 +22,6 @@ namespace WorldObjects
 
         public void Interact(string playerId, UnityAction dummy)
         {
-            string userId = UserSession.Instance.LoggedUserData.id;
             if(moneyChangeAmount > 0)
             {
                 CharacterManager.Instance.AddMoney(moneyChangeAmount);

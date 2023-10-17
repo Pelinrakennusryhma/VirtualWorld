@@ -2128,6 +2128,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5003841659298702918, guid: c3e5ec9979fc7ee4db6cc7af56f8ac04,
         type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003841659298702918, guid: c3e5ec9979fc7ee4db6cc7af56f8ac04,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5003841659298702918, guid: c3e5ec9979fc7ee4db6cc7af56f8ac04,
+        type: 3}
+      propertyPath: <ParentNetworkObject>k__BackingField
+      value: 
+      objectReference: {fileID: 601250509}
+    - target: {fileID: 5003841659298702918, guid: c3e5ec9979fc7ee4db6cc7af56f8ac04,
+        type: 3}
       propertyPath: SerializedTransformProperties.Position.x
       value: -1.5487199
       objectReference: {fileID: 0}

@@ -49,18 +49,6 @@ namespace Characters
             currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
         }
 
-        //private void OnTriggerEnter(Collider other)
-        //{
-        //    I_Interactable interactable = other.GetComponent<I_Interactable>();
-
-        //    if (interactable != null && interactable.IsActive)
-        //    {    
-        //        currentInteractable = interactable;
-        //        currentInteractableGO = other.gameObject;
-        //        PlayerEvents.Instance.CallEventInteractableDetected(interactable, other.gameObject);
-        //    }
-        //}
-
         private void OnTriggerStay(Collider other)
         {
             I_Interactable interactable = other.GetComponent<I_Interactable>();

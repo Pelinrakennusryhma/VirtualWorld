@@ -14,9 +14,13 @@ namespace BackendConnection
     {
         [SerializeField]
         string baseURL = "https://localhost:3002";
-        readonly string characterRoute = "/api/character/";
-        readonly string inventoryRoute = "/api/inventory/";
-        
+        readonly string characterRoute = "/api/character";
+        readonly string inventoryRoute = "/api/inventory";
+        readonly string questRoute = "/quests";
+        readonly string activeQuestRoute = "/active-quests";
+        readonly string completedQuestRoute = "/completed-quests";
+        readonly string resetQuestsRoute = "/reset-all";
+
         public static APICalls_Server Instance { get; private set; }
 
         void Awake()
@@ -41,7 +45,7 @@ namespace BackendConnection
         {
             try
             {
-                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + userId, RequestType.GET);
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" +userId, RequestType.GET);
 
                 string text = await WebRequestUtils.GetTextAsync(req);
 
@@ -59,13 +63,42 @@ namespace BackendConnection
         {
             try
             {
-                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + inventoryRoute + userId, RequestType.PUT, data);
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + inventoryRoute + "/" + userId, RequestType.PUT, data);
 
                 string text = await WebRequestUtils.GetTextAsync(req);
 
                 InventoryItem item = JsonConvert.DeserializeObject<InventoryItem>(text);
 
                 callback.Invoke(conn, item);
+            }
+            catch (UnityWebRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        public async UniTask AddActiveQuest(NetworkConnection conn, string userId, ActiveQuestData data,Action<NetworkConnection, ActiveQuestData> callback)
+        {
+            try
+            {
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" + userId + questRoute + activeQuestRoute, RequestType.POST, data);
+                string text = await WebRequestUtils.GetTextAsync(req);
+
+                ActiveQuestData questData = JsonConvert.DeserializeObject<ActiveQuestData>(text);
+
+                callback.Invoke(conn, questData);
+            }
+            catch (UnityWebRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        public async UniTask RemoveActiveQuest(NetworkConnection conn, string userId, ActiveQuestData data)
+        {
+            try
+            {
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" + userId + questRoute + activeQuestRoute, RequestType.DELETE, data);
             }
             catch (UnityWebRequestException e)
             {

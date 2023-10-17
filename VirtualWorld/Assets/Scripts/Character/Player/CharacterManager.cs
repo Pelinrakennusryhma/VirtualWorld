@@ -17,8 +17,6 @@ namespace Characters
         [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
 
         [SerializeField] CharacterData characterData;
-
-        [SerializeField] public InventoryController inventoryController { get; private set; }
         [SerializeField] public PlayerEmitter PlayerEmitter { get; private set; }
 
         private void Awake()
