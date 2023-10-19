@@ -7,6 +7,7 @@ using Authentication;
 using System;
 using Newtonsoft.Json;
 using FishNet.Connection;
+using Dev;
 
 namespace BackendConnection
 {
@@ -20,6 +21,7 @@ namespace BackendConnection
         readonly string activeQuestRoute = "/active-quests";
         readonly string completedQuestRoute = "/completed-quests";
         readonly string resetQuestsRoute = "/reset-all";
+        readonly string focusedQuestRoute = "/focused-quest";
 
         public static APICalls_Server Instance { get; private set; }
 
@@ -99,6 +101,65 @@ namespace BackendConnection
             try
             {
                 UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" + userId + questRoute + activeQuestRoute, RequestType.DELETE, data);
+
+                // response might not be needed for anything?
+                string text = await WebRequestUtils.GetTextAsync(req);
+            }
+            catch (UnityWebRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        public async UniTask AddCompletedQuest(NetworkConnection conn, string userId, CompletedQuestData data, Action<NetworkConnection, CompletedQuestData> callback = null)
+        {
+            try
+            {
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" + userId + questRoute + completedQuestRoute, RequestType.POST, data);
+                string text = await WebRequestUtils.GetTextAsync(req);
+
+                if (callback != null)
+                {
+
+                    CompletedQuestData questData = JsonConvert.DeserializeObject<CompletedQuestData>(text);
+                    callback.Invoke(conn, questData);
+                }
+
+            }
+            catch (UnityWebRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        public async UniTask AddFocusedQuest(NetworkConnection conn, string userId, FocusedQuestData data, Action<NetworkConnection, FocusedQuestData> callback = null)
+        {
+            try
+            {
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" + userId + questRoute + focusedQuestRoute, RequestType.POST, data);
+                string text = await WebRequestUtils.GetTextAsync(req);
+
+                if (callback != null)
+                {
+
+                    FocusedQuestData questData = JsonConvert.DeserializeObject<FocusedQuestData>(text);
+                    callback.Invoke(conn, questData);
+                }
+
+            }
+            catch (UnityWebRequestException e)
+            {
+                throw e;
+            }
+        }
+
+        public async UniTask ClearQuestData(NetworkConnection conn, string userId)
+        {
+            try
+            {
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + characterRoute + "/" + userId + questRoute + resetQuestsRoute, RequestType.DELETE);
+                string text = await WebRequestUtils.GetTextAsync(req);
+
             }
             catch (UnityWebRequestException e)
             {

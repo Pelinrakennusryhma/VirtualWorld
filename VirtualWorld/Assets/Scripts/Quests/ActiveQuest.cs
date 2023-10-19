@@ -12,23 +12,14 @@ namespace Quests
         public ActiveQuestStep CurrentStep { get => _currentStep; private set => _currentStep = value; }
         private ActiveQuestStep _currentStep;
 
-        public ActiveQuest(Quest quest)
+        public ActiveQuest(Quest quest, int step = 0, int stepProgress = 0)
         {
             Quest = quest;
-            _currentStepId = 0;
+            _currentStepId = step;
             CurrentStep = new ActiveQuestStep(Quest.steps[_currentStepId]);
+            CurrentStep.completedObjectives = stepProgress;
 
             PlayerEvents.Instance.EventQuestStepCompleted.AddListener(OnStepComplete);
-        }
-
-        public ActiveQuest(ActiveQuestData questData)
-        {
-            Quest = null; // need to find quest from some sort of quest db
-            _currentStepId = questData.step;
-            CurrentStep = new ActiveQuestStep(Quest.steps[_currentStepId]);
-            CurrentStep.completedObjectives = questData.stepProgress;
-
-            //PlayerEvents.Instance.EventQuestStepCompleted.AddListener(OnStepComplete);
         }
 
         void OnStepComplete(QuestStep step)

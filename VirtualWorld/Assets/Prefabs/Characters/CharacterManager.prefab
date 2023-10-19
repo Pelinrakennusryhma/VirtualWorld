@@ -67,6 +67,7 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 5635476881906859497}
   _networkObjectCache: {fileID: 5635476881906859497}
+  questDatabase: {fileID: 11400000, guid: 5cf1e2e792ebb7748a63fc3ef5f67111, type: 2}
   autoFocusQuest: 1
 --- !u!114 &5635476881906859497
 MonoBehaviour:

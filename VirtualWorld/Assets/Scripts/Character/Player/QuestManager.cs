@@ -7,15 +7,18 @@ using Quests;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HymiQuests;
+using System.Xml.Serialization;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Quests
 {
     public class QuestManager : NetworkBehaviour
     {
+        [SerializeField] QuestDatabase questDatabase;
         public static QuestManager Instance { get; private set; }
-        List<ActiveQuest> activeQuests = new List<ActiveQuest>();
-        List<Quest> completedQuests = new List<Quest>();
+        public List<ActiveQuest> ActiveQuests { get; private set; } = new List<ActiveQuest>();
+        public List<Quest> CompletedQuests { get; private set; } = new List<Quest>();
         public ActiveQuest FocusedQuest { get; private set; }
 
         // this should be added to settings for player to toggle
@@ -36,6 +39,7 @@ namespace Quests
         public override void OnStartClient()
         {
             base.OnStartClient();
+            questDatabase.Init();
             PlayerEvents.Instance.EventQuestCompleted.AddListener(OnQuestCompleted);
             PlayerEvents.Instance.EventActiveQuestUpdated.AddListener(OnActiveQuestUpdated);
             PlayerEvents.Instance.EventActiveQuestStepUpdated.AddListener(OnActiveQuestStepUpdated);
@@ -47,18 +51,36 @@ namespace Quests
         {
             foreach (ActiveQuestData questData in data.quests.activeQuests)
             {
-                ActiveQuest loadedQuest = new ActiveQuest(questData);
+                Quest quest = questDatabase.GetQuestById(questData.id);
+                ActiveQuest loadedQuest = new ActiveQuest(quest, questData.step, questData.stepProgress);
+                ActiveQuests.Add(loadedQuest);
+            }
+
+            foreach (CompletedQuestData questData in data.quests.completedQuests)
+            {
+                Quest quest = questDatabase.GetQuestById(questData.id);
+                CompletedQuests.Add(quest);
+            }
+
+            foreach (ActiveQuest quest in ActiveQuests)
+            {
+                if(quest.Quest.name == data.quests.focusedQuest.id)
+                {
+                    FocusedQuest = quest;
+                    PlayerEvents.Instance.CallEventFocusedQuestUpdated(FocusedQuest);
+                }
             }
         }
 
         void OnQuestCompleted(Quest quest)
         {
-            foreach (ActiveQuest activeQuest in activeQuests)
+            foreach (ActiveQuest activeQuest in ActiveQuests)
             {
                 if (activeQuest.Quest == quest)
                 {
+                    Debug.Log("quest completed: " + quest.name);
                     RemoveActiveQuest(activeQuest);
-                    completedQuests.Add(quest);
+                    AddCompletedQuest(quest);
                     PlayerEvents.Instance.CallEventInformationReceived($"Completed Quest \"{quest.title}\"");
 
                     if (activeQuest == FocusedQuest)
@@ -77,6 +99,9 @@ namespace Quests
             {
                 PlayerEvents.Instance.CallEventFocusedQuestUpdated(quest);
             }
+
+            UpdateActiveQuest(quest);
+
         }
 
         void OnActiveQuestStepUpdated(ActiveQuestStep step)
@@ -85,6 +110,25 @@ namespace Quests
             {
                 PlayerEvents.Instance.CallEventFocusedQuestUpdated(FocusedQuest);
             }
+
+            ActiveQuest questWithTheStep = FindActiveQuestWithActiveStep(step);
+
+            if (questWithTheStep != null)
+            {
+                UpdateActiveQuest(questWithTheStep);
+            }
+        }
+
+        ActiveQuest FindActiveQuestWithActiveStep(ActiveQuestStep step)
+        {
+            foreach (ActiveQuest quest in ActiveQuests)
+            {
+                if(quest.CurrentStep == step)
+                {
+                    return quest;
+                }
+            }
+            return null;
         }
 
         public void AcceptQuest(Quest quest)
@@ -108,12 +152,12 @@ namespace Quests
         {
             bool canAccept = true;
 
-            if (activeQuests.Find(q => q.Quest == quest) != null || completedQuests.Contains(quest))
+            if (ActiveQuests.Find(q => q.Quest == quest) != null || CompletedQuests.Contains(quest))
             {
                 canAccept = false;
             }
 
-            if (quest.preRequisiteQuest != null && !completedQuests.Contains(quest.preRequisiteQuest))
+            if (quest.preRequisiteQuest != null && !CompletedQuests.Contains(quest.preRequisiteQuest))
             {
                 canAccept = false;
             }
@@ -123,7 +167,7 @@ namespace Quests
 
         public bool IsOnQuestStep(QuestStep step)
         {
-            foreach (ActiveQuest activeQuest in activeQuests)
+            foreach (ActiveQuest activeQuest in ActiveQuests)
             {
                 if (activeQuest.CurrentStep.QuestStep == step)
                 {
@@ -140,21 +184,25 @@ namespace Quests
 
         public void ClearQuests()
         {
-            activeQuests.Clear();
-            completedQuests.Clear();
-            ResetFocusedQuest();
+            ActiveQuests.Clear();
+            CompletedQuests.Clear();
+            FocusedQuest = null;
+            PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
+            ClearQuestData();
         }
 
         void SetFocusedQuest(ActiveQuest quest)
         {
             FocusedQuest = quest;
             PlayerEvents.Instance.CallEventFocusedQuestUpdated(quest);
+            AddFocusedQuest(quest);
         }
 
         void ResetFocusedQuest()
         {
             FocusedQuest = null;
             PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
+            AddFocusedQuest(null);
         }
 
         ActiveQuestData CreateActiveQuestData(ActiveQuest quest)
@@ -165,8 +213,14 @@ namespace Quests
         #region Methods for API interactions - ADD Active Quest
         void AddActiveQuest(ActiveQuest newQuest)
         {
-            activeQuests.Add(newQuest);
+            ActiveQuests.Add(newQuest);
             ActiveQuestData data = CreateActiveQuestData(newQuest);
+            AddActiveQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
+        }
+
+        void UpdateActiveQuest(ActiveQuest quest)
+        {
+            ActiveQuestData data = CreateActiveQuestData(quest);
             AddActiveQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
         }
 
@@ -186,7 +240,7 @@ namespace Quests
         #region Methods for API interactions - Remove Active Quest
         void RemoveActiveQuest(ActiveQuest quest)
         {
-            activeQuests.Remove(quest);
+            ActiveQuests.Remove(quest);
             ActiveQuestData data = CreateActiveQuestData(quest);
             RemoveActiveQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
         }
@@ -194,6 +248,52 @@ namespace Quests
         void RemoveActiveQuestServerRpc(NetworkConnection conn, string userId, ActiveQuestData data)
         {
             APICalls_Server.Instance.RemoveActiveQuest(conn, userId, data);
+        }
+        #endregion
+
+        #region Methods for API interactions - Add Completed Quest
+        void AddCompletedQuest(Quest quest)
+        {
+            CompletedQuests.Add(quest);
+            CompletedQuestData data = new CompletedQuestData(quest.name);
+            AddCompletedQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
+
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        void AddCompletedQuestServerRpc(NetworkConnection conn, string userId, CompletedQuestData data)
+        {
+            APICalls_Server.Instance.AddCompletedQuest(conn, userId, data);
+        }
+        #endregion
+
+        #region Methods for API interactions - Set Focused Quest
+
+        void AddFocusedQuest(ActiveQuest quest)
+        {
+            FocusedQuestData data = new FocusedQuestData(quest == null ? "" : quest.Quest.name);
+            AddFocusedQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        void AddFocusedQuestServerRpc(NetworkConnection conn, string userId, FocusedQuestData data)
+        {
+
+            APICalls_Server.Instance.AddFocusedQuest(conn, userId, data);
+        }
+
+        #endregion
+
+        #region Methods for API interactions - Clear All Quest Data
+
+        void ClearQuestData()
+        {
+            ClearQuestDataServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id);
+        }
+        [ServerRpc(RequireOwnership = false)]
+        void ClearQuestDataServerRpc(NetworkConnection conn, string userId)
+        {
+            APICalls_Server.Instance.ClearQuestData(conn, userId);
         }
         #endregion
 

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Quests
 {
 
-    [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Quests/Quest", order = 1)]
+    [CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObjects/Quests/Quest", order = 1)]
     public class Quest : ScriptableObject
     {
         public string title;

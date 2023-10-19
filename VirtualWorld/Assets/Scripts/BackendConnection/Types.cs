@@ -76,11 +76,26 @@ namespace BackendConnection
     {
         public List<ActiveQuestData> activeQuests;
         public List<CompletedQuestData> completedQuests;
+        public FocusedQuestData focusedQuest;
     }
 
     public struct CompletedQuestData
     {
         public string id;
+
+        public CompletedQuestData(string id)
+        {
+            this.id = id;
+        }
+    }
+
+    public struct FocusedQuestData
+    {
+        public string id;
+        public FocusedQuestData(string id)
+        {
+            this.id = id;
+        }
     }
 
     public struct UserData
