@@ -23,6 +23,10 @@ namespace Quests
 
             PlayerEvents.Instance.EventQuestStepProgressed.AddListener(OnQuestStepProgressed);
 
+            // Add to list of created quest steps so this one can
+            // be cleaned when needed, e.g. when quest gets abandoned
+            QuestManager.Instance.AddActiveQuestStep(this);
+
             UpdateStep();
         }
 
@@ -30,30 +34,44 @@ namespace Quests
         {
             if(step == QuestStep)
             {
+                Debug.Log("Progress in ActiveQuestStep: " + step.name);
                 Advance(byAmount);
             }
         }
 
         public void Advance(int byAmount)
         {
+            Debug.Log("Advancing quest step " + QuestStep.name);
+            Debug.Log("CompletionStatus Pre: " + CompletionStatus);
+            Debug.Log("ByAmount: " + byAmount);
             completedObjectives += byAmount;
             if(completedObjectives >= QuestStep.requiredObjectives)
             {
+                Debug.Log("Completed.");
                 CompleteStep();
             } else
             {
+                Debug.Log("Updated.");
                 UpdateStep();
             }
+            Debug.Log("CompletionStatus Post: " + CompletionStatus);
         }
 
         void CompleteStep()
         {
             PlayerEvents.Instance.CallEventQuestStepCompleted(QuestStep);
+            // object no longer needed - remove listener so object gets garbage collected
+            Clean();
         }
 
         void UpdateStep()
         {
             PlayerEvents.Instance.CallEventActiveQuestStepUpdated(this);
+        }
+
+        public void Clean()
+        {
+            PlayerEvents.Instance.EventQuestStepProgressed.RemoveListener(OnQuestStepProgressed);
         }
         
     }

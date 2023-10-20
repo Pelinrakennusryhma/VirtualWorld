@@ -31,6 +31,8 @@ namespace Quests
                 if (_currentStepId >= Quest.steps.Count)
                 {
                     PlayerEvents.Instance.CallEventQuestCompleted(Quest);
+                    // object no longer needed - remove listener so object gets garbage collected
+                    PlayerEvents.Instance.EventQuestStepCompleted.RemoveListener(OnStepComplete);
                 }
                 else
                 {

@@ -82,10 +82,14 @@ namespace BackendConnection
     public struct CompletedQuestData
     {
         public string id;
+        public bool deleteFromActives;
+        public bool resetFocused;
 
-        public CompletedQuestData(string id)
+        public CompletedQuestData(string id, bool deleteFromActives = true, bool resetFocused = true)
         {
             this.id = id;
+            this.deleteFromActives = deleteFromActives;
+            this.resetFocused = resetFocused;
         }
     }
 

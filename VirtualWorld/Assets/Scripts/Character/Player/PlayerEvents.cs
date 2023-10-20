@@ -109,6 +109,7 @@ namespace Characters
 
         public void CallEventQuestStepProgressed(QuestStep step, int byAmount)
         {
+            Debug.Log("Invoked for step: " + step.name);
             EventQuestStepProgressed.Invoke(step, byAmount);
         }
 
@@ -139,6 +140,7 @@ namespace Characters
         {
             EventActiveQuestStepUpdated.Invoke(step);
         }
+
         #endregion
 
         #region UIDisplay

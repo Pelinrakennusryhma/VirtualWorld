@@ -22,6 +22,12 @@ namespace Quests
 
         void OnActiveQuestStepUpdated(ActiveQuestStep step)
         {
+            if(step == null)
+            {
+                IsActive = false;
+                return;
+            }
+
             if(step.QuestStep == stepToTrigger)
             {
                 IsActive = true;

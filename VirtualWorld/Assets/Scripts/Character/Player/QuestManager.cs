@@ -21,6 +21,11 @@ namespace Quests
         public List<Quest> CompletedQuests { get; private set; } = new List<Quest>();
         public ActiveQuest FocusedQuest { get; private set; }
 
+        // Stores all steps that get created with ActiveQuests.
+        // Used for looking up and removing any listeners when quest gets abandoned
+        // so that garbage collector can work.
+        List<ActiveQuestStep> _createdSteps = new List<ActiveQuestStep>();
+
         // this should be added to settings for player to toggle
         public bool autoFocusQuest = true;
 
@@ -78,15 +83,10 @@ namespace Quests
             {
                 if (activeQuest.Quest == quest)
                 {
-                    Debug.Log("quest completed: " + quest.name);
-                    RemoveActiveQuest(activeQuest);
-                    AddCompletedQuest(quest);
+                    //RemoveActiveQuest(activeQuest);
+                    bool resetFocused = activeQuest == FocusedQuest;
+                    AddCompletedQuest(activeQuest, true, resetFocused);
                     PlayerEvents.Instance.CallEventInformationReceived($"Completed Quest \"{quest.title}\"");
-
-                    if (activeQuest == FocusedQuest)
-                    {
-                        ResetFocusedQuest();
-                    }
 
                     break;
                 }
@@ -179,6 +179,7 @@ namespace Quests
 
         public void ProgressStep(QuestStep step, int byAmount)
         {
+            Debug.Log("ProgressStep func ran");
             PlayerEvents.Instance.CallEventQuestStepProgressed(step, byAmount);
         }
 
@@ -188,6 +189,8 @@ namespace Quests
             CompletedQuests.Clear();
             FocusedQuest = null;
             PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
+            PlayerEvents.Instance.CallEventActiveQuestStepUpdated(null);
+            RemoveAllActiveQuestSteps();
             ClearQuestData();
         }
 
@@ -209,6 +212,32 @@ namespace Quests
         {
             return new ActiveQuestData(quest.Quest.name, quest.CurrentStepId, quest.CurrentStep.completedObjectives);
         }
+
+        #region ActiveQuestStep handling
+
+        public void AddActiveQuestStep(ActiveQuestStep step)
+        {
+            _createdSteps.Add(step);
+        }
+
+        public void RemoveActiveQuestStep(ActiveQuestStep step)
+        {
+            ActiveQuestStep foundStep = _createdSteps.Find(s => s == step);
+            foundStep.Clean();
+            _createdSteps.Remove(step);
+        }
+
+        public void RemoveAllActiveQuestSteps()
+        {
+            foreach (ActiveQuestStep step in _createdSteps)
+            {
+                step.Clean();
+            }
+
+            _createdSteps.Clear();
+        }
+
+        #endregion
 
         #region Methods for API interactions - ADD Active Quest
         void AddActiveQuest(ActiveQuest newQuest)
@@ -240,6 +269,7 @@ namespace Quests
         #region Methods for API interactions - Remove Active Quest
         void RemoveActiveQuest(ActiveQuest quest)
         {
+            // TODO: add lines to check and remove focused quest
             ActiveQuests.Remove(quest);
             ActiveQuestData data = CreateActiveQuestData(quest);
             RemoveActiveQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
@@ -252,10 +282,19 @@ namespace Quests
         #endregion
 
         #region Methods for API interactions - Add Completed Quest
-        void AddCompletedQuest(Quest quest)
+        void AddCompletedQuest(ActiveQuest quest, bool deleteFromActives = true, bool resetFocused = true)
         {
-            CompletedQuests.Add(quest);
-            CompletedQuestData data = new CompletedQuestData(quest.name);
+            if (deleteFromActives)
+            {
+                ActiveQuests.Remove(quest);
+            }
+            if (resetFocused)
+            {
+                FocusedQuest = null;
+                PlayerEvents.Instance.CallEventFocusedQuestUpdated(null);
+            }
+            CompletedQuests.Add(quest.Quest);
+            CompletedQuestData data = new CompletedQuestData(quest.Quest.name, deleteFromActives, resetFocused);
             AddCompletedQuestServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
 
         }
