@@ -1,6 +1,7 @@
 using Characters;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.CompilerServices;
+using Quests;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -65,14 +66,6 @@ namespace StarterAssets
             }
         }
 
-
-        private void LateUpdate()
-		{
-			//ClearInteractInput();
-			//Action1Input(false);
-			//MenuInput(false);
-		}
-
 		private void OnDisable()
 		{
 			ZeroInputs();
@@ -124,7 +117,6 @@ namespace StarterAssets
                 default:
                     break;
             }
-
 		}
 
 		public void OnJump(InputAction.CallbackContext value)
@@ -194,7 +186,7 @@ namespace StarterAssets
                         break;
                     case GAME_STATE.MENU:
                         break;
-                    case GAME_STATE.TABLET: // callback function to set gamestate once tablet script is done zooming out
+                    case GAME_STATE.TABLET:
                         PlayerEvents.Instance.CallEventCloseTabletPressed();
                         break;
                     case GAME_STATE.DIALOG:
@@ -246,6 +238,27 @@ namespace StarterAssets
                 }
             }
 		}
+
+        public void OnToggleFocusedQuest(InputAction.CallbackContext value)
+        {
+            if (value.action.WasPerformedThisFrame())
+            {
+                switch (CharacterManager.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        QuestManager.Instance.ToggleFocusedQuest();
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 #endif
 
 

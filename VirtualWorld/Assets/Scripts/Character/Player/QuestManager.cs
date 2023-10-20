@@ -83,12 +83,19 @@ namespace Quests
             {
                 if (activeQuest.Quest == quest)
                 {
-                    //RemoveActiveQuest(activeQuest);
                     bool resetFocused = activeQuest == FocusedQuest;
                     AddCompletedQuest(activeQuest, true, resetFocused);
                     PlayerEvents.Instance.CallEventInformationReceived($"Completed Quest \"{quest.title}\"");
 
                     break;
+                }
+            }
+
+            if (autoFocusQuest)
+            {
+                if(ActiveQuests.Count > 0)
+                {
+                    SetFocusedQuest(ActiveQuests[0]);
                 }
             }
         }
@@ -208,6 +215,21 @@ namespace Quests
             AddFocusedQuest(null);
         }
 
+        public void ToggleFocusedQuest()
+        {
+            if(ActiveQuests.Count > 1)
+            {
+                int currentIndex = ActiveQuests.FindIndex(q => q == FocusedQuest);
+                int newIndex = currentIndex + 1;
+                if(newIndex >= ActiveQuests.Count)
+                {
+                    newIndex = 0;
+                }
+
+                SetFocusedQuest(ActiveQuests[newIndex]);
+            }
+        }
+
         ActiveQuestData CreateActiveQuestData(ActiveQuest quest)
         {
             return new ActiveQuestData(quest.Quest.name, quest.CurrentStepId, quest.CurrentStep.completedObjectives);
@@ -317,7 +339,6 @@ namespace Quests
         [ServerRpc(RequireOwnership = false)]
         void AddFocusedQuestServerRpc(NetworkConnection conn, string userId, FocusedQuestData data)
         {
-
             APICalls_Server.Instance.AddFocusedQuest(conn, userId, data);
         }
 
