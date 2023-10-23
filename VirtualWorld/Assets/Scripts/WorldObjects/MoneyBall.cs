@@ -12,7 +12,7 @@ namespace WorldObjects
         public int moneyChangeAmount = 5;
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
-
+        public bool IsActive => true;
         public Vector3 DetectionMessageOffSet { get => Vector3.zero; }
 
         void Start()
@@ -22,7 +22,6 @@ namespace WorldObjects
 
         public void Interact(string playerId, UnityAction dummy)
         {
-            string userId = UserSession.Instance.LoggedUserData.id;
             if(moneyChangeAmount > 0)
             {
                 CharacterManager.Instance.AddMoney(moneyChangeAmount);

@@ -36,7 +36,6 @@ namespace UI
         #region Init
         public void Init(UIColorTheme theme, UIManager uiManager)
         {
-            Debug.Log("gameObjectName " + gameObject.name);
             this.theme = theme;
             this.uiManager = uiManager;
 
@@ -100,7 +99,7 @@ namespace UI
                 return;
             }
 
-            if(textColor != textClickedColor)
+            if(textHoverColor != textClickedColor)
             {
                 StartCoroutine(FlashTextColor());
             }

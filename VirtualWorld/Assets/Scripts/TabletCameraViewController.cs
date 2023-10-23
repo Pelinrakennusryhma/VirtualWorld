@@ -46,17 +46,17 @@ public class TabletCameraViewController : NetworkBehaviour
     //------------------------------------------------------------------------------------------------------
 
     // Just a bool that tracks whether or not the tablet view is active
-    private bool isActiveTabletView; 
+    private bool isActiveTabletView;
 
     // A bool to keep track if we have reached TransitionPos1Camera's
     // or TransitionPos2Camera's position and rotation
-    private bool hasReachedTransitionPos; 
+    private bool hasReachedTransitionPos;
 
     // A bool to keep track which transition pos was chosen
     private bool isReachingToTransitionPos1;
-    
+
     // Are we reaching to something and interpolating towards a position?
-    private bool isInterpolating; 
+    private bool isInterpolating;
 
     // The speed at which the tablet lerps in to view
     private float incomingScaleSpeed = 10.0f;
@@ -80,16 +80,16 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
-        OriginalScalerScale = TabletMainScaler.transform.localScale; 
-        
+        OriginalScalerScale = TabletMainScaler.transform.localScale;
+
         // We don't ever start with the tablet view active
         // Make sure the bool is false
         isActiveTabletView = false;
-        
+
         // Just disable objects that we don't need
         TabletMainScaler.gameObject.SetActive(false);
 
-        if (IsOwner) 
+        if (IsOwner)
         {
             ViewWithinAViewController.Init();
             // Subscribe to events about button presses
@@ -122,7 +122,7 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         if (!isActiveTabletView)
         {
- 
+
             SetupTabletForComingIn();
             ViewWithinAViewController.OnTabletOpened();
 
@@ -137,7 +137,7 @@ public class TabletCameraViewController : NetworkBehaviour
     {
 
         SetupTabletForGoingOut();
-  
+
     }
 
     #endregion
@@ -173,14 +173,14 @@ public class TabletCameraViewController : NetworkBehaviour
         //ViewWithinAViewController.SetupMapBlips(true, false);
 
 
-  
+
         // We haven't yet reached any transition pos
         hasReachedTransitionPos = false;
 
         // Now the view is active
         isActiveTabletView = true;
 
- 
+
         // We disable the main camera that is under control
         // of CinemachineBrain and activate the FlyCamera
         ThirdPersonCamera.enabled = false;
@@ -241,7 +241,7 @@ public class TabletCameraViewController : NetworkBehaviour
     void LateUpdate()
     {
 
- 
+
         // If we don't own the networked object, don't do anything
         if (!IsOwner)
         {
@@ -323,11 +323,11 @@ public class TabletCameraViewController : NetworkBehaviour
         // Interpolate the FlyCamera's position and rotation towards the target's we just determined
         // How far we are from the target position? float magnitudeToTargetPos        
         // What is the angle between current rotation and target rotation?float angleBetweenRots
-        FlyingCam.MoveTowardsTargetPositionAndRotation(targetPos, 
-                                                       5.0f, 
-                                                       targetRot, 
-                                                       5.6f, 
-                                                       out float magnitudeToTargetPos, 
+        FlyingCam.MoveTowardsTargetPositionAndRotation(targetPos,
+                                                       5.0f,
+                                                       targetRot,
+                                                       5.6f,
+                                                       out float magnitudeToTargetPos,
                                                        out float angleBetweenRots);
 
         // We can scale the tablet out since it shouldn't be seen anymore.

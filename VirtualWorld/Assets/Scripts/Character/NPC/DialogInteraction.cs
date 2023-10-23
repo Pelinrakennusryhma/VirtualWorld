@@ -9,6 +9,7 @@ namespace Characters
     {
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
+        public bool IsActive => true;
         public Vector3 DetectionMessageOffSet { 
             get => offSet; 
             private set => offSet = value; 

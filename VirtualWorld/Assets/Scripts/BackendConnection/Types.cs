@@ -12,7 +12,8 @@ namespace BackendConnection
     {
         GET,
         POST,
-        PUT
+        PUT,
+        DELETE
     }
 
     public struct LoginUserData
@@ -68,6 +69,37 @@ namespace BackendConnection
     {
         public UserData user;
         public Inventory inventory;
+        public QuestsData quests;
+    }
+
+    public struct QuestsData
+    {
+        public List<ActiveQuestData> activeQuests;
+        public List<CompletedQuestData> completedQuests;
+        public FocusedQuestData focusedQuest;
+    }
+
+    public struct CompletedQuestData
+    {
+        public string id;
+        public bool deleteFromActives;
+        public bool resetFocused;
+
+        public CompletedQuestData(string id, bool deleteFromActives = true, bool resetFocused = true)
+        {
+            this.id = id;
+            this.deleteFromActives = deleteFromActives;
+            this.resetFocused = resetFocused;
+        }
+    }
+
+    public struct FocusedQuestData
+    {
+        public string id;
+        public FocusedQuestData(string id)
+        {
+            this.id = id;
+        }
     }
 
     public struct UserData
@@ -101,6 +133,20 @@ namespace BackendConnection
             this.itemName = itemName;
             this.operation = operation.ToString();
             this.amount = amount;
+        }
+    }
+
+    public struct ActiveQuestData
+    {
+        public string id;
+        public int step;
+        public int stepProgress;
+
+        public ActiveQuestData(string id, int step, int stepProgress)
+        {
+            this.id = id;
+            this.step = step;
+            this.stepProgress = stepProgress;
         }
     }
 }
