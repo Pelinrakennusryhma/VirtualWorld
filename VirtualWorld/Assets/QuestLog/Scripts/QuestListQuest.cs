@@ -81,142 +81,96 @@ namespace HymiQuests
                 completeButton.interactable = true;
             }
 
-            //Lisää uuden askeleen questiin. stepNumber on kuinka monennes askel questista.
-            public void AddQuestStep(int stepNumber)
+            //Muuttaa PinnedQuestin uuteen steppiin
+            if (GameObject.Find("PinnedQuests/" + quest.name))
             {
-                //Object prefab = Resources.Load("Prefabs/QuestStep");
-                //GameObject newItem = Instantiate(prefab, questStepLayout) as GameObject;
+                GameObject.Find("PinnedQuests/" + quest.name).GetComponent<PinnedQuest>().SetQuestObjective(quest.steps.ElementAt(stepNumber).Key);
+            }
+        }
 
-                GameObject newItem = Instantiate(QuestStepPrefab, questStepLayout);
+        //Kutsutaan QuestLog.cs kautta
+        public Quest AbandonQuest()
+        {
 
-                newItem.transform.Find("QuestStepText").GetComponent<TextMeshProUGUI>().text = quest.steps.ElementAt(stepNumber).Key;
-                questProgress = newItem.transform.Find("QuestProgressText").GetComponent<TextMeshProUGUI>();
-                currentStep = stepNumber;
-                UpdateQuestProgress();
-
-                //Tekee complete napista painettavan jos quest on valmis
-                if (quest.steps.Count <= questLog.GetPlayerQuest(quest).step + 1)
+            foreach (Transform transform in gameObject.transform.parent.transform.GetComponentInChildren<Transform>())
+            {
+                transform.GetComponent<Image>().color = new Color(0.757f, 0.757f, 0.757f);
+            }
+            GameObject.Find("QuestName/QuestNameText").GetComponent<TextMeshProUGUI>().text = "";
+            foreach (Transform stepTransform in questStepLayout.GetComponentsInChildren<Transform>())
+            {
+                if (stepTransform.name != "Layout")
                 {
-                    completeButton.interactable = true;
-                }
-
-                //Muuttaa PinnedQuestin uuteen steppiin
-                if (GameObject.Find("PinnedQuests/" + quest.name))
-                {
-                    GameObject.Find("PinnedQuests/" + quest.name).GetComponent<PinnedQuest>().SetQuestObjective(quest.steps.ElementAt(stepNumber).Key);
+                    Destroy(stepTransform.gameObject);
                 }
             }
 
-            //Kutsutaan QuestLog.cs kautta
-            public Quest AbandonQuest()
-            {
 
-                foreach (Transform transform in gameObject.transform.parent.transform.GetComponentInChildren<Transform>())
-                {
-                    transform.GetComponent<Image>().color = new Color(0.757f, 0.757f, 0.757f);
-                }
-                GameObject.Find("QuestName/QuestNameText").GetComponent<TextMeshProUGUI>().text = "";
-                foreach (Transform stepTransform in questStepLayout.GetComponentsInChildren<Transform>())
-                {
-                    if (stepTransform.name != "Layout")
-                    {
-                        GameObject.Find("PinnedQuests/" + quest.name).GetComponent<PinnedQuest>().SetQuestObjective(quest.steps.ElementAt(stepNumber).Key);
-                    }
-                }
-                return quest;
+
+            return quest;
+        }
+        public void PinQuest()
+        {
+            int maxPinnedQuests = 5;
+            pinnedQuests = GameObject.Find("PinnedQuests").transform;
+            pinnedQuests.gameObject.SetActive(true);
+            if (pinnedQuests.childCount < maxPinnedQuests && !pinnedQuests.Find(quest.name))
+            {
+                //Object prefab = Resources.Load("Prefabs/PinnedQuest");
+                //GameObject newItem = Instantiate(prefab, pinnedQuests) as GameObject;
+                GameObject newItem = Instantiate(PinnedQuestPrefab, pinnedQuests);
+
+                newItem.name = quest.name;
+                pinnedQuestScript = newItem.GetComponent<PinnedQuest>();
+                pinnedQuestScript.SetQuestName(quest.name);
+                pinnedQuestScript.SetQuestObjective(quest.steps.ElementAt(questLog.GetPlayerQuest(quest).step).Key);
             }
-            public void PinQuest()
+            UpdateQuestProgress();
+        }
+        public void UpdateQuestProgress()
+        {
+            if (quest.steps.ElementAt(currentStep).Value == 0)
             {
-                int maxPinnedQuests = 5;
-                pinnedQuests = GameObject.Find("PinnedQuests").transform;
-                pinnedQuests.gameObject.SetActive(true);
-                if (pinnedQuests.childCount < maxPinnedQuests && !pinnedQuests.Find(quest.name))
-                {
-                    //Object prefab = Resources.Load("Prefabs/PinnedQuest");
-                    //GameObject newItem = Instantiate(prefab, pinnedQuests) as GameObject;
-                    GameObject newItem = Instantiate(PinnedQuestPrefab, pinnedQuests);
+                questProgress.text = "";
+            }
+            else
+            {
+                questProgress.text = questLog.GetPlayerQuest(quest).progress + "/" + quest.steps.ElementAt(currentStep).Value;
+            }
+            PlayerQuest playerQuest = questLog.GetPlayerQuest(quest);
+            SetPinnedQuestProgress(playerQuest.progress, playerQuest.quest.steps.ElementAt(currentStep).Value);
+        }
 
-                    //Kutsutaan QuestLog.cs kautta
-                    public Quest AbandonQuest()
-                    {
-                        foreach (Transform transform in gameObject.transform.parent.transform.GetComponentInChildren<Transform>())
-                        {
-                            transform.GetComponent<Image>().color = new Color(0.757f, 0.757f, 0.757f);
-                        }
-                        GameObject.Find("QuestName/QuestNameText").GetComponent<TextMeshProUGUI>().text = "";
-                        foreach (Transform stepTransform in questStepLayout.GetComponentsInChildren<Transform>())
-                        {
-                            if (stepTransform.name != "Layout")
-                            {
-                                Destroy(stepTransform.gameObject);
-                            }
-                        }
-                        return quest;
-                    }
-                    public void PinQuest()
-                    {
-                        int maxPinnedQuests = 5;
-                        pinnedQuests = GameObject.Find("PinnedQuests").transform;
-                        pinnedQuests.gameObject.SetActive(true);
-                        if (pinnedQuests.childCount < maxPinnedQuests && !pinnedQuests.Find(quest.name))
-                        {
-                            //Object prefab = Resources.Load("Prefabs/PinnedQuest");
-                            //GameObject newItem = Instantiate(prefab, pinnedQuests) as GameObject;
-                            GameObject newItem = Instantiate(PinnedQuestPrefab, pinnedQuests);
+        //true = Lisää vanhaan amount määrän.
+        //false = Asettaa progressin amountiksi
+        public void SetQuestProgress(int amount, bool addToCurrentAmount)
+        {
+            PlayerQuest playerQuest = questLog.GetPlayerQuest(quest);
+            if (addToCurrentAmount)
+            {
+                playerQuest.progress += amount;
+            }
+            else
+            {
+                playerQuest.progress = amount;
+            }
+            UpdateQuestProgress();
+            if (playerQuest.progress >= playerQuest.quest.steps.ElementAt(currentStep).Value)
+            {
+                questLog.NextQuestStep(quest.id);
 
-                            newItem.name = quest.name;
-                            pinnedQuestScript = newItem.GetComponent<PinnedQuest>();
-                            pinnedQuestScript.SetQuestName(quest.name);
-                            pinnedQuestScript.SetQuestObjective(quest.steps.ElementAt(questLog.GetPlayerQuest(quest).step).Key);
-                        }
-                        UpdateQuestProgress();
-                    }
-                    public void UpdateQuestProgress()
-                    {
-                        if (quest.steps.ElementAt(currentStep).Value == 0)
-                        {
-                            questProgress.text = "";
-                        }
-                        else
-                        {
-                            questProgress.text = questLog.GetPlayerQuest(quest).progress + "/" + quest.steps.ElementAt(currentStep).Value;
-                        }
-                        PlayerQuest playerQuest = questLog.GetPlayerQuest(quest);
-                        SetPinnedQuestProgress(playerQuest.progress, playerQuest.quest.steps.ElementAt(currentStep).Value);
-                    }
+            }
+            UpdateQuestProgress();
+        }
 
-                    //addToCurrentAmount = 
-                    //true = Lisää vanhaan amount määrän.
-                    //false = Asettaa progressin amountiksi
-                    public void SetQuestProgress(int amount, bool addToCurrentAmount)
-                    {
-                        PlayerQuest playerQuest = questLog.GetPlayerQuest(quest);
-                        if (addToCurrentAmount)
-                        {
-                            playerQuest.progress += amount;
-                        }
-                        else
-                        {
-                            playerQuest.progress = amount;
-                        }
-                        UpdateQuestProgress();
-                        if (playerQuest.progress >= playerQuest.quest.steps.ElementAt(currentStep).Value)
-                        {
-                            questLog.NextQuestStep(quest.id);
-
-                        }
-                        UpdateQuestProgress();
-                    }
-
-                    public void SetPinnedQuestProgress(int current, int max)
-                    {
-                        if (pinnedQuestScript != null)
-                        {
-                            pinnedQuestScript.SetQuestProgress(current, max);
-                        }
-                    }
-                }
+        public void SetPinnedQuestProgress(int current, int max)
+        {
+            if (pinnedQuestScript != null)
+            {
+                pinnedQuestScript.SetQuestProgress(current, max);
             }
         }
     }
+
 }
+
