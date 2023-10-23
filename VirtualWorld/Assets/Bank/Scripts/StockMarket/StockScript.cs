@@ -53,9 +53,9 @@ public class StockScript : MonoBehaviour
         stockInfo.priceHistory = priceHistory;
 
         //Lisää lisättyyn StockInfoon WindowGraphin
-        UnityEngine.Object prefab2 = Resources.Load("Prefabs/WindowGraph");
-        GameObject newItem2 = Instantiate(prefab2, newItem.transform.Find("Graph")) as GameObject;
-        newItem2.GetComponent<WindowGraph>().priceHistory = priceHistory;
+        //UnityEngine.Object prefab2 = Resources.Load("Prefabs/WindowGraph");
+        //GameObject newItem2 = Instantiate(prefab2, newItem.transform.Find("Graph")) as GameObject;
+        //newItem2.GetComponent<WindowGraph>().priceHistory = priceHistory;
     }
 
     //Lisää osakkeelle uuden hinnan, ja päivittää tekstit uuteen hintaan. 
