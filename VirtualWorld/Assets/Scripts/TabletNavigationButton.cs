@@ -16,7 +16,7 @@ public class TabletNavigationButton : MonoBehaviour, IPointerClickHandler
 
     private Vector3 ParentOriginalScale;
 
-    public TabletFunctionalityController FunctionalityController;
+    public ViewWithinAViewController ViewWithinAViewController;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class TabletNavigationButton : MonoBehaviour, IPointerClickHandler
 
         transform.parent.localScale = new Vector3(ParentOriginalScale.x * 0.5f, ParentOriginalScale.y * 0.5f, ParentOriginalScale.z);
 
-        FunctionalityController.OnNavigationButtonPressed(ButtonID);
+        ViewWithinAViewController.OnNavigationButtonPressed(ButtonID);
     }
 
     public void Update()

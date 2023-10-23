@@ -8,6 +8,6 @@ public class QuestLogViewChanger : MonoBehaviour
     // when the quest log is activated as a view on the tablet?
     public void OnViewActivated()
     {
-        Debug.Log("Activated quest log view changer");
+        //Debug.Log("Activated quest log view changer");
     }
 }

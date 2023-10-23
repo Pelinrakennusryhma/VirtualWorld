@@ -213,7 +213,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1062231836899658510}
   - component: {fileID: 2249500894888291117}
-  - component: {fileID: 7949935133753534845}
   - component: {fileID: 8950555724303000417}
   m_Layer: 6
   m_Name: Tablet
@@ -257,55 +256,13 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 8950555724303000417}
   _networkObjectCache: {fileID: 8950555724303000417}
   ThirdPersonCamera: {fileID: 0}
-  CloseupCamera: {fileID: 6214813249504867188}
-  TransitionPos1Camera: {fileID: 1845512910840174062}
-  TransitionPos2Camera: {fileID: 5005703647772679745}
-  MainVirtualCamera: {fileID: 0}
-  CinemachineBrain: {fileID: 0}
+  CloseupCamera: {fileID: 0}
+  TransitionPos1Camera: {fileID: 0}
+  TransitionPos2Camera: {fileID: 0}
   Inputs: {fileID: 0}
-  IsActiveTabletView: 0
-  Graphics: {fileID: 8635279143223131779}
-  HasReachedTransitionPos: 0
-  IsReachingToTransitionPos1: 0
-  IsTakenOverByCheapInterpolations: 0
-  PlayerCameraRoot: {fileID: 0}
-  MapCamera: {fileID: 0}
-  MapStartPos: {x: 0, y: 0, z: 0}
-  MapStartRot: {x: 0, y: 0, z: 0, w: 0}
-  MapStartFarClipPlane: 0
-  GreenBlip: {fileID: 0}
-  YellowBlip: {fileID: 0}
-  RenderAlwaysOnTopCamera: {fileID: 0}
-  WaitingToBreak: 0
-  FlyCamera: {fileID: 0}
-  ThirdPersonController: {fileID: 0}
-  TabletScaler: {fileID: 0}
-  WentOverLeftShoulder: 0
-  InventoryViewChanger: {fileID: 0}
---- !u!114 &7949935133753534845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2513942907068002653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d10506fa7d652542ad0fdf5d1f3a6f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 8950555724303000417}
-  _networkObjectCache: {fileID: 8950555724303000417}
-  CurrentView: 0
-  Raycaster: {fileID: 0}
-  NewsFeedButtonOriginalLocal: {fileID: 0}
-  NewsFeedButtonOriginalGlobal: {fileID: 0}
-  NewsFeedButtonParent: {fileID: 0}
-  ViewWithAViewController: {fileID: 0}
-  NewsFeedWindowChanger: {fileID: 0}
-  CalendarWindowChanger: {fileID: 0}
-  IsTabletViewOpen: 0
+  FlyingCam: {fileID: 0}
+  TabletMainScaler: {fileID: 0}
+  ViewWithinAViewController: {fileID: 0}
 --- !u!114 &8950555724303000417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +280,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 2249500894888291117}
-  - {fileID: 7949935133753534845}
+  - {fileID: 0}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -1170,7 +1127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonID: 1
-  FunctionalityController: {fileID: 7949935133753534845}
+  ViewWithinAViewController: {fileID: 0}
 --- !u!1 &8496639033217843886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonID: 2
-  FunctionalityController: {fileID: 7949935133753534845}
+  ViewWithinAViewController: {fileID: 0}
 --- !u!1 &8635279143223131779
 GameObject:
   m_ObjectHideFlags: 0
