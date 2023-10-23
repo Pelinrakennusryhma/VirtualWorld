@@ -50,7 +50,7 @@ namespace Configuration
         // unload launch scene when the main scene has been loaded
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs args)
         {
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(0);
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(1);
         }
 
         void EnableConnectCanvas(LoggedUserData dummyData)
