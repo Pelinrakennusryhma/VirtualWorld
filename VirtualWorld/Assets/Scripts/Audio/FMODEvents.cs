@@ -3,25 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FMODEvents : MonoBehaviour
+namespace Audio
 {
-    //[field: Header("Music")]
-    //[field:SerializeField] public EventReference Music { get; private set; }
-
-    [field: Header("Character")]
-    [field: SerializeField] public EventReference Footsteps { get; private set; }
-    [field: SerializeField] public EventReference Land { get; private set; }
-
-    public static FMODEvents Instance { get; private set; }
-
-    void Awake()
+    public class FMODEvents : MonoBehaviour
     {
-        if (Instance != null)
+        //[field: Header("Music")]
+        //[field:SerializeField] public EventReference Music { get; private set; }
+
+        [field: Header("Character")]
+        [field: SerializeField] public EventReference Footsteps { get; private set; }
+        [field: SerializeField] public EventReference Land { get; private set; }
+
+        public static FMODEvents Instance { get; private set; }
+
+        void Awake()
         {
-            Debug.LogWarning("More than one FMODEvents around!");
-        } else
-        {
-            Instance = this;
+            if (Instance != null)
+            {
+                Debug.LogWarning("More than one FMODEvents around!");
+            }
+            else
+            {
+                Instance = this;
+            }
         }
     }
+
 }
