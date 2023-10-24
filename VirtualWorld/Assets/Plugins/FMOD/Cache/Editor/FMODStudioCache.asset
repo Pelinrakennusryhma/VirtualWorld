@@ -35,10 +35,10 @@ MonoBehaviour:
   Path: ../../../VirtualWorldFMOD/VirtualWorld/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638336646561240188
+  lastModified: 638337463658322600
   FileSizes:
   - Name: Desktop
-    Value: 33664
+    Value: 34208
   Exists: 1
 --- !u!114 &-2544852140268710140
 MonoBehaviour:
@@ -61,11 +61,11 @@ MonoBehaviour:
   Banks:
   - {fileID: -8192407553344855078}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 15
   Length: 0
 --- !u!114 &-986601350108169236
 MonoBehaviour:
@@ -111,7 +111,7 @@ MonoBehaviour:
   - {fileID: -986601350108169236}
   StringsBanks:
   - {fileID: -8346845406735624252}
-  cacheTime: 638336646561240188
+  cacheTime: 638337463658322600
   cacheVersion: 131603
 --- !u!114 &3470173008619425828
 MonoBehaviour:
@@ -134,9 +134,9 @@ MonoBehaviour:
   Banks:
   - {fileID: -8192407553344855078}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 15
   Length: 0
