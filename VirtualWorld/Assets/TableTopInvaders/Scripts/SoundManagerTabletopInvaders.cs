@@ -1,31 +1,27 @@
+using Audio;
 using System.Collections;
 using System.Collections.Generic;
+using TableTopInvaders;
 using UnityEngine;
 
 public class SoundManagerTabletopInvaders : MonoBehaviour
 {
-    public AudioSource AudioSource2D;
-
-    public AudioClip Countdown123;
-    public AudioClip CountdownGo;
-    public AudioClip UIPress;
 
     public void PlayCountdown1()
     {
-        AudioSource2D.PlayOneShot(Countdown123, 0.2f);
+        AudioManager.Instance.PlayOneShot(FMODEventsTTI.Instance.Countdown123, Vector3.zero);
         //AudioSource2D.volume = 1.0f;
     }
 
     public void PlayCountdownGo()
     {
-        AudioSource2D.PlayOneShot(CountdownGo, 0.2f);
+        AudioManager.Instance.PlayOneShot(FMODEventsTTI.Instance.CountdownGo, Vector3.zero);
         //AudioSource2D.volume = 1.0f;
     }
 
     public void PlayUIPress()
     {
-
-        AudioSource2D.PlayOneShot(UIPress, 0.2f);
+        AudioManager.Instance.PlayOneShot(FMODEventsTTI.Instance.UIPress, Vector3.zero);
     }
 
     public void PlaySound(string text)

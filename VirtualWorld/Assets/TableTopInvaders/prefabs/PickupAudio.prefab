@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6545182299383029344
 MonoBehaviour:
@@ -45,10 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66d8d5412142624fb2bb0d0bfd7981b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioSource: {fileID: 6261953910645075283}
-  ExplosionClip: {fileID: 8300000, guid: 4ada0cd64a15eb74b925ec5db872dd76, type: 3}
-  SpawnClip: {fileID: 8300000, guid: 89c0554f1b333664b8289e7ee0b5803b, type: 3}
-  originalPitch: 0
 --- !u!82 &6261953910645075283
 AudioSource:
   m_ObjectHideFlags: 0
@@ -56,7 +52,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019906437481415047}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}

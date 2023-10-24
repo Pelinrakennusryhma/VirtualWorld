@@ -21,6 +21,7 @@ namespace Audio
             if (Instance != null)
             {
                 Debug.LogWarning("More than one FMODEvents around!");
+                Destroy(this);
             }
             else
             {

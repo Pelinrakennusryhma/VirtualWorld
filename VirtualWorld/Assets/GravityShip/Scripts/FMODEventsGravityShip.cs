@@ -8,7 +8,6 @@ namespace GravityShip
 {
     public class FMODEventsGravityShip : MonoBehaviour
     {
-        [field: Header("Character")]
         [field: SerializeField] public EventReference UIClick { get; private set; }
         [field: SerializeField] public EventReference Explosion { get; private set; }
         [field: SerializeField] public EventReference Boost { get; private set; }
@@ -21,6 +20,7 @@ namespace GravityShip
             if (Instance != null)
             {
                 Debug.LogWarning("More than one FMODEvents around!");
+                Destroy(this);
             }
             else
             {
