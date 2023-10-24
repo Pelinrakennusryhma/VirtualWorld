@@ -1,42 +1,28 @@
+using Audio;
+using GravityShip;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManagerGravityShip : MonoBehaviour
 {
-    public AudioSource AudioSource;
-    public AudioClip UIClick;
-    public AudioClip ExplosionClip;
-    public AudioClip BoostClip;
-    public AudioClip PulsarClip;
-
-    public float OriginalAudioSourcePitch;
-
-    public void Awake()
-    {
-        OriginalAudioSourcePitch = AudioSource.pitch;    
-    }
-
     public void PlayUIClick()
     {
-        AudioSource.PlayOneShot(UIClick, 1.0f);
+        AudioManager.Instance.PlayOneShot(FMODEventsGravityShip.Instance.UIClick, Vector3.zero);
     }
 
     public void PlayDeathSound()
     {
-        AudioSource.pitch = OriginalAudioSourcePitch + Random.Range(-0.2f, 0.2f);
-        AudioSource.PlayOneShot(ExplosionClip, 1.0f);
+        AudioManager.Instance.PlayOneShot(FMODEventsGravityShip.Instance.Explosion, Vector3.zero);
     }
 
     public void PlayOnBoost()
     {
-        AudioSource.pitch = OriginalAudioSourcePitch + Random.Range(-0.2f, 0.2f);
-        AudioSource.PlayOneShot(BoostClip, 0.4f);
+        AudioManager.Instance.PlayOneShot(FMODEventsGravityShip.Instance.Boost, Vector3.zero);
     }
 
     public void PlayOnPulsar()
     {
-        AudioSource.pitch = OriginalAudioSourcePitch + Random.Range(-0.2f, 0.2f);
-        AudioSource.PlayOneShot(PulsarClip, 0.4f);
+        AudioManager.Instance.PlayOneShot(FMODEventsGravityShip.Instance.Pulsar, Vector3.zero);
     }
 }

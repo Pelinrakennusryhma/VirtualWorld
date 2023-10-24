@@ -1,46 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using Audio;
+using TableTopInvaders;
 using UnityEngine;
 
 public class BallAudio : MonoBehaviour
 {
-    public AudioSource AudioSource;
-
-    public AudioClip HitWall1;
-    public AudioClip HitWall2;
-    public AudioClip HitWall3;
-
-    private float originalPitch;
-
-    private void Awake()
-    {
-        originalPitch = AudioSource.pitch;
-    }
-
     public void HitWall(float velocity)
     {
-        AudioClip clip = null;
-
+        // Velocity should be a variable in FMOD and it should be adjusted from this code instead of doing it here
 
         if (velocity > 12)
         {
-            clip = HitWall1;
+            AudioManager.Instance.PlayOneShot(FMODEventsTTI.Instance.HitWall1, Vector3.zero);
         }
 
         else if (velocity > 9)
         {
-            clip = HitWall2;
+            AudioManager.Instance.PlayOneShot(FMODEventsTTI.Instance.HitWall2, Vector3.zero);
         }
 
         else if (velocity > 6.0f)
         {
-            clip = HitWall3;
+            AudioManager.Instance.PlayOneShot(FMODEventsTTI.Instance.HitWall3, Vector3.zero);
         }
 
-        if (clip != null)
-        {
-            AudioSource.pitch = originalPitch + Random.Range(-0.3f, 0.3f);
-            AudioSource.PlayOneShot(clip);
-        }
+        // Pitch is randomized in FMOD
     }
 }

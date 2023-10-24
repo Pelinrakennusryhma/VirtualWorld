@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 6545506745284776613}
   - component: {fileID: 6023474505392572991}
   - component: {fileID: 4854168343266436855}
+  - component: {fileID: 3786559445233015512}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -93,10 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9bfb99537bc488418cc581ade3b6c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioSource2D: {fileID: 4854168343266436855}
-  Countdown123: {fileID: 8300000, guid: 777ce50cec7f3104e81d08d14bfb13b3, type: 3}
-  CountdownGo: {fileID: 8300000, guid: 3dd59c89c1b805f49a3bbd2b829b4fb7, type: 3}
-  UIPress: {fileID: 8300000, guid: d3d0923e2bca5634abbbd4fa6864ca00, type: 3}
 --- !u!82 &4854168343266436855
 AudioSource:
   m_ObjectHideFlags: 0
@@ -104,13 +101,13 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7408037504548271450}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: -1.39
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -193,3 +190,120 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3786559445233015512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408037504548271450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 759b9639929be25468462feaa3098d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Countdown123>k__BackingField:
+    Guid:
+      Data1: 1385754853
+      Data2: 1206209294
+      Data3: -420762447
+      Data4: 1388423671
+    Path: event:/SFX/Minigames/TableTopInvaders/Countdown123
+  <CountdownGo>k__BackingField:
+    Guid:
+      Data1: -111093949
+      Data2: 1142566648
+      Data3: -837419851
+      Data4: 445107538
+    Path: event:/SFX/Minigames/TableTopInvaders/CountdownGo
+  <UIPress>k__BackingField:
+    Guid:
+      Data1: -1228739574
+      Data2: 1309160905
+      Data3: -1712549492
+      Data4: 52287051
+    Path: event:/SFX/Minigames/TableTopInvaders/UIPress
+  <HitWall1>k__BackingField:
+    Guid:
+      Data1: -2126415036
+      Data2: 1272404809
+      Data3: 1425614270
+      Data4: 919952518
+    Path: event:/SFX/Minigames/TableTopInvaders/HitWall1
+  <HitWall2>k__BackingField:
+    Guid:
+      Data1: -969020348
+      Data2: 1261926896
+      Data3: -1992690503
+      Data4: 1406086015
+    Path: event:/SFX/Minigames/TableTopInvaders/HitWall2
+  <HitWall3>k__BackingField:
+    Guid:
+      Data1: -226469140
+      Data2: 1222245624
+      Data3: 1472503996
+      Data4: -962170273
+    Path: event:/SFX/Minigames/TableTopInvaders/HitWall3
+  <Fire1>k__BackingField:
+    Guid:
+      Data1: 1821697711
+      Data2: 1191819266
+      Data3: 41846449
+      Data4: -1963219741
+    Path: event:/SFX/Minigames/TableTopInvaders/Fire1
+  <SpawnPickup>k__BackingField:
+    Guid:
+      Data1: -2143476880
+      Data2: 1257986586
+      Data3: -1116356168
+      Data4: -2056499473
+    Path: event:/SFX/Minigames/TableTopInvaders/SpawnPickup
+  <Explosion>k__BackingField:
+    Guid:
+      Data1: -1528944873
+      Data2: 1292843465
+      Data3: 1594668958
+      Data4: -107483807
+    Path: event:/SFX/Minigames/TableTopInvaders/Explosion
+  <BallHit1>k__BackingField:
+    Guid:
+      Data1: 1155287773
+      Data2: 1186968933
+      Data3: 502606978
+      Data4: 274471619
+    Path: event:/SFX/Minigames/TableTopInvaders/HitPin1
+  <BallHit2>k__BackingField:
+    Guid:
+      Data1: -2084327522
+      Data2: 1298389629
+      Data3: 418060688
+      Data4: -266202789
+    Path: event:/SFX/Minigames/TableTopInvaders/HitPin2
+  <BallHit3>k__BackingField:
+    Guid:
+      Data1: 1515323494
+      Data2: 1124834819
+      Data3: -1128287351
+      Data4: 815037410
+    Path: event:/SFX/Minigames/TableTopInvaders/HitPin3
+  <SpawnPin>k__BackingField:
+    Guid:
+      Data1: 1522538666
+      Data2: 1314427357
+      Data3: -183296895
+      Data4: 151119870
+    Path: event:/SFX/Minigames/TableTopInvaders/SpawnPin
+  <FadeOut>k__BackingField:
+    Guid:
+      Data1: -1362172973
+      Data2: 1299455926
+      Data3: 907258021
+      Data4: -884720515
+    Path: event:/SFX/Minigames/TableTopInvaders/FadeOut
+  <ToppleOver>k__BackingField:
+    Guid:
+      Data1: 160044439
+      Data2: 1279402105
+      Data3: 283583365
+      Data4: 1167442425
+    Path: event:/SFX/Minigames/TableTopInvaders/ToppleOver
