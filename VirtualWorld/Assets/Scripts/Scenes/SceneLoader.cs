@@ -9,9 +9,11 @@ using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using StarterAssets;
+using Animations;
 
 namespace Scenes
 {
+    #region Enums
     public enum ScenePackMode
     {
         ALL,
@@ -19,6 +21,9 @@ namespace Scenes
         PLAYER_ONLY,
         ALL_BUT_PLAYER
     }
+    #endregion
+
+    #region Structs
 
     public struct SceneLoadParams
     {
@@ -56,6 +61,32 @@ namespace Scenes
         }
     }
 
+    struct CachedMonoBehaviour
+    {
+        public MonoBehaviour mb;
+        public bool isEnabled;
+
+        public CachedMonoBehaviour(MonoBehaviour mb, bool isEnabled)
+        {
+            this.mb = mb;
+            this.isEnabled = isEnabled;
+        }
+    }
+
+    struct CachedCollider
+    {
+        public Collider col;
+        public bool isEnabled;
+
+        public CachedCollider(Collider col, bool isEnabled)
+        {
+            this.col = col;
+            this.isEnabled = isEnabled;
+        }
+    }
+
+    #endregion
+
     [RequireComponent(typeof(ScenePicker))]
     public class SceneLoader : MonoBehaviour
     {
@@ -87,12 +118,12 @@ namespace Scenes
             MainSceneName = ParseSceneName(mainScenePath);
         }
 
-        public void NewMainSceneObjectAdded(GameObject playerGO)
+        public void NewMainSceneObjectAdded(GameObject gameObject)
         {
             // if playing minigame, handle any new objects getting instantiated
             if (InSoloScene)
             {
-                AddNewCachedObject(playerGO);
+                AddNewCachedObject(gameObject);
             }
 
         }
@@ -106,9 +137,17 @@ namespace Scenes
             if(packMode == ScenePackMode.ALL || packMode == ScenePackMode.ALL_BUT_PLAYER)
             {
                 cachedGameObjectList.Add(new CachedGameObject(obj, obj.activeSelf));
-                obj.SetActive(false);
-            }
 
+                AnimatedObjectDisabler disabler = obj.GetComponent<AnimatedObjectDisabler>();
+
+                if(disabler != null)
+                {
+                    disabler.Disable();
+                } else
+                {
+                    obj.SetActive(false);
+                }
+            }
         }
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
@@ -169,35 +208,25 @@ namespace Scenes
 
                 if (scenePackMode == ScenePackMode.PLAYER_ONLY)
                 {
-                    GameObject player = CharacterManager.Instance.OwnedCharacter;
-                    cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
-                    player.SetActive(false);
+                    //GameObject player = CharacterManager.Instance.OwnedCharacter;
+                    //cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
+                    //player.SetActive(false);
+                    PackObject(CharacterManager.Instance.OwnedCharacter);
                     //Character.Instance.PlayerEmitter.DisableCharacter();
                 }
                 else
                 {
                     GameObject[] allObjects = activeScene.GetRootGameObjects();
 
-                    foreach (GameObject gameObject in allObjects)
+                    foreach (GameObject go in allObjects)
                     {
-                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && gameObject == CharacterManager.Instance.OwnedCharacter)
+                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManager.Instance.OwnedCharacter)
                         {
                             // move character to the new scene here?
                         }
                         else
                         {
-                            if (gameObject.CompareTag("Player"))
-                            {
-                                //PlayerEmitter playerEmitter = gameObject.GetComponent<PlayerEmitter>();
-                                cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
-                                //playerEmitter.DisableCharacter();
-                                gameObject.SetActive(false);
-                            }
-                            else
-                            {
-                                cachedGameObjectList.Add(new CachedGameObject(gameObject, gameObject.activeSelf));
-                                gameObject.SetActive(false);
-                            }
+                            PackObject(go);
                         }
                     }
                 }
@@ -210,21 +239,53 @@ namespace Scenes
             {
                 if (cachedGameObject.gameObject != null)
                 {
-                    if (cachedGameObject.gameObject.CompareTag("Player"))
-                    {
-                        PlayerEmitter playerEmitter = cachedGameObject.gameObject.GetComponent<PlayerEmitter>();
-                        //playerEmitter.EnableCharacter();
-                        cachedGameObject.gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
-                    }
-
+                    UnpackObject(cachedGameObject);
                 }
             }
 
             cachedGameObjectList.Clear();
+        }
+
+        void PackObject(GameObject go)
+        {
+            cachedGameObjectList.Add(new CachedGameObject(go, go.activeSelf));
+
+            AnimatedObjectDisabler disabler = go.GetComponent<AnimatedObjectDisabler>();
+            if (disabler != null)
+            {
+                disabler.Disable();
+                return;
+            }
+
+            AnimatedObjectContainer animatedObjectContainer = go.GetComponent<AnimatedObjectContainer>();
+            if(animatedObjectContainer != null)
+            {
+                animatedObjectContainer.DisableChildren();
+                return;
+            }
+
+            go.SetActive(false);
+
+        }
+
+        void UnpackObject(CachedGameObject cachedGameObject)
+        {
+            AnimatedObjectDisabler disabler = cachedGameObject.gameObject.GetComponent<AnimatedObjectDisabler>();
+            if (disabler != null)
+            {
+                disabler.Enable();
+                return;
+            }
+
+            AnimatedObjectContainer animatedObjectContainer = cachedGameObject.gameObject.GetComponent<AnimatedObjectContainer>();
+            if (animatedObjectContainer != null)
+            {
+                animatedObjectContainer.EnableChildren();
+                return;
+            }
+
+            cachedGameObject.gameObject.SetActive(cachedGameObject.isEnabled);
+
         }
 
         string ParseSceneName(string scenePath)

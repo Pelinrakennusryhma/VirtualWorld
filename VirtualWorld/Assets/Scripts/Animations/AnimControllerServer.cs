@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
-namespace Characters
+
+namespace Animations
 {
     public class AnimControllerServer : NetworkBehaviour
     {

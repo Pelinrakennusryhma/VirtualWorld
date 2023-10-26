@@ -379,5 +379,11 @@ namespace StarterAssets
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.Land, transform.TransformPoint(_controller.center));
             }
         }
+
+        public void StopAnimations()
+        {
+            _animator.SetFloat(_animIDSpeed, 0f);
+            _animator.SetFloat(_animIDMotionSpeed, 0f);
+        }
     }
 }
