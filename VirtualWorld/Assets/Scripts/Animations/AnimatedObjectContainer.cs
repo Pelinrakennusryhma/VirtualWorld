@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Animations
 {
+    //Disables and Enables children with AnimatedObjectDisabler component
     public class AnimatedObjectContainer : MonoBehaviour
     {
         public void EnableChildren()

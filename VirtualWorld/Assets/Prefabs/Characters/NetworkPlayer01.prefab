@@ -1865,6 +1865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 6462130043100026293}
   ui: {fileID: 0}
+  thirdPersonController: {fileID: 7279262954481719501}
 --- !u!136 &6414566386358652639
 CapsuleCollider:
   m_ObjectHideFlags: 0

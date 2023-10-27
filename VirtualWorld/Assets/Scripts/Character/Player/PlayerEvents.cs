@@ -24,8 +24,16 @@ namespace Characters
                 DontDestroyOnLoad(gameObject);
             }
         }
+        #region Player Character - movement etc.
+        public UnityEvent EventPlayerLanded;
 
-        #region CharacterData
+        public void CallEventPlayerLanded()
+        {
+            EventPlayerLanded.Invoke();
+        }
+        #endregion
+
+        #region Character Data - backend data etc.
         public UnityEvent<CharacterData> EventCharacterDataSet;
         public void CallEventCharacterDataSet(CharacterData data)
         {

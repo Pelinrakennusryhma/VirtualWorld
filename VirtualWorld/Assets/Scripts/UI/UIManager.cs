@@ -54,11 +54,14 @@ namespace UI
                 return;
             }
 
+            // When quest is completed by talking to an NPC,
+            // check the quests of the NPC and see if there's one that has
+            // the completed quest as prequisite. If so, open dialog with
+            // that quest.
             foreach (Quest npcQuest in dialogPanel.CurrentNpc.Data.mainDialog.quests)
             {
                 if(npcQuest.preRequisiteQuest == quest)
                 {
-                    Debug.Log("prequest done, open dialog panel!");
                     PlayerEvents.Instance.CallEventDialogOpened(dialogPanel.CurrentNpc, npcQuest);
                 }
             }

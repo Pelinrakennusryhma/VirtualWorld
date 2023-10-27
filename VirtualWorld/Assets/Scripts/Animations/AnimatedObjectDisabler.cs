@@ -18,6 +18,8 @@ namespace Animations
         List<CachedGameObject> childGameObjects = new List<CachedGameObject>();
         List<CachedCollider> colliders = new List<CachedCollider>();
 
+        // Scripts that shouldn't get disabled to avoid anything network related breaking,
+        // like networked animations
         List<MonoBehaviour> ignoredMonobehaviours = new List<MonoBehaviour>();
 
         void Start()
@@ -36,21 +38,25 @@ namespace Animations
             {
                 cachedMono.mb.enabled = cachedMono.isEnabled;
             }
+            monoBehaviours.Clear();
 
             foreach (CachedCollider cachedCollider in colliders)
             {
                 cachedCollider.col.enabled = cachedCollider.isEnabled;
             }
+            colliders.Clear();
 
             foreach (CachedGameObject cachedGO in childGameObjects)
             {
                 cachedGO.gameObject.SetActive(cachedGO.isEnabled);
             }
+            childGameObjects.Clear();
 
         }
 
         public void Disable()
         {
+            // Monobehaviours
             foreach (MonoBehaviour monoBehaviour in GetComponents<MonoBehaviour>())
             {
                 if (!ignoredMonobehaviours.Contains(monoBehaviour))
@@ -60,12 +66,19 @@ namespace Animations
                 }
             }
 
+            // Colliders
             foreach (Collider collider in GetComponents<Collider>())
             {
+                if(collider is CharacterController)
+                {
+                    continue;
+                }
+
                 colliders.Add(new CachedCollider(collider, collider.enabled));
                 collider.enabled = false;
             }
 
+            // Child gameObjects
             foreach (Transform child in transform)
             {
                 childGameObjects.Add(new CachedGameObject(child.gameObject, child.gameObject.activeSelf));

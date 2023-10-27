@@ -202,32 +202,30 @@ namespace Scenes
 
         void PackScene(ScenePackMode scenePackMode)
         {
-            if (scenePackMode != ScenePackMode.NONE)
+            if (scenePackMode == ScenePackMode.NONE)
             {
-                Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                return;
+            }
 
-                if (scenePackMode == ScenePackMode.PLAYER_ONLY)
-                {
-                    //GameObject player = CharacterManager.Instance.OwnedCharacter;
-                    //cachedGameObjectList.Add(new CachedGameObject(player, player.activeSelf));
-                    //player.SetActive(false);
-                    PackObject(CharacterManager.Instance.OwnedCharacter);
-                    //Character.Instance.PlayerEmitter.DisableCharacter();
-                }
-                else
-                {
-                    GameObject[] allObjects = activeScene.GetRootGameObjects();
+            Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
-                    foreach (GameObject go in allObjects)
+            if (scenePackMode == ScenePackMode.PLAYER_ONLY)
+            {
+                PackObject(CharacterManager.Instance.OwnedCharacter);
+            }
+            else
+            {
+                GameObject[] allObjects = activeScene.GetRootGameObjects();
+
+                foreach (GameObject go in allObjects)
+                {
+                    if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManager.Instance.OwnedCharacter)
                     {
-                        if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManager.Instance.OwnedCharacter)
-                        {
-                            // move character to the new scene here?
-                        }
-                        else
-                        {
-                            PackObject(go);
-                        }
+                        // move character to the new scene here?
+                    }
+                    else
+                    {
+                        PackObject(go);
                     }
                 }
             }
@@ -250,6 +248,7 @@ namespace Scenes
         {
             cachedGameObjectList.Add(new CachedGameObject(go, go.activeSelf));
 
+            // Animated NetworkObjects are disabled via script
             AnimatedObjectDisabler disabler = go.GetComponent<AnimatedObjectDisabler>();
             if (disabler != null)
             {
@@ -257,6 +256,7 @@ namespace Scenes
                 return;
             }
 
+            // Containers holding animated NetworkObjects
             AnimatedObjectContainer animatedObjectContainer = go.GetComponent<AnimatedObjectContainer>();
             if(animatedObjectContainer != null)
             {
@@ -264,6 +264,7 @@ namespace Scenes
                 return;
             }
 
+            // Normal objects are simply disabled
             go.SetActive(false);
 
         }

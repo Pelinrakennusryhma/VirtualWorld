@@ -5,6 +5,7 @@ using FishNet.Object;
 
 namespace Animations
 {
+    // For now used for starting NPC idle animation
     public class AnimControllerServer : NetworkBehaviour
     {
         Animator _animator;
