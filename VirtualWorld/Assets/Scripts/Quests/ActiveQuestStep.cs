@@ -34,27 +34,20 @@ namespace Quests
         {
             if(step == QuestStep)
             {
-                Debug.Log("Progress in ActiveQuestStep: " + step.name);
                 Advance(byAmount);
             }
         }
 
         public void Advance(int byAmount)
         {
-            Debug.Log("Advancing quest step " + QuestStep.name);
-            Debug.Log("CompletionStatus Pre: " + CompletionStatus);
-            Debug.Log("ByAmount: " + byAmount);
             completedObjectives += byAmount;
             if(completedObjectives >= QuestStep.requiredObjectives)
             {
-                Debug.Log("Completed.");
                 CompleteStep();
             } else
             {
-                Debug.Log("Updated.");
                 UpdateStep();
             }
-            Debug.Log("CompletionStatus Post: " + CompletionStatus);
         }
 
         void CompleteStep()

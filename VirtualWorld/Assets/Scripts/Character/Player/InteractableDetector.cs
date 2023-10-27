@@ -11,20 +11,39 @@ namespace Characters
     public class InteractableDetector : MonoBehaviour
     {
         [SerializeField] StarterAssetsInputs input;
-        [SerializeField] InteractionUI ui;
+        [SerializeField] ThirdPersonController thirdPersonController;
+        InteractionUI ui;
         I_Interactable currentInteractable;
         GameObject currentInteractableGO;
+
+        I_Interactable queuedInteractable;
 
         private void Start()
         {
             FindAndInitUI();
+            PlayerEvents.Instance.EventPlayerLanded.AddListener(OnPlayerLanded);
         }
 
         private void Update()
         {
-            if (input.interact && currentInteractable != null)
+            if (input.interact && currentInteractable != null && queuedInteractable == null)
             {
-                Interact();
+                if (thirdPersonController.Grounded)
+                {
+                    Interact(currentInteractable);
+                } else
+                {
+                    queuedInteractable = currentInteractable;
+                }
+            }
+        }
+
+        void OnPlayerLanded()
+        {
+            if(queuedInteractable != null)
+            {
+                Interact(queuedInteractable);
+                queuedInteractable = null;
             }
         }
 
@@ -42,11 +61,11 @@ namespace Characters
             }
         }
 
-        void Interact()
+        void Interact(I_Interactable interactable)
         {
             input.ClearInteractInput();
             PlayerEvents.Instance.CallEventInteractionStarted();
-            currentInteractable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
+            interactable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
         }
 
         private void OnTriggerStay(Collider other)

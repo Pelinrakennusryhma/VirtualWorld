@@ -51,15 +51,12 @@ namespace Characters
         [ServerRpc(RequireOwnership = false)]
         public void GetCharacterDataServerRpc(NetworkConnection conn, string id)
         {
-            Debug.Log("SERVER RPC CALLED");
-
             APICalls_Server.Instance.GetCharacterData(conn, id, AcceptCharacterData);
         }
 
         [TargetRpc]
         void AcceptCharacterData(NetworkConnection conn, CharacterData characterData)
         {
-            Debug.Log("TARGET RPC CALLED");
             Utils.DumpToConsole(characterData);
             PlayerEvents.Instance.CallEventCharacterDataSet(characterData);
         }

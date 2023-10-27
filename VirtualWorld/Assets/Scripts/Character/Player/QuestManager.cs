@@ -186,7 +186,6 @@ namespace Quests
 
         public void ProgressStep(QuestStep step, int byAmount)
         {
-            Debug.Log("ProgressStep func ran");
             PlayerEvents.Instance.CallEventQuestStepProgressed(step, byAmount);
         }
 
@@ -242,6 +241,7 @@ namespace Quests
             _createdSteps.Add(step);
         }
 
+        // Currently in no use but will be when quests can be abandoned.
         public void RemoveActiveQuestStep(ActiveQuestStep step)
         {
             ActiveQuestStep foundStep = _createdSteps.Find(s => s == step);

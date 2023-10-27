@@ -1,4 +1,5 @@
 ﻿using Audio;
+using Characters;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -56,6 +57,9 @@ namespace StarterAssets
         [Tooltip("What layers the character uses as ground")]
         public LayerMask GroundLayers;
 
+        [Tooltip("How long to wait before broadcasting that character has landed. Used to avoid floating behaviour when interacting mid-air.")]
+        public float invokeLandingDelay = 0.25f;
+
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
@@ -106,8 +110,6 @@ namespace StarterAssets
         [SerializeField] private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
-
-        public bool IsTabletViewActive;
 
         private bool IsCurrentDeviceMouse
         {
@@ -169,17 +171,28 @@ namespace StarterAssets
 
         private void GroundedCheck()
         {
+            bool prevGrounded = Grounded;
             // set sphere position, with offset
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
 
+            if(!prevGrounded && Grounded)
+            {
+                Invoke("CallEventPlayerLanded", invokeLandingDelay);
+            }
+
             // update animator if using character
             if (shouldAnimate)
             {
                 _animator.SetBool(_animIDGrounded, Grounded);
             }
+        }
+
+        void CallEventPlayerLanded()
+        {
+            PlayerEvents.Instance.CallEventPlayerLanded();
         }
 
         private void CameraRotation()
@@ -366,7 +379,7 @@ namespace StarterAssets
 
         private void OnFootstep(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            if (animationEvent.animatorClipInfo.weight > 0.5f && _controller != null)
             {
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.Footsteps, transform.TransformPoint(_controller.center));
             }
@@ -374,10 +387,19 @@ namespace StarterAssets
 
         private void OnLand(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            if (animationEvent.animatorClipInfo.weight > 0.5f && _controller != null)
             {
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.Land, transform.TransformPoint(_controller.center));
             }
+        }
+
+        // Called from AnimatedObjectDisabler to stop owned character's animations when entering minigame etc.
+        public void StopAnimations()
+        {
+            _animator.SetFloat(_animIDSpeed, 0f);
+            _animator.SetFloat(_animIDMotionSpeed, 0f);
+            _animator.SetBool(_animIDJump, false);
+            _animator.SetBool(_animIDFreeFall, false);
         }
     }
 }

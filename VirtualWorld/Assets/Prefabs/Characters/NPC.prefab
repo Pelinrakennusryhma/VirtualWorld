@@ -1230,6 +1230,7 @@ GameObject:
   - component: {fileID: 8295644382676027320}
   - component: {fileID: 2846622880478681344}
   - component: {fileID: 7351076942195331988}
+  - component: {fileID: 4423389299935481872}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -1253,7 +1254,7 @@ Transform:
   - {fileID: 5255082199052384258}
   - {fileID: 8293114218220628355}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5615815007780928290
 Animator:
@@ -1476,6 +1477,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <DetectionMessage>k__BackingField: Talk
+--- !u!114 &4423389299935481872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862277631971027947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d4ce2576721b54b9b62178b78fba86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4072265639379859564
 GameObject:
   m_ObjectHideFlags: 0

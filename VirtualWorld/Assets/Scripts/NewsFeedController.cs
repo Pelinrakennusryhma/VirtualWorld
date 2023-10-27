@@ -29,8 +29,6 @@ public class NewsFeedController : NetworkBehaviour
         }
         else
         {
-            Debug.Log("Launched newsfeed controller");
-
             Instance = this;
 
             LocalNews = GenerateLocalNewsTestFunction();

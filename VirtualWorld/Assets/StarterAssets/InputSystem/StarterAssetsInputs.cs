@@ -79,6 +79,7 @@ namespace StarterAssets
 			SprintInput(false);
 			InteractInput(false);
 			Action1Input(false);
+            TabletInput(false);
 		}
 		public void OnMove(InputAction.CallbackContext value)
 		{
