@@ -106,11 +106,6 @@ public class TabletCameraViewController : NetworkBehaviour
         // but not now    
         // We don't use the FlyCamera yet, so disable it.
         FlyingCam.EnableDisableCameras(false, false);
-
-
-
-
-        Debug.Log("On start client called. isowner " + IsOwner);
     }
 
     #region ButtonPresses

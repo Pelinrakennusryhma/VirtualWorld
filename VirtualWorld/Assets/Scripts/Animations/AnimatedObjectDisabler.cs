@@ -1,24 +1,32 @@
 using FishNet.Component.Animating;
+using FishNet.Component.Transforming;
+using FishNet.Object;
 using Scenes;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.InputSystem;
+using Characters;
 
 namespace Animations
 {
     public class AnimatedObjectDisabler : MonoBehaviour
     {
-        Animator _animator;
-        NetworkAnimator _networkAnimator;
         List<CachedMonoBehaviour> monoBehaviours = new List<CachedMonoBehaviour>();
         List<CachedGameObject> childGameObjects = new List<CachedGameObject>();
         List<CachedCollider> colliders = new List<CachedCollider>();
 
+        List<MonoBehaviour> ignoredMonobehaviours = new List<MonoBehaviour>();
+
         void Start()
         {
-            _animator = GetComponent<Animator>();
-            _networkAnimator = GetComponent<NetworkAnimator>();
+            ignoredMonobehaviours.Add(GetComponent(typeof(Animator)) as MonoBehaviour);
+            ignoredMonobehaviours.Add(GetComponent(typeof(NetworkAnimator)) as MonoBehaviour);
+            ignoredMonobehaviours.Add(GetComponent(typeof(NetworkObject)) as MonoBehaviour);
+            ignoredMonobehaviours.Add(GetComponent(typeof(NetworkTransform)) as MonoBehaviour);
+            ignoredMonobehaviours.Add(this);
         }
 
 
@@ -45,7 +53,7 @@ namespace Animations
         {
             foreach (MonoBehaviour monoBehaviour in GetComponents<MonoBehaviour>())
             {
-                if (monoBehaviour != _animator && monoBehaviour != this && monoBehaviour != _networkAnimator)
+                if (!ignoredMonobehaviours.Contains(monoBehaviour))
                 {
                     monoBehaviours.Add(new CachedMonoBehaviour(monoBehaviour, monoBehaviour.isActiveAndEnabled));
                     monoBehaviour.enabled = false;
@@ -64,11 +72,14 @@ namespace Animations
                 child.gameObject.SetActive(false);
             }
 
-            // In case of player character, stop animations from playing so we don't hear footsteps in minigame
-            ThirdPersonController tpc = GetComponent<ThirdPersonController>();
-            if(tpc != null)
+            // In case of owned player character, stop animations from playing so we don't hear footsteps in minigame
+            if(gameObject == CharacterManager.Instance.OwnedCharacter)
             {
-                tpc.StopAnimations();
+                ThirdPersonController tpc = GetComponent<ThirdPersonController>();
+                if (tpc != null)
+                {
+                    tpc.StopAnimations();
+                }
             }
         }
     }

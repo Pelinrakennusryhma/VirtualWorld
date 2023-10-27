@@ -1,3 +1,4 @@
+using FMODUnity;
 using Scenes;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace DiceMinigame
                 transform.position = transform.position + (transform.forward * forwardOffset);
 
                 camMover.Init();
-                camMover.GetComponent<AudioListener>().enabled = false;
+                camMover.GetComponent<StudioListener>().enabled = false;
 
                 environments.SetActive(false);
                 eventSystem.SetActive(false);

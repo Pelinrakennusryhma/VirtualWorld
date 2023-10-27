@@ -366,7 +366,7 @@ namespace StarterAssets
 
         private void OnFootstep(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            if (animationEvent.animatorClipInfo.weight > 0.5f && _controller != null)
             {
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.Footsteps, transform.TransformPoint(_controller.center));
             }
@@ -374,7 +374,7 @@ namespace StarterAssets
 
         private void OnLand(AnimationEvent animationEvent)
         {
-            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            if (animationEvent.animatorClipInfo.weight > 0.5f && _controller != null)
             {
                 AudioManager.Instance.PlayOneShot(FMODEvents.Instance.Land, transform.TransformPoint(_controller.center));
             }

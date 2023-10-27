@@ -43,7 +43,6 @@ namespace Quests
             foreach (Quest quest in AllQuests)
             {
                 allQuestsDictionary.Add(quest.name, quest);
-                Debug.Log("added: " + quest.name + quest.title);
             }
         }
 
