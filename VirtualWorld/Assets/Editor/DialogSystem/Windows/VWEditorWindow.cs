@@ -15,6 +15,8 @@ namespace Dialog
         private void CreateGUI()
         {
             AddGraphView();
+
+            AddStyles();
         }
 
         private void AddGraphView()
@@ -24,6 +26,12 @@ namespace Dialog
             graphView.StretchToParentSize();
 
             rootVisualElement.Add(graphView);
+        }
+        void AddStyles()
+        {
+            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Dialog/VWVariables.uss");
+
+            rootVisualElement.styleSheets.Add(styleSheet);
         }
     }
 }
