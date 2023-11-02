@@ -12,14 +12,16 @@ namespace Dialog
         public string Text { get; set; }
         public VWDialogType DialogType { get; set; }
 
-        public void Initialize()
+        public virtual void Initialize(Vector2 position)
         {
             DialogName = "DialogName";
             Choices = new List<string>();
             Text = "Dialog text.";
+
+            SetPosition(new Rect(position, Vector2.zero));
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             // Title Container
 
@@ -57,8 +59,6 @@ namespace Dialog
             customDataContainer.Add(textFoldout);
 
             extensionContainer.Add(customDataContainer);
-
-            RefreshExpandedState();
         }
     }
 }

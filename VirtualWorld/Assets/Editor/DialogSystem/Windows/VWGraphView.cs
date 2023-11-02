@@ -14,22 +14,36 @@ namespace Dialog
         {
             AddManipulators();
             AddGridBackground();
-            CreateNode();
             AddStyles();
-        }
-
-        void CreateNode()
-        {
-            VWNode node = new VWNode();
-            node.Initialize();
-            node.Draw();
-            AddElement(node);
         }
 
         void AddManipulators()
         {
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
+            this.AddManipulator(new SelectionDragger());
+            this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ContentDragger());
+            this.AddManipulator(CreateNodeContextualMenu("Add Node (Single Choice)", VWDialogType.SingleChoice));
+            this.AddManipulator(CreateNodeContextualMenu("Add Node (Multiple Choice)", VWDialogType.MultipleChoice));
+        }
+
+        IManipulator CreateNodeContextualMenu(string actionTitle, VWDialogType dialogType)
+        {
+            ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
+                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode(dialogType, actionEvent.eventInfo.localMousePosition)))
+                );
+            return contextualMenuManipulator;
+        }
+
+        VWNode CreateNode(VWDialogType dialogType, Vector2 position)
+        {
+            Type nodeType = Type.GetType($"Dialog.VW{dialogType}Node");
+            VWNode node = (VWNode)Activator.CreateInstance(nodeType);
+
+            node.Initialize(position);
+            node.Draw();
+
+            return node;
         }
 
         void AddGridBackground()
