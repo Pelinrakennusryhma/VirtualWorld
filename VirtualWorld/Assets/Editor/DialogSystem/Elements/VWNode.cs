@@ -10,7 +10,6 @@ namespace Dialog
         public string DialogName { get; set; }
         public List<string> Choices { get; set; }
         public string Text { get; set; }
-        public VWDialogType DialogType { get; set; }
 
         public virtual void Initialize(Vector2 position)
         {
@@ -19,6 +18,9 @@ namespace Dialog
             Text = "Dialog text.";
 
             SetPosition(new Rect(position, Vector2.zero));
+
+            mainContainer.AddToClassList("vw-node__main-container");
+            extensionContainer.AddToClassList("vw-node__extension-container");
         }
 
         public virtual void Draw()
@@ -29,6 +31,10 @@ namespace Dialog
             {
                 value = DialogName
             };
+
+            dialogNameTextField.AddToClassList("vw-node__text-field");
+            dialogNameTextField.AddToClassList("vw-node__filename-text-field");
+            dialogNameTextField.AddToClassList("vw-node__text-field__hidden");
 
             titleContainer.Insert(0, dialogNameTextField);
 
@@ -44,6 +50,8 @@ namespace Dialog
 
             VisualElement customDataContainer = new VisualElement();
 
+            customDataContainer.AddToClassList("vw-node__custom-data-container");
+
             Foldout textFoldout = new Foldout()
             {
                 text = "Dialog Text"
@@ -53,6 +61,9 @@ namespace Dialog
             {
                 value = Text
             };
+
+            textTextField.AddToClassList("vw-node__text-field");
+            textTextField.AddToClassList("vw-node__quote-text-field");
 
             textFoldout.Add(textTextField);
 

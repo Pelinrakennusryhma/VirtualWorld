@@ -11,7 +11,6 @@ namespace Dialog
         {
             base.Initialize(position);
 
-            DialogType = VWDialogType.SingleChoice;
 
             Choices.Add("Next Dialog");
         }

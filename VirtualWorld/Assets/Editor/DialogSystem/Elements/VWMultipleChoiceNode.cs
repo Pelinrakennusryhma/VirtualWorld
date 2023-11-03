@@ -12,8 +12,6 @@ namespace Dialog
         {
             base.Initialize(position);
 
-            DialogType = VWDialogType.MultipleChoice;
-
             Choices.Add("New Choice");
         }
 
@@ -27,6 +25,8 @@ namespace Dialog
             {
                 text = "Add Choice"
             };
+
+            addChoiceButton.AddToClassList("vw-node__button");
 
             mainContainer.Insert(1, addChoiceButton);
 
@@ -43,10 +43,16 @@ namespace Dialog
                     text = "X"
                 };
 
+                deleteChoiceButton.AddToClassList("vw-node__button");
+
                 TextField choiceTextField = new TextField()
                 {
                     value = choice
                 };
+
+                choiceTextField.AddToClassList("vw-node__text-field");
+                choiceTextField.AddToClassList("vw-node__choice-text-field");
+                choiceTextField.AddToClassList("vw-node__text-field__hidden");
 
                 choicePort.Add(choiceTextField);
                 choicePort.Add(deleteChoiceButton);

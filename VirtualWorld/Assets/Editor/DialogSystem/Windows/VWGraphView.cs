@@ -23,11 +23,11 @@ namespace Dialog
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ContentDragger());
-            this.AddManipulator(CreateNodeContextualMenu("Add Node (Single Choice)", VWDialogType.SingleChoice));
-            this.AddManipulator(CreateNodeContextualMenu("Add Node (Multiple Choice)", VWDialogType.MultipleChoice));
+            this.AddManipulator(CreateNodeContextualMenu("Add Node (Single Choice)", typeof(VWSingleChoiceNode)));
+            this.AddManipulator(CreateNodeContextualMenu("Add Node (Multiple Choice)", typeof(VWMultipleChoiceNode)));
         }
 
-        IManipulator CreateNodeContextualMenu(string actionTitle, VWDialogType dialogType)
+        IManipulator CreateNodeContextualMenu(string actionTitle, Type dialogType)
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
                 menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode(dialogType, actionEvent.eventInfo.localMousePosition)))
@@ -35,10 +35,9 @@ namespace Dialog
             return contextualMenuManipulator;
         }
 
-        VWNode CreateNode(VWDialogType dialogType, Vector2 position)
+        VWNode CreateNode(Type dialogType, Vector2 position)
         {
-            Type nodeType = Type.GetType($"Dialog.VW{dialogType}Node");
-            VWNode node = (VWNode)Activator.CreateInstance(nodeType);
+            VWNode node = (VWNode)Activator.CreateInstance(dialogType);
 
             node.Initialize(position);
             node.Draw();
@@ -57,9 +56,11 @@ namespace Dialog
 
         private void AddStyles()
         {
-            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Dialog/VWGraphViewStyles.uss");
+            StyleSheet graphViewStyleSheet = (StyleSheet)EditorGUIUtility.Load("Dialog/VWGraphViewStyles.uss");
+            StyleSheet nodeStyleSheet = (StyleSheet)EditorGUIUtility.Load("Dialog/VWNodeStyles.uss");
 
-            styleSheets.Add(styleSheet);
+            styleSheets.Add(graphViewStyleSheet);
+            styleSheets.Add(nodeStyleSheet);
         }
     }
 }
