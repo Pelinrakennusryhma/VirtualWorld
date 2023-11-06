@@ -27,22 +27,19 @@ namespace Dialog
         {
             // Title Container
 
-            TextField dialogNameTextField = new TextField()
-            {
-                value = DialogName
-            };
+            TextField dialogNameTextField = VWElementUtility.CreateTextField(DialogName);
 
-            dialogNameTextField.AddToClassList("vw-node__text-field");
-            dialogNameTextField.AddToClassList("vw-node__filename-text-field");
-            dialogNameTextField.AddToClassList("vw-node__text-field__hidden");
+            dialogNameTextField.AddClasses(
+                "vw-node__text-field", 
+                "vw-node__filename-text-field", 
+                "vw-node__text-field__hidden"
+            );
 
             titleContainer.Insert(0, dialogNameTextField);
 
             // Input Container
 
-            Port inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));
-
-            inputPort.portName = "Dialog Connection";
+            Port inputPort = this.CreatePort("Dialog Connection", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
 
             inputContainer.Add(inputPort);
 
@@ -52,18 +49,11 @@ namespace Dialog
 
             customDataContainer.AddToClassList("vw-node__custom-data-container");
 
-            Foldout textFoldout = new Foldout()
-            {
-                text = "Dialog Text"
-            };
+            Foldout textFoldout = VWElementUtility.CreateFoldout("Dialog Text");
 
-            TextField textTextField = new TextField()
-            {
-                value = Text
-            };
+            TextField textTextField = VWElementUtility.CreateTextArea(Text);
 
-            textTextField.AddToClassList("vw-node__text-field");
-            textTextField.AddToClassList("vw-node__quote-text-field");
+            textTextField.AddClasses("vw-node__text-field", "vw-node__quote-text-field");
 
             textFoldout.Add(textTextField);
 

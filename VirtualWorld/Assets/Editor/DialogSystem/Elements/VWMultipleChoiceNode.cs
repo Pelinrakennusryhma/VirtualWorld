@@ -21,10 +21,13 @@ namespace Dialog
 
             // Main Container
 
-            Button addChoiceButton = new Button()
+            Button addChoiceButton = VWElementUtility.CreateButton("Add Choice", () =>
             {
-                text = "Add Choice"
-            };
+                Port choicePort = CreateChoicePort("New Choice");
+
+                Choices.Add("New Choice");
+                outputContainer.Add(choicePort);
+            });
 
             addChoiceButton.AddToClassList("vw-node__button");
 
@@ -34,34 +37,36 @@ namespace Dialog
 
             foreach (string choice in Choices)
             {
-                Port choicePort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
-
-                choicePort.portName = "";
-
-                Button deleteChoiceButton = new Button()
-                {
-                    text = "X"
-                };
-
-                deleteChoiceButton.AddToClassList("vw-node__button");
-
-                TextField choiceTextField = new TextField()
-                {
-                    value = choice
-                };
-
-                choiceTextField.AddToClassList("vw-node__text-field");
-                choiceTextField.AddToClassList("vw-node__choice-text-field");
-                choiceTextField.AddToClassList("vw-node__text-field__hidden");
-
-                choicePort.Add(choiceTextField);
-                choicePort.Add(deleteChoiceButton);
+                Port choicePort = CreateChoicePort(choice);
 
                 outputContainer.Add(choicePort);
             }
 
             RefreshExpandedState();
         }
+
+        #region Element Creation
+        private Port CreateChoicePort(string choice)
+        {
+            Port choicePort = this.CreatePort();
+
+            Button deleteChoiceButton = VWElementUtility.CreateButton("X");
+
+            deleteChoiceButton.AddToClassList("vw-node__button");
+
+            TextField choiceTextField = VWElementUtility.CreateTextField(choice);
+
+            choiceTextField.AddClasses(
+                "vw-node__text-field",
+                "vw-node__choice-text-field",
+                "vw-node__text-field__hidden"
+            );
+
+            choicePort.Add(choiceTextField);
+            choicePort.Add(deleteChoiceButton);
+            return choicePort;
+        }
+        #endregion
     }
 }
 

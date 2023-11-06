@@ -19,6 +19,7 @@ namespace Dialog
             AddStyles();
         }
 
+        #region Element Additions
         private void AddGraphView()
         {
             VWGraphView graphView = new VWGraphView();
@@ -29,9 +30,8 @@ namespace Dialog
         }
         void AddStyles()
         {
-            StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("Dialog/VWVariables.uss");
-
-            rootVisualElement.styleSheets.Add(styleSheet);
+            rootVisualElement.AddStyleSheets("Dialog/VWVariables.uss");
         }
+        #endregion
     }
 }
