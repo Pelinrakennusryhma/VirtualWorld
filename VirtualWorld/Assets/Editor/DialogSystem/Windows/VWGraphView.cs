@@ -10,9 +10,14 @@ namespace Dialog
 {
     public class VWGraphView : GraphView
     {
-        public VWGraphView()
+        private VWEditorWindow editorWindow;
+        private VWSearchWindow searchWindow;
+        public VWGraphView(VWEditorWindow vwEditorWindow)
         {
+            editorWindow = vwEditorWindow;
+
             AddManipulators();
+            AddSearchWindow();
             AddGridBackground();
             AddStyles();
         }
@@ -63,7 +68,8 @@ namespace Dialog
         IManipulator CreateNodeContextualMenu(string actionTitle, Type dialogType)
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode(dialogType, actionEvent.eventInfo.localMousePosition)))
+                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => 
+                AddElement(CreateNode(dialogType, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
                 );
             return contextualMenuManipulator;
         }
@@ -71,7 +77,8 @@ namespace Dialog
         private IManipulator CreateGroupContextualMenu()
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction("Add Group", actionEvent => AddElement(CreateGroup("DialogGroup", actionEvent.eventInfo.localMousePosition)))
+                menuEvent => menuEvent.menu.AppendAction("Add Group", actionEvent => 
+                AddElement(CreateGroup("DialogGroup", GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
                 );
             return contextualMenuManipulator;
         }
@@ -80,7 +87,18 @@ namespace Dialog
 
         #region Element Creation
 
-        private Group CreateGroup(string title, Vector2 localMousePosition)
+        private void AddSearchWindow()
+        {
+            if (searchWindow == null)
+            {
+                searchWindow = ScriptableObject.CreateInstance<VWSearchWindow>();
+                searchWindow.Initialize(this);
+            }
+
+            nodeCreationRequest = context => SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
+        }
+
+        public Group CreateGroup(string title, Vector2 localMousePosition)
         {
             Group group = new Group()
             {
@@ -92,7 +110,7 @@ namespace Dialog
             return group;
         }
 
-        VWNode CreateNode(Type dialogType, Vector2 position)
+        public VWNode CreateNode(Type dialogType, Vector2 position)
         {
             VWNode node = (VWNode)Activator.CreateInstance(dialogType);
 
@@ -120,6 +138,21 @@ namespace Dialog
                 "Dialog/VWGraphViewStyles.uss",
                 "Dialog/VWNodeStyles.uss"
             );
+        }
+        #endregion
+
+        #region Utilities
+        public Vector2 GetLocalMousePosition(Vector2 mousePosition, bool isSearchWindow = false)
+        {
+            Vector2 worldMousePosition = mousePosition;
+
+            if (isSearchWindow)
+            {
+                worldMousePosition -= editorWindow.position.position;
+            }
+
+            Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
+            return localMousePosition;
         }
         #endregion
     }

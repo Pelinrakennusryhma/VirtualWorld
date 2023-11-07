@@ -22,7 +22,7 @@ namespace Dialog
         #region Element Additions
         private void AddGraphView()
         {
-            VWGraphView graphView = new VWGraphView();
+            VWGraphView graphView = new VWGraphView(this);
 
             graphView.StretchToParentSize();
 
