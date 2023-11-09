@@ -11,11 +11,19 @@ namespace Dialog
         public List<string> Choices { get; set; }
         public string Text { get; set; }
 
-        public virtual void Initialize(Vector2 position)
+        private VWGraphView graphView;
+        private Color defaultBackgroundColor;
+
+        public virtual void Initialize(VWGraphView vwGraphView, Vector2 position)
         {
             DialogName = "DialogName";
             Choices = new List<string>();
             Text = "Dialog text.";
+
+            graphView = vwGraphView;
+
+            // There probably is no easy way to get the color from the .uss file..
+            defaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
 
             SetPosition(new Rect(position, Vector2.zero));
 
@@ -27,7 +35,12 @@ namespace Dialog
         {
             // Title Container
 
-            TextField dialogNameTextField = VWElementUtility.CreateTextField(DialogName);
+            TextField dialogNameTextField = VWElementUtility.CreateTextField(DialogName, callback =>
+            {
+                graphView.RemoveUngroupedNode(this);
+                DialogName = callback.newValue;
+                graphView.AddUngroupedNode(this);
+            });
 
             dialogNameTextField.AddClasses(
                 "vw-node__text-field", 
@@ -60,6 +73,16 @@ namespace Dialog
             customDataContainer.Add(textFoldout);
 
             extensionContainer.Add(customDataContainer);
+        }
+
+        public void SetErrorStyle(Color color)
+        {
+            mainContainer.style.backgroundColor = color;
+        }
+
+        public void ResetStyle()
+        {
+            mainContainer.style.backgroundColor = defaultBackgroundColor;
         }
     }
 }

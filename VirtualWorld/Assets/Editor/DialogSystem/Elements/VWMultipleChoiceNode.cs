@@ -8,9 +8,9 @@ namespace Dialog
 {
     public class VWMultipleChoiceNode : VWNode
     {
-        public override void Initialize(Vector2 position)
+        public override void Initialize(VWGraphView vwGraphView, Vector2 position)
         {
-            base.Initialize(position);
+            base.Initialize(vwGraphView, position);
 
             Choices.Add("New Choice");
         }

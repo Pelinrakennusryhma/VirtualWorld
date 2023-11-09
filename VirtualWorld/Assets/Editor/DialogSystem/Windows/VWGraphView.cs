@@ -12,13 +12,20 @@ namespace Dialog
     {
         private VWEditorWindow editorWindow;
         private VWSearchWindow searchWindow;
+
+        private SerializableDictionary<string, VWNodeErrorData> ungroupedNodes;
         public VWGraphView(VWEditorWindow vwEditorWindow)
         {
             editorWindow = vwEditorWindow;
 
+            ungroupedNodes = new SerializableDictionary<string, VWNodeErrorData>();
+
             AddManipulators();
             AddSearchWindow();
             AddGridBackground();
+
+            OnElementsDeleted();
+
             AddStyles();
         }
 
@@ -114,10 +121,71 @@ namespace Dialog
         {
             VWNode node = (VWNode)Activator.CreateInstance(dialogType);
 
-            node.Initialize(position);
+            node.Initialize(this, position);
             node.Draw();
 
+            AddUngroupedNode(node);
+
             return node;
+        }
+        #endregion
+        #region Callbacks
+        private void OnElementsDeleted()
+        {
+            deleteSelection = (operationName, askUser) =>
+            {
+                for (int i = selection.Count - 1; i >= 0; i--)
+                {
+                    if (selection[i] is VWNode node)
+                    {
+                        RemoveUngroupedNode(node);
+                        RemoveElement(node);
+                    }
+                }
+            };
+        }
+        #endregion
+        #region Repeated Elements
+        public void AddUngroupedNode(VWNode node)
+        {
+            string nodeName = node.DialogName;
+
+            if (!ungroupedNodes.ContainsKey(nodeName))
+            {
+                VWNodeErrorData nodeErrorData = new VWNodeErrorData();
+                nodeErrorData.Nodes.Add(node);
+                ungroupedNodes.Add(nodeName, nodeErrorData);
+            } else
+            {
+                List<VWNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
+                ungroupedNodesList.Add(node);
+
+                Color errorColor = ungroupedNodes[nodeName].ErrorData.Color;
+                node.SetErrorStyle(errorColor);
+
+                if (ungroupedNodesList.Count > 1)
+                {
+                    ungroupedNodesList[0].SetErrorStyle(errorColor);
+                }
+            }
+        }
+
+        public void RemoveUngroupedNode(VWNode node)
+        {
+            string nodeName = node.DialogName;
+            List<VWNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
+
+            ungroupedNodesList.Remove(node);
+            node.ResetStyle();
+
+            if(ungroupedNodesList.Count == 1)
+            {
+                ungroupedNodesList[0].ResetStyle();
+            } 
+            else if(ungroupedNodesList.Count == 0)
+            {
+                ungroupedNodes.Remove(nodeName);
+            }
         }
 
         #endregion
