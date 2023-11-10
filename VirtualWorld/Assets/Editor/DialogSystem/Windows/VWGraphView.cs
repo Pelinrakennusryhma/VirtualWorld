@@ -14,17 +14,21 @@ namespace Dialog
         private VWSearchWindow searchWindow;
 
         private SerializableDictionary<string, VWNodeErrorData> ungroupedNodes;
+        private SerializableDictionary<Group, SerializableDictionary<string, VWNodeErrorData>> groupedNodes;
         public VWGraphView(VWEditorWindow vwEditorWindow)
         {
             editorWindow = vwEditorWindow;
 
             ungroupedNodes = new SerializableDictionary<string, VWNodeErrorData>();
+            groupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, VWNodeErrorData>>();
 
             AddManipulators();
             AddSearchWindow();
             AddGridBackground();
 
             OnElementsDeleted();
+            OnGroupElementsAdded();
+            OnGroupElementsRemoved();
 
             AddStyles();
         }
@@ -138,12 +142,55 @@ namespace Dialog
                 {
                     if (selection[i] is VWNode node)
                     {
+                        if(node.Group != null)
+                        {
+                            node.Group.RemoveElement(node);
+                        }
+
                         RemoveUngroupedNode(node);
                         RemoveElement(node);
                     }
                 }
             };
         }
+
+        private void OnGroupElementsAdded()
+        {
+            elementsAddedToGroup = (group, elements) =>
+            {
+                foreach (GraphElement element in elements)
+                {
+                    if (!(element is VWNode))
+                    {
+                        continue;
+                    }
+
+                    VWNode node = (VWNode)element;
+                    RemoveUngroupedNode(node);
+                    AddGroupedNode(node, group);
+                }
+            };
+        }
+
+        private void OnGroupElementsRemoved()
+        {
+            elementsRemovedFromGroup = (group, elements) =>
+            {
+                foreach (GraphElement element in elements)
+                {
+                    if (!(element is VWNode))
+                    {
+                        continue;
+                    }
+
+                    VWNode node = (VWNode)element;
+
+                    RemoveGroupedNode(node, group);
+                    AddUngroupedNode(node);
+                }
+            };
+        }
+
         #endregion
         #region Repeated Elements
         public void AddUngroupedNode(VWNode node)
@@ -185,6 +232,65 @@ namespace Dialog
             else if(ungroupedNodesList.Count == 0)
             {
                 ungroupedNodes.Remove(nodeName);
+            }
+        }
+
+
+        public void AddGroupedNode(VWNode node, Group group)
+        {
+            string nodeName = node.DialogName;
+
+            node.Group = group;
+
+            if (!groupedNodes.ContainsKey(group))
+            {
+                groupedNodes.Add(group, new SerializableDictionary<string, VWNodeErrorData>());
+            }
+
+            if (!groupedNodes[group].ContainsKey(nodeName))
+            {
+                VWNodeErrorData nodeErrorData = new VWNodeErrorData();
+                nodeErrorData.Nodes.Add(node);
+                groupedNodes[group].Add(nodeName, nodeErrorData);
+                return;
+            }
+
+            List<VWNode> groupedNodesList = groupedNodes[group][nodeName].Nodes;
+            groupedNodesList.Add(node);
+
+            Color errorColor = groupedNodes[group][nodeName].ErrorData.Color;
+            node.SetErrorStyle(errorColor);
+
+            if(groupedNodesList.Count == 2)
+            {
+                groupedNodesList[0].SetErrorStyle(errorColor);
+            }
+        }
+
+        public void RemoveGroupedNode(VWNode node, Group group)
+        {
+            string nodeName = node.DialogName;
+
+            node.Group = null;
+
+List <VWNode> groupedNodesList = groupedNodes[group][nodeName].Nodes;
+            groupedNodesList.Remove(node);
+            node.ResetStyle();
+
+            if(groupedNodesList.Count == 1)
+            {
+                groupedNodesList[0].ResetStyle();
+                return;
+            }
+
+            if(groupedNodesList.Count == 0)
+            {
+                groupedNodes[group].Remove(nodeName);
+
+                if (groupedNodes[group].Count == 0)
+                {
+                    groupedNodes.Remove(group);
+                }
             }
         }
 

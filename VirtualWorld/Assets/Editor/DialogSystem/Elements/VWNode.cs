@@ -10,7 +10,7 @@ namespace Dialog
         public string DialogName { get; set; }
         public List<string> Choices { get; set; }
         public string Text { get; set; }
-
+        public Group Group { get; set; }
         private VWGraphView graphView;
         private Color defaultBackgroundColor;
 
@@ -37,9 +37,20 @@ namespace Dialog
 
             TextField dialogNameTextField = VWElementUtility.CreateTextField(DialogName, callback =>
             {
-                graphView.RemoveUngroupedNode(this);
+                if(Group == null)
+                {
+                    graphView.RemoveUngroupedNode(this);
+                    DialogName = callback.newValue;
+                    graphView.AddUngroupedNode(this);
+
+                    return;
+                }
+
+                Group currentGroup = Group;
+
+                graphView.RemoveGroupedNode(this, Group);
                 DialogName = callback.newValue;
-                graphView.AddUngroupedNode(this);
+                graphView.AddGroupedNode(this, currentGroup);
             });
 
             dialogNameTextField.AddClasses(
