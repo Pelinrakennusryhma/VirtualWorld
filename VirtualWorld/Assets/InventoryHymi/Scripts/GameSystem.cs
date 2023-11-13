@@ -8,7 +8,7 @@ public class GameSystem : MonoBehaviour
 {
     [SerializeField] public GameObject inventory;
     InventoryHymisImplementation inventoryScript;
-    public double playerMoney = 1000;
+    public double playerMoney = 0;
     public double bankMoney = 0;
     public double playerDebt = 0;
     public double playerLoanedMoney = 0;
@@ -74,11 +74,13 @@ public class GameSystem : MonoBehaviour
 
     public void OpenInventory()
     {
+        inventoryScript.OnInventoryScreenOpened();
         inventory.SetActive(true);
     }
 
     public void CloseInventory()
     {
+        inventoryScript.OnInventoryScreenClosed();
         inventory.SetActive(false);
     }
 

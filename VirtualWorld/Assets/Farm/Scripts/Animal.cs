@@ -2,14 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Product = ProductInventory.ProductType;
 
 public class Animal : MonoBehaviour
 {
+    public enum AnimalType
+    {
+        None = 0,
+        Cow = 1,
+        Chicken = 2
+    }
+
     [SerializeField] private Image FoodBar;
     [SerializeField] private Image CleanlinessBar;
     [SerializeField] private Image PastureBar;
     [SerializeField] private Image ProductBar;
     [SerializeField] private Image AgeBar;
+    [SerializeField] private AnimalType TypeOfAnimal;
     public string animalSpecies;
     private float food = 100.0f;
     private float cleanliness = 100.0f;
@@ -80,23 +89,27 @@ public class Animal : MonoBehaviour
 
     public void CollectProduce()
     {
-        if (animalSpecies == "Cow")
+        //if (animalSpecies == "Cow")
+        if(TypeOfAnimal == AnimalType.Cow)
         {
             if (AgeBar.fillAmount != 1.0f && ProductBar.fillAmount == 1.0f)
             {
                 product = 0f;
                 ProductInventory productInventory = GameObject.Find("ProductInventory").GetComponent<ProductInventory>();
-                productInventory.ownedProducts["Milk"] += 1;
+                //productInventory.ownedProducts["Milk"] += 1;
+                productInventory.ModifyProductAmount(Product.Milk, 1);
                 productInventory.UpdateInventory();
             }
         }
-        else if (animalSpecies == "Chicken")
+        //else if (animalSpecies == "Chicken")
+        else if(TypeOfAnimal == AnimalType.Chicken)
         {
             if (AgeBar.fillAmount != 1.0f && ProductBar.fillAmount >= 0.8f)
             {
                 product = 0f;
                 ProductInventory productInventory = GameObject.Find("ProductInventory").GetComponent<ProductInventory>();
-                productInventory.ownedProducts["Egg"] += 1;
+                //productInventory.ownedProducts["Egg"] += 1;
+                productInventory.ModifyProductAmount(Product.Egg, 1);
                 productInventory.UpdateInventory();
             }
         }
@@ -104,22 +117,26 @@ public class Animal : MonoBehaviour
 
     public void Butcher()
     {
-        if (animalSpecies == "Cow")
+        //if (animalSpecies == "Cow")
+        if (TypeOfAnimal == AnimalType.Cow)
         {
             if (AgeBar.fillAmount != 1.0f && AgeBar.fillAmount >= 0.8f)
             {
                 ProductInventory productInventory = GameObject.Find("ProductInventory").GetComponent<ProductInventory>();
-                productInventory.ownedProducts["Beef"] += 1;
+                //productInventory.ownedProducts["Beef"] += 1;
+                productInventory.ModifyProductAmount(Product.Beef, 1);
                 productInventory.UpdateInventory();
             }
             Destroy(gameObject);
         }
-        else if (animalSpecies == "Chicken")
+        //else if (animalSpecies == "Chicken")
+        else if (TypeOfAnimal == AnimalType.Chicken)
         {
             if (AgeBar.fillAmount != 1.0f && AgeBar.fillAmount >= 0.8f)
             {
                 ProductInventory productInventory = GameObject.Find("ProductInventory").GetComponent<ProductInventory>();
-                productInventory.ownedProducts["Chicken Meat"] += 1;
+                //productInventory.ownedProducts["Chicken Meat"] += 1;
+                productInventory.ModifyProductAmount(Product.ChickenMeat, 1);
                 productInventory.UpdateInventory();
             }
             Destroy(gameObject);

@@ -74,8 +74,11 @@ namespace BackendConnection
                 callback.Invoke(conn, item);
             }
             catch (UnityWebRequestException e)
-            {
+            {               
+                Debug.LogError(e.Message);
                 throw e;
+
+
             }
         }
 

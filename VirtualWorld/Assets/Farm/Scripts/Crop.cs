@@ -76,6 +76,8 @@ public class Crop : MonoBehaviour
         {
             CropInventory cropInventory = GameObject.Find("CropInventory").GetComponent<CropInventory>();
             cropInventory.ownedCrops[plant] += 1;
+            //InventoryHymisImplementation.Instance.ModifyCropAmount(plant.type, 1);
+            InventoryHymisImplementation.Instance.ModifySubsceneItemAmount(plant.inventoryItem, 1);
             cropInventory.UpdateInventory();
         }
         Destroy(gameObject);

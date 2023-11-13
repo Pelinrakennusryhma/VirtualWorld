@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PlantType = Plant.PlantType;
+
 
 public class PlantDatabase : MonoBehaviour
 {
@@ -20,13 +22,13 @@ public class PlantDatabase : MonoBehaviour
     void BuildDatabase()
     {
         plants = new List<Plant> {
-            new Plant("Wheat", 300.0f, 15.0),
-            new Plant("Barley", 300.0f, 15.0),
-            new Plant("Corn", 300.0f, 15.0),
-            new Plant("Soybean", 300.0f, 15.0),
-            new Plant("Potato", 300.0f, 15.0),
-            new Plant("Carrot", 300.0f, 15.0),
-            new Plant("Lettuce", 300.0f, 15.0),
+            new Plant(PlantType.Wheat, 300.0f),
+            new Plant(PlantType.Barley, 300.0f),
+            new Plant(PlantType.Corn, 300.0f),
+            new Plant(PlantType.Soybean, 300.0f),
+            new Plant(PlantType.Potato, 300.0f),
+            new Plant(PlantType.Carrot, 300.0f),
+            new Plant(PlantType.Lettuce, 300.0f)
 
         };
     }

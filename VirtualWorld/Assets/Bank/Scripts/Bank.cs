@@ -12,10 +12,15 @@ public class Bank : MonoBehaviour
     [SerializeField] private TMP_InputField depositAmount;
     [SerializeField] private TMP_InputField withdrawAmount;
     public BankGameSystem gameSystem;
-    void Start()
-    {
+    //void Start()
+    //{
 
-        bankMoneyText.text = gameSystem.bankMoney.ToString("C", gameSystem.culture);
+    //    bankMoneyText.text = gameSystem.bankMoney.ToString("C", gameSystem.culture);
+    //}
+
+    public void InitBank(double bankMoney)
+    {
+        bankMoneyText.text = bankMoney.ToString("C", gameSystem.culture);
     }
 
     //Tallettaa rahaa pankkiin.

@@ -2269,6 +2269,7 @@ MonoBehaviour:
   PastureBar: {fileID: 0}
   ProductBar: {fileID: 1572405741555535646}
   AgeBar: {fileID: 6423644611481183242}
+  TypeOfAnimal: 2
   animalSpecies: Chicken
 --- !u!1 &9176028686107271320
 GameObject:

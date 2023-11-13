@@ -24,10 +24,30 @@ public class StockDatabase : MonoBehaviour
     void BuildDatabase()
     {
         stocks = new List<Stock> {
-            new Stock("PEAR", "Pear Inc.", "Consumer Electronics", 170, "Large"),
-            new Stock("GSFT", "Giantsoft Corporation", "Software - Infastructure", 310, "Large"),
-            new Stock("EDSN", "Edison Inc.", "Automobile Manufacturers", 160, "Large"),
-            new Stock("GMT", "GameStart Corp.", "Specialty Retail", 20, "Mid"),
+            new Stock("PEAR", 
+                      "Pear Inc.", 
+                      "Consumer Electronics", 
+                      170, 
+                      "Large",
+                      InventoryHymisImplementation.Instance.itemDatabase.GetItem(2001)),
+            new Stock("GSFT", 
+                      "Giantsoft Corporation", 
+                      "Software - Infastructure",
+                       310, 
+                       "Large",
+                       InventoryHymisImplementation.Instance.itemDatabase.GetItem(2002)),
+            new Stock("EDSN", 
+                      "Edison Inc.", 
+                      "Automobile Manufacturers", 
+                      160, 
+                      "Large",
+                      InventoryHymisImplementation.Instance.itemDatabase.GetItem(2003)),
+            new Stock("GMT", 
+                      "GameStart Corp.", 
+                      "Specialty Retail", 
+                      20, 
+                      "Mid",
+                      InventoryHymisImplementation.Instance.itemDatabase.GetItem(2004)),
         };
     }
 }

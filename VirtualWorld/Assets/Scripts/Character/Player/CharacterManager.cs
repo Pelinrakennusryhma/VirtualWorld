@@ -92,7 +92,51 @@ namespace Characters
             {
                 PlayerEvents.Instance.CallEventMoneyAmountChanged(item);
             }
+
+            else
+            {
+                PlayerEvents.Instance.CallEventInventoryItemAmountChanged(item);
+                Debug.Log("Modify item target rpc is called with item " + item.id + " item amount is " + item.amount);
+            }
         }
+
+        #region Antti's additions, inventory stuff
+        public void ModifyItem(string itemId, ModifyItemDataOperation operation, int amount, string itemName = "")
+        {
+            ModifyItemAmount(itemId, operation, amount, itemName);
+        }
+
+        public void AddDebt(int amount)
+        {
+            ModifyItemAmount("10000", ModifyItemDataOperation.ADD, amount, "Debt");
+        }
+
+        public void RemoveDebt(int amount)
+        {
+            ModifyItemAmount("10000", ModifyItemDataOperation.REMOVE, amount, "Debt");
+        }
+
+        public void AddToBankBalance(int amount)
+        {
+            ModifyItemAmount("10001", ModifyItemDataOperation.ADD, amount, "Bank balance");
+        }
+
+        public void RemoveFromBankBalance(int amount)
+        {
+            ModifyItemAmount("10001", ModifyItemDataOperation.REMOVE, amount, "Bank balance");
+        }
+
+        public void AddStock(string itemId, int amount, string itemName)
+        {
+            ModifyItemAmount(itemId, ModifyItemDataOperation.ADD, amount, itemName);
+        }
+
+        public void RemoveStock(string itemId, int amount, string itemName)
+        {
+            ModifyItemAmount(itemId, ModifyItemDataOperation.REMOVE, amount, itemName);
+        }
+
+        #endregion
     }
 }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed

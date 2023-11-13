@@ -9,13 +9,20 @@ public class Stock
     public string industry;
     public double basePrice;
     public string marketCap;
+    public Item inventoryItem;
 
-    public Stock(string symbol, string companyName, string industry, double basePrice, string marketCap)
+    public Stock(string symbol, 
+                 string companyName, 
+                 string industry, 
+                 double basePrice, 
+                 string marketCap,
+                 Item inventoryItem)
     {
         this.symbol = symbol;
         this.companyName = companyName;
         this.industry = industry;
         this.basePrice = basePrice;
         this.marketCap = marketCap;
+        this.inventoryItem = inventoryItem;
     }
 }

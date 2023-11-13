@@ -18,6 +18,8 @@ public class StockInventory : MonoBehaviour
             Destroy(go);
         }
 
+        //Debug.Log("Should get stocks from inventory");
+
         foreach (var stock in stockSystem.playerStocks)
         {
             if (stock.Value > 0)

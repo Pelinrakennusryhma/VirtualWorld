@@ -30,7 +30,9 @@ namespace UI
         public void FlashText()
         {
             // in hopes of fixing an error about failing to start coroutine because object is not active
-            if (enabled && gameObject.activeSelf)
+            if (enabled 
+                && gameObject.activeSelf
+                && gameObject.activeInHierarchy)
             {
                 StartCoroutine(IEFlashText());
             }

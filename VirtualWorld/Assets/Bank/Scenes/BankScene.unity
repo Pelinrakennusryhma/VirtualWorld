@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 286164207}
+  bank: {fileID: 429689424}
   playerMoney: 1000
   bankMoney: 0
   playerDebt: 0

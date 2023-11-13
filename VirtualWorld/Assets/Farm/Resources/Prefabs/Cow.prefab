@@ -2500,6 +2500,7 @@ MonoBehaviour:
   PastureBar: {fileID: 3436519714881454927}
   ProductBar: {fileID: 6502654049217071148}
   AgeBar: {fileID: 2567290108261092280}
+  TypeOfAnimal: 1
   animalSpecies: Cow
 --- !u!1 &9176028686107271320
 GameObject:

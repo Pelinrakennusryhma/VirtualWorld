@@ -1409,6 +1409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0c06c27dd3aab4b9c5475b8887a5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   playerCash: {fileID: 301987465322653721}
   playerBank: {fileID: 3007589415309096557}
   playerDebt: {fileID: 1901917618712260904}

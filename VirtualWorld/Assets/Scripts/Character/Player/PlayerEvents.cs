@@ -48,6 +48,13 @@ namespace Characters
             EventMoneyAmountChanged.Invoke(inventoryItem);
         }
 
+        public UnityEvent<InventoryItem> EventInventoryAmountChanged;
+
+        public void CallEventInventoryItemAmountChanged(InventoryItem inventoryItem)
+        {
+            EventInventoryAmountChanged.Invoke(inventoryItem);
+        }
+
         #endregion
 
         #region GameState

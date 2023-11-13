@@ -42,6 +42,10 @@ public class ItemDatabase : MonoBehaviour
     */
     void BuildDatabase()
     {
+        //Debug.LogWarning("Build database called");
+
+        // NOTE: it is quite risky to determine type with strings. What about typos?
+
         items = new List<Item> {
             new Item(0, "Sandwich", "Food", true, "Tasty sandwich with various fillings.", 
             new Dictionary<string, double>{
@@ -50,6 +54,11 @@ public class ItemDatabase : MonoBehaviour
             }),
 
             new Item(1, "Chips Bag", "Food", true, "A bag of chips.",
+            new Dictionary<string, double>{
+                {"Value", 4.0}
+            }),
+
+            new Item(3, "Placeholder Item", "Food", true, "An item full of placeholder",
             new Dictionary<string, double>{
                 {"Value", 4.0}
             }),
@@ -169,6 +178,87 @@ public class ItemDatabase : MonoBehaviour
             new Dictionary<string, double>{
                 {"Value", 10.0}
             }),
+
+            // Additions from farm scene. For placeholder purposes
+
+            new Item(1101, "Wheat", "Food", true, "A bunch of wheat",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1102, "Barley", "Food", true, "A bunch of barley",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1103, "Corn", "Food", true, "A bunch of corn",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1104, "Soybean", "Food", true, "A bunch of soybean",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1105, "Potato", "Food", true, "Some potato",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1106, "Carrot", "Food", true, "Some carrot",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1107, "Lettuce", "Food", true, "Some lettuce",
+            new Dictionary<string, double>{
+                {"Value", 15.0}
+            }),
+
+            new Item(1108, "Chicken meat", "Food", true, "A chunk of chicken meat",
+            new Dictionary<string, double>{
+                {"Value", 8.0}
+            }),
+
+            new Item(1109, "Beef", "Food", true, "A chunk of beef",
+            new Dictionary<string, double>{
+                {"Value", 10.0}
+            }),
+
+            new Item(1110, "Milk", "Food", true, "Some milk",
+            new Dictionary<string, double>{
+                {"Value", 2.0}
+            }),
+
+            new Item(1111, "Egg", "Food", true, "An egg",
+            new Dictionary<string, double>{
+                {"Value", 1.0}
+            }),
+
+            // Stocks
+
+            new Item(2001, "Pear Inc. stock", "Stock", true, "Pear Inc. stock",
+            new Dictionary<string, double>{
+                {"Value", 10.0}
+            }),
+
+            new Item(2002, "Giantsoft Corporation stock", "Stock", true, "Giantsoft Corporation stock",
+            new Dictionary<string, double>{
+                {"Value", 10.0}
+            }),
+
+            new Item(2003, "Edison Inc. stock", "Stock", true, "Edison Inc. stock",
+            new Dictionary<string, double>{
+                {"Value", 10.0}
+            }),
+
+            new Item(2004, "GameStart Corp. stock", "Stock", true, "GameStart Corp. stock",
+            new Dictionary<string, double>{
+                {"Value", 10.0}
+            }),
         };
+
+        //Debug.LogWarning("Database building finished");
     }
 }

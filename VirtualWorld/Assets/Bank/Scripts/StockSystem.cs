@@ -17,9 +17,12 @@ public class StockSystem : MonoBehaviour
 
         foreach (Stock stock in stockDatabase.stocks)
         {
-            playerStocks.Add(stock, 0);
+            int amountInInventory = InventoryHymisImplementation.Instance.GetItemAmount(stock.inventoryItem.id);
+            playerStocks.Add(stock, amountInInventory);
             playerStocksCost.Add(stock, 0.0);
         }
+
+        stockMarketOpen = stockMarket.activeInHierarchy;
     }
 
     //Lisää pelaajalle osakkeen. 
@@ -27,19 +30,25 @@ public class StockSystem : MonoBehaviour
     {
         playerStocks[stock] += amount;
         playerStocksCost[stock] += cost;
+
+        InventoryHymisImplementation.Instance.ModifyStockAmountFromSubscene(stock, amount);
     }
 
     //Poistaa pelaajalta osakkeen.
     public void RemoveStockFromPlayer(Stock stock, int amount, double value)
     {
-        playerStocks[stock] -= amount;
+        playerStocks[stock] -= amount;           
+        InventoryHymisImplementation.Instance.ModifyStockAmountFromSubscene(stock, -amount);
+
         if (playerStocks[stock] == 0)
         {
             playerStocksCost[stock] = 0;
+ 
         }
         else
         {
             playerStocksCost[stock] -= value;
+
         }
 
     }

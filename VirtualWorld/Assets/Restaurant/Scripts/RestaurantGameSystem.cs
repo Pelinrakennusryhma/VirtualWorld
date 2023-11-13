@@ -4,6 +4,8 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 using Scenes;
+using Characters;
+using BackendConnection;
 
 public class RestaurantGameSystem : MonoBehaviour
 {
@@ -16,17 +18,38 @@ public class RestaurantGameSystem : MonoBehaviour
 
     public CultureInfo culture = CultureInfo.CreateSpecificCulture("fi-FI");
 
+    //private void Start()
+    //{
+    //    inventoryScript = inventory.GetComponent<RestaurantInventory>();
+    //    //Muuttaa valuuttamerkkiä
+    //    culture.NumberFormat.CurrencySymbol = "C";
+    //}
+
     private void Start()
     {
         inventoryScript = inventory.GetComponent<RestaurantInventory>();
         //Muuttaa valuuttamerkkiä
         culture.NumberFormat.CurrencySymbol = "C";
+        PlayerEvents.Instance.EventMoneyAmountChanged.RemoveListener(OnMoneyAmountChanged);
+        PlayerEvents.Instance.EventMoneyAmountChanged.AddListener(OnMoneyAmountChanged);
+    }
+
+    public void OnDestroy()
+    {
+        PlayerEvents.Instance.EventMoneyAmountChanged.RemoveListener(OnMoneyAmountChanged);
+    }
+
+    public void OnMoneyAmountChanged(InventoryItem item)
+    {
+        playerMoney = item.amount;
+        inventoryScript.UpdateInventory();
     }
 
     //Lisää pelaajalle 'amount' määrän rahaa.
     public void AddMoneyToPlayer(double amount)
     {
         playerMoney += amount;
+        InventoryHymisImplementation.Instance.AddMoneyFromSubscene(amount);
         inventoryScript.UpdateInventory();
     }
 

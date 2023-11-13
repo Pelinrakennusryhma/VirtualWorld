@@ -8,6 +8,7 @@ using Scenes;
 public class BankGameSystem : MonoBehaviour
 {
     [SerializeField] public GameObject inventory;
+    [SerializeField] private Bank bank;
     BankInventory inventoryScript;
     public double playerMoney = 1000;
     public double bankMoney = 0;
@@ -21,6 +22,15 @@ public class BankGameSystem : MonoBehaviour
         inventoryScript = inventory.GetComponent<BankInventory>();
         //Muuttaa valuuttamerkkiä
         culture.NumberFormat.CurrencySymbol = "C";
+        InventoryHymisImplementation.Instance.GetMoneyThings(out double cash,
+                                                             out double debt,
+                                                             out double bankBalance,
+                                                             out double loanedMoney);
+        playerMoney = cash;
+        playerDebt = debt;
+        bankMoney = bankBalance;
+        playerLoanedMoney = loanedMoney;
+        bank.InitBank(bankBalance);
     }
 
     //Lisää pelaajalle 'amount' määrän rahaa.
@@ -28,6 +38,7 @@ public class BankGameSystem : MonoBehaviour
     {
         playerMoney += amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.AddMoneyFromSubscene(amount);
     }
 
     //Poistaa pelaajalta 'amount' määrän rahaa
@@ -35,6 +46,7 @@ public class BankGameSystem : MonoBehaviour
     {
         playerMoney -= amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.RemoveMoneyFromSubscene(amount);
     }
 
     //Lisää pelaajan pankkiin 'amount' määrän rahaa.
@@ -42,6 +54,7 @@ public class BankGameSystem : MonoBehaviour
     {
         bankMoney += amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.AddBankBalanceFromSubscene(amount);
     }
 
     //Poistaa pelaajan pankista 'amount' määrän rahaa.
@@ -49,6 +62,7 @@ public class BankGameSystem : MonoBehaviour
     {
         bankMoney -= amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.RemoveBankBalanceFromSubscene(amount);
     }
 
     //Lisää pelaajalla 'amount' määrän velkaa.
@@ -57,6 +71,7 @@ public class BankGameSystem : MonoBehaviour
         playerDebt += amount;
         playerLoanedMoney += amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.AddDebtFromSubscene(amount);
     }
 
     //Poistaa pelaajalta 'amount' määrän velkaa
@@ -64,6 +79,7 @@ public class BankGameSystem : MonoBehaviour
     {
         playerDebt -= amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.RemoveDebtFromSubscene(amount);
     }
 
     //Lisää pelaajan velkaan 'amount' määrän korkoa.
@@ -71,6 +87,8 @@ public class BankGameSystem : MonoBehaviour
     {
         playerDebt += playerLoanedMoney * amount;
         inventoryScript.UpdateInventory();
+        InventoryHymisImplementation.Instance.AddDebtFromSubscene(playerDebt);
+
     }
 
     public void OpenInventory()

@@ -144,6 +144,8 @@ public class ViewWithinAViewController : MonoBehaviour
         // set the current view to map, so the first
         // time we open the tablet we start from the map view.
         CurrentView = ViewId.Map;
+
+
     }
 
 
@@ -152,6 +154,11 @@ public class ViewWithinAViewController : MonoBehaviour
     public void OnViewChanged(ViewId viewId)
     {
         //Debug.Log("View is changed. ViewId is " + viewId.ToString());
+
+        if (CurrentView == ViewId.Inventory)
+        {
+            InventoryViewChanger.OnCloseInventory();
+        }
 
         CurrentView = viewId;
 
@@ -191,6 +198,9 @@ public class ViewWithinAViewController : MonoBehaviour
                 InventoryCanvas.worldCamera = RenderToTextureCamera;
                 ViewWithinAViewUIRaycaster.DisableRaycaster();
                 InventoryRaycaster.enabled = true;
+
+
+                
                 //ViewWithinAViewUIRaycaster.SetRaycaster(InventoryRaycaster);
                 break;
 
@@ -220,11 +230,17 @@ public class ViewWithinAViewController : MonoBehaviour
                 break;
         }
 
+
+
+
         // If the view is not the calendar, close it.
         if (viewId != ViewId.Calendar)
         {
             CalendarViewChanger.OnViewClosed();
         }
+
+        // Why these are not in the switch case?
+
 
         // If the view is newsfeed...
         if (viewId == ViewId.NewsFeed)
@@ -243,6 +259,11 @@ public class ViewWithinAViewController : MonoBehaviour
         else if (viewId == ViewId.QuestLog)
         {
             QuestLogViewChanger.OnViewActivated();
+        }
+
+        else if (viewId == ViewId.Inventory)
+        {
+            InventoryViewChanger.OnShowInventory();
         }
     }
 
@@ -273,6 +294,11 @@ public class ViewWithinAViewController : MonoBehaviour
         }
 
         InventoryViewChanger.CameraStartedTransitioning();
+
+        if (CurrentView == ViewId.Inventory)
+        {
+            InventoryViewChanger.OnShowInventory();
+        }
     }
 
     public void OnCameraReachedTransitionPos()

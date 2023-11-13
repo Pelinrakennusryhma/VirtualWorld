@@ -1177,6 +1177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layout: {fileID: 796898886}
   plantDatabase: {fileID: 541967691}
+  InstantiatedCropItems: []
 --- !u!114 &680713809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2137,6 +2138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   layout: {fileID: 699391469}
+  InstantiatedProductItems: []
 --- !u!114 &1028030067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4038,7 +4040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 6723421868644751062}
-  playerMoney: 1000
+  playerMoney: 0
   bankMoney: 0
   playerDebt: 0
   playerLoanedMoney: 0

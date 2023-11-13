@@ -33,7 +33,7 @@ public class InventoryViewChanger : MonoBehaviour
     public Camera InventoryCamera;
 
 
-
+    [SerializeField] private InventoryHymisImplementation inventoryHymis;
 
     // Camera has started transitioning
     public void CameraStartedTransitioning()
@@ -85,5 +85,15 @@ public class InventoryViewChanger : MonoBehaviour
         InventoryCanvasScaler.referencePixelsPerUnit = 100;
 
         //Debug.Log("Inventory does things related to reaching target position " + gameObject.name);
+    }
+
+    public void OnShowInventory()
+    {
+        inventoryHymis.OnInventoryScreenOpened();
+    }
+
+    public void OnCloseInventory()
+    {
+        inventoryHymis.OnInventoryScreenClosed();
     }
 }

@@ -22,6 +22,8 @@ namespace Characters
         [SerializeField] CinemachineVirtualCamera _cinemachineVirtualCamera;
         [SerializeField] List<GameObject> ownedObjects;
 
+        [SerializeField] InventoryHymisImplementation inventoryHymisImplementation; // This is here for testing purposes until a proper invenotry is implemented
+
         private void Awake()
         {
             foreach (GameObject gameObject in ownedObjects)
@@ -38,6 +40,11 @@ namespace Characters
             {
                 SceneLoader.Instance.NewMainSceneObjectAdded(gameObject);
                 return;
+            }
+
+            else
+            {
+                inventoryHymisImplementation.Init();
             }
 
             // owned character is made priority for camera

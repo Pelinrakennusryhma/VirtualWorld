@@ -2410,6 +2410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0c06c27dd3aab4b9c5475b8887a5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   playerCash: {fileID: 6616106384678605530}
   playerBank: {fileID: 8528943481603886254}
   playerDebt: {fileID: 5009420832384846827}
