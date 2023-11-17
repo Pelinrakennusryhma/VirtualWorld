@@ -6,6 +6,7 @@ using FishNet.Object;
 using Dev;
 using UI;
 using FishNet.Connection;
+using System.Collections.Generic;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Characters
@@ -73,24 +74,42 @@ namespace Characters
             ModifyItemAmount("000", ModifyItemDataOperation.REMOVE, amount, "money");
         }
 
+        public void BuyItem(string itemId, string itemName, int cost)
+        {
+            ModifyItemData costData = new ModifyItemData("000", "money", ModifyItemDataOperation.REMOVE, cost);
+            ModifyItemData purchaseData = new ModifyItemData("666", itemName, ModifyItemDataOperation.ADD, 1);
+            ModifyItemDataCollection dataCollection = new ModifyItemDataCollection(costData, purchaseData);
+            ModifyItemServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, dataCollection);
+        }
+
         void ModifyItemAmount(string itemId, ModifyItemDataOperation operation, int amount, string itemName = "")
         {
             ModifyItemData data = new ModifyItemData(itemId, itemName, operation, amount);
-            ModifyItemServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, data);
+            ModifyItemDataCollection dataCollection = new ModifyItemDataCollection(data);
+            ModifyItemServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, dataCollection);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        void ModifyItemServerRpc(NetworkConnection conn, string userId, ModifyItemData data)
+        void ModifyItemServerRpc(NetworkConnection conn, string userId, ModifyItemDataCollection dataCollection)
         {
-            APICalls_Server.Instance.ModifyInventoryItemAmount(conn, userId, data, ModifyItemTargetRpc);
+            APICalls_Server.Instance.ModifyInventoryItemAmount(conn, userId, dataCollection, ModifyItemTargetRpc);
         }
 
         [TargetRpc]
-        public void ModifyItemTargetRpc(NetworkConnection conn, InventoryItem item)
+        public void ModifyItemTargetRpc(NetworkConnection conn, Inventory inventory)
         {
-            if (item.id == "000")
+            if(inventory.items.Count == 0)
             {
-                PlayerEvents.Instance.CallEventMoneyAmountChanged(item);
+                Debug.Log("Empty response: " + inventory.items + ", likely due to not having enough credits for purchase.");
+                return;
+            }
+
+            foreach (InventoryItem item in inventory.items)
+            {
+                if (item.id == "000")
+                {
+                    PlayerEvents.Instance.CallEventMoneyAmountChanged(item);
+                }
             }
         }
     }

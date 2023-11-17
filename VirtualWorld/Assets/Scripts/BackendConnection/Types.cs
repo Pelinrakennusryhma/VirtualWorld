@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using FishNet;
 using UnityEngine;
@@ -133,6 +134,27 @@ namespace BackendConnection
             this.itemName = itemName;
             this.operation = operation.ToString();
             this.amount = amount;
+        }
+    }
+
+    public struct ModifyItemDataCollection
+    {
+        public List<ModifyItemData> inventoryChanges;
+
+        public ModifyItemDataCollection(List<ModifyItemData> inventoryChanges)
+        {
+            this.inventoryChanges = inventoryChanges;
+        }
+
+        public ModifyItemDataCollection(ModifyItemData inventoryChange)
+        {
+            this.inventoryChanges = new List<ModifyItemData>();
+            this.inventoryChanges.Add(inventoryChange);
+        }
+
+        public ModifyItemDataCollection(params ModifyItemData[] inventoryChanges)
+        {
+            this.inventoryChanges = inventoryChanges.ToList();
         }
     }
 
