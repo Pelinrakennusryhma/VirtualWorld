@@ -32,11 +32,6 @@ namespace Items
         [field:TextArea(3, 6)]
         public string Description { get; private set; }
 
-        private void Reset()
-        {
-
-        }
-
         void CreateId()
         {
             if(_displayName == "")
