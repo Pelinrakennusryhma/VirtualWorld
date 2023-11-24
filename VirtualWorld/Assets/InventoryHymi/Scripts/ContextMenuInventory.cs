@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+namespace Hymi
+{
 public class ContextMenuInventory : MonoBehaviour
 {
     [SerializeField] private GameObject buttonUse;
@@ -95,7 +97,7 @@ public class ContextMenuInventory : MonoBehaviour
     public void SellItem()
     {
         ItemScript itemScript;
-        Item item;
+        Hymi.Item item;
         item = inventory.CheckForItem(itemID);
         itemScript = GameObject.Find("Inventory/Scroll/View/Layout/" + itemID).GetComponent<ItemScript>();
         //canvasScript.money += item.value * itemScript.currentItemAmount;
@@ -117,7 +119,7 @@ public class ContextMenuInventory : MonoBehaviour
     public void UseItem()
     {
         Debug.Log("Pressed use item");
-        Item item;
+        Hymi.Item item;
         item = inventory.CheckForItem(itemID);
 
         if (item.type == "Food")
@@ -204,4 +206,5 @@ public class ContextMenuInventory : MonoBehaviour
         return false;
     }
 
+}
 }

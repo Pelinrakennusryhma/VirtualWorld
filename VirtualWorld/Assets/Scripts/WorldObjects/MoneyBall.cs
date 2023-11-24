@@ -24,10 +24,10 @@ namespace WorldObjects
         {
             if(moneyChangeAmount > 0)
             {
-                CharacterManager.Instance.AddMoney(moneyChangeAmount);
+                Inventory.Instance.AddMoney(moneyChangeAmount);
             } else
             {
-                CharacterManager.Instance.RemoveMoney(Mathf.Abs(moneyChangeAmount));
+                Inventory.Instance.RemoveMoney(Mathf.Abs(moneyChangeAmount));
             }
 
         }

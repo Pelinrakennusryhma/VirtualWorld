@@ -54,22 +54,21 @@ namespace BackendConnection
             this.arg = arg;
         }
     }
-    public struct Inventory
+    public struct InventoryData
     {
-        public List<InventoryItem> items;
+        public List<InventoryItemData> items;
     }
 
-    public struct InventoryItem
+    public struct InventoryItemData
     {
         public string id;
-        public string name;
         public int amount;
     }
 
     public struct CharacterData
     {
         public UserData user;
-        public Inventory inventory;
+        public InventoryData inventory;
         public QuestsData quests;
     }
 
@@ -124,14 +123,12 @@ namespace BackendConnection
     public struct ModifyItemData
     {
         public string itemId;
-        public string itemName;
         public string operation;
-        public int amount;
+        public double amount;
         
-        public ModifyItemData(string itemId, string itemName, ModifyItemDataOperation operation, int amount)
+        public ModifyItemData(string itemId, ModifyItemDataOperation operation, double amount)
         {
             this.itemId = itemId;
-            this.itemName = itemName;
             this.operation = operation.ToString();
             this.amount = amount;
         }

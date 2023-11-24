@@ -7,6 +7,7 @@ using Characters;
 using BackendConnection;
 using System.Numerics;
 using Quests;
+using Items;
 
 namespace UI
 {
@@ -23,7 +24,7 @@ namespace UI
         [SerializeField] TMP_Text focusedQuestProgress;
         [SerializeField] TextFlasher focusedQuestFlasher;
 
-        int previousMoney;
+        double previousMoney;
 
         void Start()
         {
@@ -31,7 +32,6 @@ namespace UI
             // skip on server.. somehow? should PlayerEvents be instantiated from the player prefab or something?
             if(PlayerEvents.Instance != null)
             {
-                PlayerEvents.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
                 PlayerEvents.Instance.EventMoneyAmountChanged.AddListener(OnMoneyAmountChanged);
                 PlayerEvents.Instance.EventFocusedQuestUpdated.AddListener(OnFocusedQuestUpdated);
             }
@@ -42,22 +42,22 @@ namespace UI
             UpdateMoney(moneyItem.amount);
         }
 
-        void OnCharacterDataSet(CharacterData data)
-        {
-            int amountMoney = 0;
-            foreach (InventoryItem item in data.inventory.items)
-            {
-                if (item.name == "money")
-                {
-                    amountMoney = item.amount;
-                    break;
-                }
-            }
+        //void OnCharacterDataSet(CharacterData data)
+        //{
+        //    int amountMoney = 0;
+        //    foreach (InventoryItem item in data.inventory.items)
+        //    {
+        //        if (item.name == "Credit")
+        //        {
+        //            amountMoney = item.amount;
+        //            break;
+        //        }
+        //    }
 
-            UpdateMoney(amountMoney);
-        }
+        //    UpdateMoney(amountMoney);
+        //}
 
-        void UpdateMoney(int newAmount)
+        void UpdateMoney(double newAmount)
         {
             moneyText.text = $"{newAmount} {currencyIcon}";
 

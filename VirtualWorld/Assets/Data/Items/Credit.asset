@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8db411adf56ba7442a214e9e788806fb, type: 3}
-  m_Name: Item
+  m_Name: Credit
   m_EditorClassIdentifier: 
-  _displayName: car
-  <Id>k__BackingField: Item-car-5DctK6Fv5Ul1YwPTWiPg
-  <Description>k__BackingField: 
+  _displayName: Credit
+  Id: Item-Credit-GdNuYJOM6EaYhdccGk3nrQ
+  <Description>k__BackingField: Common currency in Virtual World
+  <Icon>k__BackingField: {fileID: 21300000, guid: a9a9f9f437fbde34caa2c41393f1f86d,
+    type: 3}
+  <Value>k__BackingField: 1

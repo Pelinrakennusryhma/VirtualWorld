@@ -4,6 +4,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
+using Hymi;
+
 public class InventoryHymisImplementation : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI playerCash;

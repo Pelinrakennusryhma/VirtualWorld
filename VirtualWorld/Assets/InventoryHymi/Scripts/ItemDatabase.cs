@@ -2,48 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemDatabase : MonoBehaviour
+
+namespace Hymi
 {
-    public List<Item> items = new List<Item>();
-
-    private void Awake()
+    public class ItemDatabase : MonoBehaviour
     {
-        BuildDatabase();
-    }
+        public List<Item> items = new List<Item>();
 
-    //Hakee itemin ID:n mukaan
-    public Item GetItem(int id)
-    {
-        return items.Find(item => item.id == id);
-    }
+        private void Awake()
+        {
+            BuildDatabase();
+        }
 
-    //Hakee itemin nimen mukaan
-    public Item GetItem(string name)
-    {
-        return items.Find(item => item.name == name);
-    }
+        //Hakee itemin ID:n mukaan
+        public Item GetItem(int id)
+        {
+            return items.Find(item => item.id == id);
+        }
 
-    /*
-    Täsä voidaan lisätä uusia itemeitä. Item(id, name, type, stackable, description, stats)
-    Type = Food, Drink, Key, Ticket, Token, Guidebook, Tool, Equipment
-    Stats = Value, Hunger, Thirst
+        //Hakee itemin nimen mukaan
+        public Item GetItem(string name)
+        {
+            return items.Find(item => item.name == name);
+        }
 
-    ID:t:
-    0-99 = Food
-    100-199 = Drink
-    200-299 = Key
-    300-399 = Ticket
-    400-499 = Token
-    500-599 = Guidebook
-    600-699 = Tool
-    700-799 = Equipment
+        /*
+        Täsä voidaan lisätä uusia itemeitä. Item(id, name, type, stackable, description, stats)
+        Type = Food, Drink, Key, Ticket, Token, Guidebook, Tool, Equipment
+        Stats = Value, Hunger, Thirst
 
-    Kuva tulee laittamalla kuva kansioon Resources/Sprites, ja nimeämällä sen saman nimiseksi kuin item.
-    */
-    void BuildDatabase()
-    {
-        items = new List<Item> {
-            new Item(0, "Sandwich", "Food", true, "Tasty sandwich with various fillings.", 
+        ID:t:
+        0-99 = Food
+        100-199 = Drink
+        200-299 = Key
+        300-399 = Ticket
+        400-499 = Token
+        500-599 = Guidebook
+        600-699 = Tool
+        700-799 = Equipment
+
+        Kuva tulee laittamalla kuva kansioon Resources/Sprites, ja nimeämällä sen saman nimiseksi kuin item.
+        */
+        void BuildDatabase()
+        {
+            items = new List<Item> {
+            new Item(0, "Sandwich", "Food", true, "Tasty sandwich with various fillings.",
             new Dictionary<string, double>{
                 {"Value", 5.0},
                 {"Hunger", -5.0}
@@ -170,5 +173,6 @@ public class ItemDatabase : MonoBehaviour
                 {"Value", 10.0}
             }),
         };
+        }
     }
 }

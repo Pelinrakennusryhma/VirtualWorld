@@ -3871,7 +3871,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b35503ced22b084f981e8a8df92b43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 3
-  itemId: 666
-  itemName: A Religious Decoration
+  item: {fileID: 11400000, guid: c16ca8bb49d537243997ea1d0bcb808a, type: 2}
   <DetectionMessage>k__BackingField: Buy %%item%% for %%cost%% credits!
