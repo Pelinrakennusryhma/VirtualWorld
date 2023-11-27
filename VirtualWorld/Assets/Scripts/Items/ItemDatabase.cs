@@ -1,24 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
+using Dev;
 
 namespace Items
 {
     [CreateAssetMenu(fileName = "ItemDB", menuName = "Items/ItemDatabase", order = 0)]
     public class ItemDatabase : ScriptableObject
     {
+        [SerializeField] string itemsRootPath;
+        List<string> folderPaths;
         //[SerializeField] SerializableDictionary<string, Item> AllItems = new SerializableDictionary<string, Item>();
         //[SerializeField] Dictionary<string, Item> AllItems = new Dictionary<string, Item>();
         [SerializeField] List<Item> AllItems;
+
+        public void Init()
+        {
+#if UNITY_EDITOR
+            LoadFolders();
+
+            foreach (string subFolder in folderPaths)
+            {
+                Debug.Log(subFolder);
+            }
+
+            LoadItems();
+#endif
+        }
+
+#if UNITY_EDITOR
+        void LoadFolders()
+        {
+            folderPaths = new List<string>();
+            //folderPaths.Add(itemsRootPath);
+            string[] folders = AssetDatabase.GetSubFolders(itemsRootPath);
+            folderPaths.AddRange(folders);
+            foreach (string folder in folders)
+            {
+                RecursiveLoadFolder(folder);
+            }
+        }
+
+        void RecursiveLoadFolder(string folder)
+        {
+            var folders = AssetDatabase.GetSubFolders(folder);
+            folderPaths.AddRange(folders);
+            foreach (string fld in folders)
+            {
+                RecursiveLoadFolder(fld);
+            }
+        }
+
+        void LoadItems()
+        {
+            AllItems = new List<Item>();
+            
+            foreach (string folder in folderPaths)
+            {
+                Item[] itemsInFolder = Utils.GetAtPath<Item>(folder);
+                AddItems(itemsInFolder);
+            }
+
+        }
+
+#endif
 
         public void AddItem(Item item)
         {
             //AllItems.Add(item.Id, item);
             AllItems.Add(item);
             //Save();
+        }
+
+        void AddItems(Item[] items)
+        {
+            AllItems.AddRange(items);
         }
 
         public void RemoveItem(Item item)

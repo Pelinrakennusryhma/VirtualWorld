@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8db411adf56ba7442a214e9e788806fb, type: 3}
-  m_Name: Candle
+  m_Name: Credit
   m_EditorClassIdentifier: 
-  _displayName: Candle
-  Id: Item-Candle-LBW6Wf9gykW2HluKDxkYA
-  <Description>k__BackingField: A plain white candle.
-  <Icon>k__BackingField: {fileID: 21300000, guid: ec2fc9b724ef2974eaa543f284deb973,
+  _displayName: Credit
+  Id: Item-Credit-vWbJp8VAP0efOV1bRCyJaw
+  <Description>k__BackingField: Commonly used currency in Virtual World.
+  <Icon>k__BackingField: {fileID: 21300000, guid: a9a9f9f437fbde34caa2c41393f1f86d,
     type: 3}
-  <Value>k__BackingField: 3
+  <Value>k__BackingField: 1

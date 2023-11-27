@@ -30,6 +30,7 @@ namespace Characters
             }
 
             PlayerEvents.Instance.EventCharacterDataSet.AddListener(OnCharacterDataSet);
+            itemDatabase.Init();
         }
 
         void OnCharacterDataSet(CharacterData data)
