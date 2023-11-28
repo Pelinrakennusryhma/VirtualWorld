@@ -42,6 +42,9 @@ namespace Characters
         {
             Items = new List<InventoryItem>();
 
+            // used to keep track if backend sends credits item
+            InventoryItem credits = null;
+
             foreach (InventoryItemData itemData in inventoryData.items)
             {
 
@@ -55,22 +58,28 @@ namespace Characters
 
                     if (item.Id == creditItem.Id)
                     {
-                        PlayerEvents.Instance.CallEventMoneyAmountChanged(invItem);
+                        credits = invItem;                 
                     }
                 }
-
             }
+
+            // in case all credits have been spent and backend doesn't return the item at all,
+            // create InventoryItem with amount of 0 so we can call the event for UI and such
+            if(credits == null)
+            {
+                credits = new InventoryItem(creditItem, 0);
+            }
+
+            PlayerEvents.Instance.CallEventMoneyAmountChanged(credits);
         }
 
         public void AddMoney(double amount)
         {
-            // 000 is temp id for money, the "money" itemName should be grabbed from a Unity item database, it's just there for being visible in mongodb
             ModifyItemAmount(creditItem, ModifyItemDataOperation.ADD, amount);
         }
 
         public void RemoveMoney(double amount)
         {
-            // 000 is temp id for money, the "money" itemName should be grabbed from a Unity item database, it's just there for being visible in mongodb
             ModifyItemAmount(creditItem, ModifyItemDataOperation.REMOVE, amount);
         }
 
