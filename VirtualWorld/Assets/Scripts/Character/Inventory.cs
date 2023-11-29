@@ -83,6 +83,11 @@ namespace Characters
             ModifyItemAmount(creditItem, ModifyItemDataOperation.REMOVE, amount);
         }
 
+        public void AddItem(Item item, int amount = 1)
+        {
+            ModifyItemAmount(item, ModifyItemDataOperation.ADD, amount);
+        }
+
         public void BuyItem(Item item)
         {
             ModifyItemData costData = new ModifyItemData(creditItem.Id, ModifyItemDataOperation.REMOVE, item.Value);
