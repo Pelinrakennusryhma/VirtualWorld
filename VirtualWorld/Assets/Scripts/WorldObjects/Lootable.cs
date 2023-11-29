@@ -25,11 +25,11 @@ namespace WorldObjects
             DetectionMessage = DetectionMessage.Replace("%%item%%", item.DisplayName);
         }
 
-        public void Interact(string playerId, UnityAction dummy)
+        public void Interact(UnityAction callback)
         {
             Inventory.Instance.AddItem(item, 1);
 
-            respawnable.Despawn();
+            respawnable.Despawn(this, gameObject);
         }
     }
 }

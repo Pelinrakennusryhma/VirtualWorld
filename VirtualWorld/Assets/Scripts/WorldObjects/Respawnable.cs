@@ -1,3 +1,4 @@
+using Characters;
 using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,8 +11,12 @@ namespace WorldObjects
         [SerializeField] float minRespawnTime;
         [SerializeField] float maxRespawnTime;
 
-        public void Despawn()
+        I_Interactable interactableChild;
+        GameObject interactableGO;
+        public void Despawn(I_Interactable interactable, GameObject interactableGO)
         {
+            interactableChild = interactable;
+            this.interactableGO = interactableGO;
             DespawnServerRpc();
         }
 
@@ -27,6 +32,7 @@ namespace WorldObjects
         void DespawnObserversRpc()
         {
             transform.GetChild(0).gameObject.SetActive(false);
+            PlayerEvents.Instance.CallEventInteractionEnded(interactableChild, interactableGO);
         }
 
         IEnumerator RespawnTimer()

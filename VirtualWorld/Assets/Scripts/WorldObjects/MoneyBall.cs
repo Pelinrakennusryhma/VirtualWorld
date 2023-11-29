@@ -20,7 +20,7 @@ namespace WorldObjects
             DetectionMessage = DetectionMessage.Replace("%%amount%%", Mathf.Abs(moneyChangeAmount).ToString());
         }
 
-        public void Interact(string playerId, UnityAction dummy)
+        public void Interact(UnityAction _)
         {
             if(moneyChangeAmount > 0)
             {

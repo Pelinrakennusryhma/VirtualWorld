@@ -93,15 +93,24 @@ namespace Characters
         {
             EventInteractableDetected.Invoke(interactable, interactableGO);
         }
+
+        public UnityEvent EventInteractionStarted;
+
+        public void CallEventInteractionStarted()
+        {
+            EventInteractionStarted.Invoke();
+        }
+
+        public UnityEvent<I_Interactable, GameObject> EventInteractionEnded;
+        public void CallEventInteractionEnded(I_Interactable interactable, GameObject interactableGO)
+        {
+            EventInteractionEnded.Invoke(interactable, interactableGO);
+        }
+
         public UnityEvent EventInteractableLost;
         public void CallEventInteractableLost()
         {
             EventInteractableLost.Invoke();
-        }
-        public UnityEvent EventInteractionStarted;
-        public void CallEventInteractionStarted()
-        {
-            EventInteractionStarted.Invoke();
         }
         #endregion
 

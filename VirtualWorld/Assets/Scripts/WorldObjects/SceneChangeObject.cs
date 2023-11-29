@@ -23,9 +23,8 @@ namespace WorldObjects
             scenePicker = GetComponent<ScenePicker>();
         }
 
-        public void Interact(string playerId, UnityAction callback)
+        public void Interact(UnityAction _)
         {
-            callback?.Invoke();
             SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(ScenePackMode.ALL, "ShowEnvironment"));
         }
     }
