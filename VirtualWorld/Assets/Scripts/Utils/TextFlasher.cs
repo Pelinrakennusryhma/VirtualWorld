@@ -64,6 +64,7 @@ namespace UI
         {
             text.fontSize = originalFontSize;
             text.color = originalFontColor;
+            Flashing = false;
         }
     }
 }
