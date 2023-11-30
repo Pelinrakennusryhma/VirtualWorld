@@ -81,7 +81,7 @@ namespace Characters
         private void OnTriggerStay(Collider other)
         {
             I_Interactable interactable = other.GetComponent<I_Interactable>();
-            Debug.Log("other.gameobject " + other.gameObject.name);
+
             if (interactable != null)
             {
                 if (interactable.IsActive)

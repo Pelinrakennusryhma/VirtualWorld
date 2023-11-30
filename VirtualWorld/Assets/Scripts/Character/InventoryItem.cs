@@ -7,9 +7,9 @@ namespace Items
     public class InventoryItem
     {
         public Item item;
-        public double amount;
+        public int amount;
 
-        public InventoryItem(Item item, double amount)
+        public InventoryItem(Item item, int amount)
         {
             this.item = item;
             this.amount = amount;

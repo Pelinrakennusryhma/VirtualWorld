@@ -17,7 +17,7 @@ namespace Characters
         public static Inventory Instance { get; private set; }
         [SerializeField] public List<InventoryItem> Items { get; private set; }
 
-        [SerializeField] Item creditItem;
+        [field: SerializeField] public Item CreditItem { get; private set; }
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -56,7 +56,7 @@ namespace Characters
                     InventoryItem invItem = new InventoryItem(item, itemData.amount);
                     Items.Add(invItem);
 
-                    if (item.Id == creditItem.Id)
+                    if (item.Id == CreditItem.Id)
                     {
                         credits = invItem;                 
                     }
@@ -67,20 +67,21 @@ namespace Characters
             // create InventoryItem with amount of 0 so we can call the event for UI and such
             if(credits == null)
             {
-                credits = new InventoryItem(creditItem, 0);
+                credits = new InventoryItem(CreditItem, 0);
             }
 
             PlayerEvents.Instance.CallEventMoneyAmountChanged(credits);
+            PlayerEvents.Instance.CallEventInventoryChanged(Items);
         }
 
         public void AddMoney(double amount)
         {
-            ModifyItemAmount(creditItem, ModifyItemDataOperation.ADD, amount);
+            ModifyItemAmount(CreditItem, ModifyItemDataOperation.ADD, amount);
         }
 
         public void RemoveMoney(double amount)
         {
-            ModifyItemAmount(creditItem, ModifyItemDataOperation.REMOVE, amount);
+            ModifyItemAmount(CreditItem, ModifyItemDataOperation.REMOVE, amount);
         }
 
         public void AddItem(Item item, int amount = 1)
@@ -88,9 +89,14 @@ namespace Characters
             ModifyItemAmount(item, ModifyItemDataOperation.ADD, amount);
         }
 
+        public void RemoveItem(Item item, int amount = 1)
+        {
+            ModifyItemAmount(item, ModifyItemDataOperation.REMOVE, amount);
+        }
+
         public void BuyItem(Item item)
         {
-            ModifyItemData costData = new ModifyItemData(creditItem.Id, ModifyItemDataOperation.REMOVE, item.Value);
+            ModifyItemData costData = new ModifyItemData(CreditItem.Id, ModifyItemDataOperation.REMOVE, item.Value);
             ModifyItemData purchaseData = new ModifyItemData(item.Id, ModifyItemDataOperation.ADD, 1);
             ModifyItemDataCollection dataCollection = new ModifyItemDataCollection(costData, purchaseData);
             ModifyItemServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, dataCollection);

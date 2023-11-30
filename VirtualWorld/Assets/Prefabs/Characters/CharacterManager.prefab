@@ -135,4 +135,5 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 5635476881906859497}
   _networkObjectCache: {fileID: 0}
   itemDatabase: {fileID: 11400000, guid: a9b69edd0a0f7d94e859ef3ef80d1160, type: 2}
-  creditItem: {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02, type: 2}
+  <CreditItem>k__BackingField: {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02,
+    type: 2}

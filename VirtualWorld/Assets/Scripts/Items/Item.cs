@@ -38,7 +38,7 @@ namespace Items
         public string Description { get; private set; }
 
         [field: SerializeField] public Sprite Icon { get; private set; }
-        [field: SerializeField] public Double Value { get; private set; }
+        [field: SerializeField] public int Value { get; private set; }
 
         ItemDatabase ItemDatabase
         {

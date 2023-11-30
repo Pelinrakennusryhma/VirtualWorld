@@ -402,7 +402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e63e901811d96340b0d0b1914bf0f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSystem: {fileID: 825968440620504396}
   rectTransform: {fileID: 206464878381219894}
 --- !u!1 &2167788517791809477
 GameObject:
@@ -2191,8 +2190,6 @@ GameObject:
   - component: {fileID: 1814683189085235358}
   - component: {fileID: 3441218144640778960}
   - component: {fileID: 8188931894999797}
-  - component: {fileID: 5015907239326532744}
-  - component: {fileID: 825968440620504396}
   m_Layer: 7
   m_Name: InventoryCanvas
   m_TagString: Untagged
@@ -2215,7 +2212,7 @@ RectTransform:
   - {fileID: 7649290717279827857}
   - {fileID: 757666842857841542}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2285,35 +2282,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5015907239326532744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5322532612053855660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7bc5d6e0e34404498f77c38cde7c822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &825968440620504396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5322532612053855660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34bfa4677a116b94eba0bdf9bbb699f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory: {fileID: 5328865969782607972}
-  playerMoney: 1000
-  bankMoney: 0
-  playerDebt: 0
-  playerLoanedMoney: 0
 --- !u!1 &5328865969782607972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,9 +2383,10 @@ MonoBehaviour:
   playerDebt: {fileID: 5009420832384846827}
   itemCount: {fileID: 8191729030290163526}
   layout: {fileID: 6186400685550642200}
-  gameSystem: {fileID: 825968440620504396}
+  itemRepresentationPrefab: {fileID: 3132170969781516875, guid: 35ed039cc4951f34ebf07a6233220f45,
+    type: 3}
+  contextMenu: {fileID: 3839203624529840061}
   tooltip: {fileID: 7922346297925510872}
-  itemDatabase: {fileID: 5015907239326532744}
 --- !u!1 &5459513655756019815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2860,7 +2829,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3839203624529840061}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenuInventory, Assembly-CSharp
         m_MethodName: UnequipItem
         m_Mode: 1
@@ -3013,7 +2982,6 @@ MonoBehaviour:
   buttonUnequip: {fileID: 5962194533750506963}
   buttonSell: {fileID: 7744415303482443045}
   buttonDiscard: {fileID: 7443595981334669358}
-  itemID: 0
   inventory: {fileID: 3452435132212815142}
   itemDatabase: {fileID: 0}
   shopping: 0
@@ -3492,7 +3460,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3839203624529840061}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenuInventory, Assembly-CSharp
         m_MethodName: UseItem
         m_Mode: 1
@@ -4128,7 +4096,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3839203624529840061}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenuInventory, Assembly-CSharp
         m_MethodName: DiscardItem
         m_Mode: 1
@@ -4396,7 +4364,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3839203624529840061}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenuInventory, Assembly-CSharp
         m_MethodName: SellItem
         m_Mode: 1
@@ -4665,7 +4633,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3839203624529840061}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenuInventory, Assembly-CSharp
         m_MethodName: EquipItem
         m_Mode: 1
