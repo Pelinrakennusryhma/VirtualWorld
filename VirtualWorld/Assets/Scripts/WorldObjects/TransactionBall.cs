@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Characters;
 using UnityEngine.Events;
+using Items;
+using System;
 
 namespace WorldObjects
 {
     public class TransactionBall : MonoBehaviour, I_Interactable
     {
-        public int cost = 3;
-        public string itemId = "666";
-        public string itemName = "A Religious Decoration";
+        [SerializeField] Item item;
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
         public bool IsActive => true;
@@ -19,14 +19,13 @@ namespace WorldObjects
 
         void Start()
         {
-            DetectionMessage = DetectionMessage.Replace("%%cost%%", Mathf.Abs(cost).ToString());
-            DetectionMessage = DetectionMessage.Replace("%%item%%", itemName);
+            DetectionMessage = DetectionMessage.Replace("%%cost%%", Math.Abs(item.Value).ToString());
+            DetectionMessage = DetectionMessage.Replace("%%item%%", item.DisplayName);
         }
 
-        public void Interact(string playerId, UnityAction dummy)
+        public void Interact(UnityAction _)
         {
-            CharacterManager.Instance.BuyItem(itemId, itemName, cost);
-
+            Inventory.Instance.BuyItem(item);
         }
     }
 }

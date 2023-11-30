@@ -62,7 +62,7 @@ namespace BackendConnection
             }
         }
 
-        public async UniTask ModifyInventoryItemAmount(NetworkConnection conn, string userId, ModifyItemDataCollection dataCollection, Action<NetworkConnection, Inventory> callback)
+        public async UniTask ModifyInventoryItemAmount(NetworkConnection conn, string userId, ModifyItemDataCollection dataCollection, Action<NetworkConnection, InventoryData> callback)
         {
             Utils.DumpToConsole(dataCollection);
             try
@@ -73,9 +73,9 @@ namespace BackendConnection
                 Debug.Log("text: ");
                 Debug.Log(text);
 
-                Inventory inventory = JsonConvert.DeserializeObject<Inventory>(text);
+                InventoryData inventoryData = JsonConvert.DeserializeObject<InventoryData>(text);
 
-                callback.Invoke(conn, inventory);
+                callback.Invoke(conn, inventoryData);
             }
             catch (UnityWebRequestException e)
             {

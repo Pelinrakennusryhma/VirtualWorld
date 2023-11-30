@@ -10,6 +10,7 @@ namespace Characters
         MENU,
         TABLET,
         DIALOG,
-        MINIGAME
+        MINIGAME,
+        LOCKED
     }
 }

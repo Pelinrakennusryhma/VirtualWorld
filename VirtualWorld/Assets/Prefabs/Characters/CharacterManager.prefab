@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5884827464413810290}
   - component: {fileID: 5635476881906859497}
   - component: {fileID: 1746309532049967265}
+  - component: {fileID: 8613104118265851934}
   m_Layer: 0
   m_Name: CharacterManager
   m_TagString: Untagged
@@ -118,3 +119,21 @@ MonoBehaviour:
   _overrideType: 2
   _updateHostVisibility: 1
   _observerConditions: []
+--- !u!114 &8613104118265851934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76616a97c6b3e61469d554efac98dc73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5635476881906859497}
+  _networkObjectCache: {fileID: 0}
+  itemDatabase: {fileID: 11400000, guid: a9b69edd0a0f7d94e859ef3ef80d1160, type: 2}
+  <CreditItem>k__BackingField: {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02,
+    type: 2}

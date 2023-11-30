@@ -24,7 +24,7 @@ namespace Characters
             npc = GetComponent<NPC>();
         }
 
-        public void Interact(string playerId, UnityAction callback)
+        public void Interact(UnityAction _)
         {
             PlayerEvents.Instance.CallEventDialogOpened(npc);
         }

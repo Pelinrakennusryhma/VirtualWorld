@@ -7,6 +7,7 @@ using Dev;
 using UI;
 using FishNet.Connection;
 using System.Collections.Generic;
+using Items;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Characters
@@ -62,56 +63,6 @@ namespace Characters
             PlayerEvents.Instance.CallEventCharacterDataSet(characterData);
         }
 
-        public void AddMoney(int amount)
-        {
-            // 000 is temp id for money, the "money" itemName should be grabbed from a Unity item database, it's just there for being visible in mongodb
-            ModifyItemAmount("000", ModifyItemDataOperation.ADD, amount, "money");
-        }
-
-        public void RemoveMoney(int amount)
-        {
-            // 000 is temp id for money, the "money" itemName should be grabbed from a Unity item database, it's just there for being visible in mongodb
-            ModifyItemAmount("000", ModifyItemDataOperation.REMOVE, amount, "money");
-        }
-
-        public void BuyItem(string itemId, string itemName, int cost)
-        {
-            ModifyItemData costData = new ModifyItemData("000", "money", ModifyItemDataOperation.REMOVE, cost);
-            ModifyItemData purchaseData = new ModifyItemData("666", itemName, ModifyItemDataOperation.ADD, 1);
-            ModifyItemDataCollection dataCollection = new ModifyItemDataCollection(costData, purchaseData);
-            ModifyItemServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, dataCollection);
-        }
-
-        void ModifyItemAmount(string itemId, ModifyItemDataOperation operation, int amount, string itemName = "")
-        {
-            ModifyItemData data = new ModifyItemData(itemId, itemName, operation, amount);
-            ModifyItemDataCollection dataCollection = new ModifyItemDataCollection(data);
-            ModifyItemServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id, dataCollection);
-        }
-
-        [ServerRpc(RequireOwnership = false)]
-        void ModifyItemServerRpc(NetworkConnection conn, string userId, ModifyItemDataCollection dataCollection)
-        {
-            APICalls_Server.Instance.ModifyInventoryItemAmount(conn, userId, dataCollection, ModifyItemTargetRpc);
-        }
-
-        [TargetRpc]
-        public void ModifyItemTargetRpc(NetworkConnection conn, Inventory inventory)
-        {
-            if(inventory.items.Count == 0)
-            {
-                Debug.Log("Empty response: " + inventory.items + ", likely due to not having enough credits for purchase.");
-                return;
-            }
-
-            foreach (InventoryItem item in inventory.items)
-            {
-                if (item.id == "000")
-                {
-                    PlayerEvents.Instance.CallEventMoneyAmountChanged(item);
-                }
-            }
-        }
     }
 }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed

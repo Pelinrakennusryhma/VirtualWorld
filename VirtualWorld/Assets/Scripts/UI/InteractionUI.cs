@@ -53,6 +53,17 @@ namespace UI
 
         void OnInteractableLost()
         {
+            if (promptTextFlasher.Flashing)
+            {
+                promptTextFlasher.OnFlashCompletion = ClearInteractablePrompt;
+            } else
+            {
+                ClearInteractablePrompt();
+            }
+        }
+
+        void ClearInteractablePrompt()
+        {
             currentInteractableGO = null;
             ClearPromptText();
             promptText.gameObject.SetActive(false);

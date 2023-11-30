@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
-
+using Hymi;
+using Items;
 public class ItemScript : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private UnityEngine.UI.Image itemImage;
@@ -11,35 +12,30 @@ public class ItemScript : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     [SerializeField] private TextMeshProUGUI itemAmount;
     [SerializeField] private TextMeshProUGUI itemValue;
     private GameObject contextMenu;
-    public int currentItemAmount = 0; 
-    public Item item;
+    public InventoryItem invItem;
     private ContextMenuInventory contextMenuScript;
     public Tooltip tooltip;
 
     void Awake()
     {
-        contextMenu = GameObject.Find("ContextMenu");
-        contextMenuScript = contextMenu.GetComponent<ContextMenuInventory>();
+        //contextMenu = GameObject.Find("ContextMenu");
+        //contextMenuScript = contextMenu.GetComponent<ContextMenuInventory>();
     }
 
-    //Päivittää inventoryssa näkyvän määrän
-    public void UpdateAmount()
+    public void Init(InventoryItem invItem, ContextMenuInventory contextMenu, Tooltip tooltip)
     {
-        itemAmount.text = currentItemAmount.ToString();
-    }
+        contextMenuScript = contextMenu;
+        this.contextMenu = contextMenu.gameObject;
+        this.invItem = invItem;
+        this.tooltip = tooltip;
 
-    //Lisää nykyiseen määrään 'amount'. Päivittää määrän.
-    public void AddItem(int amount)
-    {
-        currentItemAmount += amount;
-        UpdateAmount();
-    }
-
-    //Poistaa nykyisestä määrästä 'amount'. Päivittää määrän.
-    public void RemoveItem(int amount)
-    {
-        currentItemAmount -= amount;
-        UpdateAmount();
+        itemImage.sprite = invItem.item.Icon;
+        itemName.text = invItem.item.DisplayName;
+        if (invItem.amount > 1)
+        {
+            itemAmount.gameObject.SetActive(true);
+            itemAmount.text = invItem.amount.ToString();
+        }
     }
 
     //Avaa context menun painettaessa m2. Painettaessa m1 piilottaa context menun ja tuhoaa info paneelit.
@@ -47,26 +43,12 @@ public class ItemScript : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            contextMenuScript.ShowOptions(item.type);
+            contextMenuScript.ShowOptions(invItem);
             contextMenuScript.SetPositionToMouse();
-            contextMenuScript.itemID = item.id;
         }
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             contextMenuScript.HideMenu();
-        }
-    }
-
-    //Aasettaa tiedot Inventory-skriptistä haettujen tietojen mukaan
-    public void InitializeItem()
-    {
-        item = GameObject.Find("Inventory").GetComponent<InventoryHymisImplementation>().itemToAdd;
-        itemImage.sprite = Resources.Load<Sprite>("Sprites/" + item.name);
-        itemName.text = item.name;
-        if (item.stackable)
-        {
-            itemAmount.gameObject.SetActive(true);
-            itemAmount.text = currentItemAmount.ToString();
         }
     }
 
@@ -75,13 +57,13 @@ public class ItemScript : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         if(this.itemAmount != null)
         {
-            tooltip.SetTooltip(this.item);
+            tooltip.SetTooltip(invItem);
         }
     }
     //Piilottaa tooltipin
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltip.gameObject.SetActive(false);
+        tooltip.Clear();
     }
 
 }

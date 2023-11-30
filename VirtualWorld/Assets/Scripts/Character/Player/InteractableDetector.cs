@@ -22,6 +22,7 @@ namespace Characters
         {
             FindAndInitUI();
             PlayerEvents.Instance.EventPlayerLanded.AddListener(OnPlayerLanded);
+            PlayerEvents.Instance.EventInteractionEnded.AddListener(OnInteractionEnded);
         }
 
         private void Update()
@@ -47,6 +48,14 @@ namespace Characters
             }
         }
 
+        void OnInteractionEnded(I_Interactable interactable, GameObject interactableGO)
+        {
+            if(interactable == currentInteractable)
+            {
+                LoseInteractable();
+            }
+        }
+
         void FindAndInitUI()
         {
             ui = FindObjectOfType<InteractionUI>();
@@ -65,7 +74,8 @@ namespace Characters
         {
             input.ClearInteractInput();
             PlayerEvents.Instance.CallEventInteractionStarted();
-            interactable.Interact(UserSession.Instance.LoggedUserData.id, new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
+            interactable.Interact(new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
+            PlayerEvents.Instance.CallEventInteractableLost();
         }
 
         private void OnTriggerStay(Collider other)
@@ -93,10 +103,15 @@ namespace Characters
         {
             if (other.gameObject == currentInteractableGO)
             {
-                currentInteractable = null;
-                currentInteractableGO = null;
-                PlayerEvents.Instance.CallEventInteractableLost();
+                LoseInteractable();
             }
+        }
+
+        private void LoseInteractable()
+        {
+            currentInteractable = null;
+            currentInteractableGO = null;
+            PlayerEvents.Instance.CallEventInteractableLost();
         }
     }
 }

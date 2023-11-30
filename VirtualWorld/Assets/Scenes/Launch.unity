@@ -902,6 +902,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3669823828670497429, guid: 088d5417f05ccf1489fa98936a060139,
         type: 3}
+      propertyPath: _port
+      value: 7000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669823828670497429, guid: 088d5417f05ccf1489fa98936a060139,
+        type: 3}
       propertyPath: _clientAddress
       value: localhost
       objectReference: {fileID: 0}
