@@ -9,7 +9,7 @@ using WorldObjects;
 
 namespace WorldObjects
 {
-    public class Lootable : NetworkBehaviour, I_Interactable
+    public class Lootable : MonoBehaviour, I_Interactable
     {
         [SerializeField] Item item;
         [field: SerializeReference]

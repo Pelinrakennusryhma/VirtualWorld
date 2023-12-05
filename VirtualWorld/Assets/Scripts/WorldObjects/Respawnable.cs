@@ -1,5 +1,6 @@
 using Characters;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,24 @@ namespace WorldObjects
         [SerializeField] float minRespawnTime;
         [SerializeField] float maxRespawnTime;
 
+        [SyncVar] bool isEnabled;
+
         I_Interactable interactableChild;
         GameObject interactableGO;
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            isEnabled = true;
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            transform.GetChild(0).gameObject.SetActive(isEnabled);
+        }
+
         public void Despawn(I_Interactable interactable, GameObject interactableGO)
         {
             interactableChild = interactable;
@@ -28,7 +45,7 @@ namespace WorldObjects
             StartCoroutine(RespawnTimer());
         }
 
-        [ObserversRpc(BufferLast = true)]
+        [ObserversRpc]
         void DespawnObserversRpc()
         {
             transform.GetChild(0).gameObject.SetActive(false);
@@ -37,15 +54,16 @@ namespace WorldObjects
 
         IEnumerator RespawnTimer()
         {
-            
+            isEnabled = false;
             float respawnTime = Random.Range(minRespawnTime, maxRespawnTime);
             yield return new WaitForSeconds(respawnTime);
 
             transform.GetChild(0).gameObject.SetActive(true);
+            isEnabled = true;
             RespawnObserversRpc();
         }
 
-        [ObserversRpc(BufferLast = true)]
+        [ObserversRpc]
         void RespawnObserversRpc()
         {
             transform.GetChild(0).gameObject.SetActive(true);
