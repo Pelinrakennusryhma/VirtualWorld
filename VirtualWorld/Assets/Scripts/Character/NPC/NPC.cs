@@ -24,7 +24,7 @@ namespace Characters
 
             InitData();
 
-            SetNamePlates();
+            SetNameplates();
         }
 
         void InitData()
@@ -33,7 +33,7 @@ namespace Characters
             npcTitle = Data.title;
         }
 
-        void SetNamePlates()
+        void SetNameplates()
         {
             nameplate.text = npcName;
             titleplate.text = npcTitle;
@@ -42,7 +42,7 @@ namespace Characters
         public override void OnStartClient()
         {
             base.OnStartClient();
-            SetNamePlates();
+            SetNameplates();
         }
     }
 }
