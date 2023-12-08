@@ -17,12 +17,14 @@ namespace WorldObjects
         I_Interactable interactableChild;
         GameObject interactableGO;
 
+        // On server start the object is always enabled
         public override void OnStartServer()
         {
             base.OnStartServer();
             isEnabled = true;
         }
 
+        // On client start, check the SyncVar and disable/enable the gameobject accordingly
         public override void OnStartClient()
         {
             base.OnStartClient();
