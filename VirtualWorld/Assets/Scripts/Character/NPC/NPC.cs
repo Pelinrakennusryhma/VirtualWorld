@@ -13,8 +13,10 @@ namespace Characters
         [SerializeField] TMP_Text nameplate;
         [SerializeField] TMP_Text titleplate;
 
+        [HideInInspector]
         [SyncVar]
         private string npcName;
+        [HideInInspector]
         [SyncVar]
         private string npcTitle;
 

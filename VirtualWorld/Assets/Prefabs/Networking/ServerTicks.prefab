@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7848704356802750603
 MonoBehaviour:
@@ -49,9 +49,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7938540828443898182}
   _networkObjectCache: {fileID: 7938540828443898182}
   serverTicks:
-  - {fileID: 11400000, guid: 94691a84e2a44e3409c24fb0ac8e4796, type: 2}
-  - {fileID: 11400000, guid: bc8c4012f1069224890b2b0fe0dcca10, type: 2}
-  - {fileID: 11400000, guid: a9edbb5e9dffdbe40bf4432fda525a15, type: 2}
+  - {fileID: 11400000, guid: 6cec196859566054ba6d3ddb5635e23a, type: 2}
 --- !u!114 &7938540828443898182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +80,6 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 10
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 910128897
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 9183262019779880194

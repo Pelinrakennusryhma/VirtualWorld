@@ -1331,7 +1331,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 14
+  <PrefabId>k__BackingField: 15
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -1392,6 +1392,8 @@ MonoBehaviour:
   _componentIndexCache: 2
   _addedNetworkObject: {fileID: 5003841659298702918}
   _networkObjectCache: {fileID: 5003841659298702918}
+  restartIdleAnimTick: {fileID: 11400000, guid: 6cec196859566054ba6d3ddb5635e23a,
+    type: 2}
 --- !u!54 &8295644382676027320
 Rigidbody:
   m_ObjectHideFlags: 0

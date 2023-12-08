@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
+using Server;
 
 namespace Animations
 {
     // For now used for starting NPC idle animation
     public class AnimControllerServer : NetworkBehaviour
     {
-        Animator _animator;
+        [SerializeField] ServerTick restartIdleAnimTick;
+
+        private Animator _animator;
 
         // animation IDs
         private int _animIDSpeed;
@@ -22,6 +25,14 @@ namespace Animations
             base.OnStartServer();
             _animator = GetComponent<Animator>();
             AssignAnimationIDs();
+            SetIdle();
+
+            restartIdleAnimTick.OnTick.AddListener(OnServerTick);
+        }
+
+        private void OnServerTick()
+        {
+            Debug.Log("@@@ restarting animation... @@@");
             SetIdle();
         }
 

@@ -9,20 +9,7 @@ using UnityEngine.Events;
 namespace Server {
     public class ServerTicks : NetworkBehaviour
     {
-        public static ServerTicks Instance { get; private set; }
         [SerializeField] List<ServerTick> serverTicks;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
         public override void OnStartServer()
         {
