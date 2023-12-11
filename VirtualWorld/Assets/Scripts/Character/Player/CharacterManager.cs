@@ -19,6 +19,10 @@ namespace Characters
         [SerializeField] CharacterData characterData;
         [SerializeField] public PlayerEmitter PlayerEmitter { get; private set; }
 
+        // Antti's addition to help determine who is driving a car.
+        public int ClientId;
+
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -42,9 +46,21 @@ namespace Characters
             OwnedCharacter = obj;
         }
 
+        // Disable and enable inputs depending on if we are driving a car.
+        public void SetInputsEnabled(bool isEnabled)
+        {
+            OwnedCharacter.GetComponentInChildren<UnityEngine.InputSystem.PlayerInput>(true).enabled = isEnabled;
+            OwnedCharacter.GetComponentInChildren<StarterAssets.StarterAssetsInputs>(true).enabled = isEnabled;
+        }
+
         public override void OnStartClient()
         {
             base.OnStartClient();
+
+            ClientId = LocalConnection.ClientId;
+
+            Debug.Log("Client id is " + ClientId);
+
             GetCharacterDataServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id);
         }
 
