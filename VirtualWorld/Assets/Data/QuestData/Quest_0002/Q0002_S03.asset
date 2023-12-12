@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf5c58f7b8456943bddee3e8108e053, type: 3}
+  m_Script: {fileID: 11500000, guid: e33c6c9163fea6e40963ca4204b993aa, type: 3}
   m_Name: Q0002_S03
   m_EditorClassIdentifier: 
   objectiveDescLong: Return to Ruttunen with the red crystal samples.
   objectiveDescShort: Return to Ruttunen.
   requiredObjectives: 1
+  questFinisher: {fileID: 11400000, guid: 9603112e509379c468865716cd49377e, type: 2}
+  dialogTitle: Red Area
+  dialogText: You found these crystals at the red area? Thank you for bringing them
+    to me!

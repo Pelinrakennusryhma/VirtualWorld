@@ -3,12 +3,8 @@ using BackendConnection;
 using Characters;
 using FishNet.Object;
 using FishNet.Connection;
-using Quests;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HymiQuests;
-using System.Xml.Serialization;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Quests
@@ -136,6 +132,23 @@ namespace Quests
                 }
             }
             return null;
+        }
+
+        public Dictionary<ActiveQuestStep, QuestFinisherStep> FindQuestStepsWithNPCFinisher(NPCData npcData)
+        {
+            Dictionary<ActiveQuestStep, QuestFinisherStep> result = new Dictionary<ActiveQuestStep, QuestFinisherStep>();
+            foreach (ActiveQuest quest in ActiveQuests)
+            {
+                QuestFinisherStep finisherStep = quest.CurrentStep.QuestStep as QuestFinisherStep;
+                if(finisherStep != null)
+                {
+                    if(finisherStep.questFinisher == npcData)
+                    {
+                        result.Add(quest.CurrentStep, finisherStep);
+                    }
+                }
+            }
+            return result;
         }
 
         public void AcceptQuest(Quest quest)

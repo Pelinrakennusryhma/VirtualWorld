@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: MRBOX_ROOT
   m_EditorClassIdentifier: 
   text: Hello complex shape. Have you come to talk to me?
-  childDialogChoices:
-  - {fileID: 11400000, guid: 0fcfb2f26cef85f4c9ebc49e0875175e, type: 2}
+  childDialogChoices: []
   quests: []

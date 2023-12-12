@@ -1,3 +1,4 @@
+using Characters;
 using Dialog;
 using System.Collections;
 using System.Collections.Generic;

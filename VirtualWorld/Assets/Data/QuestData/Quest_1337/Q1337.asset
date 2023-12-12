@@ -16,5 +16,6 @@ MonoBehaviour:
   text: There is a suspicious box around here who claims to be Mr. Box. Have a chat
     with him.
   steps:
-  - {fileID: 11400000, guid: 4b38bb0e0ab14f941a83a0a9f159c607, type: 2}
+  - {fileID: 11400000, guid: 65b0c4ea2cc0f7640bff0ab2b41d7cc9, type: 2}
   preRequisiteQuest: {fileID: 0}
+  questStarter: {fileID: 11400000, guid: cbe890d01ea317643b5dffea0a7e0f2e, type: 2}

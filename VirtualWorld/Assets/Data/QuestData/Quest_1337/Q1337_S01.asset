@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf5c58f7b8456943bddee3e8108e053, type: 3}
+  m_Script: {fileID: 11500000, guid: e33c6c9163fea6e40963ca4204b993aa, type: 3}
   m_Name: Q1337_S01
   m_EditorClassIdentifier: 
   objectiveDescLong: Talk with the suspicious box.
   objectiveDescShort: Talk with the box.
   requiredObjectives: 1
+  questFinisher: {fileID: 11400000, guid: 5e56d58fcb6fcd9409f7e142ad2fba09, type: 2}
+  dialogTitle: Talk with Mr. Box
+  dialogText: You have heard correct. I am indeed Mr. Box. Exciting, is it not?

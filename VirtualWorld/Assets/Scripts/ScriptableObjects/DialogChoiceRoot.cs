@@ -10,7 +10,7 @@ namespace Dialog
     {
         [Tooltip("Clickable sub dialog choices that are under this one.")]
         public List<DialogChoiceWithTitle> childDialogChoices;
-        [Tooltip("Clickable quests that are under this one.")]
+        [Tooltip("Clickable quests that are under this one - quests that start from this dialog root.")]
         public List<Quest> quests;
     }
 }

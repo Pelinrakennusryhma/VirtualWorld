@@ -43,13 +43,12 @@ namespace UI
             playerUI.SetActive(true);
             menu.SetActive(false);
             dialogUI.SetActive(false);
-
             PlayerEvents.Instance.EventQuestCompleted.AddListener(OnQuestCompleted);
         }
 
         void OnQuestCompleted(Quest quest)
         {
-            if(dialogPanel.CurrentNpc == null)
+            if (dialogPanel.CurrentNpc == null)
             {
                 return;
             }
@@ -60,12 +59,11 @@ namespace UI
             // that quest.
             foreach (Quest npcQuest in dialogPanel.CurrentNpc.Data.mainDialog.quests)
             {
-                if(npcQuest.preRequisiteQuest == quest)
+                if (npcQuest.preRequisiteQuest == quest)
                 {
                     PlayerEvents.Instance.CallEventDialogOpened(dialogPanel.CurrentNpc, npcQuest);
                 }
             }
-
         }
 
         public void SetPlayerCharacter(GameObject playerGO)

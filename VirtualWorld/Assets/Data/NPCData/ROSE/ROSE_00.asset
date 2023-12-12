@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d07b0d25a724c142a91a236929cb33a, type: 3}
-  m_Name: ROSE_ROOT
+  m_Name: ROSE_00
   m_EditorClassIdentifier: 
   text: Hi, I'm Rose and I'm here to help you get started. Lorem ipsum dolor sit
     amet, consectetur adipiscing elit. Curabitur dapibus enim et elit vestibulum,

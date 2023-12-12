@@ -17,5 +17,5 @@ MonoBehaviour:
   steps:
   - {fileID: 11400000, guid: 8ba8f4cc9c1c8bd4db245c785a35bf55, type: 2}
   - {fileID: 11400000, guid: 57e6e152c8829ed4c810623bed95d2a3, type: 2}
-  - {fileID: 11400000, guid: 9b8bef08ac3dc1645aeb3d3ff59c33d3, type: 2}
+  - {fileID: 11400000, guid: 9b40a63db7195b048912b0e185800a70, type: 2}
   preRequisiteQuest: {fileID: 11400000, guid: 6cd471ae53a17d8498ef6cf811d6ee49, type: 2}

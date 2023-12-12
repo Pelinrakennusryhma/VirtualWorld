@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d07b0d25a724c142a91a236929cb33a, type: 3}
-  m_Name: RUTTUNEN_ROOT
+  m_Name: RUTTUNEN_00
   m_EditorClassIdentifier: 
   text: I am Ruttunen. How can I help you?
-  childDialogChoices:
-  - {fileID: 11400000, guid: aa0c7274f47229144a1370a2a1fe18ee, type: 2}
-  - {fileID: 11400000, guid: 0869b4e0b7b52d342b376f62d652265c, type: 2}
+  childDialogChoices: []
   quests:
   - {fileID: 11400000, guid: adaf5ee0ab1f27b46b024e3d2c4c515f, type: 2}
