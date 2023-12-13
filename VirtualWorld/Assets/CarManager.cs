@@ -16,147 +16,276 @@ namespace Vehicles
 {
     public class CarManager : NetworkBehaviour, I_Interactable
     {
-        [SyncVar]
-        public bool HasADriver;
-
-        [SyncVar]
-        public string DriverPlayerId;
-
+        private const string EnterCarPrompt = "Enter Car";
+        private const string CarAlreadyHasADriverPrompt = "Car Has a Driver";
 
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
         public bool IsActive => true;
         public Vector3 DetectionMessageOffSet { get => Vector3.zero; }
 
-        public TestMover TestMover;
+        #region SyncVars
 
-        public Camera DedicatedCarCamera;
+        [SyncVar]
+        private bool HasADriver;
 
-        public Vector3 cameraOffset;
+        [SyncVar]
+        private string DriverPlayerId;
 
-        public SimpleCarController SimpleCarController;
+        [SyncVar]
+        private int DriverPlayerClientId;
 
-        public GameObject CameraOffsetPosTemp;
+        #endregion
 
-        public float OffsetLenghtZ;
-        public float OffsetLenghtY;
+        [SerializeField] private Camera DedicatedCarCamera;
 
+        [SerializeField] private GameObject ExitPos;
 
-        public GameObject CameraFocusPoint;
+        [SerializeField] private GameObject ForwardCameraFocusPoint;
+        [SerializeField] private GameObject ForwardCameraOffsetPosTemp;
+        [SerializeField] private GameObject ReverseCameraFocusPoint;
+        [SerializeField] private GameObject ReverseCameraOffsetPosTemp;
 
-        public GameObject ReverseCameraFocusPoint;
-        public GameObject ReverseCameraOffsetPosTemp;
-
-        private float ReverseOffsetLenghtZ;
+        private float ForwardOffsetLenghtY;
+        private float ForwardOffsetLenghtZ;
         private float ReverseOffsetLenghtY;
-
+        private float ReverseOffsetLenghtZ;
 
         private Vector3 CurrentVelocity;
         private Vector3 CurrentRotationalVelocity;
         private Vector3 LastForward;
 
-        public GameObject ExitPos;
+        private SimpleCarController SimpleCarController;
+        
+        private PlayerInput PlayerInput;
+        private CarInput CarInput;
 
 
-        private Vector3 previousOffsetPos;
-
-        public PlayerInput PlayerInput;
-
-
-        public CarInput CarInput;
-
-        [SyncVar]
-        public int DriverPlayerClientId;
-
-        void Start()
+        private void Start()
         {
-            DriverPlayerClientId = -1;
+            DetectionMessage = EnterCarPrompt;
 
+            if (IsServer) 
+            {
+                DriverPlayerClientId = -1;
+            }
+
+            SimpleCarController = GetComponent<SimpleCarController>();
             PlayerInput = GetComponentInChildren<PlayerInput>(true);
             CarInput = GetComponentInChildren<CarInput>(true);
 
             PlayerInput.enabled = false;
             CarInput.enabled = false;
 
-            TestMover = GetComponent<TestMover>();
-            cameraOffset = transform.position - DedicatedCarCamera.transform.position;
+            ForwardOffsetLenghtZ = transform.position.z - ForwardCameraOffsetPosTemp.transform.position.z;
+            ForwardOffsetLenghtY = transform.position.y - ForwardCameraOffsetPosTemp.transform.position.y;
+            ReverseOffsetLenghtZ = transform.position.z - ReverseCameraOffsetPosTemp.transform.position.z;
+            ReverseOffsetLenghtY = transform.position.y - ReverseCameraOffsetPosTemp.transform.position.y;
+
             DedicatedCarCamera.gameObject.SetActive(false);
+            DedicatedCarCamera.transform.position = ForwardCameraOffsetPosTemp.transform.position;
 
-            //OffsetLenghtZ = transform.position.z - DedicatedCarCamera.transform.position.z;
-            //OffsetLenghtY = transform.position.y - DedicatedCarCamera.transform.position.y;
-
-            OffsetLenghtZ = transform.position.z - CameraOffsetPosTemp.transform.position.z;
-            OffsetLenghtY = transform.position.y - CameraOffsetPosTemp.transform.position.y;
-
-            DedicatedCarCamera.transform.position = CameraOffsetPosTemp.transform.position;
-            Vector3 toCar = CameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
+            Vector3 toCar = ForwardCameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
             Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
 
             DedicatedCarCamera.transform.rotation = lookRot;
-
-            ReverseOffsetLenghtZ = transform.position.z - ReverseCameraOffsetPosTemp.transform.position.z;
-            ReverseOffsetLenghtY = transform.position.y - ReverseCameraOffsetPosTemp.transform.position.y;
         }
 
-        public void Interact(string playerId, UnityAction dummy)
+        private void Update()
         {
-            PlayerEvents.Instance.CallEventInteractableLost();
-
-            Debug.Log("Should enter car");
-            EnterCar(playerId);
-        }
-
-        public void EnterCar(string playerId)
-        {
-            if (HasADriver)
+            if (HasADriver
+                && CharacterManager.Instance.ClientId == DriverPlayerClientId)
             {
-                Debug.LogWarning("The car already has a driver. Should not enter");
+                if (CarInput.interact)
+                {
+                    ExitCar();
+                    CarInput.ClearInteractInput();
+                    CarInput.ZeroInputs();
+                }
+
+                SimpleCarController.UpdateInput(new Vector2(CarInput.move.x,
+                                                            CarInput.move.y));
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (HasADriver
+                 && CharacterManager.Instance.ClientId == DriverPlayerClientId)
+            {         
+                if (SimpleCarController.IsGoingInReverse)
+                {
+                    DoReverseCameraThings();
+                }
+
+                else
+                {
+                    DoForwardCameraThings();
+                }
+            }
+        }
+
+        #region CameraMovements
+
+        private void DoForwardCameraThings()
+        {
+            Vector3 offsetPos;
+            bool inFrontOfCar = false;
+
+            float magnitudeBetweenFocusPointAndCar = (ForwardCameraFocusPoint.transform.position
+                                                      - SimpleCarController.CarGraphics.transform.position).magnitude;
+
+            float magnitudeBetweenFocusPointAndCamera = (ForwardCameraFocusPoint.transform.position
+                                                         - DedicatedCarCamera.transform.position).magnitude;
+
+            if (magnitudeBetweenFocusPointAndCamera < magnitudeBetweenFocusPointAndCar)
+            {
+                inFrontOfCar = true;
+            }
+
+            if (inFrontOfCar)
+            {
+
+                offsetPos = SimpleCarController.CarGraphics.transform.position 
+                            + (SimpleCarController.CarGraphics.transform.forward.normalized 
+                               * ForwardOffsetLenghtZ) 
+                            + (Vector3.up * -ForwardOffsetLenghtY);
+
+                DedicatedCarCamera.transform.position = Vector3.SmoothDamp(DedicatedCarCamera.transform.position,
+                                                                       offsetPos,
+                                                                       ref CurrentVelocity,
+                                                                       0.45f,
+                                                                       155.0f,
+                                                                       Time.deltaTime);
+
+                Vector3 toCar = SimpleCarController.transform.position - DedicatedCarCamera.transform.position;
+                Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
+
+                DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
+                                                                         lookRot,
+                                                                         Time.deltaTime * 3.0f);
+
+
             }
 
             else
             {
-                Debug.LogWarning("CAr doesn't have a driver. Can enter.");            
-                OnPlayerEnteredCarServerRpc(playerId, CharacterManager.Instance.ClientId);
-                CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Disable();
-                CharacterManager.Instance.OwnedCharacter.transform.position = new Vector3(-3333, -3333, -3333);
+                offsetPos = SimpleCarController.CarGraphics.transform.position 
+                            + (SimpleCarController.CarGraphics.transform.forward.normalized 
+                               * ForwardOffsetLenghtZ) 
+                            + (Vector3.up * -ForwardOffsetLenghtY);
 
-                // We should probably swap to a dedicated car camera here
-                //DedicatedCarCamera.transform.position = CameraOffsetPosTemp.transform.position;
-                //Vector3 toFocusPoint = CameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
-                //DedicatedCarCamera.transform.rotation = Quaternion.LookRotation(toFocusPoint, Vector3.up);
+                DedicatedCarCamera.transform.position = Vector3.SmoothDamp(DedicatedCarCamera.transform.position,
+                                                                           offsetPos,
+                                                                           ref CurrentVelocity,
+                                                                           0.25f,
+                                                                           155.0f,
+                                                                           Time.deltaTime);
+
+                Vector3 toCar = ForwardCameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
 
 
-                CharacterManager.Instance.SetInputsEnabled(false);
+                Vector3 newForward = Vector3.SmoothDamp(LastForward,
+                                                        toCar,
+                                                        ref CurrentRotationalVelocity,
+                                                        0.15f,
+                                                        155.0f,
+                                                        Time.deltaTime);
 
-                PlayerInput.enabled = true;
-                CarInput.enabled = true;
-                
-                DedicatedCarCamera.gameObject.SetActive(true);
-                DedicatedCarCamera.transform.parent = null;
-                
+                DedicatedCarCamera.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
+                LastForward = DedicatedCarCamera.transform.forward;
+            }
+        }
+
+        private void DoReverseCameraThings()
+        {
+            Vector3 offsetPos;
+
+            offsetPos = SimpleCarController.CarGraphics.transform.position 
+                        + (SimpleCarController.CarGraphics.transform.forward.normalized 
+                           * ReverseOffsetLenghtZ) 
+                        + (Vector3.up * -ReverseOffsetLenghtY);
+
+            DedicatedCarCamera.transform.position = Vector3.Lerp(DedicatedCarCamera.transform.position,
+                                                                 offsetPos,
+                                                                 Time.deltaTime * 2.0f);
+
+            bool behindCar = false;
+
+            float magnitudeBetweenFocusPointAndCar = (ReverseCameraFocusPoint.transform.position
+                                                      - SimpleCarController.CarGraphics.transform.position).magnitude;
+
+            float magnitudeBetweenFocusPointAndCamera = (ReverseCameraFocusPoint.transform.position
+                                                         - DedicatedCarCamera.transform.position).magnitude;
+
+            if (magnitudeBetweenFocusPointAndCamera < magnitudeBetweenFocusPointAndCar)
+            {
+                behindCar = true;
+            }
+
+            if (behindCar)
+            {
+                Vector3 toCar = ReverseCameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
+                Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
+
+                DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
+                                                                         lookRot,
+                                                                         Time.deltaTime * 3.0f);
+            }
+
+            else
+            {
+                Vector3 toCar = SimpleCarController.CarGraphics.transform.position - DedicatedCarCamera.transform.position;
+                Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
+
+                DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
+                                                                         lookRot,
+                                                                         Time.deltaTime * 5.0f);
 
             }
         }
 
-        public void ExitCar()
-        {            
+        #endregion
+
+        public void Interact(string playerId, UnityAction dummy)
+        {
+            if (!HasADriver)
+            {
+                PlayerEvents.Instance.CallEventInteractableLost();
+
+                EnterCar(playerId);
+            }
+        }
+
+        private void EnterCar(string playerId)
+        {
+            OnPlayerEnteredCarServerRpc(playerId, CharacterManager.Instance.ClientId);
+
+            CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Disable();
+            CharacterManager.Instance.OwnedCharacter.transform.position = new Vector3(-3333, -3333, -3333);
+            CharacterManager.Instance.SetInputsEnabled(false);
+
+            PlayerInput.enabled = true;
+            CarInput.enabled = true;
+
+            DedicatedCarCamera.gameObject.SetActive(true);
+            DedicatedCarCamera.transform.parent = null;
+        }
+
+        private void ExitCar()
+        {                        
+            OnPlayerExitedCarServerRpc();
+
             PlayerInput.enabled = false;
             CarInput.enabled = false;
 
-
-
+            CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Enable();
             CharacterManager.Instance.SetInputsEnabled(true);
 
-            OnPlayerExitedCarServerRpc();
-            Debug.Log("On exit car called");
+            Vector3 castOrigin = new Vector3(ExitPos.transform.position.x, 
+                                             ExitPos.transform.position.y + 200, 
+                                             ExitPos.transform.position.z);
 
-            CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Enable();
-
-            Vector3 castOrigin = ExitPos.transform.position;
-
-            castOrigin = new Vector3(castOrigin.x, castOrigin.y + 200, castOrigin.z);
-
- 
             Physics.Raycast(castOrigin, Vector3.down, out RaycastHit hitInfo, 300);
             float yHit = hitInfo.point.y;
 
@@ -170,298 +299,43 @@ namespace Vehicles
 
             DedicatedCarCamera.gameObject.SetActive(false);
             DedicatedCarCamera.transform.parent = transform;
-
-
-        }
-
-        private void Update()
-        {
-
-            //Debug.Log(gameObject.name + " Driver player client id is " + DriverPlayerClientId);
-
-            if (HasADriver
-                &&  CharacterManager.Instance.ClientId == DriverPlayerClientId)
-            {
-
-                //Debug.Log("Driver player client id is " + DriverPlayerClientId);
-                //Debug.Log("CarInput y is " + CarInput.move.y + " x is " + CarInput.move.x);
-
-                //if (Input.GetKeyDown(KeyCode.E))
-                //{
-                //    ExitCar();
-                //}
-
-                //SimpleCarController.UpdateInput(new Vector2(Input.GetAxisRaw("Vertical"),
-                //                                            Input.GetAxisRaw("Horizontal")));
-
-
-                if (CarInput.interact)
-                {
-                    ExitCar();
-                    CarInput.ClearInteractInput();
-                    CarInput.ZeroInputs();
-                }
-
-                SimpleCarController.UpdateInput(new Vector2(CarInput.move.y,
-                                                            CarInput.move.x));
-            }
-        }
-
-        private void LateUpdate()
-        {
-
-            SimpleCarController.IsGoingInReverse = false;
-
-            if (HasADriver
-                 && CharacterManager.Instance.ClientId == DriverPlayerClientId)
-            {
-                //DedicatedCarCamera.transform.position = transform.position - cameraOffset;
-
-                Vector3 offsetPos = Vector3.zero;
-
-                //if (SimpleCarController.LastKnownVelocityMagnitude <= 1.0f)
-                //{
-                //    DedicatedCarCamera.transform.position = CameraOffsetPosTemp.transform.position;
-                //    Vector3 toFocuPoint = CameraFocusPoint.transform.position - DedicatedCarCamera.transform.position; 
-                //    DedicatedCarCamera.transform.rotation = Quaternion.LookRotation(toFocuPoint, Vector3.up);
-                //}
-
-                //else
-                {
-                    if (SimpleCarController.IsGoingInReverse)
-                    {
-                        offsetPos = SimpleCarController.CarGraphics.transform.position + (SimpleCarController.CarGraphics.transform.forward.normalized * ReverseOffsetLenghtZ) + (Vector3.up * -ReverseOffsetLenghtY);
-
-                        //Debug.Log("Offset pos y is " + offsetPos.y);
-
-                        DedicatedCarCamera.transform.position = Vector3.Lerp(DedicatedCarCamera.transform.position,
-                                                                             offsetPos,
-                                                                             Time.deltaTime * 2.0f);
-
-
-
-                        // Comment/delete this out when ready
-                        //DedicatedCarCamera.transform.position = offsetPos;
-
-
-
-                        bool behindCar = false;
-
-                        float magnitudeBetweenFocusPointAndCar = (ReverseCameraFocusPoint.transform.position 
-                                                                  - SimpleCarController.CarGraphics.transform.position).magnitude;
-
-                        float magnitudeBetweenFocusPointAndCamera = (ReverseCameraFocusPoint.transform.position 
-                                                                     - DedicatedCarCamera.transform.position).magnitude;
-
-                        if (magnitudeBetweenFocusPointAndCamera < magnitudeBetweenFocusPointAndCar)
-                        {
-                            behindCar = true;
-                        }
-
-                        if (behindCar) 
-                        {
-                            Vector3 toCar = ReverseCameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
-                            Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-                            DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
-                                                                                     lookRot,
-                                                                                     Time.deltaTime * 3.0f);
-
-                        }
-
-                        else
-                        {
-                            Vector3 toCar = SimpleCarController.CarGraphics.transform.position - DedicatedCarCamera.transform.position;
-                            Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-                            DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
-                                                                                     lookRot,
-                                                                                     Time.deltaTime * 5.0f);
-
-                        }
-
-
-                        //Vector3 currentForward = DedicatedCarCamera.transform.forward;
-
-                        //Vector3 newForward = Vector3.SmoothDamp(LastForward,
-                        //                                                          toCar,
-                        //                                                          ref CurrentRotationalVelocity,
-                        //                                                          0.01f,
-                        //                                                          155.0f,
-                        //                                                          Time.deltaTime);
-                        //DedicatedCarCamera.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
-
-                    }
-
-                    else
-                    {
-                        //if (SimpleCarController.LastKnownVelocityMagnitude < 2.0f)
-                        //{
-                        //    offsetPos = SimpleCarController.CarGraphics.transform.position + (SimpleCarController.CarGraphics.transform.forward.normalized * OffsetLenghtZ) + (Vector3.up * -OffsetLenghtY);
-
-                        //    DedicatedCarCamera.transform.position = Vector3.Lerp(DedicatedCarCamera.transform.position,
-                        //                                                         offsetPos,
-                        //                                                         Time.deltaTime * 1.0f);
-
-                        //    Vector3 toCar = CameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
-                        //    Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-                        //    DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
-                        //                                                             lookRot,
-                        //                                                             Time.deltaTime * 1.0f);
-
-                        //}
-
-                        //else 
-                        {
-                            bool inFrontOfCar = false;
-
-                            float magnitudeBetweenFocusPointAndCar = (CameraFocusPoint.transform.position
-                                                                      - SimpleCarController.CarGraphics.transform.position).magnitude;
-
-                            float magnitudeBetweenFocusPointAndCamera = (CameraFocusPoint.transform.position
-                                                                         - DedicatedCarCamera.transform.position).magnitude;
-
-                            if (magnitudeBetweenFocusPointAndCamera < magnitudeBetweenFocusPointAndCar)
-                            {
-                                inFrontOfCar = true;
-                            }
-
-                            if (inFrontOfCar)
-                            {
-
-                                offsetPos = SimpleCarController.CarGraphics.transform.position + (SimpleCarController.CarGraphics.transform.forward.normalized * OffsetLenghtZ) + (Vector3.up * -OffsetLenghtY);
-
-                                //offsetPos = Vector3.Lerp(previousOffsetPos, offsetPos, Time.deltaTime * 0.2f);
-
-                                DedicatedCarCamera.transform.position = Vector3.SmoothDamp(DedicatedCarCamera.transform.position,
-                                                                                       offsetPos,
-                                                                                       ref CurrentVelocity,
-                                                                                       0.45f,
-                                                                                       155.0f,
-                                                                                       Time.deltaTime);
-
-                                Vector3 toCar = SimpleCarController.transform.position - DedicatedCarCamera.transform.position;
-                                Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-                                DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
-                                                                                         lookRot,
-                                                                                         Time.deltaTime * 3.0f);
-                                //Debug.Log("In front of car");
-                                //Debug.Break();
-
-                                previousOffsetPos = offsetPos;
-                            }
-
-                            else 
-                            {
-
-
-
-                                offsetPos = SimpleCarController.CarGraphics.transform.position + (SimpleCarController.CarGraphics.transform.forward.normalized * OffsetLenghtZ) + (Vector3.up * -OffsetLenghtY);
-
-                                DedicatedCarCamera.transform.position = Vector3.SmoothDamp(DedicatedCarCamera.transform.position,
-                                                                                       offsetPos,
-                                                                                       ref CurrentVelocity,
-                                                                                       0.25f,
-                                                                                       155.0f,
-                                                                                       Time.deltaTime);
-
-                                Vector3 toCar = CameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
-                                //Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-                                //DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
-                                //                                                         lookRot,
-                                //                                                         Time.deltaTime * 3.0f);
-
-                                Vector3 currentForward = DedicatedCarCamera.transform.forward;
-
-                                Vector3 newForward = Vector3.SmoothDamp(LastForward,
-                                                                                          toCar,
-                                                                                          ref CurrentRotationalVelocity,
-                                                                                          0.15f,
-                                                                                          155.0f,
-                                                                                          Time.deltaTime);
-                                DedicatedCarCamera.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
-                            }
-                        }
-                    }
-                }
-
-                //DedicatedCarCamera.transform.position = Vector3.Lerp(DedicatedCarCamera.transform.position,
-                //                                                     offsetPos,
-                //                                                     Time.deltaTime * 5.0f);
-
-
-
-                //DedicatedCarCamera.transform.rotation = CameraOffsetPosTemp.transform.rotation;
-                //DedicatedCarCamera.transform.LookAt(transform.position, Vector3.up);
-
-                //Vector3 toCar = SimpleCarController.CarGraphics.transform.position - DedicatedCarCamera.transform.position;
-                //Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-
-
-                //Vector3 toCar = CameraFocusPoint.transform.position - DedicatedCarCamera.transform.position;
-                ////Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
-
-                ////DedicatedCarCamera.transform.rotation = Quaternion.Slerp(DedicatedCarCamera.transform.rotation,
-                ////                                                         lookRot,
-                ////                                                         Time.deltaTime * 3.0f);
-
-                //Vector3 currentForward = DedicatedCarCamera.transform.forward;
-
-                //Vector3 newForward = Vector3.SmoothDamp(LastForward,
-                //                                                          toCar,
-                //                                                          ref CurrentRotationalVelocity,
-                //                                                          0.15f,
-                //                                                          155.0f,
-                //                                                          Time.deltaTime);
-                //DedicatedCarCamera.transform.rotation = Quaternion.LookRotation(newForward, Vector3.up);
-
-                LastForward = DedicatedCarCamera.transform.forward;
-            }
         }
 
         [ServerRpc(RequireOwnership = false)]
-
         public void OnPlayerEnteredCarServerRpc(string playerId, int clientId)
         {
             HasADriver = true;
             DriverPlayerId = playerId;
             DriverPlayerClientId = clientId;
 
-            if (TestMover != null) 
-            {
-                TestMover.OnPlayerEnteredCar(playerId);
-            }
-
             if (SimpleCarController != null)
             {
                 SimpleCarController.OnPlayerEnteredCar(playerId, clientId);
             }
+
+            ChangeDetectionMessageObserverRpc(CarAlreadyHasADriverPrompt);
         }
 
         [ServerRpc(RequireOwnership = false)]
-
         public void OnPlayerExitedCarServerRpc()
         {
             HasADriver = false;
             
-            if (TestMover != null)
-            {
-                TestMover.OnPlayerExitedCar(DriverPlayerId);
-            }
-
             if (SimpleCarController != null)
             {
                 SimpleCarController.OnPlayerExitedCar(DriverPlayerId);
             }
 
             DriverPlayerId = "";
-            DriverPlayerClientId = -1;
-        }   
+            DriverPlayerClientId = -1;        
+            
+            ChangeDetectionMessageObserverRpc(EnterCarPrompt);
+        }
 
-        
+        [ObserversRpc]
+        public void ChangeDetectionMessageObserverRpc(string detectionMessage)
+        {
+            DetectionMessage = detectionMessage;
+        }
     }
 }

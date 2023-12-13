@@ -59,8 +59,6 @@ namespace Characters
 
             ClientId = LocalConnection.ClientId;
 
-            Debug.Log("Client id is " + ClientId);
-
             GetCharacterDataServerRpc(LocalConnection, UserSession.Instance.LoggedUserData.id);
         }
 

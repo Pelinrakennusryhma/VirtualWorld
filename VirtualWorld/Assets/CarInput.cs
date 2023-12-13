@@ -1,311 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
-public class CarInput : MonoBehaviour
+namespace Vehicles
 {
-    [Header("Car Input Values")]
-    public Vector2 move;
-    //public Vector2 look;
-    //public bool jump;
-    //[field: SerializeField] public bool Sprint { get; private set; }
-    public bool interact;
-    //public bool tablet;
-    //public bool action1;
+    public class CarInput : MonoBehaviour
+    {
+        [Header("Car Input Values")]
+        public Vector2 move;
+        public bool interact;
 
-    //[Header("Movement Settings")]
-    //public bool analogMovement;
-
-    [Header("Mouse Cursor Settings")]
-    public bool cursorLocked = true;
-    public bool cursorInputForLook = true;
+        [Header("Mouse Cursor Settings")]
+        public bool cursorLocked = true;
+        public bool cursorInputForLook = true;
 
 #if ENABLE_INPUT_SYSTEM
 
-    //private void Start()
-    //{
-    //    PlayerEvents.Instance.EventGameStateChanged.AddListener(OnGameStateChanged);
+        private void OnDisable()
+        {
+            ZeroInputs();
+        }
 
-    //    LockCursor();
-    //}
+        public void ZeroInputs()
+        {
+            MoveInput(Vector2.zero);
+            InteractInput(false);
+        }
 
-    //void OnGameStateChanged(GAME_STATE newState)
-    //{
-    //    switch (newState)
-    //    {
-    //        case GAME_STATE.FREE:
-    //            LockCursor();
-    //            break;
-    //        case GAME_STATE.MENU:
-    //            UnlockCursor();
-    //            ZeroInputs();
-    //            break;
-    //        case GAME_STATE.TABLET:
-    //            UnlockCursor();
-    //            ZeroInputs();
-    //            break;
-    //        case GAME_STATE.DIALOG:
-    //            UnlockCursor();
-    //            ZeroInputs();
-    //            break;
-    //        case GAME_STATE.MINIGAME:
-    //            UnlockCursor();
-    //            ZeroInputs();
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
+        public void OnMove(InputAction.CallbackContext value)
+        {
+            MoveInput(value.ReadValue<Vector2>());
+        }
 
-    private void OnDisable()
-    {
-        ZeroInputs();
-    }
+        public void OnInteract(InputAction.CallbackContext value)
+        {
+            InteractInput(value.performed);
+        }
 
-    public void ZeroInputs()
-    {
-        MoveInput(Vector2.zero);
-        //LookInput(Vector2.zero);
-        //JumpInput(false);
-        //SprintInput(false);
-        InteractInput(false);
-        //Action1Input(false);
-        //TabletInput(false);
-    }
-    public void OnMove(InputAction.CallbackContext value)
-    {               
-        MoveInput(value.ReadValue<Vector2>());
-
-
-    }
-
-    //public void OnLook(InputAction.CallbackContext value)
-    //{
-    //    switch (CharacterManager.Instance.gameState)
-    //    {
-    //        case GAME_STATE.FREE:
-    //            if (cursorInputForLook)
-    //            {
-    //                LookInput(value.ReadValue<Vector2>());
-    //            }
-    //            break;
-    //        case GAME_STATE.MENU:
-    //            break;
-    //        case GAME_STATE.TABLET:
-    //            break;
-    //        case GAME_STATE.DIALOG:
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //public void OnJump(InputAction.CallbackContext value)
-    //{
-    //    switch (CharacterManager.Instance.gameState)
-    //    {
-    //        case GAME_STATE.FREE:
-    //            JumpInput(value.performed);
-    //            break;
-    //        case GAME_STATE.MENU:
-    //            break;
-    //        case GAME_STATE.TABLET:
-    //            break;
-    //        case GAME_STATE.DIALOG:
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //public void OnSprint(InputAction.CallbackContext value)
-    //{
-    //    switch (CharacterManager.Instance.gameState)
-    //    {
-    //        case GAME_STATE.FREE:
-    //            SprintInput(value.performed);
-    //            break;
-    //        case GAME_STATE.MENU:
-    //            break;
-    //        case GAME_STATE.TABLET:
-    //            break;
-    //        case GAME_STATE.DIALOG:
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    public void OnInteract(InputAction.CallbackContext value)
-    {                
-        InteractInput(value.performed);
-
-        //switch (CharacterManager.Instance.gameState)
-        //{
-        //    case GAME_STATE.FREE:
-
-        //        break;
-        //    case GAME_STATE.MENU:
-        //        break;
-        //    case GAME_STATE.TABLET:
-        //        break;
-        //    case GAME_STATE.DIALOG:
-        //        break;
-        //    default:
-        //        break;
-        //}
-    }
-
-    //public void OnTablet(InputAction.CallbackContext value)
-    //{
-    //    if (value.action.WasPerformedThisFrame())
-    //    {
-    //        switch (CharacterManager.Instance.gameState)
-    //        {
-    //            case GAME_STATE.FREE:
-    //                ZeroInputs();
-    //                CharacterManager.Instance.SetGameState(GAME_STATE.TABLET);
-    //                PlayerEvents.Instance.CallEventOpenTabletPressed();
-    //                break;
-    //            case GAME_STATE.MENU:
-    //                break;
-    //            case GAME_STATE.TABLET:
-    //                PlayerEvents.Instance.CallEventCloseTabletPressed();
-    //                break;
-    //            case GAME_STATE.DIALOG:
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //}
-
-    //public void OnAction1(InputAction.CallbackContext value)
-    //{
-    //    switch (CharacterManager.Instance.gameState)
-    //    {
-    //        case GAME_STATE.FREE:
-    //            Action1Input(value.performed);
-    //            break;
-    //        case GAME_STATE.MENU:
-    //            break;
-    //        case GAME_STATE.TABLET:
-    //            break;
-    //        case GAME_STATE.DIALOG:
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //public void OnMenu(InputAction.CallbackContext value)
-    //{
-    //    if (value.action.WasPerformedThisFrame())
-    //    {
-    //        switch (CharacterManager.Instance.gameState)
-    //        {
-    //            case GAME_STATE.FREE:
-    //                CharacterManager.Instance.SetGameState(GAME_STATE.MENU);
-    //                break;
-    //            case GAME_STATE.MENU:
-    //                CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
-    //                break;
-    //            case GAME_STATE.TABLET:
-    //                PlayerEvents.Instance.CallEventCloseTabletPressed();
-    //                break;
-    //            case GAME_STATE.DIALOG:
-    //                CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //}
-
-    //public void OnToggleFocusedQuest(InputAction.CallbackContext value)
-    //{
-    //    if (value.action.WasPerformedThisFrame())
-    //    {
-    //        switch (CharacterManager.Instance.gameState)
-    //        {
-    //            case GAME_STATE.FREE:
-    //                QuestManager.Instance.ToggleFocusedQuest();
-    //                break;
-    //            case GAME_STATE.MENU:
-    //                break;
-    //            case GAME_STATE.TABLET:
-    //                break;
-    //            case GAME_STATE.DIALOG:
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //}
 #endif
 
 
-    public void MoveInput(Vector2 newMoveDirection)
-    {
-        move = newMoveDirection;
-    }
+        public void MoveInput(Vector2 newMoveDirection)
+        {
+            move = newMoveDirection;
+        }
 
-    //public void LookInput(Vector2 newLookDirection)
-    //{
-    //    look = newLookDirection;
-    //}
+        public void InteractInput(bool newInteractState)
+        {
+            interact = newInteractState;
+        }
 
-    //public void JumpInput(bool newJumpState)
-    //{
-    //    jump = newJumpState;
-    //}
+        public void ClearInteractInput()
+        {
+            interact = false;
+        }
 
-    //public void SprintInput(bool newSprintState)
-    //{
-    //    Sprint = newSprintState;
-    //}
+        public void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
 
-    public void InteractInput(bool newInteractState)
-    {
-        interact = newInteractState;
-    }
-
-    public void ClearInteractInput()
-    {
-        interact = false;
-    }
-
-    //public void ClearExecuteInputs()
-    //{
-    //    action1 = false;
-    //}
-
-    //public void TabletInput(bool newTabletState)
-    //{
-    //    tablet = newTabletState;
-    //}
-
-    //public void ClearTabletInput()
-    //{
-    //    tablet = false;
-    //}
-
-    //public void Action1Input(bool newAction1State)
-    //{
-    //    action1 = newAction1State;
-    //}
-
-    public void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    public void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
+        public void UnlockCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }
