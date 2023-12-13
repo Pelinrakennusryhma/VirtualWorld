@@ -30,9 +30,6 @@ namespace Vehicles
         private bool HasADriver;
 
         [SyncVar]
-        private string DriverPlayerId;
-
-        [SyncVar]
         private int DriverPlayerClientId;
 
         #endregion
@@ -247,19 +244,19 @@ namespace Vehicles
 
         #endregion
 
-        public void Interact(string playerId, UnityAction dummy)
+        public void Interact(UnityAction completionCallBackEvent)
         {
             if (!HasADriver)
             {
                 PlayerEvents.Instance.CallEventInteractableLost();
 
-                EnterCar(playerId);
+                EnterCar();
             }
         }
 
-        private void EnterCar(string playerId)
+        private void EnterCar()
         {
-            OnPlayerEnteredCarServerRpc(playerId, CharacterManager.Instance.ClientId);
+            OnPlayerEnteredCarServerRpc(CharacterManager.Instance.ClientId);
 
             CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Disable();
             CharacterManager.Instance.OwnedCharacter.transform.position = new Vector3(-3333, -3333, -3333);
@@ -302,15 +299,14 @@ namespace Vehicles
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void OnPlayerEnteredCarServerRpc(string playerId, int clientId)
+        public void OnPlayerEnteredCarServerRpc(int clientId)
         {
             HasADriver = true;
-            DriverPlayerId = playerId;
             DriverPlayerClientId = clientId;
 
             if (SimpleCarController != null)
             {
-                SimpleCarController.OnPlayerEnteredCar(playerId, clientId);
+                SimpleCarController.OnPlayerEnteredCar(clientId);
             }
 
             ChangeDetectionMessageObserverRpc(CarAlreadyHasADriverPrompt);
@@ -323,10 +319,9 @@ namespace Vehicles
             
             if (SimpleCarController != null)
             {
-                SimpleCarController.OnPlayerExitedCar(DriverPlayerId);
+                SimpleCarController.OnPlayerExitedCar();
             }
 
-            DriverPlayerId = "";
             DriverPlayerClientId = -1;        
             
             ChangeDetectionMessageObserverRpc(EnterCarPrompt);

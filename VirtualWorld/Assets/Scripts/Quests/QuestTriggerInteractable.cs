@@ -37,7 +37,7 @@ namespace Quests
             }
         }
 
-        public void Interact(string playerId, UnityAction callback)
+        public void Interact(UnityAction _)
         {
             ProgressQuestStep();
         }

@@ -6,31 +6,30 @@ using UnityEngine;
 
 public class TransportSetter : MonoBehaviour
 {
+//    private void Awake()
+//    {
 
-    //    private void Awake()
-    //    {
+//        Multipass mp = GetComponent<Multipass>();
 
-    //        Multipass mp = GetComponent<Multipass>();
+//#if UNITY_WEBGL && !UNITY_SERVER && !UNITY_EDITOR
+//                    mp.SetClientTransport<Bayou>();
+//#else
+//        mp.SetClientTransport<Tugboat>();
+//#endif
 
-    //#if UNITY_WEBGL && !UNITY_SERVER && !UNITY_EDITOR
-    //                mp.SetClientTransport<Bayou>();
-    //#else
-    //        mp.SetClientTransport<Tugboat>();
-    //#endif
+//        Debug.Log("Client transport set as " + mp.ClientTransport);
 
-    //        Debug.Log("Client transport set as " + mp.ClientTransport);
-
-    //    }
+//    }
 
     private void Awake()
     {
 #if UNITY_SERVER
-            return;
+                return;
 #endif
         TransportManager transportManager = GetComponent<TransportManager>();
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-            transportManager.Transport = GetComponent<Bayou>();
+                transportManager.Transport = GetComponent<Bayou>();
 #else
         transportManager.Transport = GetComponent<Tugboat>();
 #endif

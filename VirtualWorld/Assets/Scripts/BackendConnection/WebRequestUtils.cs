@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace BackendConnection
 
             if (data != null)
             {
-                string json = JsonUtility.ToJson(data);
+                string json = JsonConvert.SerializeObject(data);
                 byte[] jsonToSend = new UTF8Encoding().GetBytes(json);
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             }

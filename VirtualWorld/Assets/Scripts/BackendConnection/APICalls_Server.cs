@@ -8,6 +8,7 @@ using System;
 using Newtonsoft.Json;
 using FishNet.Connection;
 using Dev;
+using System.Collections.Generic;
 
 namespace BackendConnection
 {
@@ -61,17 +62,20 @@ namespace BackendConnection
             }
         }
 
-        public async UniTask ModifyInventoryItemAmount(NetworkConnection conn, string userId, ModifyItemData data, Action<NetworkConnection, InventoryItem> callback)
+        public async UniTask ModifyInventoryItemAmount(NetworkConnection conn, string userId, ModifyItemDataCollection dataCollection, Action<NetworkConnection, InventoryData> callback)
         {
+            Utils.DumpToConsole(dataCollection);
             try
             {
-                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + inventoryRoute + "/" + userId, RequestType.PUT, data);
+                UnityWebRequest req = WebRequestUtils.CreateRequest(baseURL + inventoryRoute + "/" + userId, RequestType.PUT, dataCollection);
 
                 string text = await WebRequestUtils.GetTextAsync(req);
+                Debug.Log("text: ");
+                Debug.Log(text);
 
-                InventoryItem item = JsonConvert.DeserializeObject<InventoryItem>(text);
+                InventoryData inventoryData = JsonConvert.DeserializeObject<InventoryData>(text);
 
-                callback.Invoke(conn, item);
+                callback.Invoke(conn, inventoryData);
             }
             catch (UnityWebRequestException e)
             {

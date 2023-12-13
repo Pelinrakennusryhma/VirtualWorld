@@ -120,14 +120,9 @@ public class TabletCameraViewController : NetworkBehaviour
 
             SetupTabletForComingIn();
             ViewWithinAViewController.OnTabletOpened();
-
-#if UNITY_WEBGL
-            Inputs.UnlockCursor();
-#endif
         }
     }
 
-    // callback is called once camera has done zooming back to change StarterAssetsInputs' gameState enum
     public void OnCloseTabletPressed()
     {
 
@@ -209,6 +204,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
     private void SetupTabletForGoingOut()
     {
+        CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
         // We keep track of if we are doing the movements 
         isInterpolating = true;
 

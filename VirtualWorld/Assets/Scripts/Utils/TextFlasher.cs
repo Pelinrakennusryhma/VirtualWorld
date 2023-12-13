@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace UI
 {
@@ -12,6 +13,8 @@ namespace UI
         [SerializeField] float flashTextDuration = 0.09f;
         [SerializeField] Color flashFontColor = Color.white;
         [SerializeField] float flashFontSize = 48f;
+        [SerializeField] public bool Flashing { get; private set; }
+        [SerializeField] public UnityAction OnFlashCompletion { get; set; }
 
         float originalFontSize;
         Color originalFontColor;
@@ -38,17 +41,30 @@ namespace UI
 
         IEnumerator IEFlashText()
         {
+            Flashing = true;
             text.fontSize = flashFontSize;
             text.color = flashFontColor;
+
             yield return new WaitForSeconds(flashTextDuration);
+
             text.fontSize = originalFontSize;
             text.color = originalFontColor;
+            Flashing = false;
+
+            yield return new WaitForEndOfFrame();
+
+            if(OnFlashCompletion != null)
+            {
+                OnFlashCompletion();
+                OnFlashCompletion = null;
+            }
         }
 
         public void Reset()
         {
             text.fontSize = originalFontSize;
             text.color = originalFontColor;
+            Flashing = false;
         }
     }
 }

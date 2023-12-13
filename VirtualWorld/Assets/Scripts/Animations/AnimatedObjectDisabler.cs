@@ -12,6 +12,9 @@ using Characters;
 
 namespace Animations
 {
+    // Because network animations break when the game object is disabled and enabled
+    // this script is required on animated network objects.
+    // Disable and Enable methods are called instead of toggling the gameobject off and on.
     public class AnimatedObjectDisabler : MonoBehaviour
     {
         List<CachedMonoBehaviour> monoBehaviours = new List<CachedMonoBehaviour>();

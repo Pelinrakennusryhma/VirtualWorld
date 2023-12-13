@@ -53,7 +53,22 @@ namespace UI
 
         void OnInteractableLost()
         {
+            // If the prompt text is in the middle of flashing IENumerator, assign it
+            // a callback to call once the flashing is complete.
+            // Otherwise hide the prompt instantly.
+            if (promptTextFlasher.Flashing)
+            {
+                promptTextFlasher.OnFlashCompletion = ClearInteractablePrompt;
+            } else
+            {
+                ClearInteractablePrompt();
+            }
+        }
+
+        void ClearInteractablePrompt()
+        {
             currentInteractableGO = null;
+            currentInteractable = null;
             ClearPromptText();
             promptText.gameObject.SetActive(false);
         }

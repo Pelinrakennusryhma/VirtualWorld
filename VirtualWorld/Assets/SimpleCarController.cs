@@ -45,8 +45,6 @@ namespace Vehicles
         [SyncVar]
         private Vector3 serverLastKnownVelocity;
 
-        [SyncVar]
-        private string playerIdUserSession;
 
         #endregion
 
@@ -137,18 +135,16 @@ namespace Vehicles
             }
         }
 
-        public void OnPlayerEnteredCar(string playerId, int clientId)
+        public void OnPlayerEnteredCar(int clientId)
         {
-            playerIdUserSession = playerId;
             driverPlayerClientId = clientId;
             hasADriver = true;
 
             CarGraphics.transform.parent = null;
         }
 
-        public void OnPlayerExitedCar(string playerId)
+        public void OnPlayerExitedCar()
         {
-            playerIdUserSession = "";
             driverPlayerClientId = -1;
             hasADriver = false;
 

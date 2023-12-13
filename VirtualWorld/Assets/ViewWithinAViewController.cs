@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Characters;
 
 
 // TO BE REFACTORED:
@@ -278,6 +279,7 @@ public class ViewWithinAViewController : MonoBehaviour
     public void OnCameraReachedTransitionPos()
     {
         InventoryViewChanger.CameraReachedTargetPosition();
+        CharacterManager.Instance.SetGameState(GAME_STATE.TABLET);
     }
 
     // Does view specific operations and tells

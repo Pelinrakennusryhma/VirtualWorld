@@ -3,136 +3,77 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Characters;
+using Items;
+using Hymi;
 
-public class InventoryHymisImplementation : MonoBehaviour
+namespace InventoryUI
 {
-    [SerializeField] private TextMeshProUGUI playerCash;
-    [SerializeField] private TextMeshProUGUI playerBank;
-    [SerializeField] private TextMeshProUGUI playerDebt;
-    [SerializeField] private TextMeshProUGUI itemCount;
-    [SerializeField] private GameObject layout;
-    [SerializeField] private GameSystem gameSystem;
-    public Tooltip tooltip;
-    public List<Item> playerItems = new List<Item>(); //Pelaajan itemit. Ei laske kuinka monta stackattavaa itemiä on. Määrä löytyy ItemScriptistä.
-    public ItemDatabase itemDatabase;
-    public Item itemToAdd;
-    private int maxItemCount = 60; //Kuinka monta itemiä pelaajalla voi olla kerralla.
+    public class InventoryHymisImplementation : MonoBehaviour
+    {
+        [SerializeField] private TextMeshProUGUI playerCash;
+        [SerializeField] private TextMeshProUGUI playerBank;
+        [SerializeField] private TextMeshProUGUI playerDebt;
+        [SerializeField] private TextMeshProUGUI itemCount;
+        [SerializeField] private GameObject layout;
+        [SerializeField] private GameObject itemRepresentationPrefab;
+        [SerializeField] private ContextMenuInventory contextMenu;
+        public Tooltip tooltip;
 
-    private void OnEnable()
-    {
-        UpdateInventory();
-    }
-    //Tarkistaa onko pelaajalla itemiä
-    public Item CheckForItem(int id)
-    {
-        return playerItems.Find(item => item.id == id);
-    }
-    
-    //Antaa pelaajalle itemin. Jos pelaajalla ei ole ennestään sitä, lisää uuden rivin inventoryyn. Jos pelaajalla on jo inventoryssa se ja tavara on stackattava, lisää määrään lisää.
-    public void AddItem(int id, int amount)
-    {
-        Item item = CheckForItem(id);
-        itemToAdd = itemDatabase.GetItem(id);
-
-        if (playerItems.Count < maxItemCount) //Jos pelaajalla on tilaa inventoryssa
+        private void Awake()
         {
-            if (item == null || !item.stackable) //Jos itemiä ei ole ennestään, tai item ei ole stackattava
-            {
-                playerItems.Add(itemToAdd);
-                Object prefab = Resources.Load("Prefabs/item");
-                GameObject newItem = Instantiate(prefab, layout.transform) as GameObject;
-                newItem.name = itemToAdd.id.ToString();
-                ItemScript itemScript = newItem.GetComponent<ItemScript>();
-                itemScript.InitializeItem();
-                itemScript.AddItem(amount);
-                itemScript.tooltip = tooltip;
-            }
-            else if (item.stackable) //Jos item on stackattava
-            {
-                GameObject.Find("Inventory/Scroll/View/Layout/" + id).GetComponent<ItemScript>().AddItem(amount);
-            }
+            PlayerEvents.Instance.EventInventoryChanged.AddListener(OnInventoryChanged);
         }
-        UpdateItemCount();
-    }
 
-    //Poistaa pelaajalta itemin. Jos pelaajalla on jo ennestään sitä enemmän kuin poistettava määrä, poistaa määrästä. Jos pelaajalla on saman verran tai vähemmän kuin poistettava määrä, poistaa rivin inventorysta.
-    public void RemoveItem(int id, int amount)
-    {
-        Debug.LogWarning("Removing item");
-        Item item = CheckForItem(id);
-        if(item != null)
+        void OnInventoryChanged(List<InventoryItem> items)
         {
-            ItemScript itemScript = GameObject.Find("Inventory/Scroll/View/Layout/" + id.ToString()).GetComponent<ItemScript>();
-            if (itemScript.currentItemAmount <= amount)
+            for (int i = layout.transform.childCount - 1; i >= 0; i--)
             {
-                playerItems.Remove(item);
-                itemScript.currentItemAmount = 0;
-                Destroy(GameObject.Find("Inventory/Scroll/View/Layout/" + id.ToString()));
+                Destroy(layout.transform.GetChild(i).gameObject);
             }
-            else
+
+            foreach (InventoryItem invItem in items)
             {
-                itemScript.RemoveItem(amount);
-            }
-        }
-        UpdateItemCount();
-    }
-    public void UpdateInventory()
-    {
-        playerCash.text = gameSystem.playerMoney.ToString("C", gameSystem.culture);
-        playerBank.text = gameSystem.bankMoney.ToString("C", gameSystem.culture);
-        playerDebt.text = gameSystem.playerDebt.ToString("C", gameSystem.culture);
-        UpdateItemCount();
-    }
-    public void SortByName()
-    {
-        playerItems.Sort((a, b) => a.name.CompareTo(b.name));
-        foreach (Item item in playerItems)
-        {
-            foreach(ItemScript itemScript in GetComponentsInChildren<ItemScript>())
-            {
-                if(item == itemScript.item)
+                // Credit item is treated separately, same will go for debt and such once those are implemented
+                if(invItem.item.Id == Inventory.Instance.CreditItem.Id)
                 {
-                    itemScript.gameObject.transform.SetAsLastSibling();
+                    UpdateFinances(invItem);
+                } else
+                {
+                    // Normal items get their graphical representation added to inventory (icon, name, description, context menu functionality)
+                    AddItemRepresentation(invItem);
                 }
             }
         }
-    }
 
-    public void SortByID()
-    {
-        List<Transform> children = new List<Transform>();
-        children = layout.GetComponentsInChildren<Transform>().Cast<Transform>().ToList();
-        children.Sort((Transform a, Transform b) => a.name.CompareTo(b.name));
-        foreach(Transform child in children)
+        void UpdateFinances(InventoryItem creditItem)
         {
-            child.SetAsLastSibling();
+            int displayAmount = creditItem == null ? 0 : creditItem.amount;
+            playerCash.text = $"{displayAmount} C";
         }
-    }
 
-    private void UpdateItemCount()
-    {
-        itemCount.text = playerItems.Count() + "/" + maxItemCount;
-    }
-
-
-
-
-
-
-    //Testausta varten. Poistettava myöhemmin.
-    public void TestButtonAdd(int id)
-    {
-        AddItem(id, 1);
-    }
-    public void TestButtonRemove(int id)
-    {
-        RemoveItem(id, 1);
-    }
-    public void TestAddEverything()
-    {
-        foreach(Item item in itemDatabase.items)
+        // Add clickable icon type of thing in inventory ui
+        void AddItemRepresentation(InventoryItem invItem)
         {
-            AddItem(item.id, 1);
+            GameObject itemRepresentationGO = Instantiate(itemRepresentationPrefab, layout.transform);
+            ItemScript itemScript = itemRepresentationGO.GetComponent<ItemScript>();
+            itemScript.Init(invItem, contextMenu, tooltip);
+        }
+
+        public void RemoveItem(InventoryItem invItem)
+        {
+            Inventory.Instance.RemoveItem(invItem.item, invItem.amount);
+            tooltip.Clear();
+        }
+
+        public void SortByName()
+        {
+
+        }
+
+        public void SortByID()
+        {
+
         }
     }
 }

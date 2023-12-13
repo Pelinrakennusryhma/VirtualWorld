@@ -61,6 +61,10 @@ namespace StarterAssets
                     UnlockCursor();
                     ZeroInputs();
                     break;
+                case GAME_STATE.LOCKED:
+                    LockCursor();
+                    ZeroInputs();
+                    break;
                 default:
                     break;
             }
@@ -182,7 +186,7 @@ namespace StarterAssets
                 {
                     case GAME_STATE.FREE:
                         ZeroInputs();
-                        CharacterManager.Instance.SetGameState(GAME_STATE.TABLET);
+                        CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
                         PlayerEvents.Instance.CallEventOpenTabletPressed();
                         break;
                     case GAME_STATE.MENU:

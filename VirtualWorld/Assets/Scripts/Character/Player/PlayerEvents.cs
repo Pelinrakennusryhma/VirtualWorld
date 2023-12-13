@@ -1,4 +1,5 @@
 using BackendConnection;
+using Items;
 using Quests;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,13 @@ namespace Characters
             EventMoneyAmountChanged.Invoke(inventoryItem);
         }
 
+        public UnityEvent<List<InventoryItem>> EventInventoryChanged;
+
+        public void CallEventInventoryChanged(List<InventoryItem> items)
+        {
+            EventInventoryChanged.Invoke(items);
+        }
+
         #endregion
 
         #region GameState
@@ -92,15 +100,24 @@ namespace Characters
         {
             EventInteractableDetected.Invoke(interactable, interactableGO);
         }
+
+        public UnityEvent EventInteractionStarted;
+
+        public void CallEventInteractionStarted()
+        {
+            EventInteractionStarted.Invoke();
+        }
+
+        public UnityEvent<I_Interactable, GameObject> EventInteractionEnded;
+        public void CallEventInteractionEnded(I_Interactable interactable, GameObject interactableGO)
+        {
+            EventInteractionEnded.Invoke(interactable, interactableGO);
+        }
+
         public UnityEvent EventInteractableLost;
         public void CallEventInteractableLost()
         {
             EventInteractableLost.Invoke();
-        }
-        public UnityEvent EventInteractionStarted;
-        public void CallEventInteractionStarted()
-        {
-            EventInteractionStarted.Invoke();
         }
         #endregion
 
