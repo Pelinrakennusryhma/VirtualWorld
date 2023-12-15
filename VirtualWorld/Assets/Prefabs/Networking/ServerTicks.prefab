@@ -49,7 +49,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7938540828443898182}
   _networkObjectCache: {fileID: 7938540828443898182}
   serverTicks:
-  - {fileID: 11400000, guid: 6cec196859566054ba6d3ddb5635e23a, type: 2}
+  - {fileID: 11400000, guid: d41377ff559ca7a46814394579e697b8, type: 2}
 --- !u!114 &7938540828443898182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 10
+  <PrefabId>k__BackingField: 11
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0

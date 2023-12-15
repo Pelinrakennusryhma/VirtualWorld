@@ -18,7 +18,7 @@ namespace Server
         [SerializeField] TickType tickType;
         [SerializeField] int interval;
 
-        [SerializeField] public UnityEvent OnTick { get; private set; }
+        public UnityEvent OnTick;
         int prevTicked = -1;
        
         public void CheckTick(DateTime dateTime)
@@ -48,6 +48,7 @@ namespace Server
                         }
                     }
                     break;
+
                 case TickType.Minute:
                     // See TickType.Second for explanation.
                     int currentMinute = DateTime.Now.Minute;
@@ -71,6 +72,7 @@ namespace Server
                         }
                     }
                     break;
+
                 case TickType.Second:
                     int currentSecond = DateTime.Now.Second;
 
@@ -100,6 +102,7 @@ namespace Server
                         }
                     }
                     break;
+
                 default:
                     break;
             }
@@ -108,7 +111,11 @@ namespace Server
         void Tick()
         {
             OnTick.Invoke();
-            //Debug.Log("Ticking: " + name + " " + DateTime.Now);
+        }
+
+        private void OnEnable()
+        {
+            hideFlags = HideFlags.DontUnloadUnusedAsset;
         }
     }
 }
