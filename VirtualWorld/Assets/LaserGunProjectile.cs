@@ -126,6 +126,8 @@ public class LaserGunProjectile : MonoBehaviour
             //ReturnToPool();
             //Debug.Break();
 
+            Vector3 rigidbodyVelocityOnHit = Rigidbody.velocity;
+
             sphereCollider.enabled = false;
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.angularVelocity = Vector3.zero;
@@ -139,6 +141,18 @@ public class LaserGunProjectile : MonoBehaviour
                 && !HasDealtDamageOnThisLaunch)
             {
                 hitDetector.OnHit(Health.DamageType.LaserGun);
+
+                if (collision.rigidbody != null)
+                {
+                    // https://docs.unity3d.com/ScriptReference/Collision-contacts.html
+                    // We can always be sure that contacts has at least one element, says the docs
+                    // so we can just access the first one safely
+                    hitDetector.AddForceToPos(collision.GetContact(0).point,
+                                              collision.rigidbody.velocity,
+                                              ForceMode.Impulse);
+                }
+
+
                 HasDealtDamageOnThisLaunch = true;
             }
 

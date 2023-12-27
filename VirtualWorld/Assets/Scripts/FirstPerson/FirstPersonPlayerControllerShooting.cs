@@ -74,30 +74,10 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             return;
         }
 
-        //if (GameManager.Instance == null)
-        //{
-        //    return;
-        //}
-
-        //if (GameManager.Instance.IsPaused
-        //    || Time.timeScale <= 0)
-        //{
-        //    return;
-        //}
-
-        //movement = new Vector3(Input.GetAxisRaw("Horizontal"),
-        //                       0, Input.GetAxisRaw("Vertical"));
-
-        //Vector2 mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"),
-        //                                 Input.GetAxisRaw("Mouse Y"));
-
         movement = new Vector3(Controls.Horizontal, 0, Controls.Vertical);
 
         Vector2 mouseInput = new Vector2(Controls.MouseDeltaX * 0.025f,
                                          Controls.MouseDeltaY * 0.025f);
-
-
-        //Debug.Log("movement at player controller is " + movement + " mouse input is " + mouseInput);
 
         if (Controls.RunDown)
         {
@@ -112,15 +92,11 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         if (Controls.CrouchDown)
         {
             isCrouchingButtonDown = true;
-
-            //Debug.Log("Crouching " + Time.time);
         }
 
         else
         {
             isCrouchingButtonDown = false;
-
-            //Debug.Log("Not crouhing " + Time.time);
         }
 
         if (Controls.JumpDownPressed)
@@ -128,38 +104,9 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             SpaceWasPressedDuringLastUpdate = true;
         }
 
-        //if (Input.GetButton("Run"))
-        //{
-        //    isRunning = true;
-        //}
-
-        //else
-        //{
-        //    isRunning = false;
-        //}
-
-        //if (Input.GetButton("Crouch"))
-        //{
-        //    isCrouchingButtonDown = true;
-
-        //    //Debug.Log("Crouching " + Time.time);
-        //}
-
-        //else
-        //{
-        //    isCrouchingButtonDown = false;
-
-        //    //Debug.Log("Not crouhing " + Time.time);
-        //}
-
         float xRot;
 
         MoveHead(mouseInput, out xRot);
-
-        //if (Input.GetButtonDown("Jump"))
-        //{
-        //    SpaceWasPressedDuringLastUpdate = true;
-        //}
 
         if (isCrouching)
         {
@@ -174,8 +121,6 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
                                                           cameraOriginalLocalPosition,
                                                           12f * Time.deltaTime);
         }
-
-        //MoveBody(movement);
     }
 
     private void FixedUpdate()
@@ -232,15 +177,6 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         bool isGrounded = false;
         bool hits = false;
         RaycastHit hit;
-
-        Vector3 point1 = StandingCapsuleCollider.transform.position + Vector3.up * (StandingCapsuleCollider.height / 2 );
-        Vector3 point2 = StandingCapsuleCollider.transform.position + Vector3.down * (StandingCapsuleCollider.height / 2 );
-
-        //hits = Physics.CapsuleCast(point1,
-        //                           point2,
-        //                           CapsuleCollider.radius,
-        //                           Vector3.down * 10.0f,
-        //                           out hit);
 
         hits = Physics.Raycast(Rigidbody.transform.position,
                                Vector3.down,
@@ -486,5 +422,18 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         Rigidbody.velocity = velo;
 
         //Debug.Log("Rigidbody velocity is " + Rigidbody.velocity);
+    }
+
+    public void ParentToMovingPlatform(Transform platform)
+    {
+        transform.parent = platform;
+
+        Debug.Log("Parented to moving platform");
+    }
+
+    public void UnparentFromMovingPlatform(Transform platform)
+    {
+        transform.parent = null;
+        Debug.Log("Unparented from moving platform");
     }
 }

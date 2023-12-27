@@ -12,30 +12,36 @@ public class ShootingRangeTimer : MonoBehaviour
     public float ElapsedTime { get => elapsedTime; 
                                private set => elapsedTime = value; }
 
-    private bool timerHasStarted;
+    private bool timerIsRunning;
 
-    public bool TimerHasStarted { get => timerHasStarted; 
-                                  private set => timerHasStarted = value; }
+    public bool TimerUsRunning { get => timerIsRunning; 
+                                  private set => timerIsRunning = value; }
 
     private bool isPaused;
     public bool IsPaused
     {
         get => isPaused;
         private set => isPaused = value;
-    }
+    }    
+    
+    private bool timerHasStarted;
+
+    public bool TimerHasStarted { get => timerHasStarted; 
+                                  private set => timerHasStarted = value; }
+
 
 
     private void Awake()
     {
         textMesh.text = "0: 00: 00: 000";
         ElapsedTime = 0;
-        TimerHasStarted = false;
+        TimerUsRunning = false;
     }
 
     private void Update()
     {
         if (!IsPaused 
-            && TimerHasStarted)
+            && TimerUsRunning)
         {
             ElapsedTime += Time.deltaTime;
 
@@ -59,12 +65,13 @@ public class ShootingRangeTimer : MonoBehaviour
 
     public void StartTimer()
     {
-        TimerHasStarted = true;
+        TimerUsRunning = true;
+        timerHasStarted = true;
     }
 
     public void StopTimer()
     {
-        TimerHasStarted = false;
+        TimerUsRunning = false;
     }
 
     public void SetPaused()

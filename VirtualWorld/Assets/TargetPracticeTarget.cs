@@ -14,7 +14,8 @@ public class TargetPracticeTarget : MonoBehaviour
 
     private MeshCollider[] MeshColliders;
 
-
+    public delegate void DeathHappened();
+    public DeathHappened OnDeathHappened;
 
     private void Awake()
     {
@@ -34,6 +35,12 @@ public class TargetPracticeTarget : MonoBehaviour
         SetUnderPhysics();
     }
 
+    public void RegisterToTakeForceOnHit()
+    {
+        Health.OnAddForceAtPosition -= AddForceAtPos;
+        Health.OnAddForceAtPosition += AddForceAtPos;
+    }
+
     public void TakingDamage(int damage)
     {
         //Debug.Log("Target practice target knows we are taking damage: " + damage);
@@ -47,6 +54,11 @@ public class TargetPracticeTarget : MonoBehaviour
     public void OnDeath()
     {
         IsDead = true;
+
+        if (OnDeathHappened != null)
+        {
+            OnDeathHappened();
+        }
 
         //Destroy(gameObject);
     }
@@ -62,4 +74,28 @@ public class TargetPracticeTarget : MonoBehaviour
         Rigidbody.useGravity = true;
         Rigidbody.mass = 10;
     }
+
+    public void SetKinematic()
+    {
+        for (int i = 0; i < MeshColliders.Length; i++)
+        {
+            MeshColliders[i].convex = true;
+        }
+
+        Rigidbody.isKinematic = true;
+        Rigidbody.useGravity = false;
+        Rigidbody.mass = 10;
+    }
+
+    public void AddForceAtPos(Vector3 hitPoint,
+                              Vector3 force,
+                              ForceMode forceMode)
+    {
+        SetUnderPhysics();
+
+        Rigidbody.AddForceAtPosition(hitPoint, 
+                                     force, 
+                                     forceMode);
+    }
+
 }

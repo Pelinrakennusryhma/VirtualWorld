@@ -22,16 +22,16 @@ public class MovingWall : MonoBehaviour
 
     public AnimationCurve Curve1;
     public AnimationCurve Curve2;
-    private float CurvePos;
+    protected float CurvePos;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         Pos1.gameObject.SetActive(false);
         Pos2.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+
+    protected virtual void FixedUpdate()
     {
         switch (MovementType)
         {
@@ -53,7 +53,7 @@ public class MovingWall : MonoBehaviour
 
     }
 
-    private void DoPingPong()
+    protected void DoPingPong()
     {
         float fromZeroToOne = Mathf.PingPong(Time.time * Speed + StartPos, 1.0f);
 
@@ -62,7 +62,7 @@ public class MovingWall : MonoBehaviour
                                                              fromZeroToOne);
     }
 
-    private void DoSine()
+    protected void DoSine()
     {
         float fromZeroToOne = (Mathf.Sin(Time.time * Speed + StartPos) + 1.0f) / 2.0f;
 
@@ -71,7 +71,7 @@ public class MovingWall : MonoBehaviour
                                                              fromZeroToOne);
     }
 
-    private void DoCurves()
+    protected virtual void DoCurves()
     {
         CurvePos += Time.deltaTime;
 

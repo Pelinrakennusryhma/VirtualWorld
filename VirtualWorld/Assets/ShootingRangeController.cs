@@ -13,9 +13,15 @@ public class ShootingRangeController : MonoBehaviour
     [SerializeField] private ShootingRangeReadySetGoPrompt readySetGoPrompt;
     public ShootingRangeReadySetGoPrompt ReadySetGoPrompt { get => readySetGoPrompt; 
                                                              private set => readySetGoPrompt = value; }
+        
+    [SerializeField] private ShootingRangeTimer timer;
+    public ShootingRangeTimer Timer { get => timer; 
+                                       private set => timer = value; }
+    
+    [SerializeField] private ShootingRangeTargetUI targetUI;
+    public ShootingRangeTargetUI TargetUI { get => targetUI; set => targetUI = value; }
 
 
-    [SerializeField] private ShootingRangeTimer Timer;
 
     private const string beginnerSceneName = "BeginnerCourseShootingRange";
     private const string intermediateSceneName = "IntermediateCourseShootingRange";
@@ -84,10 +90,14 @@ public class ShootingRangeController : MonoBehaviour
 
         if (!areOptionsShowing
             && OptionsShooting.IsShowingOptions)
-        {         
+        {
             if (Timer.TimerHasStarted)
-            {            
+            {
                 Timer.OnHide();
+            }
+
+            if (Timer.TimerUsRunning)
+            {            
                 Timer.SetPaused();
             }
 
@@ -106,6 +116,10 @@ public class ShootingRangeController : MonoBehaviour
             if (Timer.TimerHasStarted)
             {
                 Timer.OnShow();
+            }
+
+            if (Timer.TimerUsRunning)
+            {
                 Timer.ResumeFromPause();
             }
 
@@ -148,7 +162,13 @@ public class ShootingRangeController : MonoBehaviour
 
         if (targetTracker != null)
         {
-            allTargetsAreDestroyed = targetTracker.CheckIfTargetsHaveBeenDestroyed();
+            allTargetsAreDestroyed = targetTracker.CheckIfTargetsHaveBeenDestroyed(out int destroyedTargets,
+                                                                                   out int aliveTargets,
+                                                                                   out int totalTargets);
+
+            targetUI.UpdateTargetAmounts(destroyedTargets, 
+                                         aliveTargets, 
+                                         totalTargets);
         }
 
         return allTargetsAreDestroyed;
