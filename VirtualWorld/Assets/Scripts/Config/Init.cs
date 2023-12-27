@@ -53,15 +53,15 @@ namespace Configuration
 #if UNITY_EDITOR
             if (ClonesManager.IsClone())
             {
-                processType = ProcessType.DEV_CLIENT; // Cloned editor
+                processType = ProcessType.DEV_CLIENT; // Cloned editor, client running on editor and connecting to editor server
             }
             else if (runAsClient == true)
             {
-                processType = ProcessType.DEV_CLIENT2; // Normal editor with runAsClient on
+                processType = ProcessType.DEV_CLIENT2; // Normal editor with runAsClient on, connects from editor to aws server
             }
             else
             {
-                processType = ProcessType.DEV_SERVER; // Normal editor with runAsClient off
+                processType = ProcessType.DEV_SERVER; // Normal editor with runAsClient off, server running on editor
             }
 #endif
             Debug.Log("processType: " + processType.ToString());
