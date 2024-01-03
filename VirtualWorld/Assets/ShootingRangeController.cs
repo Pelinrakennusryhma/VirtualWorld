@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class ShootingRangeController : MonoBehaviour
 {    
@@ -33,6 +35,11 @@ public class ShootingRangeController : MonoBehaviour
 
     private bool areOptionsShowing;
 
+    private float defaultShadowDistance;
+    private int originalShadowCascadeCount;
+    private float originalNormalBias;
+    private float originalDepthBias;
+
     private void Awake()
     {
         targetTracker = FindObjectOfType<ShootingRangeTargetTracker>();
@@ -47,6 +54,8 @@ public class ShootingRangeController : MonoBehaviour
             Instance = this;
             // No need to use don't destroy on load on this one, because all the 
             // scenes have their own controller and references.
+
+            SetShadowDistance();
         }
     }
 
@@ -76,6 +85,7 @@ public class ShootingRangeController : MonoBehaviour
 
     private void OnDestroy()
     {
+        RevertShadownDistance();
         ReadySetGoPrompt.OnReadySetGoPromptFinished -= OnReadySetGoPromptFinished;
     }
 
@@ -172,5 +182,37 @@ public class ShootingRangeController : MonoBehaviour
         }
 
         return allTargetsAreDestroyed;
+    }
+
+    private void SetShadowDistance()
+    {
+         //return;
+
+        UniversalRenderPipelineAsset urp = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
+        defaultShadowDistance = urp.shadowDistance;
+        urp.shadowDistance = 500;
+        
+        //originalShadowCascadeCount = urp.shadowCascadeCount;
+        //urp.shadowCascadeCount = 1;
+
+
+        //originalNormalBias = urp.shadowNormalBias; // Default is currently 1
+        //urp.shadowNormalBias = 0;
+        //originalDepthBias = urp.shadowDepthBias; // Default is currently 1
+        //urp.shadowDepthBias = 0;
+
+        //Debug.Log("Shadow distance is " + urp.shadowDistance + " shadow cascade count is " + urp.shadowCascadeCount);
+    }
+
+    private void RevertShadownDistance()
+    {
+         //return;
+
+        UniversalRenderPipelineAsset urp = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
+        urp.shadowDistance = defaultShadowDistance;
+
+        //urp.shadowCascadeCount = originalShadowCascadeCount;
+        //urp.shadowNormalBias = originalNormalBias;
+        //urp.shadowDepthBias = originalDepthBias;
     }
 }

@@ -90,7 +90,7 @@ public class ViewWithinAViewController : MonoBehaviour
     private GraphicRaycaster QuestLogRaycaster;
 
 
-    private bool HasBeenInitted;
+
 
     private void Awake()
     {
@@ -102,10 +102,6 @@ public class ViewWithinAViewController : MonoBehaviour
 
     public void Init()
     {
-        HasBeenInitted = true;
-
-
-
         MapCamera.targetTexture = OutputRenderTexture;
 
         bool wasActive = gameObject.activeSelf;

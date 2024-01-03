@@ -428,12 +428,12 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
     {
         transform.parent = platform;
 
-        Debug.Log("Parented to moving platform");
+        //Debug.Log("Parented to moving platform");
     }
 
     public void UnparentFromMovingPlatform(Transform platform)
     {
         transform.parent = null;
-        Debug.Log("Unparented from moving platform");
+        //Debug.Log("Unparented from moving platform");
     }
 }

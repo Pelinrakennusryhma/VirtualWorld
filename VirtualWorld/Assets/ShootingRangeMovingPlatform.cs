@@ -8,7 +8,7 @@ public class ShootingRangeMovingPlatform : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("On collision enter called");
+        //Debug.Log("On collision enter called");
 
         FirstPersonPlayerControllerShooting controller = collision.gameObject.GetComponent<FirstPersonPlayerControllerShooting>();
 
@@ -20,7 +20,7 @@ public class ShootingRangeMovingPlatform : MonoBehaviour
 
     public void OnCollisionExit(Collision collision)
     {
-        Debug.Log("On collision exit called");
+        //Debug.Log("On collision exit called");
 
         FirstPersonPlayerControllerShooting controller = collision.gameObject.GetComponent<FirstPersonPlayerControllerShooting>();
 
