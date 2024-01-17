@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1da70fc5182ced241b4ddc28815ed0d4, type: 3}
-  m_Name: ServerTickAt0Hour
+  m_Name: ServerTickOncePerDay
   m_EditorClassIdentifier: 
   tickType: 0
   interval: 0
+  OnTick:
+    m_PersistentCalls:
+      m_Calls: []
