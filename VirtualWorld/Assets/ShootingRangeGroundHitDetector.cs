@@ -11,7 +11,7 @@ public class ShootingRangeGroundHitDetector : MonoBehaviour
         if (Health.HitPoints >= Health.MaxHitPoints
             && other.gameObject.CompareTag("Ground")) 
         {
-            Debug.Log("Triggered from ground, should die. ");
+            //Debug.Log("Triggered from ground, should die. ");
 
 
             //Debug.Log("Triggered from ground, should die. The other parent is " 

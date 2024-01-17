@@ -14,10 +14,10 @@ public class ShootingRangeMovingTarget : MovingWall
         Target.OnDeathHappened += OnTargetDeath;
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         Target.SetKinematic();
-        Target.RegisterToTakeForceOnHit();
+        //Target.RegisterToTakeForceOnHit();
     }
 
     protected override void FixedUpdate()

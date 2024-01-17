@@ -16,6 +16,16 @@ public class FirstPersonPlayerCharacterShooting : MonoBehaviour
 
     private void Awake()
     {
+        //Debug.Log("We awoke");
+    }
+
+    private void OnDestroy()
+    {
+        //Debug.Log("We we're destroyed");
+    }
+
+    private void Start()
+    {
         Instance = this;
 
         OverlayCamera = new GameObject().AddComponent<Camera>();

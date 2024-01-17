@@ -20,7 +20,10 @@ public class LaserGunProjectile : MonoBehaviour
     public int FramesInCollision;
 
     public bool HasStopped;
-    public TrailRenderer TrailRenderer;
+    public TrailRenderer TrailRenderer1;
+    
+    public TrailRenderer TrailRenderer2;
+
     public float TrailRendererStartWidth;
     public float TrailRendererEndWidth;
 
@@ -45,10 +48,11 @@ public class LaserGunProjectile : MonoBehaviour
         OwnerLaserGun = owner;
         Rigidbody = GetComponent<Rigidbody>();
         sphereCollider = GetComponent<SphereCollider>();
-        TrailRenderer = GetComponentInChildren<TrailRenderer>(true);
-        TrailRendererStartWidth = TrailRenderer.startWidth;
-        TrailRendererEndWidth = TrailRenderer.endWidth;
-        TrailLifeTime = TrailRenderer.time;
+        //TrailRenderer1 = GetComponentInChildren<TrailRenderer>(true);
+        TrailRendererStartWidth = TrailRenderer1.startWidth;
+        TrailRendererEndWidth = TrailRenderer1.endWidth;
+        TrailLifeTime = TrailRenderer1.time;
+  
         gameObject.SetActive(false);
         transform.position = owner.transform.position;
         HitParticles.Stop(true);
@@ -76,8 +80,12 @@ public class LaserGunProjectile : MonoBehaviour
         HasDealtDamageOnThisLaunch = false;
         HitParticles.Stop(true);
         HasDisabledTrail = false;
-        TrailRenderer.gameObject.SetActive(true);
-        TrailRenderer.time = TrailLifeTime;
+        TrailRenderer1.gameObject.SetActive(true);
+        TrailRenderer1.time = TrailLifeTime;
+
+        TrailRenderer2.gameObject.SetActive(true);
+        TrailRenderer2.time = TrailLifeTime;
+
         HasStopped = false;
         LifeTime = 3.0f;
         gameObject.transform.position = originPos;
@@ -119,7 +127,8 @@ public class LaserGunProjectile : MonoBehaviour
     {
         if (!collision.collider.gameObject.CompareTag("Player"))
         {
-            TrailRenderer.time = 0.1f;
+            TrailRenderer1.time = 0.1f;
+            TrailRenderer2.time = 0.1f;
             StopStartTime = Time.time;
             HasStopped = true;
             HasDisabledTrail = false;
@@ -148,7 +157,7 @@ public class LaserGunProjectile : MonoBehaviour
                     // We can always be sure that contacts has at least one element, says the docs
                     // so we can just access the first one safely
                     hitDetector.AddForceToPos(collision.GetContact(0).point,
-                                              collision.rigidbody.velocity,
+                                              rigidbodyVelocityOnHit,
                                               ForceMode.Impulse);
                 }
 
@@ -184,7 +193,8 @@ public class LaserGunProjectile : MonoBehaviour
             if (!HasDisabledTrail 
                 && (Time.time - StopStartTime) >= 0.1f)
             {
-                TrailRenderer.gameObject.SetActive(false);
+                TrailRenderer1.gameObject.SetActive(false);
+                TrailRenderer2.gameObject.SetActive(false);
                 HasDisabledTrail = true;
                 //Debug.LogWarning("Disabled trail");
             }

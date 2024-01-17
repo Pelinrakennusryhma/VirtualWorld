@@ -25,6 +25,8 @@ public class ShootingRangeCircularMovingTarget : ShootingRangeMovingTarget
         ActualMovingObject.gameObject.SetActive(true);
 
         originalLocalPosition = ActualMovingObject.transform.localPosition;
+
+        Target.SetForceMultiplier(3.0f);
     }
 
     protected override void FixedUpdate()

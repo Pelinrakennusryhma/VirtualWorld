@@ -8,6 +8,12 @@ public class ShootingRangeRotatingMovingTarget : ShootingRangeMovingTarget
     [SerializeField] private bool rotateClockwise = true;
 
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Target.SetForceMultiplier(2.0f);
+    }
+
     protected override void FixedUpdate()
     {
         if (!Target.IsDead) 

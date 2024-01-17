@@ -36,6 +36,8 @@ public class HitDetector : MonoBehaviour
                               Vector3 force,
                               ForceMode forceMode)
     {
+        //Debug.Log("Force to add is " + force);
+
         OwnerHealth.AddForceAtPos(position,
                                   force,
                                   forceMode);

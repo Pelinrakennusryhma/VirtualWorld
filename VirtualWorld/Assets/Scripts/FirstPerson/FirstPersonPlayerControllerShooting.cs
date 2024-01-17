@@ -48,6 +48,10 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
     private FirstPersonPlayerControlsShooting Controls;
 
+    private Transform latestMovingPlatform;
+
+    private bool canGetGrounded = true;
+
     void Awake()
     {
         Controls = GetComponent<FirstPersonPlayerControlsShooting>();
@@ -199,7 +203,8 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
 
         bool isOnASlope = false;
-        Vector3 slopeNormal = Vector3.up; 
+        Vector3 slopeNormal = Vector3.up;
+        float slopeAngle = 0;
 
         if (Physics.Raycast(Rigidbody.transform.position,
                            Vector3.down,
@@ -214,7 +219,16 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
                 isOnASlope = true;
                 groundedExtraTime = 0.2f;
                 slopeNormal = hit.normal;
+                //Debug.Log("slope hit " + Time.time);
+                slopeAngle = angle;
             }
+
+
+        }
+
+        else
+        {
+            //Debug.Log("Not hitting a slope " + Time.time);
         }
 
         //Debug.Log("Is on a slope " + isOnASlope + " " + Time.time);
@@ -238,6 +252,12 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             {
                 Rigidbody.useGravity = true;
             }
+        }
+
+        if (!canGetGrounded)
+        {
+            isGrounded = false;
+            isOnASlope = false;
         }
 
         jumpTimer -= Time.deltaTime;
@@ -283,7 +303,8 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             //Debug.Log("Trying to stand up ");
         }
 
-        if (isGrounded 
+        if ((isGrounded || isOnASlope)
+            && canGetGrounded
             && SpaceWasPressedDuringLastUpdate
             && jumpTimer <= 0)
         {
@@ -291,15 +312,22 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
             if (!UseRealGravity) 
             {
+
                 Rigidbody.velocity = new Vector3(Rigidbody.velocity.x, UnrealisticGravityJumpForce, Rigidbody.velocity.z);
+                //Debug.Log("Added false gravity on jump " + Time.time);
             }
 
             else
             {
                 Rigidbody.AddForce(Vector3.up * RealisticGravityJumpForce, ForceMode.Impulse);
+                //Debug.Log("Added real gravity on jump " + Time.time);
             }
 
+            canGetGrounded = false;
+
             jumpTimer = 0.2f;
+
+            //Debug.Log("We pressed jump. Rigidbody velo y is " + Rigidbody.velocity.y + " at time" + Time.time);
         }
 
         else
@@ -312,6 +340,8 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
                     Rigidbody.velocity = new Vector3(Rigidbody.velocity.x,
                                          Rigidbody.velocity.y - UnrealisticGravityAscendingGravity * Time.deltaTime,
                                          Rigidbody.velocity.z);
+
+                    //Debug.Log("Jumping ascending. Velo y is " + Rigidbody.velocity.y + " at time " + Time.time);
                 }
 
                 else
@@ -397,8 +427,25 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
         float yVelo;
 
-        if ((isGrounded 
-            || isOnASlope)
+        if (Rigidbody.velocity.y < 0
+            && !canGetGrounded)
+        {
+            canGetGrounded = true;
+        }
+
+        bool isJumping = false;
+
+        if (SpaceWasPressedDuringLastUpdate
+            || jumpTimer > 0
+            || (Rigidbody.velocity.y > 0 && !canGetGrounded))
+        {
+            isJumping = true;
+
+            //Debug.Log("We are jumping. Space was pressed " + SpaceWasPressedDuringLastUpdate + " jumptimer " + jumpTimer + " rb velo y " + Rigidbody.velocity.y + " at time " + Time.time);
+        }
+
+        if (((isGrounded 
+            || isOnASlope) && canGetGrounded)
             && !SpaceWasPressedDuringLastUpdate
             && jumpTimer <= 0)
         {
@@ -412,11 +459,18 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
         Vector3 velo = new Vector3(clampedVelo.x, yVelo, clampedVelo.z);
 
-        if (isOnASlope)
+        if (isOnASlope
+            && !isJumping)
         {
-            Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, slopeNormal);
-            velo = slopeRotation * velo;
+            float veloMag = velo.magnitude;
+            //velo = OldAdjustDirectionToSlope(slopeNormal, velo);
+            velo = NewAdjustDircetionToSlope(slopeNormal, move) * veloMag;
             velo = Vector3.ClampMagnitude(velo, MaxRunSpeed);
+        }
+
+        else
+        {
+            //Debug.Log("Check failed. Is on a slope " + isOnASlope + " is jumping " + isJumping + " y velo is " + yVelo + " at time " + Time.time);
         }
 
         Rigidbody.velocity = velo;
@@ -424,16 +478,45 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         //Debug.Log("Rigidbody velocity is " + Rigidbody.velocity);
     }
 
+    private Vector3 NewAdjustDircetionToSlope(Vector3 slopeNormal,
+                                              Vector3 movement)
+    {
+        return Vector3.ProjectOnPlane(movement, slopeNormal).normalized;
+    }
+
+    private Vector3 OldAdjustDirectionToSlope(Vector3 slopeNormal, Vector3 velo)
+    {
+        Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, slopeNormal);
+
+        float veloMag = velo.magnitude;
+
+        Debug.Log("New velo sloped mag is " + (slopeRotation * velo.normalized).magnitude);
+
+        velo = (slopeRotation * velo.normalized) * veloMag;
+
+
+        //velo = slopeRotation * xzVelo;
+        velo = Vector3.ClampMagnitude(velo, MaxRunSpeed);
+        //Debug.Log("Sloped " + Time.time + " veloMag is " + veloMag + " velocity magnitude is " + velo.magnitude + " slope rotation is " + slopeRotation.eulerAngles);
+        return velo;
+    }
+
     public void ParentToMovingPlatform(Transform platform)
     {
-        transform.parent = platform;
+        latestMovingPlatform = platform;
+        transform.parent = latestMovingPlatform;
 
         //Debug.Log("Parented to moving platform");
     }
 
     public void UnparentFromMovingPlatform(Transform platform)
     {
-        transform.parent = null;
+        if (latestMovingPlatform == platform)
+        {            
+            latestMovingPlatform = null;
+            transform.parent = null;
+        }
+
         //Debug.Log("Unparented from moving platform");
     }
 }

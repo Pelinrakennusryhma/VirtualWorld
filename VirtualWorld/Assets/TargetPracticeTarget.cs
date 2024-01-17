@@ -17,6 +17,8 @@ public class TargetPracticeTarget : MonoBehaviour
     public delegate void DeathHappened();
     public DeathHappened OnDeathHappened;
 
+    private float forceMultiplier = 1.0f;
+
     private void Awake()
     {
         IsDead = false;
@@ -33,12 +35,19 @@ public class TargetPracticeTarget : MonoBehaviour
         MeshColliders = GetComponentsInChildren<MeshCollider>();
 
         SetUnderPhysics();
+
+        RegisterToTakeForceOnHit();
     }
 
     public void RegisterToTakeForceOnHit()
     {
         Health.OnAddForceAtPosition -= AddForceAtPos;
         Health.OnAddForceAtPosition += AddForceAtPos;
+    }
+
+    public void SetForceMultiplier(float multiplier)
+    {
+        forceMultiplier = multiplier;
     }
 
     public void TakingDamage(int damage)
@@ -70,9 +79,12 @@ public class TargetPracticeTarget : MonoBehaviour
             MeshColliders[i].convex = true;
         }
 
+
         Rigidbody.isKinematic = false;
         Rigidbody.useGravity = true;
         Rigidbody.mass = 10;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.angularVelocity = Vector3.zero;
     }
 
     public void SetKinematic()
@@ -93,8 +105,15 @@ public class TargetPracticeTarget : MonoBehaviour
     {
         SetUnderPhysics();
 
-        Rigidbody.AddForceAtPosition(hitPoint, 
-                                     force, 
+        //Debug.Log("Force to add is " + force);
+
+        // Wrong order of parameters!!!
+        //Rigidbody.AddForceAtPosition(hitPoint, 
+        //                             force, 
+        //                             forceMode);
+
+        Rigidbody.AddForceAtPosition(force * forceMultiplier, 
+                                     hitPoint,
                                      forceMode);
     }
 

@@ -24,10 +24,11 @@ public class ShootingRangeController : MonoBehaviour
     public ShootingRangeTargetUI TargetUI { get => targetUI; set => targetUI = value; }
 
 
+    [SerializeField] private bool isAGameplayScene;
 
-    private const string beginnerSceneName = "BeginnerCourseShootingRange";
-    private const string intermediateSceneName = "IntermediateCourseShootingRange";
-    private const string expertSceneName = "ExpertCourseShootingRange";
+    //private const string beginnerSceneName = "BeginnerCourseShootingRange";
+    //private const string intermediateSceneName = "IntermediateCourseShootingRange";
+    //private const string expertSceneName = "ExpertCourseShootingRange";
 
     private bool allTargetsHaveBeenDestroyed;
 
@@ -43,20 +44,22 @@ public class ShootingRangeController : MonoBehaviour
     private void Awake()
     {
         targetTracker = FindObjectOfType<ShootingRangeTargetTracker>();
+        Instance = this;
 
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
 
-        else
-        {
-            Instance = this;
-            // No need to use don't destroy on load on this one, because all the 
-            // scenes have their own controller and references.
+        //if (Instance != null)
+        //{
+        //    Destroy(gameObject);
+        //}
 
-            SetShadowDistance();
-        }
+        //else
+        //{
+        //    Instance = this;
+        //    // No need to use don't destroy on load on this one, because all the 
+        //    // scenes have their own controller and references.
+
+        //    SetShadowDistance();
+        //}
     }
 
     private void Start()
@@ -66,18 +69,26 @@ public class ShootingRangeController : MonoBehaviour
         Timer.OnHide();
         ReadySetGoPrompt.OnHide();
 
-        bool isAGamePlayScene = false;
+        //bool isAGamePlayScene = false;
 
-        string sceneName = SceneManager.GetActiveScene().name;
+        //string sceneName = SceneManager.GetActiveScene().name;
 
-        if (sceneName.Equals(beginnerSceneName)
-            || sceneName.Equals(intermediateSceneName)
-            || sceneName.Equals(expertSceneName))
-        {
-            isAGamePlayScene = true;
-        }
+        //if (sceneName.Equals(beginnerSceneName)
+        //    || sceneName.Equals(intermediateSceneName)
+        //    || sceneName.Equals(expertSceneName))
+        //{
+        //    isAGamePlayScene = true;
 
-        if (isAGamePlayScene) 
+        //    Debug.Log("Is a game play scene");
+        //}
+
+        //else
+        //{
+        //    Debug.Log("Is not a gameplay scene. Active scene is " + SceneManager.GetActiveScene().name);
+        //}
+        
+
+        if (isAGameplayScene) 
         {
             StartReadySetGoPrompt();
         }
@@ -85,7 +96,7 @@ public class ShootingRangeController : MonoBehaviour
 
     private void OnDestroy()
     {
-        RevertShadownDistance();
+        //RevertShadownDistance();
         ReadySetGoPrompt.OnReadySetGoPromptFinished -= OnReadySetGoPromptFinished;
     }
 
@@ -184,35 +195,35 @@ public class ShootingRangeController : MonoBehaviour
         return allTargetsAreDestroyed;
     }
 
-    private void SetShadowDistance()
-    {
-         //return;
+    //private void SetShadowDistance()
+    //{
+    //     return;
 
-        UniversalRenderPipelineAsset urp = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
-        defaultShadowDistance = urp.shadowDistance;
-        urp.shadowDistance = 500;
+    //    UniversalRenderPipelineAsset urp = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
+    //    defaultShadowDistance = urp.shadowDistance;
+    //    urp.shadowDistance = 500;
         
-        //originalShadowCascadeCount = urp.shadowCascadeCount;
-        //urp.shadowCascadeCount = 1;
+    //    //originalShadowCascadeCount = urp.shadowCascadeCount;
+    //    //urp.shadowCascadeCount = 1;
 
 
-        //originalNormalBias = urp.shadowNormalBias; // Default is currently 1
-        //urp.shadowNormalBias = 0;
-        //originalDepthBias = urp.shadowDepthBias; // Default is currently 1
-        //urp.shadowDepthBias = 0;
+    //    //originalNormalBias = urp.shadowNormalBias; // Default is currently 1
+    //    //urp.shadowNormalBias = 0;
+    //    //originalDepthBias = urp.shadowDepthBias; // Default is currently 1
+    //    //urp.shadowDepthBias = 0;
 
-        //Debug.Log("Shadow distance is " + urp.shadowDistance + " shadow cascade count is " + urp.shadowCascadeCount);
-    }
+    //    //Debug.Log("Shadow distance is " + urp.shadowDistance + " shadow cascade count is " + urp.shadowCascadeCount);
+    //}
 
-    private void RevertShadownDistance()
-    {
-         //return;
+    //private void RevertShadownDistance()
+    //{
+    //     return;
 
-        UniversalRenderPipelineAsset urp = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
-        urp.shadowDistance = defaultShadowDistance;
+    //    UniversalRenderPipelineAsset urp = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
+    //    urp.shadowDistance = defaultShadowDistance;
 
-        //urp.shadowCascadeCount = originalShadowCascadeCount;
-        //urp.shadowNormalBias = originalNormalBias;
-        //urp.shadowDepthBias = originalDepthBias;
-    }
+    //    //urp.shadowCascadeCount = originalShadowCascadeCount;
+    //    //urp.shadowNormalBias = originalNormalBias;
+    //    //urp.shadowDepthBias = originalDepthBias;
+    //}
 }
