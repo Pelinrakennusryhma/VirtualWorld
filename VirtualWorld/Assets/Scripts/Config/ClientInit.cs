@@ -43,7 +43,7 @@ namespace Configuration
         {
             apiCalls_Client.LogOut();
             await apiCalls_Client.OnBeginLogin(username, password, false);
-            InstanceFinder.ClientManager.StartConnection();
+            ConnectToServer();
             Debug.Log("client autologged");
         }
 

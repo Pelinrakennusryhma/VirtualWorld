@@ -75,28 +75,25 @@ namespace Audio
             LoadData();
             SetInitialVolumes();
 
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            //SceneManager.sceneLoaded -= OnSceneLoaded;
+            //SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        private void Start()
-        {
-            //InitializeMusic(FMODEvents.Instance.Music);
-            //SetMusicAreaBySceneIndex(SceneManager.GetActiveScene().buildIndex);
-
-        }
-
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            // Destroy on server when main scene loads
-            if (scene.name == SceneLoader.Instance.MainSceneName)
-            {
-                if (InstanceFinder.IsServer && !InstanceFinder.IsHost)
-                {
-                    Destroy(gameObject);
-                }
-            }
-        }
+        //void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        //{
+        //    if(SceneLoader.Instance == null)
+        //    {
+        //        return;
+        //    }
+        //    // Destroy on server when main scene loads
+        //    if (scene.name == SceneLoader.Instance.MainSceneName)
+        //    {
+        //        if (InstanceFinder.IsServer && !InstanceFinder.IsHost)
+        //        {
+        //            Destroy(gameObject);
+        //        }
+        //    }
+        //}
 
 
         void LoadData()

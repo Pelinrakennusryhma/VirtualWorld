@@ -10,6 +10,7 @@ public class NetworkObjectSpawner : MonoBehaviour
 {
     public static NetworkObjectSpawner Instance;
     [SerializeField] GameObject[] objectsToSpawn;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -20,21 +21,19 @@ public class NetworkObjectSpawner : MonoBehaviour
         {
             Instance = this;
         }
-
-        InstanceFinder.ServerManager.OnServerConnectionState -= OnServerStarted;
-        InstanceFinder.ServerManager.OnServerConnectionState += OnServerStarted;
-
     }
 
-    void OnServerStarted(ServerConnectionStateArgs args)
+    public void Init()
     {
-        if (args.ConnectionState == LocalConnectionState.Started)
+        SpawnNetworkObjects();
+    }
+
+    void SpawnNetworkObjects()
+    {
+        foreach (GameObject obj in objectsToSpawn)
         {
-            foreach (GameObject obj in objectsToSpawn)
-            {
-                GameObject go = Instantiate(obj);
-                InstanceFinder.ServerManager.Spawn(go);
-            }
+            GameObject go = Instantiate(obj);
+            InstanceFinder.ServerManager.Spawn(go);
         }
     }
 }
