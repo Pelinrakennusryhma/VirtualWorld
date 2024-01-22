@@ -8,6 +8,11 @@ using UI;
 using FishNet.Connection;
 using System.Collections.Generic;
 using Items;
+using StarterAssets;
+using FishNet;
+using FishNet.Managing.Scened;
+using Networking;
+using UnityEngine.SceneManagement;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Characters
@@ -17,6 +22,7 @@ namespace Characters
         public static CharacterManager Instance { get; private set; }
         public GAME_STATE gameState = GAME_STATE.FREE;
         [field: SerializeField] public GameObject OwnedCharacter { get; private set; }
+        private ThirdPersonController ownedController;
 
         [SerializeField] CharacterData characterData;
         [SerializeField] public PlayerEmitter PlayerEmitter { get; private set; }
@@ -36,16 +42,40 @@ namespace Characters
                 Instance = this;
             }
         }
+        private void OnDisable()
+        {
+            InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
+        }
 
         public void SetGameState(GAME_STATE newState)
         {
-            CharacterManager.Instance.gameState = newState;
+            Instance.gameState = newState;
             PlayerEvents.Instance.CallEventGameStateChanged(newState);
         }
 
-        public void SetOwnedCharacter(GameObject obj)
+        public void SetOwnedCharacter(GameObject obj, ThirdPersonController controller)
         {
+            InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoaded;
             OwnedCharacter = obj;
+            ownedController = controller;
+        }
+
+        void OnSceneLoaded(SceneLoadEndEventArgs args)
+        {
+            NetworkSceneInit init = null;
+            Scene loadedScene = args.LoadedScenes[0];
+            foreach (GameObject rootGO in loadedScene.GetRootGameObjects())
+            {
+                init = rootGO.GetComponent<NetworkSceneInit>();
+
+                if (init != null)
+                {
+                    ownedController.SetPosition(init.PlayerCharacterSpawnSpot.position);
+                    PlayerEvents.Instance.CallEventSceneLoadEnded();
+                    PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}.");
+                    break;
+                }
+            }
         }
 
         // Disable and enable inputs depending on if we are driving a car.

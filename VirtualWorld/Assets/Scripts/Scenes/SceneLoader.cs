@@ -154,6 +154,7 @@ namespace Scenes
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
             string sceneName = ParseSceneName(scenePath);
+            PlayerEvents.Instance.CallEventSceneLoadStarted(); // Load Ended is called from CharacterManager once character has been inited on the new scene.
 
             // ALL_BUT_PLAYER essentially means loading a network scene because everything but player character is packed away.. not smooth.
             if (sceneLoadParams.scenePackMode == ScenePackMode.ALL_BUT_PLAYER)
@@ -192,6 +193,7 @@ namespace Scenes
             Scene subScene = SceneManager.GetSceneByName(sceneName);
 
             SceneManager.SetActiveScene(subScene);
+            PlayerEvents.Instance.CallEventSceneLoadEnded();
         }
 
         IEnumerator UnloadAsyncScene()

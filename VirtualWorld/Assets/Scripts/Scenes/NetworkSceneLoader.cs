@@ -46,10 +46,12 @@ namespace Scenes
 
             // Load main scene to be active on server and all clients.
             SceneLoadData mainSld = new SceneLoadData(mainSceneName);
+            mainSld.Options.AutomaticallyUnload = false;
             SceneManager.LoadGlobalScenes(mainSld);
 
             // Preload other scenes on server only so later on clients can enter those.
             SceneLoadData otherSld = new SceneLoadData(otherSceneNames);
+            otherSld.Options.AutomaticallyUnload = false;
             SceneManager.LoadConnectionScenes(otherSld);
 
             // Unload launch scene as it's no longer needed

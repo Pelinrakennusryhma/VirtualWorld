@@ -152,34 +152,6 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-
-            InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoaded;
-        }
-
-        void OnSceneLoaded(SceneLoadEndEventArgs args)
-        {
-            if(CharacterManager.Instance.OwnedCharacter != this.gameObject)
-            {
-                InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
-                return;
-            }
-
-            NetworkSceneInit init = null;
-            foreach (GameObject rootGO in args.LoadedScenes[0].GetRootGameObjects())
-            {
-                init = rootGO.GetComponent<NetworkSceneInit>();
-
-                if(init != null)
-                {
-                    SetPosition(init.PlayerCharacterSpawnSpot.position);
-                    break;
-                }
-            }
-        }
-
-        private void OnDisable()
-        {
-            InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
         }
 
         private void Update()
@@ -440,6 +412,8 @@ namespace StarterAssets
         {
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            StopAnimations();
 
             transform.position = pos;
         }

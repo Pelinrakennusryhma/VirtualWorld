@@ -18,11 +18,17 @@ namespace Characters
 
         I_Interactable queuedInteractable;
 
+        // toggled off while loading a scene
+        bool isEnabled = true;
+
         private void Start()
         {
             FindAndInitUI();
             PlayerEvents.Instance.EventPlayerLanded.AddListener(OnPlayerLanded);
             PlayerEvents.Instance.EventInteractionEnded.AddListener(OnInteractionEnded);
+
+            PlayerEvents.Instance.EventSceneLoadStarted.AddListener(OnSceneLoadStarted);
+            PlayerEvents.Instance.EventSceneLoadEnded.AddListener(OnSceneLoadEnded);
         }
 
         private void Update()
@@ -80,6 +86,11 @@ namespace Characters
 
         private void OnTriggerStay(Collider other)
         {
+            if (!isEnabled)
+            {
+                OnTriggerExit(other);
+                return;
+            }
             I_Interactable interactable = other.GetComponent<I_Interactable>();
 
             if (interactable != null)
@@ -113,5 +124,15 @@ namespace Characters
             currentInteractableGO = null;
             PlayerEvents.Instance.CallEventInteractableLost();
         }
+        void OnSceneLoadStarted()
+        {
+            isEnabled = false;
+        }
+
+        void OnSceneLoadEnded()
+        {
+            isEnabled = true;
+        }
+       
     }
 }
