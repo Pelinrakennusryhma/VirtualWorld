@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using StarterAssets;
 using Animations;
+using FishNet;
 
 namespace Scenes
 {
@@ -19,7 +20,7 @@ namespace Scenes
         ALL,
         NONE,
         PLAYER_ONLY,
-        ALL_BUT_PLAYER
+        ALL_BUT_PLAYER // Network scene
     }
     #endregion
 
@@ -152,9 +153,17 @@ namespace Scenes
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
-            this.sceneLoadParams = sceneLoadParams;
             string sceneName = ParseSceneName(scenePath);
-            StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
+
+            // ALL_BUT_PLAYER essentially means loading a network scene because everything but player character is packed away.. not smooth.
+            if (sceneLoadParams.scenePackMode == ScenePackMode.ALL_BUT_PLAYER)
+            {
+                NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
+            } else
+            {
+                this.sceneLoadParams = sceneLoadParams;
+                StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
+            }
         }
 
         public void LoadSceneByName(string sceneName, SceneLoadParams sceneLoadParams)

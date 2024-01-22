@@ -23,6 +23,7 @@ public class NetworkObjectSpawner : MonoBehaviour
         }
     }
 
+    // Called once FishNet server has started
     public void Init()
     {
         SpawnNetworkObjects();

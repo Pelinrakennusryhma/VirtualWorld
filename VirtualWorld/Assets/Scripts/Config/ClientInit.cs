@@ -51,6 +51,9 @@ namespace Configuration
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs args)
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(1);
+
+            // unsubcribe afterwards so network scene loading doesn't get messed up
+            networkManager.SceneManager.OnLoadEnd -= SceneManager_OnLoadEnd;
         }
 
         void EnableConnectCanvas(LoggedUserData dummyData)

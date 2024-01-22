@@ -1,8 +1,14 @@
 ﻿using Audio;
 using Characters;
+using Dev;
+using FishNet;
+using FishNet.Managing.Scened;
+using Networking;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
+using UnityEngine.Events;
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -146,6 +152,34 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(SceneLoadEndEventArgs args)
+        {
+            if(CharacterManager.Instance.OwnedCharacter != this.gameObject)
+            {
+                InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
+                return;
+            }
+
+            NetworkSceneInit init = null;
+            foreach (GameObject rootGO in args.LoadedScenes[0].GetRootGameObjects())
+            {
+                init = rootGO.GetComponent<NetworkSceneInit>();
+
+                if(init != null)
+                {
+                    SetPosition(init.PlayerCharacterSpawnSpot.position);
+                    break;
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
         }
 
         private void Update()
@@ -400,6 +434,14 @@ namespace StarterAssets
             _animator.SetFloat(_animIDMotionSpeed, 0f);
             _animator.SetBool(_animIDJump, false);
             _animator.SetBool(_animIDFreeFall, false);
+        }
+
+        public void SetPosition(Vector3 pos)
+        {
+            _jumpTimeoutDelta = JumpTimeout;
+            _fallTimeoutDelta = FallTimeout;
+
+            transform.position = pos;
         }
     }
 }
