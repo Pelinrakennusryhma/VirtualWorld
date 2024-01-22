@@ -408,7 +408,7 @@ namespace StarterAssets
             _animator.SetBool(_animIDFreeFall, false);
         }
 
-        public void SetPosition(Vector3 pos)
+        public void SetPosAndRot(Vector3 pos, Quaternion rot)
         {
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -416,6 +416,7 @@ namespace StarterAssets
             StopAnimations();
 
             transform.position = pos;
+            transform.rotation = rot;
         }
     }
 }

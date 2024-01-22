@@ -70,7 +70,7 @@ namespace Characters
 
                 if (init != null)
                 {
-                    ownedController.SetPosition(init.PlayerCharacterSpawnSpot.position);
+                    ownedController.SetPosAndRot(init.PlayerCharacterSpawnSpot.position, init.PlayerCharacterSpawnSpot.rotation);
                     PlayerEvents.Instance.CallEventSceneLoadEnded();
                     PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}.");
                     break;
