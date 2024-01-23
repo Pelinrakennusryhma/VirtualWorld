@@ -139,7 +139,6 @@ MonoBehaviour:
   _maximumFrameTicks: 2
   _tickRate: 15
   _pingInterval: 1
-  _timingInterval: 2
   _physicsMode: 1
 --- !u!1 &555580081
 GameObject:
@@ -1179,7 +1178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _logging: {fileID: 0}
-  _spawnablePrefabs: {fileID: 11400000, guid: 3a54436bdb916194f99da0d17231e617, type: 2}
+  _spawnablePrefabs: {fileID: 11400000, guid: 9aaa1b9114d69414f8579396f1d18e47, type: 2}
   _refreshDefaultPrefabs: 0
   _runInBackground: 1
   _dontDestroyOnLoad: 1

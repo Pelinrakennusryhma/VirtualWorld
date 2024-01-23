@@ -1,13 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:VirtualWorld/Assets/FishNet/Demos/Network LOD/Materials/Player.mat.meta
 guid: 143d8fe5f64b27d44a592f57d7949e1c
-|||||||| 42eb39b:VirtualWorld/Assets/TableTopInvaders/SkySeries Freebie/ExampleScenes/SceneObjects/2_10.mat.meta
-guid: eb10b6f571322b443bec8c532c088270
-timeCreated: 1509071527
-licenseType: Store
-========
-guid: 8c24ceda4d9ddcc4ea5578c24f2ae292
->>>>>>>> main:VirtualWorld/Assets/Materials/CloseButton LiberationSans SDF.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

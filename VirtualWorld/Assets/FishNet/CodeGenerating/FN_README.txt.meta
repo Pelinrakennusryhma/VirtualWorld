@@ -1,14 +1,6 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:VirtualWorld/Assets/FishNet/CodeGenerating/FN_README.txt.meta
 guid: 9133eb285bd7f3c4f89f4d7a2a079c6b
 TextScriptImporter:
-|||||||| 42eb39b:VirtualWorld/Assets/Config/GameConfig.json.meta
-guid: 437624ce1ecc1c54db1141c94408255c
-TextScriptImporter:
-========
-guid: fece2e495e474ea49a41041b06bc446b
-PrefabImporter:
->>>>>>>> main:VirtualWorld/Assets/Prefabs/CalendarCameraPlaceholder.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
