@@ -8,6 +8,8 @@ using FishNet.Connection;
 using UnityEngine.SceneManagement;
 using FishNet;
 using Characters;
+using System;
+using static FishNet.Managing.Scened.UnloadOptions;
 
 namespace Scenes
 {
@@ -17,9 +19,11 @@ namespace Scenes
         [SerializeField] string mainSceneName;
         [SerializeField] List<string> otherSceneNames;
 
+        ///<summary>
+        ///Used for finding a scene reference by name. Populated whenever a scene is loaded on the server.
+        ///</summary>
         Dictionary<string, Scene> scenesLoaded = new();
 
-        ScenePicker mainScenePicker;
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -29,7 +33,6 @@ namespace Scenes
             else
             {
                 Instance = this;
-                mainScenePicker = GetComponent<ScenePicker>();
             }
         }
 
@@ -65,7 +68,10 @@ namespace Scenes
 
             MoveToNetworkSceneServerRpc(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
         }
-
+        ///<summary>
+        ///NetworkObjects that should be moved to another network scene.
+        ///Currently an array of one object, the player character.
+        ///</summary>
         NetworkObject[] CreateMovedNetworkObjects()
         {
             NetworkObject[] movedNetworkObjects = new NetworkObject[1];
@@ -77,13 +83,29 @@ namespace Scenes
         [ServerRpc(RequireOwnership = false)]
         void MoveToNetworkSceneServerRpc(NetworkConnection conn, string sceneToLoadName, string sceneToUnloadName, NetworkObject[] movedNetworkObjects)
         {
+            // These scenes are loaded on the server - find a reference to them by name.
             Scene newSceneRef = scenesLoaded[sceneToLoadName];
             Scene oldSceneRef = scenesLoaded[sceneToUnloadName];
-            SceneLoadData sld = new(newSceneRef) { MovedNetworkObjects = movedNetworkObjects};
+
+            // Used for keeping scene alive on the server after last client unloads it.
+            SceneLookupData activeScene = new SceneLookupData(newSceneRef);
+
+            // Pass the old scene's name as params so we can use that to determine the teleport point in the new scene.
+            byte[] oldSceneNameAsBytes = System.Text.Encoding.UTF8.GetBytes(sceneToUnloadName);
+
+            SceneLoadData sld = new(newSceneRef) { 
+                MovedNetworkObjects = movedNetworkObjects,
+                Params = new LoadParams()
+                {
+                    ClientParams = oldSceneNameAsBytes,
+                },
+                PreferredActiveScene = activeScene
+            };
+
             SceneUnloadData sud = new(oldSceneRef);
+            sud.Options.Mode = ServerUnloadMode.KeepUnused;
 
             SceneManager.LoadConnectionScenes(conn, sld);
-
             SceneManager.UnloadConnectionScenes(conn, sud);
         }
 
@@ -93,8 +115,6 @@ namespace Scenes
             {
                 scenesLoaded.Add(scene.name, scene);
             }
-
-            Utils.DumpToConsole(scenesLoaded);
         }
 
         public void OnDisable()

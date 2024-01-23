@@ -44,7 +44,10 @@ namespace Characters
         }
         private void OnDisable()
         {
-            InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
+            if (IsOwner)
+            {
+                InstanceFinder.SceneManager.OnLoadEnd -= OnSceneLoaded;
+            }
         }
 
         public void SetGameState(GAME_STATE newState)
@@ -62,20 +65,33 @@ namespace Characters
 
         void OnSceneLoaded(SceneLoadEndEventArgs args)
         {
-            NetworkSceneInit init = null;
+            NetworkSceneConnector connector = null;
             Scene loadedScene = args.LoadedScenes[0];
+
             foreach (GameObject rootGO in loadedScene.GetRootGameObjects())
             {
-                init = rootGO.GetComponent<NetworkSceneInit>();
+                connector = rootGO.GetComponent<NetworkSceneConnector>();
 
-                if (init != null)
-                {
-                    ownedController.SetPosAndRot(init.PlayerCharacterSpawnSpot.position, init.PlayerCharacterSpawnSpot.rotation);
-                    PlayerEvents.Instance.CallEventSceneLoadEnded();
-                    PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}.");
+                if (connector != null)
+                {                  
                     break;
                 }
             }
+
+            if(connector != null)
+            {
+                string prevSceneName = System.Text.Encoding.UTF8.GetString(args.QueueData.SceneLoadData.Params.ClientParams);
+
+                Transform spawnPos = connector.GetSpawnTransform(prevSceneName);
+
+                ownedController.SetPosAndRot(spawnPos.position, spawnPos.rotation);
+            } else
+            {
+                // maybe some type of backup to move player to like Vector3.zero or whatever in case there is no connector
+            }
+
+            PlayerEvents.Instance.CallEventSceneLoadEnded();
+            PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}");
         }
 
         // Disable and enable inputs depending on if we are driving a car.
