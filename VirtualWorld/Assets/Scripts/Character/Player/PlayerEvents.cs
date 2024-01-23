@@ -175,6 +175,22 @@ namespace Characters
         {
             EventInformationReceived.Invoke(info);
         }
+
+        public UnityEvent EventSceneLoadStarted;
+
+        public void CallEventSceneLoadStarted()
+        {
+            Debug.Log("scene load started?!?!");
+            EventSceneLoadStarted.Invoke();
+        }
+
+        public UnityEvent EventSceneLoadEnded;
+
+        public void CallEventSceneLoadEnded()
+        {
+            Debug.Log("scene load ended?!?!");
+            EventSceneLoadEnded.Invoke();
+        }
         #endregion
     }
 }

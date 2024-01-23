@@ -1,8 +1,14 @@
 ﻿using Audio;
 using Characters;
+using Dev;
+using FishNet;
+using FishNet.Managing.Scened;
+using Networking;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
+using UnityEngine.Events;
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -400,6 +406,17 @@ namespace StarterAssets
             _animator.SetFloat(_animIDMotionSpeed, 0f);
             _animator.SetBool(_animIDJump, false);
             _animator.SetBool(_animIDFreeFall, false);
+        }
+
+        public void SetPosAndRot(Vector3 pos, Quaternion rot)
+        {
+            _jumpTimeoutDelta = JumpTimeout;
+            _fallTimeoutDelta = FallTimeout;
+
+            StopAnimations();
+
+            transform.position = pos;
+            transform.rotation = rot;
         }
     }
 }

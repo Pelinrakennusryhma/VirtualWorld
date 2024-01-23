@@ -10,14 +10,11 @@ For user authentication and database to work clone [Virtual World Backend projec
 
 In Assets folder, create a folder called `Config` if it doesn't already exist. In the `Config` folder create `GameConfig.json` file with the following contents:
 ```
-"DEV_IpForClient": "[IP for client to connect to in dev environment, likely your localhost]",
-"PROD_IpForClient": "[IP of the deployed unity server]",
-"PROD_URLForClient": "[URL for client for SSL enabled connection to work]",
-"ipForServer":"[IP for server to run on, likely 0.0.0.0]",
-"serverPort":"[Port of your choosing]",
-"DEV_clientBackendUrl":"[URL for client to make authentication api calls to in dev environment, E.G http://localhost:3001]",
-"PROD_clientBackendUrl":"[(https)URL for client to make authentication api calls to in prod environment]",
-"serverBackendUrl": "[URL for server to make api calls to("DataApp" in the backend server)]"
+  "PROD_IpForClient": [IP for client to connect to (AWS server's ip)]
+  "PROD_URLForClient": [SSL enabled server address for client to connect to(the server's dns address)]
+  "DEV_clientBackendUrl": [Address of the authentication server in DEV mode (likely http://localhost:3001)]
+  "PROD_clientBackendUrl": [HTTPS address of the authentication server for client to connect to (likely same as PROD_URLForClient)]
+  "serverBackendUrl": [Internal address for server to backend connection. Same in DEV and PROD (likely http://localhost:3002)]
 ```
 
 ## Links

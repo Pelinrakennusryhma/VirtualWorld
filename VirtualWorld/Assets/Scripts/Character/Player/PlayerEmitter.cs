@@ -44,7 +44,7 @@ namespace Characters
             _cinemachineVirtualCamera.Priority = 100;
 
             UIManager.Instance.SetPlayerCharacter(gameObject);
-            CharacterManager.Instance?.SetOwnedCharacter(gameObject);
+            CharacterManager.Instance?.SetOwnedCharacter(gameObject, controller);
             foreach (GameObject gameObject in ownedObjects)
             {
                 gameObject.SetActive(true);
