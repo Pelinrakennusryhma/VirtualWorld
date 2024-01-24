@@ -97,6 +97,7 @@ public class FirstPersonPlayerControlsShooting : MonoBehaviour
         if (valueFloat > 0)
         {
             JumpDownPressed = true;
+            Debug.Log("Pressed jump ");
         }
 
         else

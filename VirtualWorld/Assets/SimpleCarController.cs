@@ -11,7 +11,7 @@ namespace Vehicles
 {
 
     // Stolen some functionality from here: https://docs.unity3d.com/Manual/WheelColliderTutorial.html
-    public class SimpleCarController : NetworkBehaviour
+    public class SimpleCarController : MonoBehaviour
     {
 
         [System.Serializable]
@@ -28,25 +28,23 @@ namespace Vehicles
                                         private set => carGraphics = value; }
 
 
-        #region SyncVars
 
-        [SyncVar]
         public bool IsGoingInReverse;
 
-        [SyncVar]
+
         private int driverPlayerClientId;
 
-        [SyncVar]
+
         private bool hasADriver;
 
-        [SyncVar]
+
         private float timeSpentOnRoof;
 
-        [SyncVar]
+
         private Vector3 serverLastKnownVelocity;
 
 
-        #endregion
+
 
         public List<AxleInfo> axleInfos; // the information about each individual axle
 
@@ -90,9 +88,9 @@ namespace Vehicles
             SetupRigidbodyAndAxleValues();
         }
 
-        public override void OnStartClient()
+        public void Start()
         {
-            base.OnStartClient();
+
 
             LastCarGraphicsPosition = transform.position;
             LastCarGraphicsForward = CarGraphics.transform.forward;
@@ -102,8 +100,7 @@ namespace Vehicles
 
         public void FixedUpdate()
         {
-            if (IsServer
-                && hasADriver)
+            if (hasADriver)
             {
                 Drive();
             }
@@ -124,15 +121,14 @@ namespace Vehicles
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (IsServer)
-            {
+
                 if (!collision.gameObject.CompareTag("Ground"))
                 {
                     brakeAbruptly = true;
                     timeSpentInBrakingAbrubtly = 0;
                     Rigidbody.velocity = serverLastKnownVelocity;
                 }
-            }
+            
         }
 
         public void OnPlayerEnteredCar(int clientId)
@@ -150,7 +146,7 @@ namespace Vehicles
 
             CarGraphics.transform.parent = transform;
             
-            SendInputToServerServerRpc(Vector2.zero);
+            SendInputToServer(Vector2.zero);
         }
 
         // These could and maybe even should be set in the editor,
@@ -248,12 +244,12 @@ namespace Vehicles
             LastKnownHorizontalInput = input.x;
             LastKnownVerticalInput = input.y;
 
-            SendInputToServerServerRpc(new Vector2(LastKnownHorizontalInput,
+            SendInputToServer(new Vector2(LastKnownHorizontalInput,
                                                    LastKnownVerticalInput));
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        public void SendInputToServerServerRpc(Vector2 input)
+
+        public void SendInputToServer(Vector2 input)
         {           
             LastKnownHorizontalInput = input.x;
             LastKnownVerticalInput = input.y;
@@ -451,10 +447,9 @@ namespace Vehicles
             TimeOfLastFixedUpdate = Time.time;
             lastPos = transform.position;
 
-            if (IsServer)
-            {
+
                 serverLastKnownVelocity = Rigidbody.velocity;
-            }
+            
         }
 
         private void HandleCarGraphicsRotation()

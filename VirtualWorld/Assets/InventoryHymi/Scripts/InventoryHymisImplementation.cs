@@ -23,6 +23,7 @@ namespace InventoryUI
         private void Awake()
         {
             PlayerEvents.Instance.EventInventoryChanged.AddListener(OnInventoryChanged);
+            Debug.Log("Hymis inventory began listening to invenotry changed event " + Time.time);
         }
 
         void OnInventoryChanged(List<InventoryItem> items)

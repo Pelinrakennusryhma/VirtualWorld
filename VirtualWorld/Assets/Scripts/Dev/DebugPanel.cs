@@ -13,33 +13,33 @@ namespace Dev
         [SerializeField] TMP_Text focusedQuest;
         public void ResetQuests()
         {
-            QuestManager.Instance.ClearQuests();
+            QuestManagerNonNetworked.Instance.ClearQuests();
         }
 
         void Update()
         {
-            if(QuestManager.Instance == null)
+            if(QuestManagerNonNetworked.Instance == null)
             {
                 return;
             }
 
             activeQuests.text = "Active:\n";
-            foreach (ActiveQuest quest in QuestManager.Instance.ActiveQuests)
+            foreach (ActiveQuest quest in QuestManagerNonNetworked.Instance.ActiveQuests)
             {
                 activeQuests.text += quest.Quest.name;
             }
 
             completedQuests.text = "Completed:\n";
-            foreach (Quest quest in QuestManager.Instance.CompletedQuests)
+            foreach (Quest quest in QuestManagerNonNetworked.Instance.CompletedQuests)
             {
                 completedQuests.text += quest.name;
             }
 
-            if(QuestManager.Instance.FocusedQuest != null)
+            if(QuestManagerNonNetworked.Instance.FocusedQuest != null)
             {
                 focusedQuest.text = $"Focused: " +
-                    $"\nstepId: {QuestManager.Instance.FocusedQuest.CurrentStepId} " +
-                    $"\nstepProgress: {QuestManager.Instance.FocusedQuest.CurrentStep.completedObjectives}";
+                    $"\nstepId: {QuestManagerNonNetworked.Instance.FocusedQuest.CurrentStepId} " +
+                    $"\nstepProgress: {QuestManagerNonNetworked.Instance.FocusedQuest.CurrentStep.completedObjectives}";
             } else
             {
                 focusedQuest.text = "";

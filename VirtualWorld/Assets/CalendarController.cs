@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using FishNet.Object;
 
 
 // TO BE REFACTORED:--------------------------------------
@@ -12,7 +11,7 @@ using FishNet.Object;
 
 
 // This controller is used to keep track of calendar things.
-public class CalendarController : NetworkBehaviour
+public class CalendarController : MonoBehaviour
 {
 
     // A struct for saving data about a day
@@ -121,6 +120,14 @@ public class CalendarController : NetworkBehaviour
         // END OF REFACTOR/DELETION
         // -----------------------------------------------------------
 
+    }
+
+    private void Start()
+    {
+        if (Instance == this)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     // This function is used to check

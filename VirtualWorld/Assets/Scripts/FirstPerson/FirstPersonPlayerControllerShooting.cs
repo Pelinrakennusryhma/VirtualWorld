@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FirstPersonPlayerControllerShooting : MonoBehaviour
@@ -70,6 +68,11 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        Debug.Log("Active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -82,6 +85,8 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
         Vector2 mouseInput = new Vector2(Controls.MouseDeltaX * 0.025f,
                                          Controls.MouseDeltaY * 0.025f);
+
+        //Debug.Log("Mouse delta x is " + Controls.MouseDeltaX + " at time " + Time.time);
 
         if (Controls.RunDown)
         {
@@ -106,11 +111,12 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         if (Controls.JumpDownPressed)
         {
             SpaceWasPressedDuringLastUpdate = true;
+            Debug.Log("Jump pressed during last late update");
         }
 
-        float xRot;
+        //float xRot;
 
-        MoveHead(mouseInput, out xRot);
+        //MoveHead(mouseInput, out xRot);
 
         if (isCrouching)
         {
@@ -136,6 +142,10 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             return;
         }
 
+        Vector2 mouseInput = new Vector2(Controls.MouseDeltaX * 0.025f,
+                                 Controls.MouseDeltaY * 0.025f);
+
+        MoveHead(mouseInput, out float xRot);
         MoveBody(movement);
     }
 
@@ -169,8 +179,16 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
         Camera.transform.localRotation = Quaternion.Euler(yRot, 0, 0);
         Quaternion previousRot = Rigidbody.transform.rotation;
+
+
+        //Debug.Log("Old rot y is " + Rigidbody.transform.rotation.eulerAngles.y);
         Rigidbody.transform.Rotate(0, xRot * mouseSensitivity, 0);
         Rigidbody.transform.rotation = Quaternion.Slerp(previousRot, Rigidbody.transform.rotation, 0.9f);
+        //Debug.Log("New rot y is " + Rigidbody.transform.rotation.eulerAngles.y);
+
+        //float RotationSpeed = 10;
+        //float _rotationVelocity = xRot * RotationSpeed;
+        //Rigidbody.transform.Rotate(Vector3.up * _rotationVelocity);
     }
 
     private void MoveBody(Vector3 movement)

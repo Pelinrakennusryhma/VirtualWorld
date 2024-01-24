@@ -16,15 +16,35 @@ public class GamePlayCameraGravityShip : MonoBehaviour
 
     public Camera LayeredCamera;
 
-    private void Start()
-    {        
-        LevelStartReferenceCamera = FindObjectOfType<LevelStartReferenceCamera>(true);
-        LevelStartReferenceCamera.gameObject.SetActive(false);
 
-        if (GameManagerGravityShip.Instance.RelaunchingTheSameScene) 
+
+    private void Start()
+    {
+
+    }
+
+    public void SetupLevelStartCamerasAndStuff(UnityEngine.SceneManagement.Scene scene)
+    {
+        if (GameManagerGravityShip.Instance.RelaunchingTheSameScene)
         {
             return;
         }
+
+        LevelStartReferenceCamera[] allrefCams = FindObjectsOfType<LevelStartReferenceCamera>(true);
+
+        for (int i = 0; i < allrefCams.Length; i++)
+        {
+            if (allrefCams[i].gameObject.scene.name.Equals(scene.name))
+            {
+                LevelStartReferenceCamera = allrefCams[i];
+                LevelStartReferenceCamera.gameObject.SetActive(false);
+            }
+        }
+
+
+
+
+        Debug.Log("Level start reference camera scene is " + LevelStartReferenceCamera.gameObject.scene.name);
 
 
         Camera = GetComponent<Camera>();
@@ -45,6 +65,8 @@ public class GamePlayCameraGravityShip : MonoBehaviour
 
         Time.timeScale = 0;
         StartTimer = 2.0f;
+
+        Destroy(LevelStartReferenceCamera.gameObject);
     }
 
     // Update is called once per frame

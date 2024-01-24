@@ -81,14 +81,14 @@ namespace Characters
         public void CallEventDialogOpened(NPC npc, Quest quest = null)
         {
             EventDialogOpened.Invoke(npc, quest);
-            CharacterManager.Instance.SetGameState(GAME_STATE.DIALOG);
+            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.DIALOG);
         }
 
         public UnityEvent EventDialogClosed;
         public void CallEventDialogClosed()
         {
             EventDialogClosed.Invoke();
-            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
         }
 
         #endregion

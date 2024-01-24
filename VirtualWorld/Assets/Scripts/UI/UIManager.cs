@@ -36,6 +36,8 @@ namespace UI
             {
                 Destroy(gameObject);
             }
+
+            Debug.Log("UI manager gameobject name is " + gameObject.name);
         }
 
         private void Start()

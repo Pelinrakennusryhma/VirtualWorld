@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FishNet.Object;
 using System.Linq;
-using FishNet.Connection;
 
-public class NewsFeedController : NetworkBehaviour
+
+public class NewsFeedController : MonoBehaviour
 {
     public static NewsFeedController Instance;
 
@@ -36,12 +34,22 @@ public class NewsFeedController : NetworkBehaviour
 
     }
 
-
-    public override void OnStartClient()
+    public void Start()
     {
-        RequestGlobalNewsServerRpc();
-        //Debug.Log("Player spawned, should update global news at startup. Probably the call is in the wrong place at Additive Scene Launcher");
+        if (Instance == this)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
+        RequestGlobalNews();
     }
+
+
+    //public override void OnStartClient()
+    //{
+    //    RequestGlobalNewsServerRpc();
+    //    //Debug.Log("Player spawned, should update global news at startup. Probably the call is in the wrong place at Additive Scene Launcher");
+    //}
 
     public List<NewsFeedItem> GetLocalNews()
     {
@@ -178,12 +186,11 @@ public class NewsFeedController : NetworkBehaviour
     }
 
 
-    // Probaly sending long strings is not a good thing, but then again websites do that too.
-    [ServerRpc(RequireOwnership = false)]
-    public void AddNewsItemToGlobalNewsServerRpc(int priority,
-                                                 int id,
-                                                 string header,
-                                                 string content)
+
+    public void AddNewsItemToGlobalNews(int priority,
+                                        int id,
+                                        string header,
+                                        string content)
     {
         //Debug.Log("Server rpc is called");
 
@@ -221,17 +228,17 @@ public class NewsFeedController : NetworkBehaviour
 
         //Debug.Log("Got through. about to call client rpc");
 
-        UpdateGlobalNewsItemClientRpc(item.Priority,
+        UpdateGlobalNewsItem(item.Priority,
                                       item.ID,
                                       item.Header,
                                       item.Content);
     }
 
-    [ObserversRpc]
-    public void UpdateGlobalNewsItemClientRpc(int priority,
-                                              int id,
-                                              string header,
-                                              string content)
+
+    public void UpdateGlobalNewsItem(int priority,
+                                     int id,
+                                     string header,
+                                     string content)
     {
         //Debug.Log("Observers rpc is called");
 
@@ -257,14 +264,14 @@ public class NewsFeedController : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void RequestGlobalNewsServerRpc()
+ 
+    public void RequestGlobalNews()
     {
         //Debug.Log("Requesting global news");
 
         for (int i = 0; i < GlobalNews.Count; i++)
         {
-            UpdateGlobalNewsItemClientRpc(GlobalNews[i].Priority,
+            UpdateGlobalNewsItem(GlobalNews[i].Priority,
                                           GlobalNews[i].ID,
                                           GlobalNews[i].Header,
                                           GlobalNews[i].Content);

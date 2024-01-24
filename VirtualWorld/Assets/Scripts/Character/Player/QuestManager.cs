@@ -41,9 +41,8 @@ namespace Quests
             }
         }
 
-        public override void OnStartClient()
+        public  void Start()
         {
-            base.OnStartClient();
             questDatabase.Init();
             PlayerEvents.Instance.EventQuestCompleted.AddListener(OnQuestCompleted);
             PlayerEvents.Instance.EventActiveQuestUpdated.AddListener(OnActiveQuestUpdated);

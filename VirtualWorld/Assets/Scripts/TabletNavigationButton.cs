@@ -30,6 +30,8 @@ public class TabletNavigationButton : MonoBehaviour, IPointerClickHandler
         transform.parent.localScale = new Vector3(ParentOriginalScale.x * 0.5f, ParentOriginalScale.y * 0.5f, ParentOriginalScale.z);
 
         ViewWithinAViewController.OnNavigationButtonPressed(ButtonID);
+
+        Debug.Log("Pressed tablet navigation button");
     }
 
     public void Update()

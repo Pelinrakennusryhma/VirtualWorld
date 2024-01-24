@@ -87,7 +87,7 @@ namespace StarterAssets
 		}
 		public void OnMove(InputAction.CallbackContext value)
 		{
-			switch (CharacterManager.Instance.gameState)
+			switch (CharacterManagerNonNetworked.Instance.gameState)
 			{
 				case GAME_STATE.FREE:
                     MoveInput(value.ReadValue<Vector2>());
@@ -105,7 +105,7 @@ namespace StarterAssets
 
 		public void OnLook(InputAction.CallbackContext value)
 		{
-            switch (CharacterManager.Instance.gameState)
+            switch (CharacterManagerNonNetworked.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     if (cursorInputForLook)
@@ -126,7 +126,7 @@ namespace StarterAssets
 
 		public void OnJump(InputAction.CallbackContext value)
 		{
-            switch (CharacterManager.Instance.gameState)
+            switch (CharacterManagerNonNetworked.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     JumpInput(value.performed);
@@ -144,7 +144,7 @@ namespace StarterAssets
 
 		public void OnSprint(InputAction.CallbackContext value)
 		{
-            switch (CharacterManager.Instance.gameState)
+            switch (CharacterManagerNonNetworked.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     SprintInput(value.performed);
@@ -162,7 +162,7 @@ namespace StarterAssets
 
 		public void OnInteract(InputAction.CallbackContext value)
 		{	
-            switch (CharacterManager.Instance.gameState)
+            switch (CharacterManagerNonNetworked.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     InteractInput(value.performed);
@@ -182,11 +182,11 @@ namespace StarterAssets
         {
             if (value.action.WasPerformedThisFrame())
             {
-                switch (CharacterManager.Instance.gameState)
+                switch (CharacterManagerNonNetworked.Instance.gameState)
                 {
                     case GAME_STATE.FREE:
                         ZeroInputs();
-                        CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
+                        CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.LOCKED);
                         PlayerEvents.Instance.CallEventOpenTabletPressed();
                         break;
                     case GAME_STATE.MENU:
@@ -204,7 +204,7 @@ namespace StarterAssets
 
         public void OnAction1(InputAction.CallbackContext value)
 		{
-            switch (CharacterManager.Instance.gameState)
+            switch (CharacterManagerNonNetworked.Instance.gameState)
             {
                 case GAME_STATE.FREE:
                     Action1Input(value.performed);
@@ -224,19 +224,19 @@ namespace StarterAssets
 		{
 			if(value.action.WasPerformedThisFrame())
 			{
-                switch (CharacterManager.Instance.gameState)
+                switch (CharacterManagerNonNetworked.Instance.gameState)
                 {
                     case GAME_STATE.FREE:
-                        CharacterManager.Instance.SetGameState(GAME_STATE.MENU);
+                        CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.MENU);
                         break;
                     case GAME_STATE.MENU:
-                        CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+                        CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
                         break;
                     case GAME_STATE.TABLET:
                         PlayerEvents.Instance.CallEventCloseTabletPressed();
                         break;
                     case GAME_STATE.DIALOG:
-                        CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+                        CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
                         break;
                     default:
                         break;
@@ -248,10 +248,10 @@ namespace StarterAssets
         {
             if (value.action.WasPerformedThisFrame())
             {
-                switch (CharacterManager.Instance.gameState)
+                switch (CharacterManagerNonNetworked.Instance.gameState)
                 {
                     case GAME_STATE.FREE:
-                        QuestManager.Instance.ToggleFocusedQuest();
+                        QuestManagerNonNetworked.Instance.ToggleFocusedQuest();
                         break;
                     case GAME_STATE.MENU:
                         break;

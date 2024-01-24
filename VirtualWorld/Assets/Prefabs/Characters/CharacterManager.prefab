@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5884827464413810290}
   - component: {fileID: 5635476881906859497}
   - component: {fileID: 1746309532049967265}
+  - component: {fileID: 6203663215727701464}
   - component: {fileID: 8613104118265851934}
   m_Layer: 0
   m_Name: CharacterManager
@@ -53,6 +54,7 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 5635476881906859497}
   gameState: 0
   <OwnedCharacter>k__BackingField: {fileID: 0}
+  ClientId: 0
 --- !u!114 &-5884827464413810290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +79,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5585604776717508355}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
   m_Name: 
@@ -88,6 +90,7 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: 4913510220092636752}
   - {fileID: -5884827464413810290}
+  - {fileID: 8613104118265851934}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -119,6 +122,26 @@ MonoBehaviour:
   _overrideType: 2
   _updateHostVisibility: 1
   _observerConditions: []
+--- !u!114 &6203663215727701464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a1c0f4ce301c144bd6c30143a6f549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: 0
+  <OwnedCharacter>k__BackingField: {fileID: 0}
+  ClientId: 0
+  DummyItems:
+  - {fileID: 11400000, guid: c16ca8bb49d537243997ea1d0bcb808a, type: 2}
+  - {fileID: 11400000, guid: 665ab5b0559cbbc4da1bb97ee65d8f0e, type: 2}
+  - {fileID: 11400000, guid: 69a36462a78ed62469e1af57e5297469, type: 2}
+  - {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02, type: 2}
 --- !u!114 &8613104118265851934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76616a97c6b3e61469d554efac98dc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 5635476881906859497}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 5635476881906859497}
   itemDatabase: {fileID: 11400000, guid: a9b69edd0a0f7d94e859ef3ef80d1160, type: 2}
   <CreditItem>k__BackingField: {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02,
     type: 2}

@@ -4,10 +4,25 @@ using UnityEngine;
 
 public class TestPhysicsUpdater : MonoBehaviour
 {
-    private float timer; 
+    private float timer;
+
+    public static TestPhysicsUpdater Instance;
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        else 
+        { 
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        gameObject.SetActive(false);
+
         //Physics.simulationMode = SimulationMode.FixedUpdate;
     }
 

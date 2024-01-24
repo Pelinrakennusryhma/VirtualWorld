@@ -154,6 +154,9 @@ namespace Scenes
         {
             this.sceneLoadParams = sceneLoadParams;
             string sceneName = ParseSceneName(scenePath);
+
+            Debug.Log("Scene name is " + sceneName + " scene load params are " + sceneLoadParams.ToString());
+
             StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
         }
 
@@ -170,7 +173,7 @@ namespace Scenes
 
         IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
-            CharacterManager.Instance.SetGameState(GAME_STATE.MINIGAME);
+            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.MINIGAME);
             PackScene(sceneLoadParams.scenePackMode);
 
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -187,7 +190,7 @@ namespace Scenes
 
         IEnumerator UnloadAsyncScene()
         {
-            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
             AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
             while (!op.isDone)
@@ -211,7 +214,7 @@ namespace Scenes
 
             if (scenePackMode == ScenePackMode.PLAYER_ONLY)
             {
-                PackObject(CharacterManager.Instance.OwnedCharacter);
+                PackObject(CharacterManagerNonNetworked.Instance.OwnedCharacter);
             }
             else
             {
@@ -219,7 +222,7 @@ namespace Scenes
 
                 foreach (GameObject go in allObjects)
                 {
-                    if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManager.Instance.OwnedCharacter)
+                    if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManagerNonNetworked.Instance.OwnedCharacter)
                     {
                         // move character to the new scene here?
                     }

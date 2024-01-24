@@ -11,12 +11,12 @@ namespace Quests
         {
             // When client loads and CharacterManager is not yet initialized, return
             // to avoid errors from any objects already in the trigger area
-            if(CharacterManager.Instance == null)
+            if(CharacterManagerNonNetworked.Instance == null)
             {
                 return;
             }
 
-            if(other.gameObject == CharacterManager.Instance.OwnedCharacter)
+            if(other.gameObject == CharacterManagerNonNetworked.Instance.OwnedCharacter)
             {
                 Debug.Log("player entered");
                 ProgressQuestStep();

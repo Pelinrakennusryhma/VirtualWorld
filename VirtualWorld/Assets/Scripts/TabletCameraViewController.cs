@@ -1,7 +1,5 @@
 using UnityEngine;
 using StarterAssets;
-using FishNet.Object;
-using UnityEngine.Events;
 using Characters;
 
 // DOES THIS NEED TO BE A NetworkBehaviour?
@@ -12,7 +10,7 @@ using Characters;
 // This component is in charge of moving and changing cameras,
 // when tablet view is activated
 
-public class TabletCameraViewController : NetworkBehaviour
+public class TabletCameraViewController : MonoBehaviour
 {
     // The main camera
     [Tooltip("NetworkPlayer01/MainCamera")]
@@ -76,7 +74,7 @@ public class TabletCameraViewController : NetworkBehaviour
     [SerializeField] private ViewWithinAViewController ViewWithinAViewController;
 
 
-    public override void OnStartClient()
+    public void Start()
     {
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
@@ -89,7 +87,7 @@ public class TabletCameraViewController : NetworkBehaviour
         // Just disable objects that we don't need
         TabletMainScaler.gameObject.SetActive(false);
 
-        if (IsOwner)
+        //if (IsOwner)
         {
             ViewWithinAViewController.Init();
             // Subscribe to events about button presses
@@ -99,8 +97,8 @@ public class TabletCameraViewController : NetworkBehaviour
 
         //Debug.LogWarning("Starting client. Isowner " + IsOwner);
 
-        ViewWithinAViewController.SetupMapBlips(IsOwner,
-                                                !IsOwner);
+        ViewWithinAViewController.SetupMapBlips(true,
+                                                false);
 
         // Disable the render on top camera, it will be used later
         // but not now    
@@ -204,7 +202,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
     private void SetupTabletForGoingOut()
     {
-        CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
+        CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.LOCKED);
         // We keep track of if we are doing the movements 
         isInterpolating = true;
 
@@ -234,10 +232,10 @@ public class TabletCameraViewController : NetworkBehaviour
 
 
         // If we don't own the networked object, don't do anything
-        if (!IsOwner)
-        {
-            return;
-        }
+        //if (!IsOwner)
+        //{
+        //    return;
+        //}
 
 
         //if (Inputs.tablet)
@@ -335,7 +333,7 @@ public class TabletCameraViewController : NetworkBehaviour
             ViewWithinAViewController.OnTabletClosed();
 
             // once camera has reached its return position, set gameState to free
-            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
         }
     }
 

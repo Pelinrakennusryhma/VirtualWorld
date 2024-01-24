@@ -74,6 +74,12 @@ namespace Characters
         {
             input.ClearInteractInput();
             PlayerEvents.Instance.CallEventInteractionStarted();
+
+            if (PlayerEvents.Instance == null)
+            {
+                Debug.LogError("Player events instance is null");
+            }
+
             interactable.Interact(new UnityAction(() => PlayerEvents.Instance.CallEventInteractableLost()));
             PlayerEvents.Instance.CallEventInteractableLost();
         }

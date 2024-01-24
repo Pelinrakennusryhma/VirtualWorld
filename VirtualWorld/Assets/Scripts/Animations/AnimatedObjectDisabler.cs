@@ -89,7 +89,7 @@ namespace Animations
             }
 
             // In case of owned player character, stop animations from playing so we don't hear footsteps in minigame
-            if(gameObject == CharacterManager.Instance.OwnedCharacter)
+            if(gameObject == CharacterManagerNonNetworked.Instance.OwnedCharacter)
             {
                 ThirdPersonController tpc = GetComponent<ThirdPersonController>();
                 if (tpc != null)

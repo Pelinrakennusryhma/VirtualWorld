@@ -1,9 +1,6 @@
-using FishNet.Object;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TestNewsFeedFiller : NetworkBehaviour
+public class TestNewsFeedFiller : MonoBehaviour
 {
     public float Timer;
     private int runningGlobalID;
@@ -23,7 +20,7 @@ public class TestNewsFeedFiller : NetworkBehaviour
 
         if (Timer <= 0)
         {
-            GenerateAGlobalNewsItemServerRpc();
+            GenerateAGlobalNewsItem();
             GenerateALocalNewsItem();
             Timer = 10.0f + Random.Range(-2.0f, 2.0f);
         }
@@ -57,11 +54,8 @@ public class TestNewsFeedFiller : NetworkBehaviour
         //                                                             item.Content);
     }
 
-    // We probably want to generate the news on the server. At least global news
-    // Local news shouldn't matter that much, because if someone wants to mess with
-    // their own news feed, perhaps they should be able to? Because in the end, who cares if the news can't be seen by others?
-    [ServerRpc(RequireOwnership = false)]
-    public void GenerateAGlobalNewsItemServerRpc()
+
+    public void GenerateAGlobalNewsItem()
     {
         // Note: this is called server side, so any parameters
         // that should define the news should be addded to the method call
@@ -92,7 +86,7 @@ public class TestNewsFeedFiller : NetworkBehaviour
 
         int priority = Random.Range(-5, 100); // The smaller the number, the higher it shows on the News feed
 
-        NewsFeedController.Instance.AddNewsItemToGlobalNewsServerRpc(priority,
+        NewsFeedController.Instance.AddNewsItemToGlobalNews(priority,
                                                                      id,
                                                                      header,
                                                                      content); // The server will broadcast the news item to clients

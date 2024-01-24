@@ -99,7 +99,7 @@ namespace Dialog
                     if (isQuestTrigger)
                     {
                         DialogChoiceWithQuestStepTrigger questTrigger = (DialogChoiceWithQuestStepTrigger)childDialog;
-                        if (!QuestManager.Instance.IsOnQuestStep(questTrigger.questStep))
+                        if (!QuestManagerNonNetworked.Instance.IsOnQuestStep(questTrigger.questStep))
                         {
                             continue;
                         }
@@ -121,7 +121,7 @@ namespace Dialog
             {
                 foreach (Quest quest in quests)
                 {
-                    if (QuestManager.Instance.CanAcceptQuest(quest))
+                    if (QuestManagerNonNetworked.Instance.CanAcceptQuest(quest))
                     {
                         GameObject buttonObj = Instantiate(questChoiceButtonPrefab, dialogContainer);
                         subDialogButtons.Add(buttonObj);
@@ -173,7 +173,7 @@ namespace Dialog
 
             completeButton.onClick.RemoveAllListeners();
             completeButton.gameObject.SetActive(true);
-            completeButton.onClick.AddListener(() => QuestManager.Instance.ProgressStep(questTrigger.questStep, 1));
+            completeButton.onClick.AddListener(() => QuestManagerNonNetworked.Instance.ProgressStep(questTrigger.questStep, 1));
 
 
             backButton.onClick.RemoveAllListeners();
@@ -185,7 +185,7 @@ namespace Dialog
         {
             acceptButton.onClick.RemoveAllListeners();
             acceptButton.gameObject.SetActive(true);
-            acceptButton.onClick.AddListener(() => QuestManager.Instance.AcceptQuest(quest));
+            acceptButton.onClick.AddListener(() => QuestManagerNonNetworked.Instance.AcceptQuest(quest));
 
             completeButton.gameObject.SetActive(false);
 

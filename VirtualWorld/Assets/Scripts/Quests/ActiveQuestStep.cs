@@ -25,7 +25,7 @@ namespace Quests
 
             // Add to list of created quest steps so this one can
             // be cleaned when needed, e.g. when quest gets abandoned
-            QuestManager.Instance.AddActiveQuestStep(this);
+            QuestManagerNonNetworked.Instance.AddActiveQuestStep(this);
 
             UpdateStep();
         }

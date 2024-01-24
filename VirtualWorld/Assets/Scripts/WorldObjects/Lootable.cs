@@ -17,11 +17,13 @@ namespace WorldObjects
         public bool IsActive => true;
         public Vector3 DetectionMessageOffSet { get => Vector3.zero; }
 
-        Respawnable respawnable;
+        //Respawnable respawnable;
+        RespawnableNonNetworked respawnable;
 
         void Start()
         {
-            respawnable = transform.parent.GetComponent<Respawnable>();
+            //respawnable = transform.parent.GetComponent<Respawnable>();
+            respawnable = transform.parent.GetComponent<RespawnableNonNetworked>();
             DetectionMessage = DetectionMessage.Replace("%%item%%", item.DisplayName);
         }
 
