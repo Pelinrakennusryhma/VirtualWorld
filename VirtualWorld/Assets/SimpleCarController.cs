@@ -57,8 +57,10 @@ namespace Vehicles
         [SerializeField] private AnimationCurve BrakeInputVelocityReduceCurve;
         [SerializeField] private AnimationCurve AccelerationCurve;
 
-        private float LastKnownHorizontalInput;
-        private float LastKnownVerticalInput;
+
+        [SerializeField] private float LastKnownHorizontalInput;
+
+        [SerializeField] private float LastKnownVerticalInput;
 
         private Rigidbody Rigidbody;
 
@@ -80,12 +82,20 @@ namespace Vehicles
         private Vector3[] lastTenKnownVelocities = new Vector3[10];
         private int runningVelocityIndex;
 
+        private Vector3 originalPos;
+        private Quaternion originalRot;
+
+        private float notAValidRotationTimer;
+
         public void Awake()
         {
             lastPos = transform.position;
             LastCarGraphicsPosition = transform.position;
             LastCarGraphicsForward = CarGraphics.transform.forward;
             CarGraphics.transform.position = transform.position;
+
+            originalPos = transform.position;
+            originalRot = transform.rotation;
 
             SetupRigidbodyAndAxleValues();
         }
@@ -103,9 +113,34 @@ namespace Vehicles
         public void FixedUpdate()
         {
             if (IsServer
-                && hasADriver)
+                && (hasADriver
+                || brakeAbruptly))
             {
                 Drive();
+            }
+
+            if (IsServer)
+            {
+                float angleBetweenRots = Vector3.Angle(Vector3.up, transform.up);
+
+                if (angleBetweenRots < 1.0f)
+                {
+                    notAValidRotationTimer = 0;
+                }
+
+                else
+                {
+                    notAValidRotationTimer += Time.deltaTime;
+                }
+
+                if (notAValidRotationTimer >= 30.0f)
+                {
+                    notAValidRotationTimer = 0;
+                    transform.position = originalPos;
+                    transform.rotation = originalRot;
+                    Rigidbody.velocity = Vector3.zero;
+                    Debug.Log("Resetted pos " + Time.time);
+                }
             }
 
             OnFixedUpdate();
@@ -149,7 +184,11 @@ namespace Vehicles
             hasADriver = false;
 
             CarGraphics.transform.parent = transform;
-            
+
+            SetMotorAndSteering(0, 0);
+            brakeAbruptly = true;
+            timeSpentInBrakingAbrubtly = 0;
+
             SendInputToServerServerRpc(Vector2.zero);
         }
 
@@ -245,22 +284,30 @@ namespace Vehicles
 
         public void UpdateInput(Vector2 input)
         {
-            LastKnownHorizontalInput = input.x;
-            LastKnownVerticalInput = input.y;
+            if (IsOwner) 
+            {
+                LastKnownHorizontalInput = input.x;
+                LastKnownVerticalInput = input.y;
 
-            SendInputToServerServerRpc(new Vector2(LastKnownHorizontalInput,
-                                                   LastKnownVerticalInput));
+                SendInputToServerServerRpc(new Vector2(LastKnownHorizontalInput,
+                                                       LastKnownVerticalInput));
+            }
+            
         }
 
-        [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(RequireOwnership = true)]
         public void SendInputToServerServerRpc(Vector2 input)
         {           
             LastKnownHorizontalInput = input.x;
             LastKnownVerticalInput = input.y;
+
+            //Debug.Log("Server received input horizontal: " + LastKnownHorizontalInput + " vertical: " + LastKnownVerticalInput);
         }
 
         private void Drive()
         {
+            //Debug.Log("Driving " + Time.time + " horizontal is " + LastKnownHorizontalInput + " vertical is " + LastKnownVerticalInput);
+
             Vector2 input = new Vector2(LastKnownHorizontalInput,
                                         LastKnownVerticalInput);
 
@@ -294,6 +341,7 @@ namespace Vehicles
                 if (timeSpentInBrakingAbrubtly >= 1.0f)
                 {
                     brakeAbruptly = false;
+                    Rigidbody.velocity = Vector3.zero;
                 }
             }
 
