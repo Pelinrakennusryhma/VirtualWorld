@@ -43,7 +43,7 @@ namespace Configuration
         {
             apiCalls_Client.LogOut();
             await apiCalls_Client.OnBeginLogin(username, password, false);
-            InstanceFinder.ClientManager.StartConnection();
+            ConnectToServer();
             Debug.Log("client autologged");
         }
 
@@ -51,6 +51,9 @@ namespace Configuration
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs args)
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(1);
+
+            // unsubcribe afterwards so network scene loading doesn't get messed up
+            networkManager.SceneManager.OnLoadEnd -= SceneManager_OnLoadEnd;
         }
 
         void EnableConnectCanvas(LoggedUserData dummyData)

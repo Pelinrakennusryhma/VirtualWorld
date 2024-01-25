@@ -17,11 +17,15 @@ namespace Configuration
         [SerializeField] ScenePicker mainScenePicker;
         [SerializeField] NetworkManager networkManager;
         [SerializeField] SceneManager sceneManager;
+
+        [SerializeField] NetworkObjectSpawner networkObjectSpawner;
+
+        [Tooltip("Objects that server doesn't need so they can be destroyed")]
+        [SerializeField] GameObject[] objectsToDespawn;
         public async UniTask Init()
         {
             Debug.Log("--- SERVER INIT START ---");
             networkManager.ServerManager.OnServerConnectionState += OnServerStarted;
-
             networkManager.ServerManager.StartConnection();
         }
 
@@ -29,21 +33,18 @@ namespace Configuration
         {
             if(args.ConnectionState == LocalConnectionState.Started)
             {
-                LoadMainScene();
+                DestroyObjectsOnServer();
+                networkObjectSpawner.Init();
             }
         }
 
-        void LoadMainScene()
+        void DestroyObjectsOnServer()
         {
-            string mainSceneName = mainScenePicker.GetSceneName();
-            SceneLoadData sld = new SceneLoadData(mainSceneName);
-            sceneManager.LoadGlobalScenes(sld);
-
-            //unload launch scene as it's no longer needed
-            sceneManager.UnloadConnectionScenes(new SceneUnloadData("Launch"));
-            Debug.Log("--- SERVER INIT END ---");
+            foreach (GameObject go in objectsToDespawn)
+            {
+                Destroy(go);
+            }
         }
-
     }
 }
 

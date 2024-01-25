@@ -16,6 +16,9 @@ namespace WorldObjects
         public bool IsActive => true;
         public Vector3 DetectionMessageOffSet { get => Vector3.zero; private set => DetectionMessageOffSet = value; }
 
+        [SerializeField] ScenePackMode scenePackMode = ScenePackMode.ALL;
+        [Tooltip("Extra data that can be passed to scene loading")]
+        [SerializeField] string sceneDataString;
         ScenePicker scenePicker;
 
         void Start()
@@ -25,7 +28,7 @@ namespace WorldObjects
 
         public void Interact(UnityAction _)
         {
-            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(ScenePackMode.ALL, "ShowEnvironment"));
+            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(scenePackMode, sceneDataString));
         }
     }
 }

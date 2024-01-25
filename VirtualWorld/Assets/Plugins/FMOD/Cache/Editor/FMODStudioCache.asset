@@ -18,8 +18,7 @@ MonoBehaviour:
     Data2: 1124834819
     Data3: -1128287351
     Data4: 815037410
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -45,8 +44,7 @@ MonoBehaviour:
     Data2: 1279402105
     Data3: 283583365
     Data4: 1167442425
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -69,10 +67,10 @@ MonoBehaviour:
   Path: ../../../VirtualWorldFMOD/VirtualWorld/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638337549804338921
+  lastModified: 638355819295521165
   FileSizes:
   - Name: Desktop
-    Value: 1834
+    Value: 712
   Exists: 1
 --- !u!114 &-8192407553344855078
 MonoBehaviour:
@@ -89,7 +87,7 @@ MonoBehaviour:
   Path: ../../../VirtualWorldFMOD/VirtualWorld/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638337553527029065
+  lastModified: 638355828092918880
   FileSizes:
   - Name: Desktop
     Value: 281920
@@ -112,8 +110,7 @@ MonoBehaviour:
     Data2: 1292843465
     Data3: 1594668958
     Data4: -107483807
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -139,8 +136,7 @@ MonoBehaviour:
     Data2: 1191819266
     Data3: 41846449
     Data4: -1963219741
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -166,8 +162,7 @@ MonoBehaviour:
     Data2: 1142566648
     Data3: -837419851
     Data4: 445107538
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -193,8 +188,7 @@ MonoBehaviour:
     Data2: 1272404809
     Data3: 1425614270
     Data4: 919952518
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -220,8 +214,7 @@ MonoBehaviour:
     Data2: 1178917894
     Data3: -251285874
     Data4: -1358163185
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -247,8 +240,7 @@ MonoBehaviour:
     Data2: 1103690081
     Data3: 413880983
     Data4: -1796546945
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -274,8 +266,7 @@ MonoBehaviour:
     Data2: 1157262194
     Data3: 1679058859
     Data4: 502993890
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -301,8 +292,7 @@ MonoBehaviour:
     Data2: 1171314243
     Data3: -283860350
     Data4: 405727046
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -328,8 +318,7 @@ MonoBehaviour:
     Data2: 1314427357
     Data3: -183296895
     Data4: 151119870
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -352,10 +341,10 @@ MonoBehaviour:
   Path: ../../../VirtualWorldFMOD/VirtualWorld/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638337549804318936
+  lastModified: 638355819295501804
   FileSizes:
   - Name: Desktop
-    Value: 1486
+    Value: 1036
   Exists: 1
 --- !u!114 &-595580158767971005
 MonoBehaviour:
@@ -375,8 +364,7 @@ MonoBehaviour:
     Data2: 1248524287
     Data3: 1272696744
     Data4: 301918357
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -427,7 +415,7 @@ MonoBehaviour:
   - {fileID: -986601350108169236}
   StringsBanks:
   - {fileID: -8346845406735624252}
-  cacheTime: 638337553527029065
+  cacheTime: 638355828092918880
   cacheVersion: 131603
 --- !u!114 &299133216720696888
 MonoBehaviour:
@@ -447,8 +435,7 @@ MonoBehaviour:
     Data2: 1186968933
     Data3: 502606978
     Data4: 274471619
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -474,8 +461,7 @@ MonoBehaviour:
     Data2: 1206209294
     Data3: -420762447
     Data4: 1388423671
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -501,8 +487,7 @@ MonoBehaviour:
     Data2: 1261926896
     Data3: -1992690503
     Data4: 1406086015
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -528,8 +513,7 @@ MonoBehaviour:
     Data2: 1257986586
     Data3: -1116356168
     Data4: -2056499473
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -555,8 +539,7 @@ MonoBehaviour:
     Data2: 1173673360
     Data3: 419888024
     Data4: 701616081
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -582,8 +565,7 @@ MonoBehaviour:
     Data2: 1298389629
     Data3: 418060688
     Data4: -266202789
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -609,8 +591,7 @@ MonoBehaviour:
     Data2: 1299455926
     Data3: 907258021
     Data4: -884720515
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -636,8 +617,7 @@ MonoBehaviour:
     Data2: 1222245624
     Data3: 1472503996
     Data4: -962170273
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -663,8 +643,7 @@ MonoBehaviour:
     Data2: 1309160905
     Data3: -1712549492
     Data4: 52287051
-  Banks:
-  - {fileID: -8192407553344855078}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1

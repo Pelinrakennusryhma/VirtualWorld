@@ -10,10 +10,24 @@ namespace Server {
     public class ServerTicks : NetworkBehaviour
     {
         [SerializeField] List<ServerTick> serverTicks;
+        bool isEnabled = false;
 
         public override void OnStartServer()
         {
             base.OnStartServer();
+
+            foreach (ServerTick serverTick in serverTicks)
+            {
+                serverTick.Init();
+            }
+
+            StartCoroutine(DelayedEnable());
+        }
+
+        IEnumerator DelayedEnable()
+        {
+            yield return new WaitForSeconds(2f);
+            isEnabled = true;
         }
 
         // Disable on clients. Only listening to event invokes needs to work on clients.
@@ -25,6 +39,7 @@ namespace Server {
 
         private void Update()
         {
+            if (!isEnabled) return;
             foreach (ServerTick serverTick in serverTicks)
             {
                 serverTick.CheckTick(DateTime.Now);
