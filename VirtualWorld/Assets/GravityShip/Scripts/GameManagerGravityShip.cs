@@ -44,11 +44,29 @@ public class GameManagerGravityShip : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UICanvas = FindObjectOfType<UICanvasGravityShip>();
+        //UICanvas = FindObjectOfType<UICanvasGravityShip>();
 
-        if (UICanvas != null) 
+        //if (UICanvas != null) 
+        //{
+        //    UICanvas.SetDeaths(Deaths);
+        //}
+
+        UICanvasGravityShip[] allCanvases = FindObjectsOfType<UICanvasGravityShip>(true);
+
+        for (int i = 0; i < allCanvases.Length; i++)
         {
-            UICanvas.SetDeaths(Deaths);
+            if (allCanvases[i].gameObject.scene.name.Equals(scene.name))
+            {
+                UICanvas = allCanvases[i];
+                UICanvas.SetDeaths(Deaths);
+            }
+        }
+
+        GamePlayCameraGravityShip[] allCamera = FindObjectsOfType<GamePlayCameraGravityShip>(true);
+
+        for (int i = 0; i < allCamera.Length; i++)
+        {
+            allCamera[i].SetupLevelStartCamerasAndStuff(scene);
         }
 
         // Hopefully we have only one light in the scene...

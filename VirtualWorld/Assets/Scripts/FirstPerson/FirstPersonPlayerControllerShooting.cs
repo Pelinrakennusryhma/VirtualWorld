@@ -108,9 +108,9 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             SpaceWasPressedDuringLastUpdate = true;
         }
 
-        float xRot;
+        //float xRot;
 
-        MoveHead(mouseInput, out xRot);
+        //MoveHead(mouseInput, out xRot);
 
         if (isCrouching)
         {
@@ -136,6 +136,12 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
             return;
         }
 
+        Vector2 mouseInput = new Vector2(Controls.MouseDeltaX * 0.025f,
+                                 Controls.MouseDeltaY * 0.025f);
+
+        float xRot;
+
+        MoveHead(mouseInput, out xRot);
         MoveBody(movement);
     }
 
