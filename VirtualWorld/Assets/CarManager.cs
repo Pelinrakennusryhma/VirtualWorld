@@ -19,6 +19,7 @@ namespace Vehicles
         private const string EnterCarPrompt = "Enter Car";
         private const string CarAlreadyHasADriverPrompt = "Car Has a Driver";
 
+
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
         public bool IsActive => true;
@@ -60,7 +61,15 @@ namespace Vehicles
 
         private void Start()
         {
-            DetectionMessage = EnterCarPrompt;
+            if (!HasADriver) 
+            {
+                DetectionMessage = EnterCarPrompt;
+            }
+
+            else
+            {
+                DetectionMessage = CarAlreadyHasADriverPrompt;
+            }
 
             if (IsServer) 
             {
@@ -256,7 +265,8 @@ namespace Vehicles
 
         private void EnterCar()
         {
-            OnPlayerEnteredCarServerRpc(CharacterManager.Instance.ClientId);
+            OnPlayerEnteredCarServerRpc(CharacterManager.Instance.ClientId,
+                                        LocalConnection);
 
             CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Disable();
             CharacterManager.Instance.OwnedCharacter.transform.position = new Vector3(-3333, -3333, -3333);
@@ -299,8 +309,12 @@ namespace Vehicles
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void OnPlayerEnteredCarServerRpc(int clientId)
+        public void OnPlayerEnteredCarServerRpc(int clientId,
+                                                FishNet.Connection.NetworkConnection connection)
         {
+            Debug.Log("Player entered car");
+            NetworkObject no = GetComponent<NetworkObject>();
+            no.GiveOwnership(connection);
             HasADriver = true;
             DriverPlayerClientId = clientId;
 
@@ -327,10 +341,12 @@ namespace Vehicles
             ChangeDetectionMessageObserverRpc(EnterCarPrompt);
         }
 
+        // This does not work like it should
         [ObserversRpc]
         public void ChangeDetectionMessageObserverRpc(string detectionMessage)
         {
             DetectionMessage = detectionMessage;
+            Debug.Log("Changed detection message");
         }
     }
 }

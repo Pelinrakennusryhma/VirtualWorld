@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.35867438, g: 0.44501597, b: 0.5776631, a: 1}
+  m_IndirectSpecularColor: {r: 0.41227594, g: 0.48922873, b: 0.60328513, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1697,6 +1697,11 @@ PrefabInstance:
       propertyPath: tugboat
       value: 
       objectReference: {fileID: 1648241100}
+    - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
+        type: 3}
+      propertyPath: configFile
+      value: 
+      objectReference: {fileID: 4900000, guid: d235e25b96231a34fa1f089c91763cc0, type: 3}
     - target: {fileID: 2197454570324986040, guid: 3e48d776751d4e04faf4d530264a03d0,
         type: 3}
       propertyPath: userSession
