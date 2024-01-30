@@ -151,15 +151,14 @@ namespace Scenes
             }
         }
 
-        public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
+        public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams, bool bundled)
         {
             string sceneName = ParseSceneName(scenePath);
 
             // ALL_BUT_PLAYER essentially means loading a network scene because everything but player character is packed away.. not smooth.
             if (sceneLoadParams.scenePackMode == ScenePackMode.ALL_BUT_PLAYER)
             {
-                PlayerEvents.Instance.CallEventSceneLoadStarted(); // Load Ended is called from CharacterManager once character has been inited on the new scene.
-                NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
+                NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName, bundled);
             } else
             {
                 this.sceneLoadParams = sceneLoadParams;

@@ -3168,6 +3168,7 @@ MonoBehaviour:
   <DetectionMessage>k__BackingField: Throw some dice.
   scenePackMode: 0
   sceneDataString: ShowEnvironment
+  bundled: 0
 --- !u!114 &1430937520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3564,6 +3565,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LoadNetworkScene (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7815887162451583778, guid: bd16b5075ea7fa1428b8349c6a4da989,
+        type: 3}
+      propertyPath: bundled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7815887162451583778, guid: bd16b5075ea7fa1428b8349c6a4da989,
         type: 3}
@@ -4996,6 +5002,7 @@ MonoBehaviour:
   <DetectionMessage>k__BackingField: Load Test Scene
   scenePackMode: 0
   sceneDataString: 
+  bundled: 0
 --- !u!65 &1907471363
 BoxCollider:
   m_ObjectHideFlags: 0
