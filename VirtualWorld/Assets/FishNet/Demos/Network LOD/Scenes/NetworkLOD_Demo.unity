@@ -137,7 +137,7 @@ MonoBehaviour:
   _timingType: 0
   _allowTickDropping: 0
   _maximumFrameTicks: 2
-  _tickRate: 30
+  _tickRate: 20
   _pingInterval: 15
   _physicsMode: 0
 --- !u!1 &442045874
@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d331f979d46e8e4a9fc90070c596d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableNetworkLod: 0
+  _enableNetworkLod: 1
   _levelOfDetailDistances:
   - 5
   - 10
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _logging: {fileID: 0}
-  _spawnablePrefabs: {fileID: 11400000, guid: 3a54436bdb916194f99da0d17231e617, type: 2}
+  _spawnablePrefabs: {fileID: 11400000, guid: 0078a285cda09f349b2668a721a53212, type: 2}
   _refreshDefaultPrefabs: 1
   _runInBackground: 1
   _dontDestroyOnLoad: 1

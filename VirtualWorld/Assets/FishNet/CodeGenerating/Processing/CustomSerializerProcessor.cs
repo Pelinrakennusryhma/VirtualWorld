@@ -253,7 +253,7 @@ namespace FishNet.CodeGenerating.Processing
                     TryInsertAutoPack(ref instructionIndex);
                     //Replace call to generic with already made serializer.
                     Instruction newInstruction = processor.Create(OpCodes.Call, createdMethodRef);
-                    methodDef.Body.Instructions[instructionIndex] = newInstruction;
+                    methodDef.Body.Instructions[instructionIndex] = newInstruction;                    
                     return;
                 }
                 else
@@ -312,16 +312,16 @@ namespace FishNet.CodeGenerating.Processing
 
             bool write = (methodDef.ReturnType == methodDef.Module.TypeSystem.Void);
 
-            //Return None for FishNet types.
-#if FishNet
+            //Return None for Mirror types.
+#if MIRROR
             if (write)
             {
-                if (methodDef.Parameters.Count > 0 && methodDef.Parameters[0].ParameterType.FullName == "FishNet.NetworkWriter")
+                if (methodDef.Parameters.Count > 0 && methodDef.Parameters[0].ParameterType.FullName == "Mirror.NetworkWriter")
                     return ExtensionType.None;                    
             }
             else
             {
-                if (methodDef.Parameters.Count > 0 && methodDef.Parameters[0].ParameterType.FullName == "FishNet.NetworkReader")
+                if (methodDef.Parameters.Count > 0 && methodDef.Parameters[0].ParameterType.FullName == "Mirror.NetworkReader")
                     return ExtensionType.None;
             }
 #endif

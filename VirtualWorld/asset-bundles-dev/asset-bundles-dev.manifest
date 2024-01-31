@@ -1,0 +1,11 @@
+ManifestFileVersion: 0
+CRC: 1351987923
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: hub_scene
+      Dependencies:
+        Dependency_0: hub_assets
+    Info_1:
+      Name: hub_assets
+      Dependencies: {}

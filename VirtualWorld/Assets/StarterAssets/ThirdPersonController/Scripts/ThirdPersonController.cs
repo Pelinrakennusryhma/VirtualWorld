@@ -1,9 +1,13 @@
 ﻿using Audio;
 using Characters;
+using Cinemachine;
 using Dev;
 using FishNet;
+using FishNet.Example.ColliderRollbacks;
 using FishNet.Managing.Scened;
 using Networking;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 #if ENABLE_INPUT_SYSTEM
@@ -69,6 +73,11 @@ namespace StarterAssets
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
+        Vector3 originalCamPos;
+        Quaternion originalCamRot;
+        bool resetCamera = false;
+
+        [SerializeField] CinemachineVirtualCamera vcam;
 
         [Tooltip("How far in degrees can you move the camera up")]
         public float TopClamp = 70.0f;
@@ -133,6 +142,8 @@ namespace StarterAssets
         public void Awake()
         {
             _animator = GetComponent<Animator>();
+            //originalCamPos = CinemachineCameraTarget.transform.localPosition;
+            originalCamRot = CinemachineCameraTarget.transform.localRotation;
         }
 
         private void Start()
@@ -204,13 +215,23 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition && !resetCamera)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
                 _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+            }
+
+            if (resetCamera == true)
+            {
+                CinemachineCameraTarget.transform.localRotation = originalCamRot;
+                _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+                _cinemachineTargetPitch = 0f;
+                vcam.PreviousStateIsValid = false;
+
+                return;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -417,6 +438,17 @@ namespace StarterAssets
 
             transform.position = pos;
             transform.rotation = rot;
+
+            resetCamera = true;
+
+            StartCoroutine(EnableCamera());
+
+        }
+
+        IEnumerator EnableCamera()
+        {
+            yield return new WaitForSeconds(0.5f);
+            resetCamera = false;
         }
     }
 }

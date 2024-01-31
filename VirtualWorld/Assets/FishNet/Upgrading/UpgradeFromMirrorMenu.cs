@@ -4,43 +4,43 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace FishNet.Upgrading.FishNet.Editing
+namespace FishNet.Upgrading.Mirror.Editing
 {
 
     /* IMPORTANT IMPORTANT IMPORTANT IMPORTANT 
-    * If you receive errors about missing FishNet components,
-    * such as NetworkIdentity, then remove FishNet and any other
-    * FishNet defines.
+    * If you receive errors about missing Mirror components,
+    * such as NetworkIdentity, then remove MIRROR and any other
+    * MIRROR defines.
     * Project Settings -> Player -> Other -> Scripting Define Symbols.
     * 
     * If you are also using my assets add FGG_ASSETS to the defines, and
     * then remove it after running this script. */
     [APIExclude]
-    public class UpgradeFromFishNetMenu : MonoBehaviour
+    public class UpgradeFromMirrorMenu : MonoBehaviour
     {
 
         /// <summary>
         /// Replaces all components.
         /// </summary>
-        [MenuItem("Fish-Networking/Upgrading/From FishNet/Replace Components", false, 2)]
+        [MenuItem("Fish-Networking/Upgrading/From Mirror/Replace Components", false, 2)]
         private static void ReplaceComponents()
         {
-#if FishNet
-            FishNetUpgrade result = GameObject.FindObjectOfType<FishNetUpgrade>();
+#if MIRROR
+            MirrorUpgrade result = GameObject.FindObjectOfType<MirrorUpgrade>();
             if (result != null)
             {
-                Debug.LogError("FishNetUpgrade already exist in the scene. This suggests an operation is currently running.");
+                Debug.LogError("MirrorUpgrade already exist in the scene. This suggests an operation is currently running.");
                 return;
             }
 
             GameObject iteratorGo = new GameObject();
-            iteratorGo.AddComponent<FishNetUpgrade>();
+            iteratorGo.AddComponent<MirrorUpgrade>();
 #else
-            Debug.LogError("FishNet must be imported to perform this function.");
+            Debug.LogError("Mirror must be imported to perform this function.");
 #endif
         }
 
-        [MenuItem("Fish-Networking/Upgrading/From FishNet/Remove Defines", false, 2)]
+        [MenuItem("Fish-Networking/Upgrading/From Mirror/Remove Defines", false, 2)]
         private static void RemoveDefines()
         {
             string currentDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
@@ -51,11 +51,11 @@ namespace FishNet.Upgrading.FishNet.Editing
             string[] currentArr = currentDefines.Split(';');
 
             bool removed = false;
-            //Add any define which doesn't contain FishNet.
+            //Add any define which doesn't contain MIRROR.
             foreach (string item in currentArr)
             {
                 string itemLower = item.ToLower();
-                if (itemLower != "FishNet" && !itemLower.StartsWith("FishNet_"))
+                if (itemLower != "mirror" && !itemLower.StartsWith("mirror_"))
                     definesHs.Add(item);
                 else
                     removed = true;
@@ -63,7 +63,7 @@ namespace FishNet.Upgrading.FishNet.Editing
 
             if (removed)
             {
-                Debug.Log("Removed FishNet defines to player settings.");
+                Debug.Log("Removed Mirror defines to player settings.");
                 string changedDefines = string.Join(";", definesHs);
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, changedDefines);
             }

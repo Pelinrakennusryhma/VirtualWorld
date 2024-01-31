@@ -1,13 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:VirtualWorld/Assets/FishNet/Demos/Prediction V1/Materials/BlueMat.mat.meta
 guid: ea31fef5ca1bc7344a72c71a5f9a0cd2
-|||||||| 42eb39b:VirtualWorld/Assets/TableTopInvaders/SkySeries Freebie/ExampleScenes/SceneObjects/4_10.mat.meta
-guid: db3bceb128d32144ca6fd4550ac256bc
-timeCreated: 1509071516
-licenseType: Store
-========
-guid: fdc51964897b47346a6c007a4ff8e4e4
->>>>>>>> main:VirtualWorld/Assets/Materials/GreenArrow.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

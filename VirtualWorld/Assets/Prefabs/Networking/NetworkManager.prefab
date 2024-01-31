@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3669823828670497429}
   - component: {fileID: 5521520430485187083}
   - component: {fileID: 6906324870541112061}
+  - component: {fileID: 3559631631346633121}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -41,7 +42,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3420831886163924895
 MonoBehaviour:
@@ -74,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211a9f6ec51ddc14f908f5acc0cd0423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 5114944315837095853, guid: 34f10dafe4211af49bd0ece68fc2000b,
+  _playerPrefab: {fileID: 6723520626843087359, guid: 34f10dafe4211af49bd0ece68fc2000b,
     type: 3}
   _addToDefaultScene: 1
   Spawns: []
@@ -212,14 +213,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useWss: 1
   _sslConfiguration:
-    Enabled: 0
+    Enabled: 1
     CertificatePath: ./cert.pfx
     CertificatePassword: 
     SslProtocol: 12288
   _mtu: 1023
   _port: 7001
   _maximumClients: 2000
-  _clientAddress: gameserver.hyvanmielenpelit.fi
+  _clientAddress: localhost
 --- !u!114 &5521520430485187083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,3 +250,26 @@ MonoBehaviour:
   _updateHostVisibility: 1
   _defaultConditions:
   - {fileID: 11400000, guid: 2033f54fd2794464bae08fa5a55c8996, type: 2}
+--- !u!114 &3559631631346633121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4028241648465265804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe9ebe226af76a4a943ecc44f7ff909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceServers:
+  - url: stun:stun2.l.google.com:19302
+    username: 
+    credential: 
+  _mtu: 1023
+  _origin: '*'
+  _port: 7001
+  _maximumClients: 2000
+  _HTTPS: 0
+  _clientAddress: 127.0.0.1
+  _noClientPort: 0

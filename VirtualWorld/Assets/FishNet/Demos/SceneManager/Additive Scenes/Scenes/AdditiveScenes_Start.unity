@@ -236,10 +236,10 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 2134535186}
   _networkObjectCache: {fileID: 2134535186}
   _scenes:
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_0.unity
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_1.unity
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_2.unity
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_3.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_0.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_1.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_2.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_3.unity
 --- !u!4 &2134535188
 Transform:
   m_ObjectHideFlags: 0
@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _logging: {fileID: 0}
-  _spawnablePrefabs: {fileID: 11400000, guid: 3a54436bdb916194f99da0d17231e617, type: 2}
+  _spawnablePrefabs: {fileID: 11400000, guid: 223fa01133c52c7469e6520b901bcebd, type: 2}
   _refreshDefaultPrefabs: 0
   _runInBackground: 1
   _dontDestroyOnLoad: 1
