@@ -9,13 +9,19 @@ public class ShootingRangeTimer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMesh;
 
     private float elapsedTime;
-    public float ElapsedTime { get => elapsedTime; 
-                               private set => elapsedTime = value; }
+    public float ElapsedTime 
+    { 
+        get => elapsedTime; 
+        private set => elapsedTime = value; 
+    }
 
     private bool timerIsRunning;
 
-    public bool TimerUsRunning { get => timerIsRunning; 
-                                  private set => timerIsRunning = value; }
+    public bool TimerUsRunning 
+    { 
+        get => timerIsRunning; 
+        private set => timerIsRunning = value; 
+    }
 
     private bool isPaused;
     public bool IsPaused
