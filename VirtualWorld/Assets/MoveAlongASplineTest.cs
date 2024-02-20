@@ -25,12 +25,24 @@ public class MoveAlongASplineTest : MonoBehaviour
 
     private bool hasReachedStopArea;
 
+    public GameObject RaftGraphics;
+
     private float previousGoodYHit;
+
+    private Vector3 lastRaftRigidbodyPosition;
+    private Vector3 predictedRaftRigidbodyPosition;
+    private float timeOfLastFixedUpdate;
+    private float graphicsYOffset;
+    private Vector3 lastRaftGraphicsPosition;
+
+    [SerializeField] private RaftControls RaftControls;
+
     void Start()
     {  
         Splines = FindObjectsOfType<SplineContainer>();
         WaterInfos = FindObjectsOfType<WaterInfo>();
         hasReachedStopArea = false;
+        graphicsYOffset = RaftGraphics.transform.position.y - Rigidbody.transform.position.y;
     }
 
 
@@ -38,8 +50,12 @@ public class MoveAlongASplineTest : MonoBehaviour
     {
 
 
-        Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"),
-                                       Input.GetAxisRaw("Vertical"));
+        //Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"),
+        //                               Input.GetAxisRaw("Vertical"));
+
+        Vector2 movement = new Vector2(RaftControls.Horizontal,
+                                       RaftControls.Vertical);
+
         Inputs = movement;
 
         // Stolen from ShowNearestPoint.cs that is an example script
@@ -154,31 +170,31 @@ public class MoveAlongASplineTest : MonoBehaviour
             raftFreeVelocity = Vector3.zero;
         }
 
-        Rigidbody.velocity = waterCurrentVelocity 
-                             + raftFreeVelocity
-                             + new Vector3(0, formerYVelo, 0);
+        //Rigidbody.velocity = waterCurrentVelocity
+        //                     + raftFreeVelocity
+        //                     + new Vector3(0, formerYVelo, 0);
 
-        //Rigidbody.transform.forward = Vector3.RotateTowards(Rigidbody.transform.forward.normalized,
-        //                                                    Rigidbody.velocity.normalized, 8.0f * Time.deltaTime,
-        //                                                    1.0f);
-        Vector3 newXZVelo = new Vector3(Rigidbody.velocity.x,
-                                        0,
-                                        Rigidbody.velocity.z);
+        ////Rigidbody.transform.forward = Vector3.RotateTowards(Rigidbody.transform.forward.normalized,
+        ////                                                    Rigidbody.velocity.normalized, 8.0f * Time.deltaTime,
+        ////                                                    1.0f);
+        //Vector3 newXZVelo = new Vector3(Rigidbody.velocity.x,
+        //                                0,
+        //                                Rigidbody.velocity.z);
 
-        Rigidbody.transform.forward = Vector3.Lerp(Rigidbody.transform.forward.normalized,
-                                                   newXZVelo.normalized,
-                                                   1.9f * Time.deltaTime);
+        //Rigidbody.transform.forward = Vector3.Lerp(Rigidbody.transform.forward.normalized,
+        //                                           newXZVelo.normalized,
+        //                                           1.9f * Time.deltaTime);
 
-        //Rigidbody.transform.forward = Vector3.RotateTowards(Rigidbody.transform.forward.normalized,
-        //                                                    raftFreeVelocity, 0.5f * Time.deltaTime,
-        //                                                    1.0f);
+        ////Rigidbody.transform.forward = Vector3.RotateTowards(Rigidbody.transform.forward.normalized,
+        ////                                                    raftFreeVelocity, 0.5f * Time.deltaTime,
+        ////                                                    1.0f);
 
-        Rigidbody.angularVelocity = Vector3.zero;
+        //Rigidbody.angularVelocity = Vector3.zero;
 
-        //Rigidbody.transform.forward = dir.normalized;
-        //Rigidbody.transform.up = Vector3.up;
+        ////Rigidbody.transform.forward = dir.normalized;
+        ////Rigidbody.transform.up = Vector3.up;
 
-        NearestPointVisualizer.transform.position = nearest.xyz;
+        //NearestPointVisualizer.transform.position = nearest.xyz;
 
         //Debug.Log("Movement " + movement + " nearest is " + nearest.xyz + " water current velocity mag is " + waterCurrentVelocity.magnitude);
 
@@ -210,6 +226,8 @@ public class MoveAlongASplineTest : MonoBehaviour
             yHeightGround = 0;
         }
 
+        bool isGrounded = false;
+
         if (transform.position.y - yHeightGround
             <= 0.1f) 
         {
@@ -220,6 +238,7 @@ public class MoveAlongASplineTest : MonoBehaviour
             Rigidbody.useGravity = false;
             Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
             Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            isGrounded = true;
         }
 
         else
@@ -236,12 +255,13 @@ public class MoveAlongASplineTest : MonoBehaviour
                                                            Rigidbody.transform.position.z);
                 Rigidbody.useGravity = false;
                 Rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-
+                isGrounded = true;
                 //Debug.Log("Snapping to ground " + Time.time);
             }
 
             else
             {
+                isGrounded = false;
                 Rigidbody.useGravity = true;
                 Rigidbody.constraints = RigidbodyConstraints.None;
                 Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -251,10 +271,73 @@ public class MoveAlongASplineTest : MonoBehaviour
             //Debug.Log("We should be in free fall. " + Time.time + " velo mag is " + Rigidbody.velocity.magnitude);
         }
 
+        if (!isGrounded)
+        {
+            raftFreeVelocity = Vector3.zero;
+        }
+
+        else
+        {
+            formerYVelo = 0;
+        }
+
+        Rigidbody.velocity = waterCurrentVelocity
+                     + raftFreeVelocity
+                     + new Vector3(0, formerYVelo, 0);
+
+        //Rigidbody.transform.forward = Vector3.RotateTowards(Rigidbody.transform.forward.normalized,
+        //                                                    Rigidbody.velocity.normalized, 8.0f * Time.deltaTime,
+        //                                                    1.0f);
+        Vector3 newXZVelo = new Vector3(Rigidbody.velocity.x,
+                                        0,
+                                        Rigidbody.velocity.z);
+
+        Rigidbody.transform.forward = Vector3.Lerp(Rigidbody.transform.forward.normalized,
+                                                   newXZVelo.normalized,
+                                                   1.9f * Time.deltaTime);
+
+        //Rigidbody.transform.forward = Vector3.RotateTowards(Rigidbody.transform.forward.normalized,
+        //                                                    raftFreeVelocity, 0.5f * Time.deltaTime,
+        //                                                    1.0f);
+
+        Rigidbody.angularVelocity = Vector3.zero;
+
+        //Rigidbody.transform.forward = dir.normalized;
+        //Rigidbody.transform.up = Vector3.up;
+
+        NearestPointVisualizer.transform.position = nearest.xyz;
+
         if (foundGround) 
         {
             previousGoodYHit = yHeightGround - 0.5f;
         }
+
+        timeOfLastFixedUpdate = Time.time;
+        lastRaftRigidbodyPosition = Rigidbody.transform.position;
+        predictedRaftRigidbodyPosition = Rigidbody.transform.position + Rigidbody.velocity * Time.fixedDeltaTime;
+    }
+
+    public void Update()
+    {
+        //return;
+
+        //float ratio = (Time.time - timeOfLastFixedUpdate) / Time.fixedDeltaTime;
+        //RaftGraphics.transform.position = Vector3.Lerp(lastRaftRigidbodyPosition,
+        //                                               predictedRaftRigidbodyPosition,
+        //                                               ratio);
+
+        //RaftGraphics.transform.position = new Vector3(RaftGraphics.transform.position.x,
+        //                                              RaftGraphics.transform.position.y + graphicsYOffset,
+        //                                              RaftGraphics.transform.position.z);
+
+        //Vector3 rigidPos = Rigidbody.transform.position;
+        //rigidPos = new Vector3(rigidPos.x, rigidPos.y + graphicsYOffset, rigidPos.z); 
+
+        //RaftGraphics.transform.position = Vector3.Lerp(lastRaftGraphicsPosition,
+        //                                               rigidPos,
+        //                                               0.8f);
+
+        //Debug.Log("Ratio is " + ratio + " at time " + Time.time);
     }
 
     public void OnStopAreaReached()

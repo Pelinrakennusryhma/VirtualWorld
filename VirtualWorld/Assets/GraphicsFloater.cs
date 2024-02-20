@@ -27,19 +27,20 @@ public class GraphicsFloater : MonoBehaviour
     void Update()
     {
         FloatSpeed = 0.6f;
-        FloatSeverity = 0.05f;
+        FloatSeverity = 0.01f;
         unevener = Mathf.Sin(Time.time * 0.9f);
         //unevener = Mathf.Abs(unevener);
-        unevener *= 1.1f;
-        float floattySpeedo = FloatSpeed * 0.01f * Rigidbody.velocity.magnitude;
+        unevener *= 0.14f;
+        //float floattySpeedo = FloatSpeed * 0.01f * Rigidbody.velocity.magnitude;
 
+        float floattySpeedo = FloatSpeed * unevener;
         //yHeight = Mathf.Sin(Time.time * floattySpeedo) * FloatSeverity;
 
-        yHeight = Mathf.Sin(Time.time * floattySpeedo) * FloatSeverity * unevener;
+        yHeight = Mathf.Sin(Time.time * floattySpeedo) * FloatSeverity;
 
-        //transform.position = new Vector3(Parent.transform.position.x,
-        //                                 Parent.transform.position.y + yHeight + originalYOffset,
-        //                                 Parent.transform.position.z);
+        transform.position = new Vector3(Parent.transform.position.x,
+                                         Parent.transform.position.y + yHeight + originalYOffset,
+                                         Parent.transform.position.z);
 
         float unevener2 = Mathf.Sin(Time.time * 10.89f) * Mathf.Cos(Time.time * 11.47f);
 

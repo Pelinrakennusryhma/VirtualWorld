@@ -36,12 +36,18 @@ public class BoatCamera : MonoBehaviour
             if (Time.time >= LevelStartTime + 2.0f)
             {
                 transform.position = Vector3.Lerp(transform.position, CameraOffsetPosObject.transform.position, 2.0f * Time.deltaTime);
+                //transform.position = CameraOffsetPosObject.transform.position;
                 transform.rotation = Quaternion.Slerp(transform.rotation,
                                                       (Quaternion.LookRotation((PlayerGraphicsObject.transform.position
                                                                                 + PlayerGraphicsObject.transform.forward * 2.0f)
                                                                                - transform.position,
                                                                                Vector3.up)),
-                                                      3.0f * Time.deltaTime);
+                                                      4.6f * Time.deltaTime);
+
+                //transform.rotation = Quaternion.LookRotation((PlayerGraphicsObject.transform.position
+                //                                                + PlayerGraphicsObject.transform.forward * 2.0f)
+                //                                               - transform.position,
+                //                                               Vector3.up);
             }
         }
 

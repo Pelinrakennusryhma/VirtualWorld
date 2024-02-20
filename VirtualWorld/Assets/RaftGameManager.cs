@@ -34,10 +34,10 @@ public class RaftGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GoToLobby();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    GoToLobby();
+        //}
 
         if (waitingToGoToLobby)
         {
@@ -68,7 +68,7 @@ public class RaftGameManager : MonoBehaviour
         waitingToGoToLobby = true;
     }
 
-    private void GoToLobby()
+    public void GoToLobby()
     {
         if (!alreadyLeavingTheScene) 
         {

@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8cc24961260c248898666a63432506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenePath: Assets/WaterPark/Scenes/WaterPark8.unity
+  scenePath: Assets/WaterPark/Scenes/WaterParkEasy.unity
 --- !u!1 &769996727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,7 +1588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8cc24961260c248898666a63432506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenePath: Assets/WaterPark/Scenes/WaterPark8.unity
+  scenePath: Assets/WaterPark/Scenes/WaterParkIntermediate.unity
 --- !u!1 &1636287933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1969,6 +1969,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 988574258801629103, guid: 42ed92e550238e541ba32315ade9d767,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3258892220832888288, guid: 42ed92e550238e541ba32315ade9d767,
         type: 3}
       propertyPath: m_RootOrder
