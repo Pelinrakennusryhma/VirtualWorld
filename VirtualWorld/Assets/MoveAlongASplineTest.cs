@@ -37,12 +37,16 @@ public class MoveAlongASplineTest : MonoBehaviour
 
     [SerializeField] private RaftControls RaftControls;
 
+    Vector3 lastPos;
+    float totalDistanceTravelled;
+
     void Start()
     {  
         Splines = FindObjectsOfType<SplineContainer>();
         WaterInfos = FindObjectsOfType<WaterInfo>();
         hasReachedStopArea = false;
         graphicsYOffset = RaftGraphics.transform.position.y - Rigidbody.transform.position.y;
+        lastPos = transform.position;
     }
 
 
@@ -315,6 +319,14 @@ public class MoveAlongASplineTest : MonoBehaviour
         timeOfLastFixedUpdate = Time.time;
         lastRaftRigidbodyPosition = Rigidbody.transform.position;
         predictedRaftRigidbodyPosition = Rigidbody.transform.position + Rigidbody.velocity * Time.fixedDeltaTime;
+
+        float magFromLastPos = (transform.position - lastPos).magnitude;
+
+        totalDistanceTravelled += magFromLastPos;
+
+        //Debug.Log("Total distance travelled " + (int) totalDistanceTravelled);
+
+        lastPos = transform.position;
     }
 
     public void Update()

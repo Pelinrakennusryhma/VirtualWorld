@@ -2095,6 +2095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StandingCapsule: {fileID: 3258892219970795244}
+  MainCamera: {fileID: 3258892220254394949}
   OverlayCamera: {fileID: 0}
   OverlayLayerMask:
     serializedVersion: 2
