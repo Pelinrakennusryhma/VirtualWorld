@@ -180,7 +180,15 @@ namespace Scenes
 
         IEnumerator LoadAsyncScene(string sceneName, SceneLoadParams sceneLoadParams)
         {
-            CharacterManager.Instance.SetGameState(GAME_STATE.MINIGAME);
+            if (CharacterManager.Instance != null) 
+            {
+                CharacterManager.Instance.SetGameState(GAME_STATE.MINIGAME);
+            }
+
+            else
+            {
+                CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.MINIGAME);
+            }
             PackScene(sceneLoadParams.scenePackMode);
 
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -197,7 +205,16 @@ namespace Scenes
 
         IEnumerator UnloadAsyncScene()
         {
-            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+            if (CharacterManager.Instance != null) 
+            {
+                CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+            }
+
+            else
+            {
+                CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
+            }
+
             AsyncOperation op = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
 
             while (!op.isDone)
@@ -221,7 +238,15 @@ namespace Scenes
 
             if (scenePackMode == ScenePackMode.PLAYER_ONLY)
             {
-                PackObject(CharacterManager.Instance.OwnedCharacter);
+                if (CharacterManager.Instance != null) 
+                {
+                    PackObject(CharacterManager.Instance.OwnedCharacter);
+                }
+
+                else
+                {
+                    PackObject(CharacterManagerNonNetworked.Instance.OwnedCharacter);
+                }
             }
             else
             {

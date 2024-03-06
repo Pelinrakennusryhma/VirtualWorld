@@ -275,7 +275,16 @@ public class ViewWithinAViewController : MonoBehaviour
     public void OnCameraReachedTransitionPos()
     {
         InventoryViewChanger.CameraReachedTargetPosition();
-        CharacterManager.Instance.SetGameState(GAME_STATE.TABLET);
+
+        if (CharacterManager.Instance != null) 
+        {
+            CharacterManager.Instance.SetGameState(GAME_STATE.TABLET);
+        }
+
+        else
+        {
+            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.TABLET);
+        }
     }
 
     // Does view specific operations and tells

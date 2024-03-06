@@ -67,6 +67,8 @@ namespace Scenes
             string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             MoveToNetworkSceneServerRpc(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
+
+            Debug.Log("Moving to networked scene");
         }
         ///<summary>
         ///NetworkObjects that should be moved to another network scene.
