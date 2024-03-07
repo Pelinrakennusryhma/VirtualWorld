@@ -4631,6 +4631,11 @@ PrefabInstance:
       propertyPath: attenuationObject
       value: 
       objectReference: {fileID: 2403281327749895622}
+    - target: {fileID: 8556953172577737799, guid: f6d148d888ffbf54b9afe9936dfaec1f,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: far clip plane

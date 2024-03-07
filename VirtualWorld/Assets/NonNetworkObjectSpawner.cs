@@ -6,7 +6,7 @@ public class NonNetworkObjectSpawner : MonoBehaviour
     public static NonNetworkObjectSpawner Instance;
     [SerializeField] GameObject[] objectsToSpawn;
 
-    [SerializeField] GameObject playerPrefab;
+    [SerializeField] public GameObject playerPrefab;
 
     private void Awake()
     {

@@ -159,7 +159,17 @@ namespace Scenes
             if (sceneLoadParams.scenePackMode == ScenePackMode.ALL_BUT_PLAYER)
             {
                 PlayerEvents.Instance.CallEventSceneLoadStarted(); // Load Ended is called from CharacterManager once character has been inited on the new scene.
-                NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
+
+                if (NonNetworkRecognizer.Instance == null) 
+                {
+                    NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
+                }
+
+                else
+                {
+                    Debug.Log("Do the non-networked scene loading thingie");
+                    MoveToNonNetworkedScene(sceneName);
+                }
             } else
             {
                 this.sceneLoadParams = sceneLoadParams;
@@ -369,6 +379,77 @@ namespace Scenes
 
             SceneManager.SetActiveScene(newSubScene);
             SceneManager.UnloadSceneAsync(oldSubScene);
+        }
+
+        private void MoveToNonNetworkedScene(string newSceneName)
+        {
+            Debug.Log("Moving to non-networked scene " + newSceneName);
+
+            string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            GameObject characterToMove = CharacterManagerNonNetworked.Instance.OwnedCharacter;
+
+            //UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(newSceneName);
+            //Scene newScene = SceneManager.GetSceneByName(newSceneName);
+            //SceneManager.MoveGameObjectToScene(characterToMove, newScene);
+            //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(currentSceneName);
+
+            StartCoroutine(DoTheSwitch(newSceneName, 
+                                       currentSceneName, 
+                                       characterToMove));
+        }
+
+        private IEnumerator DoTheSwitch(string newScene, 
+                                        string oldScene, 
+                                        GameObject objectToMove)
+        {
+            Debug.Log("Started coroutine of scene switching");
+
+
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(newScene, LoadSceneMode.Additive);
+
+            //SceneManager.LoadScene(newScene, LoadSceneMode.Single);
+
+            //yield return null;
+
+            while (!loadOperation.isDone)
+            {
+                yield return null;
+            }
+
+            Scene newSceneScene = SceneManager.GetSceneByName(newScene);
+            SceneManager.MoveGameObjectToScene(objectToMove, newSceneScene);
+
+            Networking.NetworkSceneConnector connector = null;
+
+            foreach (GameObject rootGO in newSceneScene.GetRootGameObjects())
+            {
+                connector = rootGO.GetComponent<Networking.NetworkSceneConnector>();
+
+                if (connector != null)
+                {
+                    Debug.Log("Found a connector " + connector.gameObject.name);
+                    break;
+                }
+            }
+
+
+            Transform spawnPoint = connector.GetSpawnTransform(oldScene);
+
+
+            objectToMove.transform.position = spawnPoint.position;
+            objectToMove.transform.rotation = spawnPoint.rotation;
+
+
+            SceneManager.SetActiveScene(newSceneScene);
+            SceneManager.UnloadSceneAsync(oldScene);
+
+            PlayerEvents.Instance.CallEventSceneLoadEnded();
+
+            //GameObject newCharacter = Instantiate(NonNetworkObjectSpawner.Instance.playerPrefab);
+
+            //newCharacter.transform.position = spawnPoint.position;
+            //newCharacter.transform.rotation = spawnPoint.rotation;
         }
     }
 }

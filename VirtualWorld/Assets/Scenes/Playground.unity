@@ -8388,6 +8388,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8928306933776394528, guid: 1266e5a67f67c0d49af2b4674cd02b34,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8928306933776394528, guid: 1266e5a67f67c0d49af2b4674cd02b34,
+        type: 3}
       propertyPath: _scenePathHash
       value: 128377683
       objectReference: {fileID: 0}
