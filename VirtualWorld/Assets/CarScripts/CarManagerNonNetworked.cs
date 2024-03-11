@@ -1,41 +1,29 @@
-using Authentication;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Characters;
 using UnityEngine.Events;
 using WorldObjects;
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
 using Animations;
-using Cinemachine;
-using StarterAssets;
 using UnityEngine.InputSystem;
 
 namespace Vehicles
 {
-    public class CarManager : NetworkBehaviour, I_Interactable
+    public class CarManagerNonNetworked : MonoBehaviour, I_Interactable
     {
-        public GameObject NonNetworkedCarPrefab;
-
         private const string EnterCarPrompt = "Enter Car";
         private const string CarAlreadyHasADriverPrompt = "Car Has a Driver";
-
 
         [field: SerializeReference]
         public string DetectionMessage { get; set; }
         public bool IsActive => true;
         public Vector3 DetectionMessageOffSet { get => Vector3.zero; }
 
-        #region SyncVars
-
-        [SyncVar]
+ 
         private bool HasADriver;
 
-        [SyncVar]
+
         private int DriverPlayerClientId;
 
-        #endregion
+
 
         [SerializeField] private Camera DedicatedCarCamera;
 
@@ -55,30 +43,23 @@ namespace Vehicles
         private Vector3 CurrentRotationalVelocity;
         private Vector3 LastForward;
 
-        private SimpleCarController SimpleCarController;
+        private SimpleCarControllerNonNetworked SimpleCarController;
         
         private PlayerInput PlayerInput;
         private CarInput CarInput;
 
+        private Vector3 spawnPos;
+        private Quaternion spawnRot;
 
         private void Start()
         {
-            if (!HasADriver) 
-            {
-                DetectionMessage = EnterCarPrompt;
-            }
+            DetectionMessage = EnterCarPrompt;
 
-            else
-            {
-                DetectionMessage = CarAlreadyHasADriverPrompt;
-            }
 
-            if (IsServer) 
-            {
                 DriverPlayerClientId = -1;
-            }
+            
 
-            SimpleCarController = GetComponent<SimpleCarController>();
+            SimpleCarController = GetComponent<SimpleCarControllerNonNetworked>();
             PlayerInput = GetComponentInChildren<PlayerInput>(true);
             CarInput = GetComponentInChildren<CarInput>(true);
 
@@ -98,29 +79,23 @@ namespace Vehicles
 
             DedicatedCarCamera.transform.rotation = lookRot;
 
-            if (NonNetworkRecognizer.Instance != null)
-            {                
+            Debug.Log("Pos at spawn is " + transform.position);
 
-                GameObject nnCar = Instantiate(NonNetworkedCarPrefab);
+            transform.position = spawnPos;
+            transform.rotation = spawnRot;
 
+            SimpleCarController.OnSpawn();
+        }
 
-
-
-                CarManagerNonNetworked cmnn = nnCar.GetComponent<CarManagerNonNetworked>();
-                cmnn.SetSpawn(transform);
-
-                Debug.Log("Instantiating. Transform position is " + transform.position + " instantiated car transform position is " + nnCar.transform.position);
-
-                Destroy(gameObject);
-
-
-            }
+        public void SetSpawn(Transform spawn)
+        {
+            spawnPos = spawn.position;
+            spawnRot = spawn.rotation;
         }
 
         private void Update()
         {
-            if (HasADriver
-                && CharacterManager.Instance.ClientId == DriverPlayerClientId)
+            if (HasADriver)
             {
                 if (CarInput.interact)
                 {
@@ -136,8 +111,7 @@ namespace Vehicles
 
         private void LateUpdate()
         {
-            if (HasADriver
-                 && CharacterManager.Instance.ClientId == DriverPlayerClientId)
+            if (HasADriver)
             {         
                 if (SimpleCarController.IsGoingInReverse)
                 {
@@ -285,12 +259,11 @@ namespace Vehicles
 
         private void EnterCar()
         {
-            OnPlayerEnteredCarServerRpc(CharacterManager.Instance.ClientId,
-                                        LocalConnection);
+            OnPlayerEnteredCar(CharacterManagerNonNetworked.Instance.ClientId);
 
-            CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Disable();
-            CharacterManager.Instance.OwnedCharacter.transform.position = new Vector3(-3333, -3333, -3333);
-            CharacterManager.Instance.SetInputsEnabled(false);
+            CharacterManagerNonNetworked.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Disable();
+            CharacterManagerNonNetworked.Instance.OwnedCharacter.transform.position = new Vector3(-3333, -3333, -3333);
+            CharacterManagerNonNetworked.Instance.SetInputsEnabled(false);
 
             PlayerInput.enabled = true;
             CarInput.enabled = true;
@@ -301,13 +274,13 @@ namespace Vehicles
 
         private void ExitCar()
         {                        
-            OnPlayerExitedCarServerRpc();
+            OnPlayerExitedCar();
 
             PlayerInput.enabled = false;
             CarInput.enabled = false;
 
-            CharacterManager.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Enable();
-            CharacterManager.Instance.SetInputsEnabled(true);
+            CharacterManagerNonNetworked.Instance.OwnedCharacter.GetComponent<AnimatedObjectDisabler>().Enable();
+            CharacterManagerNonNetworked.Instance.SetInputsEnabled(true);
 
             Vector3 castOrigin = new Vector3(ExitPos.transform.position.x, 
                                              ExitPos.transform.position.y + 200, 
@@ -316,11 +289,11 @@ namespace Vehicles
             Physics.Raycast(castOrigin, Vector3.down, out RaycastHit hitInfo, 300);
             float yHit = hitInfo.point.y;
 
-            CharacterController controller = CharacterManager.Instance.OwnedCharacter.GetComponent<CharacterController>();
+            CharacterController controller = CharacterManagerNonNetworked.Instance.OwnedCharacter.GetComponent<CharacterController>();
             float yHeight = yHit + controller.center.y - controller.height / 2 + 0.1f;
 
 
-            CharacterManager.Instance.OwnedCharacter.transform.position = new Vector3(ExitPos.transform.position.x,
+            CharacterManagerNonNetworked.Instance.OwnedCharacter.transform.position = new Vector3(ExitPos.transform.position.x,
                                                                                       yHeight,
                                                                                       ExitPos.transform.position.z);
 
@@ -328,13 +301,9 @@ namespace Vehicles
             DedicatedCarCamera.transform.parent = transform;
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        public void OnPlayerEnteredCarServerRpc(int clientId,
-                                                FishNet.Connection.NetworkConnection connection)
+ 
+        public void OnPlayerEnteredCar(int clientId)
         {
-            Debug.Log("Player entered car");
-            NetworkObject no = GetComponent<NetworkObject>();
-            no.GiveOwnership(connection);
             HasADriver = true;
             DriverPlayerClientId = clientId;
 
@@ -343,11 +312,11 @@ namespace Vehicles
                 SimpleCarController.OnPlayerEnteredCar(clientId);
             }
 
-            ChangeDetectionMessageObserverRpc(CarAlreadyHasADriverPrompt);
+            ChangeDetectionMessage(CarAlreadyHasADriverPrompt);
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        public void OnPlayerExitedCarServerRpc()
+
+        public void OnPlayerExitedCar()
         {
             HasADriver = false;
             
@@ -358,15 +327,13 @@ namespace Vehicles
 
             DriverPlayerClientId = -1;        
             
-            ChangeDetectionMessageObserverRpc(EnterCarPrompt);
+            ChangeDetectionMessage(EnterCarPrompt);
         }
 
-        // This does not work like it should
-        [ObserversRpc]
-        public void ChangeDetectionMessageObserverRpc(string detectionMessage)
+
+        public void ChangeDetectionMessage(string detectionMessage)
         {
             DetectionMessage = detectionMessage;
-            Debug.Log("Changed detection message");
         }
     }
 }

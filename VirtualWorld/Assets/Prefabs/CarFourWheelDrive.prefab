@@ -863,7 +863,7 @@ Transform:
   - {fileID: 6861853359230459484}
   - {fileID: 1252801866121447078}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1086291936003292275
 MonoBehaviour:
@@ -887,8 +887,8 @@ MonoBehaviour:
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
-    Position: {x: -38.05, y: -8.14, z: -31.18}
-    Rotation: {x: -0, y: -0, z: -0, w: 1}
+    Position: {x: 6.73, y: -8.14, z: -31.18}
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
   _isGlobal: 0
@@ -897,7 +897,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 14
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 128377683
+  _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 11936680817777376063
 --- !u!54 &4702313932396575612
@@ -987,9 +987,10 @@ MonoBehaviour:
   _componentIndexCache: 1
   _addedNetworkObject: {fileID: 1086291936003292275}
   _networkObjectCache: {fileID: 1086291936003292275}
+  NonNetworkedCarPrefab: {fileID: 8467707330618858008, guid: c035b8ee09bfec74da541b36da81f467,
+    type: 3}
   <DetectionMessage>k__BackingField: Enter car
   HasADriver: 0
-  DriverPlayerId: 
   DriverPlayerClientId: 0
   DedicatedCarCamera: {fileID: 6784373675242138662}
   ExitPos: {fileID: 8515903000827574234}
@@ -1039,7 +1040,6 @@ MonoBehaviour:
   hasADriver: 0
   timeSpentOnRoof: 0
   serverLastKnownVelocity: {x: 0, y: 0, z: 0}
-  playerIdUserSession: 
   axleInfos:
   - leftWheel: {fileID: 6677720212594452199}
     rightWheel: {fileID: 106190619121049834}
@@ -1097,6 +1097,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  LastKnownHorizontalInput: 0
+  LastKnownVerticalInput: 0
 --- !u!114 &9215042743944452199
 MonoBehaviour:
   m_ObjectHideFlags: 0
