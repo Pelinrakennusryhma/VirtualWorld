@@ -296,6 +296,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ShootingRange/Scenes/ExpertCourseShootingRange.unity
     guid: 09af0d9534f280748b5251598213e8fe
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/LobbyWaterPark.unity
+    guid: bc7344c78e6ecda4ba75c9f857ebf0fe
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterParkEasy.unity
+    guid: 408e1a9d03381d34198dccde0f3523fb
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterParkIntermediate.unity
+    guid: c79eb488e72c3f7449f1e10650af73d5
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterParkExpert.unity
+    guid: e50e9602433876d4ab6814f80523f060
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}

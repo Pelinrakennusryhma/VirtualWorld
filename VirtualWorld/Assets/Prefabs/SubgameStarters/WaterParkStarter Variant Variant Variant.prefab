@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &402149623224553163
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4538201955734192549, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 47af9a06085bfcf419851cfdbae88358, type: 2}
+    - target: {fileID: 5078848081293711528, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_Name
+      value: WaterParkStarter Variant Variant Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723426501670882656, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: scenePath
+      value: Assets/WaterPark/Scenes/LobbyWaterPark.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.96492493
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.26252607
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849504043893920453, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154641645551351229, guid: e002a0ba9642f454fb9c3218b7e35da9,
+        type: 3}
+      propertyPath: <DetectionMessage>k__BackingField
+      value: Go To Water Park
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e002a0ba9642f454fb9c3218b7e35da9, type: 3}

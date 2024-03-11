@@ -9,6 +9,8 @@ public class FirstPersonPlayerCharacterShooting : MonoBehaviour
 
     public CapsuleCollider StandingCapsule;
 
+    public Camera MainCamera;
+
     public Camera OverlayCamera;
 
     public LayerMask OverlayLayerMask;
@@ -26,17 +28,19 @@ public class FirstPersonPlayerCharacterShooting : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Start called");
+
         Instance = this;
 
         OverlayCamera = new GameObject().AddComponent<Camera>();
-        OverlayCamera.transform.parent = Camera.main.transform;        
+        OverlayCamera.transform.parent = MainCamera.transform;        
         Destroy(OverlayCamera.GetComponentInChildren<AudioListener>());
 
-        OverlayCamera.transform.position = Camera.main.transform.position;
-        OverlayCamera.transform.rotation = Camera.main.transform.rotation;
-        OverlayCamera.fieldOfView = Camera.main.fieldOfView;
+        OverlayCamera.transform.position = MainCamera.transform.position;
+        OverlayCamera.transform.rotation = MainCamera.transform.rotation;
+        OverlayCamera.fieldOfView = MainCamera.fieldOfView;
 
-        UniversalAdditionalCameraData data = Camera.main.GetUniversalAdditionalCameraData();
+        UniversalAdditionalCameraData data = MainCamera.GetUniversalAdditionalCameraData();
         data.renderType = CameraRenderType.Base;
         data.cameraStack.Add(OverlayCamera);
 
@@ -50,8 +54,8 @@ public class FirstPersonPlayerCharacterShooting : MonoBehaviour
 
     private void Update()
     {
-        OverlayCamera.transform.position = Camera.main.transform.position;
-        OverlayCamera.transform.rotation = Camera.main.transform.rotation;
-        OverlayCamera.fieldOfView = Camera.main.fieldOfView;
+        OverlayCamera.transform.position = MainCamera.transform.position;
+        OverlayCamera.transform.rotation = MainCamera.transform.rotation;
+        OverlayCamera.fieldOfView = MainCamera.fieldOfView;
     }
 }
