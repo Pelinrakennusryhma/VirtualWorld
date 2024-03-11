@@ -16,7 +16,7 @@ public class WormHoleGravityShip : MonoBehaviour
     public void WarpToOtherHole(WormHoleSingleHole warpFrom,
                                 Vector3 offset)
     {
-        //Debug.Log("WARP! " + warpFrom.gameObject.name);
+        Debug.Log("WARP! " + warpFrom.gameObject.name);
 
         Vector3 targetPos = Vector3.zero;
 

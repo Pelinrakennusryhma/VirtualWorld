@@ -39,7 +39,11 @@ public class GamePlayCameraGravityShip : MonoBehaviour
             }
         }
 
-
+        if (LevelStartReferenceCamera == null)
+        {
+            //Debug.LogError("Level start reference camera is all null");
+            return;
+        }
 
 
         //Debug.Log("Level start reference camera scene is " + LevelStartReferenceCamera.gameObject.scene.name);

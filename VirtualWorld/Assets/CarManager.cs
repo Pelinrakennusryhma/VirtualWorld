@@ -98,12 +98,14 @@ namespace Vehicles
 
             DedicatedCarCamera.transform.rotation = lookRot;
 
+            Debug.Log("Start called on car manager");
+
             if (NonNetworkRecognizer.Instance != null)
             {                
 
                 GameObject nnCar = Instantiate(NonNetworkedCarPrefab);
 
-
+                Scenes.SceneLoader.Instance.MoveToMainScene(nnCar);
 
 
                 CarManagerNonNetworked cmnn = nnCar.GetComponent<CarManagerNonNetworked>();
@@ -113,8 +115,10 @@ namespace Vehicles
 
                 Destroy(gameObject);
 
-
+                Debug.Log("Car scene is " + nnCar.gameObject.scene.name);
             }
+
+            //Debug.Break();
         }
 
         private void Update()

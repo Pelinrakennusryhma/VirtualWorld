@@ -8,11 +8,15 @@ public class TestPhysicsUpdater : MonoBehaviour
 
     public static TestPhysicsUpdater Instance;
 
+    private SimulationMode previousSimulationMode;
+
     private void Awake()
     {
         if (Instance == null)
         {
-            Instance = this;
+            Instance = this;        
+            previousSimulationMode = Physics.simulationMode;    
+            Physics.simulationMode = SimulationMode.FixedUpdate;
             //DontDestroyOnLoad(gameObject);
         }
 
@@ -21,7 +25,12 @@ public class TestPhysicsUpdater : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //Physics.simulationMode = SimulationMode.FixedUpdate;
+
+    }
+
+    private void OnDestroy()
+    {
+        Physics.simulationMode = previousSimulationMode;
     }
 
     private void FixedUpdate()

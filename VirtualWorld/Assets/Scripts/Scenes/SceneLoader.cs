@@ -451,6 +451,11 @@ namespace Scenes
             //newCharacter.transform.position = spawnPoint.position;
             //newCharacter.transform.rotation = spawnPoint.rotation;
         }
+
+        public void MoveToMainScene(GameObject objectToMove)
+        {
+            SceneManager.MoveGameObjectToScene(objectToMove, SceneManager.GetSceneByName(MainSceneName));
+        }
     }
 }
 
