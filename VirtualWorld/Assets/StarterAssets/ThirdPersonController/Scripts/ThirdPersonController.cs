@@ -135,6 +135,30 @@ namespace StarterAssets
             _animator = GetComponent<Animator>();
         }
 
+        public void DontDestroyOnLoad()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public void TryToSpawnToLaserTagSpot()
+        {
+            Debug.Log("Trying to spawn to laser tag spot");
+
+            LaserTagInitialSpawnSpot spawnSpot = FindObjectOfType<LaserTagInitialSpawnSpot>();
+
+            if (spawnSpot != null)
+            {
+                spawnSpot.GetPosAndRot(out Vector3 pos, 
+                                       out Quaternion rot);
+
+                transform.position = pos;
+                transform.rotation = rot;
+
+                Debug.Log("Should set position and rotation");
+
+            }
+        }
+
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -152,6 +176,7 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            PlayerEvents.Instance.EventSceneLoadEnded.AddListener(TryToSpawnToLaserTagSpot);
         }
 
         private void Update()

@@ -308,6 +308,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/WaterPark/Scenes/WaterParkExpert.unity
     guid: e50e9602433876d4ab6814f80523f060
+  - enabled: 1
+    path: Assets/LaserTag/Scenes/LobbyLaserTag.unity
+    guid: 36350c2a40d0d3a4696b157981258dd6
+  - enabled: 1
+    path: Assets/LaserTag/Scenes/Map1LaserTag.unity
+    guid: b37bb9709e4360a4aa2e2d6273447a7d
+  - enabled: 1
+    path: Assets/LaserTag/Scenes/Map2LaserTag.unity
+    guid: bcb97adbf7a38ef418ef52d8f027237e
+  - enabled: 1
+    path: Assets/LaserTag/Scenes/Map3LaserTag.unity
+    guid: 00121b971f89d5c44a0a185ab209fe37
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}

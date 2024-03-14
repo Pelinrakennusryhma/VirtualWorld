@@ -24,6 +24,10 @@ namespace Scenes
         ///</summary>
         Dictionary<string, Scene> scenesLoaded = new();
 
+        private NetworkConnection pendingConn;
+        SceneUnloadData pendingSceneUnloadData;
+        private string sceneToUnloadName;
+
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -33,6 +37,15 @@ namespace Scenes
             else
             {
                 Instance = this;
+
+                //otherSceneNames = new List<string>();
+              
+                //otherSceneNames.Add("LobbyLaserTag");
+                //otherSceneNames.Add("Map3LaserTag");
+                //otherSceneNames.Add("Map2LaserTag");
+                //otherSceneNames.Add("Map1LaserTag");                
+                //otherSceneNames.Add("Farm"); 
+
             }
         }
 
@@ -40,6 +53,9 @@ namespace Scenes
         {
             base.OnStartServer();
             SceneManager.OnLoadEnd += RegisterScenes;
+            SceneManager.OnLoadEnd -= OkayToStartUnloading;
+            SceneManager.OnLoadEnd += OkayToStartUnloading;
+
             LoadServerScenes();
         }
 
@@ -68,7 +84,7 @@ namespace Scenes
 
             MoveToNetworkSceneServerRpc(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
 
-            Debug.Log("Moving to networked scene");
+            Debug.LogError("Moving to networked scene");
         }
         ///<summary>
         ///NetworkObjects that should be moved to another network scene.
@@ -89,6 +105,8 @@ namespace Scenes
             Scene newSceneRef = scenesLoaded[sceneToLoadName];
             Scene oldSceneRef = scenesLoaded[sceneToUnloadName];
 
+            Debug.LogError("New scene name is " + newSceneRef.name + " old scene name is " + oldSceneRef.name);
+
             // Used for keeping scene alive on the server after last client unloads it.
             SceneLookupData activeScene = new SceneLookupData(newSceneRef);
 
@@ -107,8 +125,29 @@ namespace Scenes
             SceneUnloadData sud = new(oldSceneRef);
             sud.Options.Mode = ServerUnloadMode.KeepUnused;
 
+            //for (int i = 0; i < movedNetworkObjects.Length; i++)
+            //{
+            //    movedNetworkObjects[i].GetComponent<StarterAssets.ThirdPersonController>().DontDestroyOnLoad();
+            //}
+
+
+            //SceneManager.UnloadConnectionScenes(conn, sud);
             SceneManager.LoadConnectionScenes(conn, sld);
-            SceneManager.UnloadConnectionScenes(conn, sud);
+            //SceneManager.UnloadConnectionScenes(conn, sud); // The original place for this call. After load
+            //UnloadSceneOnClient(conn, sceneToUnloadName);
+            pendingConn = conn;
+            pendingSceneUnloadData = sud;
+
+            this.sceneToUnloadName = sceneToUnloadName; 
+
+            Debug.LogError("Moving to network scene server rpc completed");
+        }
+
+        [TargetRpc]
+        public void UnloadSceneOnClient(NetworkConnection target,
+                                        string sceneToUnloadName)
+        {
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
         }
 
         public void RegisterScenes(SceneLoadEndEventArgs args)
@@ -122,6 +161,24 @@ namespace Scenes
         public void OnDisable()
         {
             SceneManager.OnLoadEnd -= RegisterScenes;
+            SceneManager.OnLoadEnd -= OkayToStartUnloading;
+        }
+
+        public void OkayToStartUnloading(SceneLoadEndEventArgs args)
+        {
+            //if (pendingConn != null
+            //    && pendingSceneUnloadData != null) 
+            //{
+            //    SceneManager.UnloadConnectionScenes(pendingConn, pendingSceneUnloadData);
+            //}
+
+            //pendingConn = null;
+            //pendingSceneUnloadData = null;
+
+            if (pendingConn != null) 
+            {
+                UnloadSceneOnClient(pendingConn, sceneToUnloadName);
+            }
         }
     }
 }

@@ -18,7 +18,8 @@ namespace UI
 
         void OnSceneLoadStarted()
         {
-            loadingScreenPanel.SetActive(true);
+            //loadingScreenPanel.SetActive(true);
+            loadingScreenPanel.SetActive(false);
         }
 
         void OnSceneLoadEnded()

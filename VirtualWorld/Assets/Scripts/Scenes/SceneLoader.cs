@@ -162,6 +162,7 @@ namespace Scenes
 
                 if (NonNetworkRecognizer.Instance == null) 
                 {
+                    Debug.LogError("About to move to the networked scene");
                     NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
                 }
 
@@ -433,8 +434,13 @@ namespace Scenes
                 }
             }
 
+            Transform spawnPoint = objectToMove.transform;
 
-            Transform spawnPoint = connector.GetSpawnTransform(oldScene);
+            if (connector != null) 
+            {
+                spawnPoint = connector.GetSpawnTransform(oldScene);
+            }
+
 
 
             objectToMove.transform.position = spawnPoint.position;

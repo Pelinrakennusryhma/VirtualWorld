@@ -731,6 +731,7 @@ namespace FishNet.Managing.Scened
         /// <param name="sceneLoadData">Data about which scenes to load.</param>
         public void LoadConnectionScenes(NetworkConnection conn, SceneLoadData sceneLoadData)
         {
+            Debug.LogError("Loading connection scenes");
             LoadConnectionScenes(new NetworkConnection[] { conn }, sceneLoadData);
         }
         /// <summary>

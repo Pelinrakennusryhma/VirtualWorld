@@ -79,7 +79,7 @@ namespace Vehicles
 
             DedicatedCarCamera.transform.rotation = lookRot;
 
-            Debug.Log("Pos at spawn is " + transform.position);
+            //Debug.Log("Pos at spawn is " + transform.position);
 
             transform.position = spawnPos;
             transform.rotation = spawnRot;

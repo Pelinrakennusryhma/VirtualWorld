@@ -111,3 +111,7 @@ MonoBehaviour:
   mainSceneName: Playground
   otherSceneNames:
   - Farm
+  - Map1LaserTag
+  - Map2LaserTag
+  - Map3LaserTag
+  - LobbyLaserTag

@@ -21,6 +21,8 @@ public class ShootingRangeSubsceneStarter : MonoBehaviour
         if (!IsAlreadySwitchingScenes
             && other.gameObject.CompareTag("Player"))
         {
+            Debug.LogError("About to switch subscenes");
+
             IsAlreadySwitchingScenes = true;
 
             if (SceneLoader.Instance != null) 
