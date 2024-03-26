@@ -15,6 +15,8 @@ namespace Scenes
 {
     public class NetworkSceneLoader : NetworkBehaviour
     {
+
+        public GameObject PlayerPrefab;
         public static NetworkSceneLoader Instance { get; private set; }
         [SerializeField] string mainSceneName;
         [SerializeField] List<string> otherSceneNames;
@@ -27,8 +29,18 @@ namespace Scenes
         private NetworkConnection pendingConn;
         SceneUnloadData pendingSceneUnloadData;
         private string sceneToUnloadName;
+        private Scene newSceneRef;
 
-        void Awake()
+
+        public Scene LatestLoaded;
+
+        private SceneUnloadData scneUnloadData;
+
+        public NetworkConnection pendingConn2;
+
+
+
+        private void Awake()
         {
             if (Instance != null && Instance != this)
             {
@@ -55,6 +67,9 @@ namespace Scenes
             SceneManager.OnLoadEnd += RegisterScenes;
             SceneManager.OnLoadEnd -= OkayToStartUnloading;
             SceneManager.OnLoadEnd += OkayToStartUnloading;
+            SceneManager.OnLoadEnd -= OnSceneLoadEnded;
+            SceneManager.OnLoadEnd += OnSceneLoadEnded;
+
 
             LoadServerScenes();
         }
@@ -93,8 +108,18 @@ namespace Scenes
         NetworkObject[] CreateMovedNetworkObjects()
         {
             NetworkObject[] movedNetworkObjects = new NetworkObject[1];
-            NetworkObject playerCharacter = CharacterManager.Instance.OwnedCharacter.GetComponent<NetworkObject>();
-            movedNetworkObjects[0] = playerCharacter;
+
+            if (CharacterManager.Instance.OwnedCharacter != null) 
+            {
+                NetworkObject playerCharacter = CharacterManager.Instance.OwnedCharacter.GetComponent<NetworkObject>();
+                movedNetworkObjects[0] = playerCharacter;
+            }
+
+            else
+            {
+                movedNetworkObjects = null;
+            }
+
             return movedNetworkObjects;
         }
 
@@ -105,7 +130,7 @@ namespace Scenes
             Scene newSceneRef = scenesLoaded[sceneToLoadName];
             Scene oldSceneRef = scenesLoaded[sceneToUnloadName];
 
-            Debug.LogError("New scene name is " + newSceneRef.name + " old scene name is " + oldSceneRef.name);
+            //Debug.LogError("New scene name is " + newSceneRef.name + " old scene name is " + oldSceneRef.name);
 
             // Used for keeping scene alive on the server after last client unloads it.
             SceneLookupData activeScene = new SceneLookupData(newSceneRef);
@@ -113,7 +138,8 @@ namespace Scenes
             // Pass the old scene's name as params so we can use that to determine the teleport point in the new scene.
             byte[] oldSceneNameAsBytes = System.Text.Encoding.UTF8.GetBytes(sceneToUnloadName);
 
-            SceneLoadData sld = new(newSceneRef) { 
+            SceneLoadData sld = new(newSceneRef)
+            {
                 MovedNetworkObjects = movedNetworkObjects,
                 Params = new LoadParams()
                 {
@@ -132,22 +158,145 @@ namespace Scenes
 
 
             //SceneManager.UnloadConnectionScenes(conn, sud);
-            SceneManager.LoadConnectionScenes(conn, sld);
+            if (sceneToLoadName.Equals(mainSceneName))
+            {
+
+                SceneManager.LoadConnectionScenes(conn, sld);
+                UnpackMainSceneOnClient(conn, sceneToLoadName);
+
+                //SpawnANewPlayerTArgetRpc(conn);
+                //SpawnANewPlayer(conn, newSceneRef);
+
+
+                //pendingConn = conn;
+                //this.newSceneRef = newSceneRef;
+
+                //for (int i = 0; i < movedNetworkObjects.Length; i++)
+                //{
+                //    UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(movedNetworkObjects[i].gameObject, newSceneRef);
+                //}
+
+                //SceneManager.UnloadConnectionScenes(conn, sud); 
+                //conn = null;
+            }
+
+            else
+            {
+                SceneManager.LoadConnectionScenes(conn, sld);
+            }
+
+
+
+            //SceneManager.LoadConnectionScenes(conn, sld);
+
             //SceneManager.UnloadConnectionScenes(conn, sud); // The original place for this call. After load
             //UnloadSceneOnClient(conn, sceneToUnloadName);
+
+            LatestLoaded = newSceneRef;
+
+            scneUnloadData = sud;
             pendingConn = conn;
             pendingSceneUnloadData = sud;
+            pendingConn2 = conn;
 
-            this.sceneToUnloadName = sceneToUnloadName; 
+            this.sceneToUnloadName = sceneToUnloadName;
 
-            Debug.LogError("Moving to network scene server rpc completed");
+            //DoTheMoveToThingsAndStuff(conn);
+
+            //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
+
+            //Debug.LogError("Moving to network scene server rpc completed");
+        }
+
+        private static void DoTheMoveToThingsAndStuff(NetworkConnection conn)
+        {
+            SceneMover[] sceneMovers = FindObjectsOfType<SceneMover>(true);
+
+            for (int i = 0; i< sceneMovers.Length; i++)
+            {
+                Debug.Log("Scene mover gameobject scene is " + sceneMovers[i].gameObject.scene.name);
+            }
+
+            for (int i = 0; i < sceneMovers.Length; i++)
+            {
+
+                UnityEngine.SceneManagement.Scene sceeen = sceneMovers[i].gameObject.scene;
+
+                Debug.Log("At do the move things and stuff scene name is " + sceeen.name);
+
+                //SpawnObject(sceneMovers[i].gameObject, conn, sceeen);
+
+                sceneMovers[i].SetSceneWeShouldBeIn(sceeen.name);
+                sceneMovers[i].SaveSceneNameAsString(conn, sceeen.name);
+                sceneMovers[i].MoveCharacterToScene(conn, sceeen, sceeen.name);
+                //sceneMovers[i].MoveCharacterToSceneSceen(sceeen, sceeen.name);
+
+                sceneMovers[i].OnActiveSceneChanged();
+            }
+        }
+
+
+
+        [TargetRpc]
+
+        public void UnpackMainSceneOnClient(NetworkConnection target,
+                                            string sceneToUnpack)
+        {            
+            //NetworkSceneLoader.Instance.MoveToNetworkScene(target, sceneToUnpack);
+            SceneLoader.Instance.UnpackScene(sceneToUnpack);
+
+            UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneToUnpack));
+
+
+
+            Debug.Log("Unpacking main scene");
+
+            //SceneLoader.Instance.MoveToMainScene(CharacterManager.Instance.OwnedCharacter.gameObject);
         }
 
         [TargetRpc]
         public void UnloadSceneOnClient(NetworkConnection target,
                                         string sceneToUnloadName)
         {
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
+
+            //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
+            //return;
+
+            Debug.LogError("Unloading scene on client. About to do packing to main scene");
+
+            //if (!sceneToUnloadName.Equals(mainSceneName)) 
+            //{
+            //    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
+            //}
+
+            //else
+            //{
+            //    SceneLoader.Instance.PackScene(sceneToUnloadName, ScenePackMode.ALL);
+            //}
+
+            if (!sceneToUnloadName.Equals(mainSceneName)) 
+            {
+                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
+
+                //SpawnANewPlayer(pendingConn, newSceneRef);
+                Debug.LogError("Should unload scene");
+            }
+
+            else
+            {
+                SceneLoader.Instance.PackScene(sceneToUnloadName, ScenePackMode.ALL, true);
+
+                Debug.Log("Packing main scene");
+            }
+
+            //SceneMover[] sceneMovers = FindObjectsOfType<SceneMover>(true);
+
+            //for (int i  = 0; i < sceneMovers.Length; i++)
+            //{
+                
+            //    UnityEngine.SceneManagement.Scene sceeen = LatestLoaded;
+            //    sceneMovers[i].MoveCharacterToScene(sceeen);
+            //}
         }
 
         public void RegisterScenes(SceneLoadEndEventArgs args)
@@ -166,6 +315,8 @@ namespace Scenes
 
         public void OkayToStartUnloading(SceneLoadEndEventArgs args)
         {
+
+
             //if (pendingConn != null
             //    && pendingSceneUnloadData != null) 
             //{
@@ -175,10 +326,82 @@ namespace Scenes
             //pendingConn = null;
             //pendingSceneUnloadData = null;
 
+            Debug.LogError("STARTED UNLOADING");
+
             if (pendingConn != null) 
             {
                 UnloadSceneOnClient(pendingConn, sceneToUnloadName);
+                Debug.LogError("should unload " + sceneToUnloadName);
+
+                //if (!sceneToUnloadName.Equals(mainSceneName))
+                //{
+                //    SpawnANewPlayer(pendingConn, newSceneRef);
+                //}
+
+                //DoTheMoveToThingsAndStuff(pendingConn);
             }
+
+            //SpawnANewPlayer(pendingConn, LatestLoaded);
+
+            pendingConn = null;
+            sceneToUnloadName = "";
+
+
+        }
+
+        private void OnSceneLoadEnded(SceneLoadEndEventArgs args)
+        {
+            DoTheMoveToThingsAndStuff(pendingConn2);
+        }
+
+
+        public void MovePlayerToMainScene(NetworkObject[] movedObjects,
+                                          string scene)
+        {
+
+        }
+
+        [TargetRpc]
+        public void SpawnANewPlayerTArgetRpc(NetworkConnection conn)
+        {
+            //Debug.LogError("Should spawn a new player");
+           // CharacterManager.Instance.Respawn();
+        }
+
+        public void SpawnANewPlayer(NetworkConnection ownerConnection,
+                                    Scene sceneToSpawnTo)
+        {
+            GameObject go = Instantiate(PlayerPrefab);
+            //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(go, sceneToSpawnTo);
+            NetworkObject nob = go.GetComponent<NetworkObject>();
+            //InstanceFinder.ServerManager.Spawn(go, ownerConnection, sceneToSpawnTo);
+
+            Debug.LogError("Scene to spawn to is " + sceneToSpawnTo.name);
+            Instance.ServerManager.Spawn(nob, ownerConnection, sceneToSpawnTo);
+            OnRespawn(ownerConnection);
+            Debug.LogError("spawning a new player. Go scene is " + go.gameObject.scene.name);
+        }
+
+        [TargetRpc]
+        public void OnRespawn(NetworkConnection connection)
+        {
+            NetworkObjectSpawner.Instance.ReInit();
+        }
+
+        public Scene GetLatestLoaded()
+        {
+            return LatestLoaded;
+        }
+
+
+        public Scene GetCorrectScene(GameObject obj)
+        {
+            return obj.scene;
+        }
+
+        public static void SpawnObject(GameObject obj, NetworkConnection connection, Scene sceneToSpawnTo)
+        {
+            Instance.ServerManager.Spawn(obj, connection, sceneToSpawnTo);
         }
     }
 }

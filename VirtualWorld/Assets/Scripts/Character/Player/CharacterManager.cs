@@ -42,6 +42,18 @@ namespace Characters
                 Instance = this;
             }
         }
+        private void OnDestroy()
+        {
+            Instance = null;
+
+            Debug.Log("Character manager got destroyed. Scene is " + gameObject.scene.name);
+        }
+
+        public void OnREspawn()
+        {
+            Instance = this;
+        }
+
         private void OnDisable()
         {
             if (IsOwner)
@@ -65,29 +77,48 @@ namespace Characters
 
         void OnSceneLoaded(SceneLoadEndEventArgs args)
         {
+            //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, Scenes.NetworkSceneLoader.Instance.GetCorrectScene(gameObject));
+
+
             NetworkSceneConnector connector = null;
-            Scene loadedScene = args.LoadedScenes[0];
+            Scene loadedScene;
+            bool foundAScene = false;
 
-            foreach (GameObject rootGO in loadedScene.GetRootGameObjects())
+            if (args.LoadedScenes == null|| args.LoadedScenes.Length == 0)
             {
-                connector = rootGO.GetComponent<NetworkSceneConnector>();
-
-                if (connector != null)
-                {                  
-                    break;
-                }
+                Debug.LogError("No loaded scenes");
+                loadedScene = Scenes.NetworkSceneLoader.Instance.GetLatestLoaded();
             }
 
-            if(connector != null)
+            else
             {
-                string prevSceneName = System.Text.Encoding.UTF8.GetString(args.QueueData.SceneLoadData.Params.ClientParams);
+                loadedScene = args.LoadedScenes[0];
+                foundAScene = true;
+            }
 
-                Transform spawnPos = connector.GetSpawnTransform(prevSceneName);
-
-                ownedController.SetPosAndRot(spawnPos.position, spawnPos.rotation);
-            } else
+            if (foundAScene) 
             {
-                // maybe some type of backup to move player to like Vector3.zero or whatever in case there is no connector
+                foreach (GameObject rootGO in loadedScene.GetRootGameObjects())
+                {
+                    connector = rootGO.GetComponent<NetworkSceneConnector>();
+
+                    if (connector != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (connector != null)
+                {
+                    string prevSceneName = System.Text.Encoding.UTF8.GetString(args.QueueData.SceneLoadData.Params.ClientParams);
+
+                    Transform spawnPos = connector.GetSpawnTransform(prevSceneName);
+
+                    ownedController.SetPosAndRot(spawnPos.position, spawnPos.rotation);
+                } else
+                {
+                    // maybe some type of backup to move player to like Vector3.zero or whatever in case there is no connector
+                }
             }
 
             PlayerEvents.Instance.CallEventSceneLoadEnded();
@@ -123,6 +154,11 @@ namespace Characters
             PlayerEvents.Instance.CallEventCharacterDataSet(characterData);
         }
 
+        public void Respawn()
+        {
+            Debug.LogError("Should respawn player4");
+            OnSceneLoaded(new SceneLoadEndEventArgs());
+        }
     }
 }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed

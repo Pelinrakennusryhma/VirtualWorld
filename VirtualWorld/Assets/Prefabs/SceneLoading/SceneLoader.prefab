@@ -108,6 +108,8 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 6162508941689785795}
   _networkObjectCache: {fileID: 6162508941689785795}
+  PlayerPrefab: {fileID: 8626857905538890898, guid: 34f10dafe4211af49bd0ece68fc2000b,
+    type: 3}
   mainSceneName: Playground
   otherSceneNames:
   - Farm

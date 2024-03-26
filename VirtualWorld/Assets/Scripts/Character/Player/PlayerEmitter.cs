@@ -28,10 +28,26 @@ namespace Characters
             {
                 gameObject.SetActive(false);
             }
+
+            //Debug.LogError("Player emitter awoke. Scene is " + gameObject.scene.name);
+            //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
+            //DoStartClientThings();
+
+            //Debug.LogError("Player emitter moved. Scene is " + gameObject.scene.name);
+        }
+
+        private void OnDestroy()
+        {
+            Debug.LogError("Player emitter got destroyed. Scene is " + gameObject.scene.name);
         }
         public override void OnStartClient()
         {
             base.OnStartClient();
+            DoStartClientThings();
+        }
+
+        private void DoStartClientThings()
+        {
 
             // if not our own character notify the minigame loading system about a new gameobject being instantiated
             if (!IsOwner)

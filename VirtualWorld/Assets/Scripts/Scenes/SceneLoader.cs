@@ -50,7 +50,7 @@ namespace Scenes
             this.scenePackMode = scenePackMode;
         }
     }
-    struct CachedGameObject
+    public struct CachedGameObject
     {
         public GameObject gameObject;
         public bool isEnabled;
@@ -200,7 +200,7 @@ namespace Scenes
             {
                 CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.MINIGAME);
             }
-            PackScene(sceneLoadParams.scenePackMode);
+            PackScene(null, sceneLoadParams.scenePackMode, false);
 
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -238,7 +238,23 @@ namespace Scenes
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(MainSceneName));
         }
 
-        void PackScene(ScenePackMode scenePackMode)
+        public void PackScene(string sceneName,
+                              ScenePackMode scenePackMode,
+                              bool keepPlayersUnpacked)
+        {
+            PackScene(scenePackMode, 
+                      UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName), 
+                      keepPlayersUnpacked);
+        }
+
+        public void UnpackScene(string sceneName)
+        {
+            UnpackScene();
+        }
+
+        void PackScene(ScenePackMode scenePackMode,
+                       Scene sceneToPack,
+                       bool keepPlayersUnpacked)
         {
             if (scenePackMode == ScenePackMode.NONE)
             {
@@ -247,16 +263,24 @@ namespace Scenes
 
             Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
+            if (sceneToPack != null)
+            {
+                activeScene = sceneToPack;
+            }
+
             if (scenePackMode == ScenePackMode.PLAYER_ONLY)
             {
-                if (CharacterManager.Instance != null) 
+                if (!keepPlayersUnpacked) 
                 {
-                    PackObject(CharacterManager.Instance.OwnedCharacter);
-                }
+                    if (CharacterManager.Instance != null)
+                    {
+                        PackObject(CharacterManager.Instance.OwnedCharacter);
+                    }
 
-                else
-                {
-                    PackObject(CharacterManagerNonNetworked.Instance.OwnedCharacter);
+                    else
+                    {
+                        PackObject(CharacterManagerNonNetworked.Instance.OwnedCharacter);
+                    }
                 }
             }
             else
@@ -271,7 +295,17 @@ namespace Scenes
                     }
                     else
                     {
-                        PackObject(go);
+                        bool shouldPack = true;
+
+                        if (go.GetComponent<PlayerEmitter>())
+                        {
+                            shouldPack = false;
+                        }
+
+                        if (shouldPack) 
+                        {
+                            PackObject(go);
+                        }
                     }
                 }
             }
@@ -461,6 +495,62 @@ namespace Scenes
         public void MoveToMainScene(GameObject objectToMove)
         {
             SceneManager.MoveGameObjectToScene(objectToMove, SceneManager.GetSceneByName(MainSceneName));
+        }
+
+        public void UnpackNonPlayerPlayer(List<CachedGameObject> objects)
+        {
+            for (int i = 0; i < objects.Count; i++) {
+                AnimatedObjectDisabler disabler = objects[i].gameObject.GetComponent<AnimatedObjectDisabler>();
+                if (disabler != null)
+                {
+                    disabler.Enable();
+                    return;
+                }
+
+                AnimatedObjectContainer animatedObjectContainer = objects[i].gameObject.GetComponent<AnimatedObjectContainer>();
+                if (animatedObjectContainer != null)
+                {
+                    animatedObjectContainer.EnableChildren();
+                    return;
+                }
+
+                objects[i].gameObject.SetActive(objects[i].isEnabled);
+            }
+        }
+
+        public List<CachedGameObject> PackNonPlayerPlayer(Transform[] objs)
+        {
+            List<CachedGameObject> cahced = new List<CachedGameObject>();
+
+
+            for (int i  = 0; i < objs.Length; i++)
+            {
+                cahced.Add(new CachedGameObject(objs[i].gameObject, objs[i].gameObject.activeSelf));
+
+
+                // Animated NetworkObjects are disabled via script
+                AnimatedObjectDisabler disabler = objs[i].GetComponent<AnimatedObjectDisabler>();
+                if (disabler != null)
+                {
+                    disabler.Disable();
+                    //return;
+                }
+
+                // Containers holding animated NetworkObjects
+                AnimatedObjectContainer animatedObjectContainer = objs[i].GetComponent<AnimatedObjectContainer>();
+                if (animatedObjectContainer != null)
+                {
+                    animatedObjectContainer.DisableChildren();
+                    //return;
+                }
+
+                // Normal objects are simply disabled
+                objs[i].gameObject.SetActive(false);
+            }
+
+
+
+            return cahced;
         }
     }
 }

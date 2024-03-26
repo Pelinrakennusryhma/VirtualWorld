@@ -121,7 +121,10 @@ public class DefaultScene : MonoBehaviour
         _networkManager.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
         _networkManager.ServerManager.OnAuthenticationResult += ServerManager_OnAuthenticationResult;
         if (_startInOffline)
+        {
             LoadOfflineScene();
+            Debug.LogError("Loading offline scene");
+        }
     }
 
     /// <summary>
