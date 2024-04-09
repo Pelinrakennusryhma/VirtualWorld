@@ -76,8 +76,12 @@ public class TabletCameraViewController : NetworkBehaviour
     [SerializeField] private ViewWithinAViewController ViewWithinAViewController;
 
 
+    private bool isOwner;
+
     public void Start()
     {
+        gameObject.SetActive(false);
+
         Debug.Log("Start called on tablet");
 
         if (NonNetworkRecognizer.Instance != null)
@@ -111,12 +115,23 @@ public class TabletCameraViewController : NetworkBehaviour
             // but not now    
             // We don't use the FlyCamera yet, so disable it.
             FlyingCam.EnableDisableCameras(false, false);
+
+            SceneManager.OnLoadEnd -= OnSceneLoaded;
+            SceneManager.OnLoadEnd += OnSceneLoaded;
+        }
+    }
+
+    public void OnEnable()
+    {
+        if (!isOwner)
+        {
+            //gameObject.SetActive(false);
         }
     }
 
     public override void OnStartClient()
     {
-        Debug.LogWarning("On start client is called");
+        Debug.LogError("On start client is called");
 
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
@@ -131,10 +146,23 @@ public class TabletCameraViewController : NetworkBehaviour
 
         if (IsOwner)
         {
+            SceneManager.OnLoadEnd -= OnSceneLoaded;
+            SceneManager.OnLoadEnd += OnSceneLoaded;
+
+
+            isOwner = true;
+            gameObject.SetActive(true);
             ViewWithinAViewController.Init();
             // Subscribe to events about button presses
             PlayerEvents.Instance.EventOpenTabletPressed.AddListener(OnOpenTabletPressed);
             PlayerEvents.Instance.EventCloseTabletPressed.AddListener(OnCloseTabletPressed);
+        }
+
+        else
+        {
+            gameObject.SetActive(false);
+
+            Debug.LogError("Should have disabled the tablet game object");
         }
 
         //Debug.LogWarning("Starting client. Isowner " + IsOwner);
@@ -166,7 +194,7 @@ public class TabletCameraViewController : NetworkBehaviour
     public void OnCloseTabletPressed()
     {
 
-        SetupTabletForGoingOut();
+        SetupTabletForGoingOut(false);
 
     }
 
@@ -179,6 +207,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
     private void SetupTabletForComingIn()
     {
+        gameObject.SetActive(true);
         isInterpolating = true;
 
 
@@ -242,9 +271,9 @@ public class TabletCameraViewController : NetworkBehaviour
         }
     }
 
-    private void SetupTabletForGoingOut()
+    private void SetupTabletForGoingOut(bool instantGoingOut)
     {
-        if (CharacterManager.Instance != null) 
+        if (CharacterManager.Instance != null)
         {
             CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
         }
@@ -273,6 +302,35 @@ public class TabletCameraViewController : NetworkBehaviour
         // We can say, that we aren't on tablet view anymore
         // Even though we are just beginning to transition out.
         isActiveTabletView = false;
+
+
+        if (instantGoingOut)
+        {
+            Vector3 targetPos = ThirdPersonCamera.transform.position;
+            Quaternion targetRot = ThirdPersonCamera.transform.rotation;
+
+            FlyingCam.transform.position = targetPos;
+            FlyingCam.transform.rotation = targetRot;
+            isInterpolating = false;
+            hasReachedTransitionPos = true;
+            isActiveTabletView = false;
+            ViewWithinAViewController.OnCameraReachedTransitionPos();
+            FlyingCam.EnableDisableCameras(false, false);
+
+            InstaHideTablet();
+
+            if (CharacterManager.Instance != null)
+            {
+                CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+            }
+
+            else
+            {
+                CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
+            }
+
+            Debug.Log("We should instantly disable the tablet");
+        }
     }
 
     #endregion
@@ -280,12 +338,13 @@ public class TabletCameraViewController : NetworkBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (NonNetworkRecognizer.Instance == null) 
+        if (NonNetworkRecognizer.Instance == null)
         {
 
             // If we don't own the networked object, don't do anything
             if (!IsOwner)
             {
+                gameObject.SetActive(false);
                 return;
             }
         }
@@ -386,7 +445,7 @@ public class TabletCameraViewController : NetworkBehaviour
             ViewWithinAViewController.OnTabletClosed();
 
             // once camera has reached its return position, set gameState to free
-            if (CharacterManager.Instance != null) 
+            if (CharacterManager.Instance != null)
             {
                 CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
             }
@@ -545,6 +604,11 @@ public class TabletCameraViewController : NetworkBehaviour
                                                             Mathf.Lerp(scalerLocal.z, 0, Time.deltaTime * outgoingScaleSpeed));
     }
 
+    private void InstaHideTablet()
+    {
+        TabletMainScaler.transform.localScale = Vector3.zero;
+    }
+
     #endregion
 
 
@@ -564,5 +628,12 @@ public class TabletCameraViewController : NetworkBehaviour
 
         // We are not doing any transitions anymore
         isInterpolating = false;
+    }
+
+    public void OnSceneLoaded(FishNet.Managing.Scened.SceneLoadEndEventArgs args)
+    {
+        //gameObject.SetActive(false);
+        SetupTabletForGoingOut(true);
+        Debug.LogError("On scene loaded called on tablet");
     }
 }

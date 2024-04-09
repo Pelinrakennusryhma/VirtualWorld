@@ -153,6 +153,12 @@ namespace Scenes
 
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
+
+            for(int paska = 0; paska < CharacterManager.Instance.sciinMuuvers.Count; paska++)
+            {
+                UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(CharacterManager.Instance.sciinMuuvers[paska].gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
+            }
+
             string sceneName = ParseSceneName(scenePath);
 
             // ALL_BUT_PLAYER essentially means loading a network scene because everything but player character is packed away.. not smooth.
@@ -301,6 +307,8 @@ namespace Scenes
                         {
                             shouldPack = false;
                         }
+
+                        shouldPack = true;
 
                         if (shouldPack) 
                         {
@@ -499,27 +507,47 @@ namespace Scenes
 
         public void UnpackNonPlayerPlayer(List<CachedGameObject> objects)
         {
+            Debug.LogError("Unpacking non player player");
+
             for (int i = 0; i < objects.Count; i++) {
+
+               // Debug.Log("Iterating through object " + i);
+
+                ThirdPersonController controller = objects[i].gameObject.GetComponentInChildren<ThirdPersonController>(true);
+
+                if (controller != null) 
+                {
+                    controller.enabled = true;
+                    Debug.LogError("Enabled third person controller");
+                }
+
                 AnimatedObjectDisabler disabler = objects[i].gameObject.GetComponent<AnimatedObjectDisabler>();
                 if (disabler != null)
                 {
                     disabler.Enable();
-                    return;
+
                 }
 
                 AnimatedObjectContainer animatedObjectContainer = objects[i].gameObject.GetComponent<AnimatedObjectContainer>();
                 if (animatedObjectContainer != null)
                 {
                     animatedObjectContainer.EnableChildren();
-                    return;
+
                 }
 
                 objects[i].gameObject.SetActive(objects[i].isEnabled);
+
+               // Debug.Log("Gameobject " + objects[i].gameObject + " is enabled " + objects[i].isEnabled);
             }
         }
 
         public List<CachedGameObject> PackNonPlayerPlayer(Transform[] objs)
         {
+            for (int i = 0; i < objs.Length; i++) 
+            {
+                Debug.LogError("PACKING NON PLAYER PLAYER. Objs[i] scene is  " + objs[i].gameObject.scene.name);
+            }
+
             List<CachedGameObject> cahced = new List<CachedGameObject>();
 
 
@@ -546,6 +574,8 @@ namespace Scenes
 
                 // Normal objects are simply disabled
                 objs[i].gameObject.SetActive(false);
+
+                //Debug.LogError("Game object " + objs[i].gameObject.name + " is enabled " + objs[i].gameObject.activeSelf);
             }
 
 

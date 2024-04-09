@@ -117,6 +117,9 @@ namespace StarterAssets
 
         private const float _threshold = 0.01f;
 
+        private bool JustSpawned;
+        private int SpawnedFrames;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -247,6 +250,14 @@ namespace StarterAssets
                 _cinemachineTargetYaw, 0.0f);
         }
 
+        public void MoveSlightly()
+        {
+            // _controller.Move(new Vector3(0, 0.1f, 0));
+            //SetPosAndRot(transform.position + Vector3.up * 0.1f, transform.rotation);
+            JustSpawned = true;
+            SpawnedFrames = 0;
+        }
+
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
@@ -284,8 +295,17 @@ namespace StarterAssets
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
+
+            if (JustSpawned)
+            {
+                _input.move += new Vector2(0, 0.1f);
+
+                Debug.LogError("Moving slightly " + gameObject.name);
+            }
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+
+
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
@@ -315,6 +335,18 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            }
+
+            if (JustSpawned)
+            {
+
+                SpawnedFrames++;
+
+                if (SpawnedFrames >= 3) 
+                {                
+                    _input.move = Vector2.zero;
+                    JustSpawned = false;
+                }
             }
         }
 

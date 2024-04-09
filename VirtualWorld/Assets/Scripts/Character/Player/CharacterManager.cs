@@ -30,6 +30,13 @@ namespace Characters
         // Antti's addition to help determine who is driving a car.
         public int ClientId;
 
+        public List<SceneMover> sceneMovers = new List<SceneMover>();
+
+
+        public List<SceneMover> sciinMuuvers = new List<SceneMover>();
+
+        public SceneMover OwnerSceneMover;
+
 
         private void Awake()
         {
@@ -80,6 +87,9 @@ namespace Characters
             //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, Scenes.NetworkSceneLoader.Instance.GetCorrectScene(gameObject));
 
 
+            
+
+
             NetworkSceneConnector connector = null;
             Scene loadedScene;
             bool foundAScene = false;
@@ -95,6 +105,41 @@ namespace Characters
                 loadedScene = args.LoadedScenes[0];
                 foundAScene = true;
             }
+
+            List<Scene> allScenes = new List<Scene>();
+
+            for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+            {
+                allScenes.Add(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i));
+            }
+
+
+            for (int k = 0; k < allScenes.Count; k++)
+            {
+
+
+                GameObject[] rootObjects = allScenes[k].GetRootGameObjects();
+
+                for (int i = 0; i < rootObjects.Length; i++)
+                {
+                    SceneMover[] movers = rootObjects[i].GetComponentsInChildren<SceneMover>(true);
+
+
+                    for (int j = 0; j < movers.Length; j++)
+                    {
+                        sceneMovers.Add(movers[j]);
+                    }
+
+                }
+            }
+
+            Debug.LogError("Found Scene movers length is " + sceneMovers.Count);
+            sceneMovers.Clear();
+
+            LogSceneMovers();
+            Debug.LogError("ABOUT TO INFROM SCENE MOVERS. Scene movers length is " + sciinMuuvers.Count);
+            InformSceneMovers(loadedScene);
+            Debug.LogError("SHOULD HAVE INFORMED SCENE MOVERS");
 
             if (foundAScene) 
             {
@@ -123,6 +168,8 @@ namespace Characters
 
             PlayerEvents.Instance.CallEventSceneLoadEnded();
             PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}");
+
+            OnSpawn();
         }
 
         // Disable and enable inputs depending on if we are driving a car.
@@ -158,6 +205,71 @@ namespace Characters
         {
             Debug.LogError("Should respawn player4");
             OnSceneLoaded(new SceneLoadEndEventArgs());
+        }
+
+        public void AssSceneMover(SceneMover over)
+        {
+            sciinMuuvers.Add(over);
+            Debug.LogError("About to DELETE a scene mover");
+            LogSceneMovers();
+
+
+        }
+
+        public void DiliitSciinMuuver(SceneMover overAndOut)
+        {
+            sciinMuuvers.Remove(overAndOut);
+        }
+
+        private void LogSceneMovers()
+        {
+            for (int i = 0; i < sciinMuuvers.Count; i++)
+            {
+                if (sciinMuuvers[i].gameObject != null) 
+                {
+                    Debug.LogError("Scene mover at " + i + " is " + sciinMuuvers[i].gameObject.name);
+                }
+
+                else
+                {
+                    Debug.LogError("Null sciin muuver");
+                }
+            }
+
+            Debug.LogError("Scene mover count is " + sciinMuuvers.Count);
+        }
+
+        private void InformSceneMovers(Scene scene)
+        {
+            Debug.LogError("About to inform scene movers of the scene "+ scene.name  );
+
+            for (int i = 0; i < sciinMuuvers.Count; i++)
+            {
+                Debug.LogError("Informing scene mover at " + i + " that is in the scene " + sciinMuuvers[i].gameObject.scene.name);
+                sciinMuuvers[i].DecideThisAndThat(scene);
+            }
+        }
+
+        public void SetOwnerSceneMover(SceneMover mover)
+        {
+            OwnerSceneMover = mover;
+        }
+
+
+        public static void DoSomethingHeinous(NetworkConnection connection, Scene scene)
+        {
+            Instance.OwnerSceneMover.MoveYourAss(connection, scene);
+        }
+
+        public void OnSpawn()
+        {
+            Debug.LogError("OnSpawn called " + Time.time);
+            ownedController.MoveSlightly();
+
+            for (int i = 0; i< sciinMuuvers.Count; i++)
+            {
+                sciinMuuvers[i].GetComponentInChildren<ThirdPersonController>(true).MoveSlightly();
+            }
         }
     }
 }

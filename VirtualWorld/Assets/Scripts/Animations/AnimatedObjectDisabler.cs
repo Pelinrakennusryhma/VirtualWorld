@@ -55,6 +55,22 @@ namespace Animations
             }
             childGameObjects.Clear();
 
+
+            //foreach (Collider collider in GetComponents<Collider>())
+            //{
+            //    if (collider is CharacterController)
+            //    {
+            //        collider.enabled = true;
+            //        continue;
+            //    }
+
+            //    //colliders.Add(new CachedCollider(collider, collider.enabled));
+            //    //collider.enabled = false;
+            //}
+
+            //CharacterController controller = GetComponentInChildren<CharacterController>(true);
+            //controller.enabled = true;
+
         }
 
         public void Disable()
@@ -113,6 +129,9 @@ namespace Animations
                     }
                 }
             }
+
+            //CharacterController controller = GetComponentInChildren<CharacterController>(true);
+            //controller.enabled = false;
         }
     }
 }
