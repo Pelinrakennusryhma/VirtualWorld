@@ -145,7 +145,7 @@ namespace StarterAssets
 
         public void TryToSpawnToLaserTagSpot()
         {
-            Debug.Log("Trying to spawn to laser tag spot");
+            //Debug.Log("Trying to spawn to laser tag spot");
 
             LaserTagInitialSpawnSpot spawnSpot = FindObjectOfType<LaserTagInitialSpawnSpot>();
 
@@ -157,7 +157,7 @@ namespace StarterAssets
                 transform.position = pos;
                 transform.rotation = rot;
 
-                Debug.Log("Should set position and rotation");
+                //Debug.Log("Should set position and rotation");
 
             }
         }
@@ -300,7 +300,7 @@ namespace StarterAssets
             {
                 _input.move += new Vector2(0, 0.1f);
 
-                Debug.LogError("Moving slightly " + gameObject.name);
+                //Debug.LogError("Moving slightly " + gameObject.name);
             }
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;

@@ -3133,6 +3133,7 @@ MonoBehaviour:
   - {fileID: 4395321836587320995}
   - {fileID: 5531011658549054286}
   - {fileID: 1221039505239401820}
+  ClientID: 0
 --- !u!114 &6723520626843087359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3272,6 +3273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d4ce2576721b54b9b62178b78fba86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterController: {fileID: 3884531294408016767}
 --- !u!114 &1085394686146889340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3287,6 +3289,8 @@ MonoBehaviour:
   _componentIndexCache: 3
   _addedNetworkObject: {fileID: 6723520626843087359}
   _networkObjectCache: {fileID: 6723520626843087359}
+  SceneWeShouldBeIn: 
+  OwnerSceneMoverScene: 
 --- !u!1 &9016680625421896465
 GameObject:
   m_ObjectHideFlags: 0

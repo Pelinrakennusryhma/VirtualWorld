@@ -82,11 +82,11 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         gameObject.SetActive(false);
 
-        Debug.Log("Start called on tablet");
+        //Debug.Log("Start called on tablet");
 
         if (NonNetworkRecognizer.Instance != null)
         {
-            Debug.LogWarning("On start client is called on tablet");
+            //Debug.LogWarning("On start client is called on tablet");
 
             // Save the tablet scaler object's original scale, because we are about to 
             // set it to zero
@@ -131,7 +131,7 @@ public class TabletCameraViewController : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        Debug.LogError("On start client is called");
+        //Debug.LogError("On start client is called");
 
         // Save the tablet scaler object's original scale, because we are about to 
         // set it to zero
@@ -162,7 +162,7 @@ public class TabletCameraViewController : NetworkBehaviour
         {
             gameObject.SetActive(false);
 
-            Debug.LogError("Should have disabled the tablet game object");
+            //Debug.LogError("Should have disabled the tablet game object");
         }
 
         //Debug.LogWarning("Starting client. Isowner " + IsOwner);
@@ -329,7 +329,7 @@ public class TabletCameraViewController : NetworkBehaviour
                 CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
             }
 
-            Debug.Log("We should instantly disable the tablet");
+            //Debug.Log("We should instantly disable the tablet");
         }
     }
 
@@ -634,6 +634,6 @@ public class TabletCameraViewController : NetworkBehaviour
     {
         //gameObject.SetActive(false);
         SetupTabletForGoingOut(true);
-        Debug.LogError("On scene loaded called on tablet");
+        //Debug.LogError("On scene loaded called on tablet");
     }
 }

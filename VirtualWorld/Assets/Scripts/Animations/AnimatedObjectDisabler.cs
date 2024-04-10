@@ -17,6 +17,8 @@ namespace Animations
     // Disable and Enable methods are called instead of toggling the gameobject off and on.
     public class AnimatedObjectDisabler : MonoBehaviour
     {
+        public CharacterController CharacterController;
+
         List<CachedMonoBehaviour> monoBehaviours = new List<CachedMonoBehaviour>();
         List<CachedGameObject> childGameObjects = new List<CachedGameObject>();
         List<CachedCollider> colliders = new List<CachedCollider>();
@@ -71,10 +73,35 @@ namespace Animations
             //CharacterController controller = GetComponentInChildren<CharacterController>(true);
             //controller.enabled = true;
 
+            //CharacterController.enabled = true;
+
+
+            Debug.LogError("About to enable colliders");
+
+            // Colliders
+            foreach (Collider collider in GetComponents<Collider>())
+            {
+                if (collider is CharacterController)
+                {
+                    //collider.enabled = true;
+                    if (gameObject.GetComponentInChildren<PlayerEmitter>(true)) 
+                    {
+                        Debug.Log("Character controller collider is enabled " + collider.enabled + " game object name is " + gameObject.name + " client id is " + GetComponentInChildren<PlayerEmitter>(true).GetClientID());
+                    }
+                    else
+                    {
+                        Debug.LogError("Null player emitter");
+                    }//continue;
+                }
+            }
         }
 
         public void Disable()
         {
+            monoBehaviours.Clear();
+            colliders.Clear();
+            childGameObjects.Clear();
+
             // Monobehaviours
             foreach (MonoBehaviour monoBehaviour in GetComponents<MonoBehaviour>())
             {
@@ -85,11 +112,23 @@ namespace Animations
                 }
             }
 
+            if (gameObject.GetComponentInChildren<PlayerEmitter>(true))
+            {
+                Debug.LogError("About to disable colliders of client id " + GetComponentInChildren<PlayerEmitter>(true).GetClientID());
+            }
+
+            else
+            {
+                Debug.LogError("Null player emitter");
+            }
+
             // Colliders
             foreach (Collider collider in GetComponents<Collider>())
             {
                 if(collider is CharacterController)
                 {
+
+                    Debug.Log("Character controller collider is enabled " + collider.enabled + " gameobject name is " + gameObject.name);
                     continue;
                 }
 
@@ -132,6 +171,11 @@ namespace Animations
 
             //CharacterController controller = GetComponentInChildren<CharacterController>(true);
             //controller.enabled = false;
+
+            //CharacterController controller = GetComponentInChildren<CharacterController>(true);
+            //controller.enabled = false;
+
+            //CharacterController.enabled = false;
         }
     }
 }

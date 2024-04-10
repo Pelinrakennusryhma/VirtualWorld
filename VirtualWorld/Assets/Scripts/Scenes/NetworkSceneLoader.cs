@@ -99,7 +99,7 @@ namespace Scenes
 
             MoveToNetworkSceneServerRpc(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
 
-            Debug.LogError("Moving to networked scene");
+            //Debug.LogError("Moving to networked scene");
         }
         ///<summary>
         ///NetworkObjects that should be moved to another network scene.
@@ -227,7 +227,7 @@ namespace Scenes
                 UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(movedNetworkObjects[i].gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneToLoadName));
 
                 Scene correct = newSceneRef;
-                gameObject.GetComponent<SceneMover>().MoveYourAss(pendingConn, correct);
+                gameObject.GetComponentInChildren<SceneMover>(true).MoveYourAss(pendingConn, correct);
                 CharacterManager.DoSomethingHeinous(pendingConn, correct);
             }
         }
@@ -272,7 +272,7 @@ namespace Scenes
 
 
 
-            Debug.Log("Unpacking main scene");
+            //Debug.Log("Unpacking main scene");
 
             //SceneLoader.Instance.MoveToMainScene(CharacterManager.Instance.OwnedCharacter.gameObject);
         }
@@ -285,7 +285,7 @@ namespace Scenes
             //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
             //return;
 
-            Debug.LogError("Unloading scene on client. About to do packing to main scene");
+            //Debug.LogError("Unloading scene on client. About to do packing to main scene");
 
             //if (!sceneToUnloadName.Equals(mainSceneName)) 
             //{
@@ -302,14 +302,14 @@ namespace Scenes
                 UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneToUnloadName);
 
                 //SpawnANewPlayer(pendingConn, newSceneRef);
-                Debug.LogError("Should unload scene");
+                //Debug.LogError("Should unload scene");
             }
 
             else
             {
                 SceneLoader.Instance.PackScene(sceneToUnloadName, ScenePackMode.ALL, true);
 
-                Debug.Log("Packing main scene");
+                //Debug.Log("Packing main scene");
             }
 
             //SceneMover[] sceneMovers = FindObjectsOfType<SceneMover>(true);
@@ -338,7 +338,7 @@ namespace Scenes
 
         public void OkayToStartUnloading(SceneLoadEndEventArgs args)
         {
-            Debug.LogError("About to do unloading");
+            //Debug.LogError("About to do unloading");
             SceneMover[] sceneMovers = FindObjectsOfType<SceneMover>(true);
 
 
@@ -356,7 +356,7 @@ namespace Scenes
 
                     //sceneMovers[i].UnpackNonPlayerPlayer(pendingConn);
                 }
-                Debug.Log("Scene mover gameobject scene is " + sceneMovers[i].gameObject.scene.name);
+                //Debug.Log("Scene mover gameobject scene is " + sceneMovers[i].gameObject.scene.name);
             }
 
 
@@ -369,12 +369,12 @@ namespace Scenes
             //pendingConn = null;
             //pendingSceneUnloadData = null;
 
-            Debug.LogError("STARTED UNLOADING");
+            //Debug.LogError("STARTED UNLOADING");
 
             if (pendingConn != null) 
             {
                 UnloadSceneOnClient(pendingConn, sceneToUnloadName);
-                Debug.LogError("should unload " + sceneToUnloadName);
+                //Debug.LogError("should unload " + sceneToUnloadName);
 
                 //if (!sceneToUnloadName.Equals(mainSceneName))
                 //{
@@ -396,13 +396,13 @@ namespace Scenes
         {
             DoTheMoveToThingsAndStuff(pendingConn2);
 
-            Debug.LogError("On scene load ended at network scene loader");
+            //Debug.LogError("On scene load ended at network scene loader");
 
             SceneMover[] sceneMovers = FindObjectsOfType<SceneMover>(true);
 
             for (int i = 0; i < sceneMovers.Length; i++) 
             {
-                Debug.LogError("We have a scene mover at scene " + sceneMovers[i].gameObject.scene.name);
+                //Debug.LogError("We have a scene mover at scene " + sceneMovers[i].gameObject.scene.name);
                 sceneMovers[i].OnActiveSceneSet(pendingConn2, sceneMovers[i].gameObject.scene);
             }
         }

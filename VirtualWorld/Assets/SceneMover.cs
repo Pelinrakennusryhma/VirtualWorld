@@ -63,7 +63,7 @@ public class SceneMover : NetworkBehaviour
 
     private void OnSceneSyncVarBeingUpdated(string prev, string next, bool asServer)
     {
-        Debug.Log("SCENE SYNC VAR BEING UPDATED. Scene sync var just got updated. The new value is " + next);
+        //Debug.Log("SCENE SYNC VAR BEING UPDATED. Scene sync var just got updated. The new value is " + next);
 
 
 
@@ -81,17 +81,17 @@ public class SceneMover : NetworkBehaviour
         if (byName.IsValid())
         {
             UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, byName);
-            Debug.LogError("WValid scene. Move gameobject");
+            //Debug.LogError("WValid scene. Move gameobject");
         }
 
         else
         {
-            Debug.LogError("We have an invalid scene. Cant move gameobject");
+            //Debug.LogError("We have an invalid scene. Cant move gameobject");
         }
 
         for (int i = 0; i < allMovers.Length; i++) 
         {
-            Debug.LogError("Scene mover scene is " + allMovers[i].gameObject.scene.name);
+            //Debug.LogError("Scene mover scene is " + allMovers[i].gameObject.scene.name);
 
             bool inTheSameSceneAsMainPlayer = false;
 
@@ -105,7 +105,7 @@ public class SceneMover : NetworkBehaviour
             {
                 SceneLoader.Instance.UnpackNonPlayerPlayer(gameObjects);
 
-                Debug.Log("Should unpack nonplayer player");
+                //Debug.Log("Should unpack nonplayer player");
             }
 
             else
@@ -114,7 +114,7 @@ public class SceneMover : NetworkBehaviour
 
                 //allMovers[i].gameObject.transform.position = new Vector3(-3333, -3333, -3333);
 
-                Debug.LogError("Should have moved to hevon vittu");
+                //Debug.LogError("Should have moved to hevon vittu");
             }
         }
 
@@ -127,7 +127,7 @@ public class SceneMover : NetworkBehaviour
 
         if (gameObject.scene.name.Equals("MovedObjectsHolder"))
         {
-            Debug.LogError("We ended up being in moved objects holder");
+            //Debug.LogError("We ended up being in moved objects holder");
             gameObject.SetActive(true);
             StopAllCoroutines();
             StartCoroutine(DelayedSceneMovement());
@@ -160,7 +160,7 @@ public class SceneMover : NetworkBehaviour
     {
         SceneWeShouldBeIn = gameObject.scene.name;
 
-        Debug.LogError("Server should update syncvar about which scene we should be in " + SceneWeShouldBeIn);
+        //Debug.LogError("Server should update syncvar about which scene we should be in " + SceneWeShouldBeIn);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -168,14 +168,14 @@ public class SceneMover : NetworkBehaviour
     {
         SceneWeShouldBeIn = sceneName;
 
-        Debug.Log("Scene we should be in is " + SceneWeShouldBeIn);
+        //Debug.Log("Scene we should be in is " + SceneWeShouldBeIn);
     }
 
     public void SetSceneWeShouldBeInNonNetworked(string sceneName)
     {
         SceneWeShouldBeIn = sceneName;
 
-        Debug.Log("Scene we should be in is " + SceneWeShouldBeIn);
+        //Debug.Log("Scene we should be in is " + SceneWeShouldBeIn);
     }
 
     [ServerRpc]
@@ -188,14 +188,14 @@ public class SceneMover : NetworkBehaviour
     {
         SwitchBySceneName();
 
-        Debug.Log("Loaded scene " + scene.name);
+        //Debug.Log("Loaded scene " + scene.name);
 
         int index = UnityEngine.SceneManagement.SceneManager.sceneCount;
 
         for (int i = 0; i < index; i++)
         {
             UnityEngine.SceneManagement.Scene scene2 = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            Debug.Log("Loaded scene at " + i + " is at the moment of scene loaded " + scene2.name );
+            //Debug.Log("Loaded scene at " + i + " is at the moment of scene loaded " + scene2.name );
         }
 
 
@@ -223,12 +223,12 @@ public class SceneMover : NetworkBehaviour
     {
         if (IsOwner)
         {
-            Debug.LogError("Is owner is called ");
+            //Debug.LogError("Is owner is called ");
 
             SetOwnerSceneMoverScene(sceneToMoveTo.name);
         }
 
-        Debug.Log("Scene to move to is " + sceneNameAsString);
+        //Debug.Log("Scene to move to is " + sceneNameAsString);
 
         int index = UnityEngine.SceneManagement.SceneManager.sceneCount;
 
@@ -237,16 +237,16 @@ public class SceneMover : NetworkBehaviour
         for (int i = 0; i < index; i++)
         {
             UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            Debug.Log("Loaded scene at " + i + " is " + scene.name);
+            //Debug.Log("Loaded scene at " + i + " is " + scene.name);
         }
 
-        Debug.Log("Active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        //Debug.Log("Active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
         incomingScene = sceneToMoveTo;
 
         //NetworkSceneLoader.Instance.ServerManager.Spawn(gameObject, connection, sceneToMoveTo);
         //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, sceneToLoad);
-        Debug.Log("Moving to scene " + sceneToLoad.name + " network id is " + connection.ClientId + "gameobject name is " + gameObject.name + " active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        //Debug.Log("Moving to scene " + sceneToLoad.name + " network id is " + connection.ClientId + "gameobject name is " + gameObject.name + " active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
 
 
@@ -261,7 +261,7 @@ public class SceneMover : NetworkBehaviour
                                  UnityEngine.SceneManagement.Scene sceneToMoveTo,
                                  string sceneNameAsString)
     {
-        Debug.Log("Scene to move to is " + sceneNameAsString);
+        //Debug.Log("Scene to move to is " + sceneNameAsString);
 
         int index = UnityEngine.SceneManagement.SceneManager.sceneCount;
 
@@ -270,16 +270,16 @@ public class SceneMover : NetworkBehaviour
         for (int i = 0; i < index; i++)
         {
             UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-            Debug.Log("Loaded scene at " + i + " is " + scene.name);
+            //Debug.Log("Loaded scene at " + i + " is " + scene.name);
         }
 
-        Debug.Log("Active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        //Debug.Log("Active scene is " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
         incomingScene = sceneToMoveTo;
 
         //NetworkSceneLoader.Instance.ServerManager.Spawn(gameObject, connection, sceneToMoveTo);
         //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-        Debug.Log("Moving to scene " + sceneToLoad.name + "gameobject name is " + gameObject.name);
+        //Debug.Log("Moving to scene " + sceneToLoad.name + "gameobject name is " + gameObject.name);
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, sceneToLoad);
 
 
@@ -290,7 +290,7 @@ public class SceneMover : NetworkBehaviour
     {
         incomingSceneName = sceneName;
 
-        Debug.Log("incoming scene name as string is " + sceneName);
+        //Debug.Log("incoming scene name as string is " + sceneName);
     }
 
 
@@ -324,7 +324,7 @@ public class SceneMover : NetworkBehaviour
 
         //objectToMove.gameObject.SetActive(false);
 
-        Debug.LogError("Making sure the object does not get desotryed");
+        //Debug.LogError("Making sure the object does not get desotryed");
     }
 
     }
@@ -350,7 +350,7 @@ public class SceneMover : NetworkBehaviour
 
     public void OnActiveSceneSet(NetworkConnection connection, Scene ownerScene)
     {
-        Debug.LogError("On active scene set. Owner scene name is " + ownerScene.name) ;
+        //Debug.LogError("On active scene set. Owner scene name is " + ownerScene.name) ;
 
         if (gameObject.scene.name.Equals(ownerScene.name))
         {
@@ -362,11 +362,11 @@ public class SceneMover : NetworkBehaviour
     public void OnActiveSceneChanged(UnityEngine.SceneManagement.Scene scene,
                                      UnityEngine.SceneManagement.LoadSceneMode mode)
     {
-        Debug.LogError("Evento of scene change is fired. SCENE NAME IS " + scene.name);
+        //Debug.LogError("Evento of scene change is fired. SCENE NAME IS " + scene.name);
 
         if (string.IsNullOrEmpty(scene.name))
         {
-            Debug.LogError("Null or empty scene name. SCENE NAME IS " + scene.name);
+            //Debug.LogError("Null or empty scene name. SCENE NAME IS " + scene.name);
             return;
         }
 
@@ -380,7 +380,7 @@ public class SceneMover : NetworkBehaviour
                 && gameObject.scene.name.Equals(scene.name))
             {
                 SceneLoader.Instance.UnpackNonPlayerPlayer(gameObjects);
-                Debug.LogError("Names match. Unpack");
+                //Debug.LogError("Names match. Unpack");
             }
 
             else
@@ -388,7 +388,7 @@ public class SceneMover : NetworkBehaviour
 
                 SceneLoader.Instance.PackNonPlayerPlayer(GetComponentsInChildren<Transform>());
                 //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
-                Debug.LogError("Names do not match. Pack");
+                //Debug.LogError("Names do not match. Pack");
 
                 if (scene.IsValid())
                 {
@@ -398,7 +398,7 @@ public class SceneMover : NetworkBehaviour
         }
 
         //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, incomingScene);
-        Debug.LogError("The gameobject just moved to scene " + gameObject.scene.name);
+        //Debug.LogError("The gameobject just moved to scene " + gameObject.scene.name);
 
         //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName(incomingSceneName));
     }
@@ -409,7 +409,7 @@ public class SceneMover : NetworkBehaviour
 
         if (string.IsNullOrEmpty(scene.name))
         {
-            Debug.LogError("Null or empty scene name");
+            //Debug.LogError("Null or empty scene name");
             return;
         }
 
@@ -422,8 +422,9 @@ public class SceneMover : NetworkBehaviour
         else
         {
             UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("MovedObjectsHolder"));
-            Debug.LogError("Invalid scene. Moving to moved objects holder");
+            //Debug.LogError("Invalid scene. Moving to moved objects holder");
             StopAllCoroutines();
+            gameObject.SetActive(true);
             StartCoroutine(DelayedSceneMovement());
         }
 
@@ -437,7 +438,7 @@ public class SceneMover : NetworkBehaviour
         if (gameObject.scene.name.Equals(scene.name))
         {
             SceneLoader.Instance.UnpackNonPlayerPlayer(gameObjects);
-            Debug.LogError("Names match. Unpack");
+            //Debug.LogError("Names match. Unpack");
         }
 
         else
@@ -445,19 +446,19 @@ public class SceneMover : NetworkBehaviour
 
             SceneLoader.Instance.PackNonPlayerPlayer(GetComponentsInChildren<Transform>());
             //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
-            Debug.LogError("Names do not match. Pack. Gameobject scene name is " + gameObject.scene.name + " scene name is " + scene.name);
+            //Debug.LogError("Names do not match. Pack. Gameobject scene name is " + gameObject.scene.name + " scene name is " + scene.name);
 
 
         }
 
         if (gameObject.scene.name.Equals("MovedObjectsHolder"))
         {
-            Debug.LogError("We ended up being in MovedObjectsHolder. Do the delayed moving");
+            //Debug.LogError("We ended up being in MovedObjectsHolder. Do the delayed moving");
             gameObject.SetActive(true);
             StopAllCoroutines();
             StartCoroutine(DelayedSceneMovement());
         }
-        Debug.LogError("Scene mover should do it's magic,");
+        //Debug.LogError("Scene mover should do it's magic,");
     }
 
     public void OnDestroy()
@@ -480,7 +481,7 @@ public class SceneMover : NetworkBehaviour
     private void StopTheFuckingCorouteines()
     {
         StopAllCoroutines();
-        Debug.LogError("Should have stopped coroutines");
+        //Debug.LogError("Should have stopped coroutines");
     }
 
     public IEnumerator DelayedSceneMovement()
@@ -492,7 +493,7 @@ public class SceneMover : NetworkBehaviour
         {
             for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
             {
-                Debug.LogError("Currently loaded scene is " + UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).name);
+                //Debug.LogError("Currently loaded scene is " + UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).name);
 
                 Scene valid;
                 bool unassignedValid = true;
@@ -506,12 +507,12 @@ public class SceneMover : NetworkBehaviour
                     UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, valid);
                     searchingForAValidScene = false;
 
-                    Debug.LogError("OKAY, HERE WE ARE. A found non-moved objects holder scene is " + valid.name + " gameobject scene name is " + gameObject.scene.name);
+                    //Debug.LogError("OKAY, HERE WE ARE. A found non-moved objects holder scene is " + valid.name + " gameobject scene name is " + gameObject.scene.name);
 
                     if (gameObject.scene.name.Equals(valid.name))
                     {
                         SceneLoader.Instance.UnpackNonPlayerPlayer(gameObjects);
-                        Debug.LogError("Names match. Unpack");
+                        //Debug.LogError("Names match. Unpack");
                     }
 
                     else
@@ -519,7 +520,7 @@ public class SceneMover : NetworkBehaviour
 
                         SceneLoader.Instance.PackNonPlayerPlayer(GetComponentsInChildren<Transform>());
                         //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
-                        Debug.LogError("Names do not match. Pack");
+                        //Debug.LogError("Names do not match. Pack");
 
 
                     }
@@ -546,7 +547,7 @@ public class SceneMover : NetworkBehaviour
 
             else
             {
-                Debug.LogError("Should break");
+                //Debug.LogError("Should break");
                 yield break;
             }
         }
@@ -555,7 +556,7 @@ public class SceneMover : NetworkBehaviour
     [ServerRpc]
     public void TellTheOwnerToMove()
     {
-        Debug.LogError("Should tell the owner to move");
+        //Debug.LogError("Should tell the owner to move");
 
 
         foreach (KeyValuePair<int, NetworkConnection> kvp in ClientManager.Clients)
@@ -567,7 +568,7 @@ public class SceneMover : NetworkBehaviour
 
     public void TellTheOwnerToMoveClientRpc(NetworkConnection connection)
     {
-        Debug.LogError("Should tell the owner to move");
+        //Debug.LogError("Should tell the owner to move");
 
         StarterAssets.ThirdPersonController third = GetComponentInChildren<StarterAssets.ThirdPersonController>(true);
         third.MoveSlightly();

@@ -98,7 +98,7 @@ namespace Vehicles
 
             DedicatedCarCamera.transform.rotation = lookRot;
 
-            Debug.Log("Start called on car manager");
+            //Debug.Log("Start called on car manager");
 
             if (NonNetworkRecognizer.Instance != null)
             {                
@@ -111,11 +111,11 @@ namespace Vehicles
                 CarManagerNonNetworked cmnn = nnCar.GetComponent<CarManagerNonNetworked>();
                 cmnn.SetSpawn(transform);
 
-                Debug.Log("Instantiating. Transform position is " + transform.position + " instantiated car transform position is " + nnCar.transform.position);
+                //Debug.Log("Instantiating. Transform position is " + transform.position + " instantiated car transform position is " + nnCar.transform.position);
 
                 Destroy(gameObject);
 
-                Debug.Log("Car scene is " + nnCar.gameObject.scene.name);
+                //Debug.Log("Car scene is " + nnCar.gameObject.scene.name);
             }
 
             //Debug.Break();

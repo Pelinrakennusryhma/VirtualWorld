@@ -9,6 +9,7 @@ using Scenes;
 using FishNet.Object;
 using FishNet.Component.Animating;
 using System.Collections.Generic;
+using FishNet.Object.Synchronizing;
 
 namespace Characters
 {
@@ -21,6 +22,9 @@ namespace Characters
 
         [SerializeField] CinemachineVirtualCamera _cinemachineVirtualCamera;
         [SerializeField] List<GameObject> ownedObjects;
+
+        [SyncVar]
+        public int ClientID;
 
         private void Awake()
         {
@@ -36,6 +40,11 @@ namespace Characters
             //Debug.LogError("Player emitter moved. Scene is " + gameObject.scene.name);
         }
 
+        public int GetClientID()
+        {
+            return ClientID;
+        }
+
         private void OnDestroy()
         {
             Debug.LogError("Player emitter got destroyed. Scene is " + gameObject.scene.name);
@@ -44,6 +53,17 @@ namespace Characters
         {
             base.OnStartClient();
             DoStartClientThings();
+
+            SetClientId(CharacterManager.Instance.ClientId);
+
+
+        }
+
+        [ServerRpc]
+        public void SetClientId(int id)
+        {
+            ClientID = id;
+            Debug.LogError("Set player emitter client id to " + ClientID);
         }
 
         private void DoStartClientThings()

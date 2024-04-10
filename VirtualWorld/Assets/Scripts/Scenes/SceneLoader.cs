@@ -168,13 +168,13 @@ namespace Scenes
 
                 if (NonNetworkRecognizer.Instance == null) 
                 {
-                    Debug.LogError("About to move to the networked scene");
+                    //Debug.LogError("About to move to the networked scene");
                     NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
                 }
 
                 else
                 {
-                    Debug.Log("Do the non-networked scene loading thingie");
+                    //Debug.Log("Do the non-networked scene loading thingie");
                     MoveToNonNetworkedScene(sceneName);
                 }
             } else
@@ -507,7 +507,7 @@ namespace Scenes
 
         public void UnpackNonPlayerPlayer(List<CachedGameObject> objects)
         {
-            Debug.LogError("Unpacking non player player");
+            //Debug.LogError("Unpacking non player player");
 
             for (int i = 0; i < objects.Count; i++) {
 
@@ -518,7 +518,7 @@ namespace Scenes
                 if (controller != null) 
                 {
                     controller.enabled = true;
-                    Debug.LogError("Enabled third person controller");
+                    //Debug.LogError("Enabled third person controller");
                 }
 
                 AnimatedObjectDisabler disabler = objects[i].gameObject.GetComponent<AnimatedObjectDisabler>();
@@ -545,7 +545,7 @@ namespace Scenes
         {
             for (int i = 0; i < objs.Length; i++) 
             {
-                Debug.LogError("PACKING NON PLAYER PLAYER. Objs[i] scene is  " + objs[i].gameObject.scene.name);
+                //Debug.LogError("PACKING NON PLAYER PLAYER. Objs[i] scene is  " + objs[i].gameObject.scene.name);
             }
 
             List<CachedGameObject> cahced = new List<CachedGameObject>();

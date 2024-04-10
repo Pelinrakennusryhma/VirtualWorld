@@ -53,7 +53,7 @@ namespace Characters
         {
             Instance = null;
 
-            Debug.Log("Character manager got destroyed. Scene is " + gameObject.scene.name);
+            //Debug.Log("Character manager got destroyed. Scene is " + gameObject.scene.name);
         }
 
         public void OnREspawn()
@@ -96,7 +96,7 @@ namespace Characters
 
             if (args.LoadedScenes == null|| args.LoadedScenes.Length == 0)
             {
-                Debug.LogError("No loaded scenes");
+                //Debug.LogError("No loaded scenes");
                 loadedScene = Scenes.NetworkSceneLoader.Instance.GetLatestLoaded();
             }
 
@@ -133,13 +133,13 @@ namespace Characters
                 }
             }
 
-            Debug.LogError("Found Scene movers length is " + sceneMovers.Count);
+            //Debug.LogError("Found Scene movers length is " + sceneMovers.Count);
             sceneMovers.Clear();
 
             LogSceneMovers();
-            Debug.LogError("ABOUT TO INFROM SCENE MOVERS. Scene movers length is " + sciinMuuvers.Count);
+            //Debug.LogError("ABOUT TO INFROM SCENE MOVERS. Scene movers length is " + sciinMuuvers.Count);
             InformSceneMovers(loadedScene);
-            Debug.LogError("SHOULD HAVE INFORMED SCENE MOVERS");
+            //Debug.LogError("SHOULD HAVE INFORMED SCENE MOVERS");
 
             if (foundAScene) 
             {
@@ -203,14 +203,14 @@ namespace Characters
 
         public void Respawn()
         {
-            Debug.LogError("Should respawn player4");
+            //Debug.LogError("Should respawn player4");
             OnSceneLoaded(new SceneLoadEndEventArgs());
         }
 
         public void AssSceneMover(SceneMover over)
         {
             sciinMuuvers.Add(over);
-            Debug.LogError("About to DELETE a scene mover");
+            //Debug.LogError("About to DELETE a scene mover");
             LogSceneMovers();
 
 
@@ -227,25 +227,25 @@ namespace Characters
             {
                 if (sciinMuuvers[i].gameObject != null) 
                 {
-                    Debug.LogError("Scene mover at " + i + " is " + sciinMuuvers[i].gameObject.name);
+                    //Debug.LogError("Scene mover at " + i + " is " + sciinMuuvers[i].gameObject.name);
                 }
 
                 else
                 {
-                    Debug.LogError("Null sciin muuver");
+                    //Debug.LogError("Null sciin muuver");
                 }
             }
 
-            Debug.LogError("Scene mover count is " + sciinMuuvers.Count);
+           // Debug.LogError("Scene mover count is " + sciinMuuvers.Count);
         }
 
         private void InformSceneMovers(Scene scene)
         {
-            Debug.LogError("About to inform scene movers of the scene "+ scene.name  );
+            //Debug.LogError("About to inform scene movers of the scene "+ scene.name  );
 
             for (int i = 0; i < sciinMuuvers.Count; i++)
             {
-                Debug.LogError("Informing scene mover at " + i + " that is in the scene " + sciinMuuvers[i].gameObject.scene.name);
+                //Debug.LogError("Informing scene mover at " + i + " that is in the scene " + sciinMuuvers[i].gameObject.scene.name);
                 sciinMuuvers[i].DecideThisAndThat(scene);
             }
         }
@@ -263,7 +263,7 @@ namespace Characters
 
         public void OnSpawn()
         {
-            Debug.LogError("OnSpawn called " + Time.time);
+            //Debug.LogError("OnSpawn called " + Time.time);
             ownedController.MoveSlightly();
 
             for (int i = 0; i< sciinMuuvers.Count; i++)
