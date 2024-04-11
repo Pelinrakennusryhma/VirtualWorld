@@ -27,6 +27,10 @@ namespace Animations
         // like networked animations
         List<MonoBehaviour> ignoredMonobehaviours = new List<MonoBehaviour>();
 
+        public GameObject BlockerCollider;
+
+        public CapsuleCollider CapsuleCollider;
+
         void Start()
         {
             ignoredMonobehaviours.Add(GetComponent(typeof(Animator)) as MonoBehaviour);
@@ -34,6 +38,22 @@ namespace Animations
             ignoredMonobehaviours.Add(GetComponent(typeof(NetworkObject)) as MonoBehaviour);
             ignoredMonobehaviours.Add(GetComponent(typeof(NetworkTransform)) as MonoBehaviour);
             ignoredMonobehaviours.Add(this);
+
+            //Debug.LogError("Animated object disabler gameobject name is " + gameObject.name);
+
+            //if (CharacterController != null) 
+            //{
+            //    BlockerCollider = new GameObject();
+            //    BlockerCollider.gameObject.name = "BlockerCollider";
+            //    BlockerCollider.transform.parent = transform;
+            //    CapsuleCollider capsule = BlockerCollider.AddComponent<CapsuleCollider>();
+            //    capsule.radius = CharacterController.radius;
+            //    capsule.height = CharacterController.height;
+            //    capsule.center = CharacterController.center;
+
+            //    BlockerCollider.layer = 8;
+            //}
+
         }
 
 
@@ -73,26 +93,36 @@ namespace Animations
             //CharacterController controller = GetComponentInChildren<CharacterController>(true);
             //controller.enabled = true;
 
-            //CharacterController.enabled = true;
+            //if (CharacterController != null)
+            //{
+            //    CharacterController.enabled = true;
+            //}
 
 
-            Debug.LogError("About to enable colliders");
+           // Debug.LogError("About to enable colliders");
 
             // Colliders
             foreach (Collider collider in GetComponents<Collider>())
             {
+                //Debug.LogError("We have a collider at gameobject" + gameObject.name);
+
                 if (collider is CharacterController)
                 {
                     //collider.enabled = true;
                     if (gameObject.GetComponentInChildren<PlayerEmitter>(true)) 
                     {
-                        Debug.Log("Character controller collider is enabled " + collider.enabled + " game object name is " + gameObject.name + " client id is " + GetComponentInChildren<PlayerEmitter>(true).GetClientID());
+                        //Debug.Log("Character controller collider is enabled " + collider.enabled + " game object name is " + gameObject.name + " client id is " + GetComponentInChildren<PlayerEmitter>(true).GetClientID());
                     }
                     else
                     {
-                        Debug.LogError("Null player emitter");
+                        //Debug.LogError("Null player emitter");
                     }//continue;
                 }
+            }
+
+            if (CapsuleCollider != null)
+            {
+                CapsuleCollider.enabled = true;
             }
         }
 
@@ -114,21 +144,23 @@ namespace Animations
 
             if (gameObject.GetComponentInChildren<PlayerEmitter>(true))
             {
-                Debug.LogError("About to disable colliders of client id " + GetComponentInChildren<PlayerEmitter>(true).GetClientID());
+                //Debug.LogError("About to disable colliders of client id " + GetComponentInChildren<PlayerEmitter>(true).GetClientID());
             }
 
             else
             {
-                Debug.LogError("Null player emitter");
+                //Debug.LogError("Null player emitter");
             }
 
             // Colliders
             foreach (Collider collider in GetComponents<Collider>())
             {
-                if(collider is CharacterController)
+                //Debug.LogError("We have a collider at gameobject" + gameObject.name);
+
+                if (collider is CharacterController)
                 {
 
-                    Debug.Log("Character controller collider is enabled " + collider.enabled + " gameobject name is " + gameObject.name);
+                    //Debug.Log("Character controller collider is enabled " + collider.enabled + " gameobject name is " + gameObject.name);
                     continue;
                 }
 
@@ -175,7 +207,15 @@ namespace Animations
             //CharacterController controller = GetComponentInChildren<CharacterController>(true);
             //controller.enabled = false;
 
-            //CharacterController.enabled = false;
+            //if (CharacterController != null)
+            //{
+            //    CharacterController.enabled = false;
+            //}
+
+            if (CapsuleCollider != null) 
+            {
+                CapsuleCollider.enabled = false;
+            }
         }
     }
 }

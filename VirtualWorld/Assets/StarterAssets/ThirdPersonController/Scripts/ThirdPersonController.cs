@@ -145,7 +145,7 @@ namespace StarterAssets
 
         public void TryToSpawnToLaserTagSpot()
         {
-            //Debug.Log("Trying to spawn to laser tag spot");
+            //Debug.LogError("Trying to spawn to laser tag spot");
 
             LaserTagInitialSpawnSpot spawnSpot = FindObjectOfType<LaserTagInitialSpawnSpot>();
 
@@ -157,7 +157,7 @@ namespace StarterAssets
                 transform.position = pos;
                 transform.rotation = rot;
 
-                //Debug.Log("Should set position and rotation");
+                //Debug.LogError("Managed to find a spawn spot. Should set position and rotation");
 
             }
         }

@@ -33,6 +33,8 @@ namespace Characters
                 gameObject.SetActive(false);
             }
 
+
+
             //Debug.LogError("Player emitter awoke. Scene is " + gameObject.scene.name);
             //UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
             //DoStartClientThings();
@@ -47,7 +49,7 @@ namespace Characters
 
         private void OnDestroy()
         {
-            Debug.LogError("Player emitter got destroyed. Scene is " + gameObject.scene.name);
+            //Debug.LogError("Player emitter got destroyed. Scene is " + gameObject.scene.name);
         }
         public override void OnStartClient()
         {
@@ -63,7 +65,7 @@ namespace Characters
         public void SetClientId(int id)
         {
             ClientID = id;
-            Debug.LogError("Set player emitter client id to " + ClientID);
+            //Debug.LogError("Set player emitter client id to " + ClientID);
         }
 
         private void DoStartClientThings()

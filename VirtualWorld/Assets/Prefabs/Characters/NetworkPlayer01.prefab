@@ -3274,6 +3274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterController: {fileID: 3884531294408016767}
+  BlockerCollider: {fileID: 0}
+  CapsuleCollider: {fileID: 3783174288072433619}
 --- !u!114 &1085394686146889340
 MonoBehaviour:
   m_ObjectHideFlags: 0
