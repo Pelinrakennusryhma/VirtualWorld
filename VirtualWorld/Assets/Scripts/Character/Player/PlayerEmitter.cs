@@ -10,6 +10,7 @@ using FishNet.Object;
 using FishNet.Component.Animating;
 using System.Collections.Generic;
 using FishNet.Object.Synchronizing;
+using FishNet.Connection;
 
 namespace Characters
 {
@@ -100,6 +101,16 @@ namespace Characters
                 inputs.enabled = true;
                 playerInput.enabled = true;
             }
+        }
+
+        public void OnSceneLoaded(NetworkConnection connection,
+                                  UnityEngine.SceneManagement.Scene scene,
+                                  string sceneName)
+        {
+            UnityEngine.SceneManagement.Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            Debug.LogError("Should spawn a first person controller. Active scene is " + activeScene.name);
+
+            CharacterManager.Instance.OnShouldSpawnAFirstPersonController(connection, scene, this, sceneName);
         }
     }
 }

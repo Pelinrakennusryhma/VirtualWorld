@@ -37,6 +37,8 @@ namespace Characters
 
         public SceneMover OwnerSceneMover;
 
+        public FirstPersonSpawner FirstPersonSpawner;
+
 
         private void Awake()
         {
@@ -270,6 +272,34 @@ namespace Characters
             {
                 sciinMuuvers[i].GetComponentInChildren<ThirdPersonController>(true).MoveSlightly();
             }
+        }
+
+        [TargetRpc]
+        public void OnShouldSpawnAFirstPersonController(NetworkConnection connection,
+                                                        UnityEngine.SceneManagement.Scene scene,
+                                                        PlayerEmitter informer,
+                                                        string sceneName)
+        {
+            bool isALasterTagScene = false;
+
+            if (sceneName.Equals("LobbyLaserTag")
+                || sceneName.Equals("Map1LaserTag")
+                || sceneName.Equals("Map2LaserTag")
+                || sceneName.Equals("Map3LaserTag"))
+            {
+                isALasterTagScene = true;
+            }
+
+            if (isALasterTagScene)
+            {
+                Debug.LogError("Shuld spawn a first person controller. Scene name is " + sceneName);
+                FirstPersonSpawner.OnSpawnFirsPersonController();
+            }      
+        }
+
+        public void SetFirstPersonSpawner(FirstPersonSpawner spawner)
+        {
+            FirstPersonSpawner = spawner;
         }
     }
 }

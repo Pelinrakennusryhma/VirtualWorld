@@ -65,7 +65,11 @@ public class SceneMover : NetworkBehaviour
     {
         //Debug.Log("SCENE SYNC VAR BEING UPDATED. Scene sync var just got updated. The new value is " + next);
 
-
+        if (SceneLoader.Instance.sceneLoadParams.scenePackMode == ScenePackMode.ALL)
+        {
+            Debug.LogError("Dont mess with packing right now, because everything should be packed away already");
+            return;
+        }
 
 
         SceneMover[] allMovers = FindObjectsOfType<SceneMover>(true);

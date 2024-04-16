@@ -59,6 +59,8 @@ namespace Animations
 
         public void Enable()
         {
+            Debug.LogError("Enabling. We are probably unpacking");
+
             foreach (CachedMonoBehaviour cachedMono in monoBehaviours)
             {
                 cachedMono.mb.enabled = cachedMono.isEnabled;
@@ -128,6 +130,8 @@ namespace Animations
 
         public void Disable()
         {
+
+            Debug.LogError("Disabling");
             monoBehaviours.Clear();
             colliders.Clear();
             childGameObjects.Clear();
@@ -139,6 +143,8 @@ namespace Animations
                 {
                     monoBehaviours.Add(new CachedMonoBehaviour(monoBehaviour, monoBehaviour.isActiveAndEnabled));
                     monoBehaviour.enabled = false;
+
+                    Debug.LogError("disabled " + monoBehaviour.name);
                 }
             }
 
@@ -166,6 +172,7 @@ namespace Animations
 
                 colliders.Add(new CachedCollider(collider, collider.enabled));
                 collider.enabled = false;
+                Debug.LogError("disabled " + collider.name);
             }
 
             // Child gameObjects
@@ -173,6 +180,7 @@ namespace Animations
             {
                 childGameObjects.Add(new CachedGameObject(child.gameObject, child.gameObject.activeSelf));
                 child.gameObject.SetActive(false);
+                Debug.LogError("disabled " + child.name);
             }
 
             // In case of owned player character, stop animations from playing so we don't hear footsteps in minigame

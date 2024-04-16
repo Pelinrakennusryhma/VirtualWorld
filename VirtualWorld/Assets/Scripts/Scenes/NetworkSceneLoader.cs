@@ -201,6 +201,14 @@ namespace Scenes
             }
 
 
+            PlayerEmitter[] emitters = FindObjectsOfType<PlayerEmitter>(true);
+
+            for (int i = 0; i < emitters.Length; i++)
+            {
+                emitters[i].OnSceneLoaded(conn, newSceneRef, newSceneRef.name);
+
+            }
+
 
             //SceneManager.LoadConnectionScenes(conn, sld);
 
@@ -404,6 +412,16 @@ namespace Scenes
             {
                 //Debug.LogError("We have a scene mover at scene " + sceneMovers[i].gameObject.scene.name);
                 sceneMovers[i].OnActiveSceneSet(pendingConn2, sceneMovers[i].gameObject.scene);
+            }
+
+
+            CharacterManager[] characterManagers = FindObjectsOfType<CharacterManager>(true);
+
+            for (int i = 0; i< characterManagers.Length; i++)
+            {
+                Debug.LogError("Found a character manager. " + characterManagers[i].gameObject.name);
+
+
             }
         }
 

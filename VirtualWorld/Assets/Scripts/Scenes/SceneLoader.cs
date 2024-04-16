@@ -154,6 +154,8 @@ namespace Scenes
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
 
+            Debug.LogError("Loading scene at path " + scenePath);
+
             for(int paska = 0; paska < CharacterManager.Instance.sciinMuuvers.Count; paska++)
             {
                 UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(CharacterManager.Instance.sciinMuuvers[paska].gameObject, UnityEngine.SceneManagement.SceneManager.GetSceneByName("Playground"));
@@ -179,6 +181,8 @@ namespace Scenes
                 }
             } else
             {
+
+                Debug.LogError("Scene to load name is " + sceneName);
                 this.sceneLoadParams = sceneLoadParams;
                 StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
             }
@@ -269,9 +273,18 @@ namespace Scenes
 
             Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
+            Debug.LogError("Active scene is " + activeScene.name + " active scene is valid " + activeScene.IsValid());
+
             if (sceneToPack != null)
             {
-                activeScene = sceneToPack;
+                Debug.LogError("Set active scene to scene to pack. Active scene name is "+ activeScene.name);
+                
+                if (!string.IsNullOrEmpty(sceneToPack.name)) 
+                {
+                    activeScene = sceneToPack;                
+                    Debug.LogError("Set active scene to scene to pack . Active scene name is " + activeScene.name);
+                }
+
             }
 
             if (scenePackMode == ScenePackMode.PLAYER_ONLY)
@@ -291,16 +304,23 @@ namespace Scenes
             }
             else
             {
+                Debug.LogError("Active scene is " + activeScene.name + " active scene is valid " + activeScene.IsValid()+ ". About to get root gameobjects");
+
+
                 GameObject[] allObjects = activeScene.GetRootGameObjects();
 
                 foreach (GameObject go in allObjects)
                 {
+                    Debug.LogError("scene pack mode is " + scenePackMode.ToString());
+
                     if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManager.Instance.OwnedCharacter)
                     {
                         // move character to the new scene here?
                     }
                     else
                     {
+
+                        Debug.LogError("Packing object " + go.name);
                         bool shouldPack = true;
 
                         if (go.GetComponent<PlayerEmitter>())
@@ -336,12 +356,17 @@ namespace Scenes
         {
             cachedGameObjectList.Add(new CachedGameObject(go, go.activeSelf));
 
+            bool dontDiasbleGO = false;
+
             // Animated NetworkObjects are disabled via script
             AnimatedObjectDisabler disabler = go.GetComponent<AnimatedObjectDisabler>();
             if (disabler != null)
             {
                 disabler.Disable();
-                return;
+
+                Debug.LogError("Disabled an animated object");
+                dontDiasbleGO = true;
+                //return;
             }
 
             // Containers holding animated NetworkObjects
@@ -349,11 +374,18 @@ namespace Scenes
             if(animatedObjectContainer != null)
             {
                 animatedObjectContainer.DisableChildren();
-                return;
+                Debug.LogError("Disabled an animated object container");
+                dontDiasbleGO = true;
+                //return;
             }
 
+
             // Normal objects are simply disabled
-            go.SetActive(false);
+            if (!dontDiasbleGO) 
+            {
+                go.SetActive(false);
+                Debug.LogError("Set GO to inactive");
+            }
 
         }
 
