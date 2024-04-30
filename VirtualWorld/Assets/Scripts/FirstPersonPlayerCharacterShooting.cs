@@ -28,7 +28,7 @@ public class FirstPersonPlayerCharacterShooting : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Start called");
+        //Debug.Log("Start called");
 
         Instance = this;
 

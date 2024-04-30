@@ -2290,7 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f16b97cbc7e8a4283c88602e1007d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 4
+  _componentIndexCache: 5
   _addedNetworkObject: {fileID: 6723520626843087359}
   _networkObjectCache: {fileID: 6723520626843087359}
   nameplate: {fileID: 7877624777775460607}
@@ -2895,7 +2895,13 @@ MonoBehaviour:
   CameraAngleOverride: 0
   LockCameraPosition: 0
   shouldAnimate: 0
+  _controller: {fileID: 0}
   _mainCamera: {fileID: 828501038496082298}
+  FrameCount: 0
+  OuterSync: 0
+  MeshRenderers: []
+  GraphicsObject: {fileID: 5807826285939670799}
+  SkinnedMeshRenderer: {fileID: 5817934334024221847}
 --- !u!114 &3243273416863477651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3155,6 +3161,7 @@ MonoBehaviour:
   - {fileID: 7437850499667014438}
   - {fileID: 6388654011615722710}
   - {fileID: 1085394686146889340}
+  - {fileID: 4489870899438534653}
   - {fileID: 6295185017534091790}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField:
@@ -3306,9 +3313,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f799bdb42443343bf1011d341ea8ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 4
+  _addedNetworkObject: {fileID: 6723520626843087359}
+  _networkObjectCache: {fileID: 6723520626843087359}
   FPSPrefab: {fileID: 3258892220832888289, guid: 42ed92e550238e541ba32315ade9d767,
     type: 3}
   SpawnedObject: {fileID: 0}
+  third: {fileID: 7279262954481719501}
+  FirstSpawn: 0
 --- !u!1 &9016680625421896465
 GameObject:
   m_ObjectHideFlags: 0

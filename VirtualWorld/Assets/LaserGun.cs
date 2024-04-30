@@ -86,4 +86,12 @@ public class LaserGun : Weapon
         //Debug.Log("Here should be functionality for returning object to pool. If needed");
     }
 
+    public void MoveProjectilesToScene(UnityEngine.SceneManagement.Scene scene)
+    {
+        for (int i =0; i < Projectiles.Count; i++)
+        {
+            UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(Projectiles[i].gameObject, scene);
+        }
+    }
+
 }

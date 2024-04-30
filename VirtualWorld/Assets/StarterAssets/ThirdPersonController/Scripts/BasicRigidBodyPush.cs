@@ -13,6 +13,8 @@ public class BasicRigidBodyPush : MonoBehaviour
 
 	private void PushRigidBodies(ControllerColliderHit hit)
 	{
+		Debug.LogError("Pushing rigidbody" + hit.gameObject.name);
+
 		// https://docs.unity3d.com/ScriptReference/CharacterController.OnControllerColliderHit.html
 
 		// make sure we hit a non kinematic rigidbody

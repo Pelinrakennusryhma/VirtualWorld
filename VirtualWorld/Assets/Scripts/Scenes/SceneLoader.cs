@@ -100,6 +100,10 @@ namespace Scenes
 
         bool InSoloScene { get { return cachedGameObjectList.Count > 0; } }
 
+        public bool DontMessWithPacking;
+
+        public bool WeAreInMiniScene;
+
         void Awake()
         {
             if (Instance != null && Instance != this)
@@ -154,7 +158,7 @@ namespace Scenes
         public void LoadScene(string scenePath, SceneLoadParams sceneLoadParams)
         {
 
-            Debug.LogError("Loading scene at path " + scenePath);
+            //Debug.LogError("Loading scene at path " + scenePath);
 
             for(int paska = 0; paska < CharacterManager.Instance.sciinMuuvers.Count; paska++)
             {
@@ -163,6 +167,9 @@ namespace Scenes
 
             string sceneName = ParseSceneName(scenePath);
 
+            DontMessWithPacking = true;
+            WeAreInMiniScene = false;
+
             // ALL_BUT_PLAYER essentially means loading a network scene because everything but player character is packed away.. not smooth.
             if (sceneLoadParams.scenePackMode == ScenePackMode.ALL_BUT_PLAYER)
             {
@@ -170,6 +177,7 @@ namespace Scenes
 
                 if (NonNetworkRecognizer.Instance == null) 
                 {
+                    DontMessWithPacking = false;
                     //Debug.LogError("About to move to the networked scene");
                     NetworkSceneLoader.Instance.MoveToNetworkScene(InstanceFinder.ClientManager.Connection, sceneName);
                 }
@@ -181,7 +189,8 @@ namespace Scenes
                 }
             } else
             {
-
+                WeAreInMiniScene = true;
+                DontMessWithPacking = false;
                 Debug.LogError("Scene to load name is " + sceneName);
                 this.sceneLoadParams = sceneLoadParams;
                 StartCoroutine(LoadAsyncScene(sceneName, sceneLoadParams));
@@ -273,16 +282,16 @@ namespace Scenes
 
             Scene activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
-            Debug.LogError("Active scene is " + activeScene.name + " active scene is valid " + activeScene.IsValid());
+            //Debug.LogError("Active scene is " + activeScene.name + " active scene is valid " + activeScene.IsValid());
 
             if (sceneToPack != null)
             {
-                Debug.LogError("Set active scene to scene to pack. Active scene name is "+ activeScene.name);
+                //Debug.LogError("Set active scene to scene to pack. Active scene name is "+ activeScene.name);
                 
                 if (!string.IsNullOrEmpty(sceneToPack.name)) 
                 {
                     activeScene = sceneToPack;                
-                    Debug.LogError("Set active scene to scene to pack . Active scene name is " + activeScene.name);
+                    //Debug.LogError("Set active scene to scene to pack . Active scene name is " + activeScene.name);
                 }
 
             }
@@ -304,14 +313,14 @@ namespace Scenes
             }
             else
             {
-                Debug.LogError("Active scene is " + activeScene.name + " active scene is valid " + activeScene.IsValid()+ ". About to get root gameobjects");
+                //Debug.LogError("Active scene is " + activeScene.name + " active scene is valid " + activeScene.IsValid()+ ". About to get root gameobjects");
 
 
                 GameObject[] allObjects = activeScene.GetRootGameObjects();
 
                 foreach (GameObject go in allObjects)
                 {
-                    Debug.LogError("scene pack mode is " + scenePackMode.ToString());
+                    //Debug.LogError("scene pack mode is " + scenePackMode.ToString());
 
                     if (scenePackMode == ScenePackMode.ALL_BUT_PLAYER && go == CharacterManager.Instance.OwnedCharacter)
                     {
@@ -320,7 +329,7 @@ namespace Scenes
                     else
                     {
 
-                        Debug.LogError("Packing object " + go.name);
+                        //Debug.LogError("Packing object " + go.name);
                         bool shouldPack = true;
 
                         if (go.GetComponent<PlayerEmitter>())
@@ -329,6 +338,11 @@ namespace Scenes
                         }
 
                         shouldPack = true;
+
+                        if (go.GetComponentInChildren<FirstPersonPlayerControllerShooting>(true))
+                        {
+                            shouldPack = false;
+                        }
 
                         if (shouldPack) 
                         {
@@ -364,7 +378,7 @@ namespace Scenes
             {
                 disabler.Disable();
 
-                Debug.LogError("Disabled an animated object");
+                //Debug.LogError("Disabled an animated object");
                 dontDiasbleGO = true;
                 //return;
             }
@@ -374,7 +388,7 @@ namespace Scenes
             if(animatedObjectContainer != null)
             {
                 animatedObjectContainer.DisableChildren();
-                Debug.LogError("Disabled an animated object container");
+                //Debug.LogError("Disabled an animated object container");
                 dontDiasbleGO = true;
                 //return;
             }
@@ -384,7 +398,7 @@ namespace Scenes
             if (!dontDiasbleGO) 
             {
                 go.SetActive(false);
-                Debug.LogError("Set GO to inactive");
+                //Debug.LogError("Set GO to inactive");
             }
 
         }
@@ -458,7 +472,7 @@ namespace Scenes
 
         private void MoveToNonNetworkedScene(string newSceneName)
         {
-            Debug.Log("Moving to non-networked scene " + newSceneName);
+            //Debug.Log("Moving to non-networked scene " + newSceneName);
 
             string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
@@ -478,7 +492,7 @@ namespace Scenes
                                         string oldScene, 
                                         GameObject objectToMove)
         {
-            Debug.Log("Started coroutine of scene switching");
+            //Debug.Log("Started coroutine of scene switching");
 
 
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(newScene, LoadSceneMode.Additive);
@@ -503,7 +517,7 @@ namespace Scenes
 
                 if (connector != null)
                 {
-                    Debug.Log("Found a connector " + connector.gameObject.name);
+                    //Debug.Log("Found a connector " + connector.gameObject.name);
                     break;
                 }
             }

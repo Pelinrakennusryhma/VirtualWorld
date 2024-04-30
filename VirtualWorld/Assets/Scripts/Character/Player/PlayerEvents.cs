@@ -180,7 +180,7 @@ namespace Characters
 
         public void CallEventSceneLoadStarted()
         {
-            Debug.Log("scene load started?!?!");
+            //Debug.Log("scene load started?!?!");
             EventSceneLoadStarted.Invoke();
         }
 
@@ -188,7 +188,7 @@ namespace Characters
 
         public void CallEventSceneLoadEnded()
         {
-            Debug.Log("scene load ended?!?!");
+            //Debug.Log("scene load ended?!?!");
             EventSceneLoadEnded.Invoke();
         }
         #endregion

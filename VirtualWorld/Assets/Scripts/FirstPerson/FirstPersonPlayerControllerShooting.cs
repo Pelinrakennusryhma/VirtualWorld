@@ -52,6 +52,15 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
 
     private bool canGetGrounded = true;
 
+    public NetworkedFPSControllerInitializer netFPS;
+
+    public int FrameCount;
+
+    public Vector3 LastPos;
+    public bool JumpedLastFrame;
+    public bool WasCrouchedLastFrame;
+
+
     void Awake()
     {
         Controls = GetComponent<FirstPersonPlayerControlsShooting>();
@@ -67,6 +76,7 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         }
 
         cameraOriginalLocalPosition = Camera.transform.localPosition;
+        netFPS = GetComponent<NetworkedFPSControllerInitializer>();
         
     }
 
@@ -409,6 +419,16 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         Vector3 xzVelo = new Vector3(Rigidbody.velocity.x, 0, Rigidbody.velocity.z);
         Vector3 clampedVelo;
 
+        if (isCrouching)
+        {
+            WasCrouchedLastFrame = true;
+        }
+
+        else
+        {
+            WasCrouchedLastFrame = false;
+        }
+
         if (!isRunning
             && !isCrouching) 
         {
@@ -447,7 +467,14 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         {
             isJumping = true;
 
+            JumpedLastFrame = true;
+
             //Debug.Log("We are jumping. Space was pressed " + SpaceWasPressedDuringLastUpdate + " jumptimer " + jumpTimer + " rb velo y " + Rigidbody.velocity.y + " at time " + Time.time);
+        }
+
+        else
+        {
+            JumpedLastFrame = false;
         }
 
         if (((isGrounded 
@@ -524,5 +551,42 @@ public class FirstPersonPlayerControllerShooting : MonoBehaviour
         }
 
         //Debug.Log("Unparented from moving platform");
+    }
+
+    public void LateUpdate()
+    {
+        //Debug.LogError("Syncing position to " + transform.position + " on frame " + FrameCount + " at time " + Time.time);
+        netFPS.SyncFirstPersonPosToThirdPersonController(transform.position, 
+                                                         transform.rotation, 
+                                                         LastPos, 
+                                                         JumpedLastFrame, 
+                                                         WasCrouchedLastFrame);
+        LastPos = transform.position;
+        FrameCount++;
+    }
+
+    public void DisablePhysicsTest()
+    {
+        Rigidbody.isKinematic = true;
+        Rigidbody.useGravity = false;
+
+        StandingCapsuleCollider.enabled = false;
+        CrouchingCapsuleCollider.enabled = false;
+
+        //Debug.LogError("Disabling fps physics for testing purposes");
+
+    }
+
+    public void OnCollisionStay(Collision collision)
+    {
+       // Debug.LogError("On collision stay with " + collision.gameObject.name + " collider name is " + collision.collider.gameObject.name);
+    }
+
+    public void ChangeColliderSize(CharacterController referenceController)
+    {
+        StandingCapsuleCollider.center = referenceController.center;
+        StandingCapsuleCollider.height = referenceController.height;
+        StandingCapsuleCollider.radius = referenceController.radius;
+        //Debug.LogError("Messing with collider sizes");
     }
 }

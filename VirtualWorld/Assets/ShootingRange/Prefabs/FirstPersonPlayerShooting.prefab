@@ -1449,7 +1449,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 503
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1528,6 +1528,7 @@ GameObject:
   - component: {fileID: 2627714150616012581}
   - component: {fileID: 7462703147264723855}
   - component: {fileID: 6629649716766176095}
+  - component: {fileID: 8483252417781072297}
   m_Layer: 0
   m_Name: FirstPersonPlayerShooting
   m_TagString: Player
@@ -2116,6 +2117,18 @@ MonoBehaviour:
   timer: {fileID: 5477821926021513005}
   targetUI: {fileID: 3399032884027610834}
   isAGameplayScene: 1
+--- !u!114 &8483252417781072297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258892220832888289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2934de6f4138bfc43b949ac62ac307a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5386706484219078271
 GameObject:
   m_ObjectHideFlags: 0

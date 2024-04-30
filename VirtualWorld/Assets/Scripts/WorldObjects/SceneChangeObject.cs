@@ -28,6 +28,8 @@ namespace WorldObjects
 
         public void Interact(UnityAction _)
         {
+            //Debug.LogError("We are interacting. Should go to scene " + scenePicker.scenePath);
+                
             SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(scenePackMode, sceneDataString));
         }
     }

@@ -292,8 +292,8 @@ namespace Characters
 
             if (isALasterTagScene)
             {
-                Debug.LogError("Shuld spawn a first person controller. Scene name is " + sceneName);
-                FirstPersonSpawner.OnSpawnFirsPersonController();
+                //Debug.LogError("Shuld spawn a first person controller. Scene name is " + sceneName);
+                //FirstPersonSpawner.OnSpawnFirsPersonController();
             }      
         }
 

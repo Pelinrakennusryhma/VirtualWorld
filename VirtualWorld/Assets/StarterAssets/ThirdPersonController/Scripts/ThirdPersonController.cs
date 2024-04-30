@@ -111,14 +111,22 @@ namespace StarterAssets
         private PlayerInput _playerInput;
 #endif
         private Animator _animator;
-        private CharacterController _controller;
+        public CharacterController _controller;
         private StarterAssetsInputs _input;
-        [SerializeField] private GameObject _mainCamera;
+        public GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
 
         private bool JustSpawned;
         private int SpawnedFrames;
+
+        public int FrameCount;
+        public bool OuterSync;
+
+        public MeshRenderer[] MeshRenderers;
+        public GameObject GraphicsObject;
+
+        public SkinnedMeshRenderer SkinnedMeshRenderer;
 
         private bool IsCurrentDeviceMouse
         {
@@ -136,6 +144,7 @@ namespace StarterAssets
         public void Awake()
         {
             _animator = GetComponent<Animator>();
+            MeshRenderers = GetComponentsInChildren<MeshRenderer>(true);
         }
 
         public void DontDestroyOnLoad()
@@ -157,8 +166,49 @@ namespace StarterAssets
                 transform.position = pos;
                 transform.rotation = rot;
 
+                FirstPersonSpawner fpsSpawner = GetComponentInChildren<FirstPersonSpawner>(true);
+
+                bool isALasterTagScene = false;
+
+                string sceneName = spawnSpot.gameObject.scene.name;
+
+                if (sceneName.Equals("LobbyLaserTag")
+                    || sceneName.Equals("Map1LaserTag")
+                    || sceneName.Equals("Map2LaserTag")
+                    || sceneName.Equals("Map3LaserTag"))
+                {
+                    isALasterTagScene = true;
+                }
+
+                if (isALasterTagScene)
+                {
+                    //Debug.LogError("Shuld SPAWN A FIRST PERSON CONTROLLER. Scene name is " + sceneName + " client id " + gameObject.GetComponent<PlayerEmitter>().ClientID);
+
+                    if (CharacterManager.Instance.ClientId == gameObject.GetComponent<PlayerEmitter>().ClientID) 
+                    {
+                        fpsSpawner.OnSpawnFirsPersonController();
+                    }
+                }
+
+
+
+                fpsSpawner.SetControllerSpawnPositionAndRotation(pos, rot, spawnSpot.gameObject.scene);
+
+
                 //Debug.LogError("Managed to find a spawn spot. Should set position and rotation");
 
+            }
+
+            else
+            {
+                if (CharacterManager.Instance.ClientId == gameObject.GetComponent<PlayerEmitter>().ClientID)
+                {
+                    FirstPersonSpawner fpsSpawner = GetComponentInChildren<FirstPersonSpawner>(true);
+
+                    fpsSpawner.OnShouldDestroy();
+                    EnableThings();
+                    Debug.LogError("Should probably destroy the fps controller");
+                }
             }
         }
 
@@ -260,6 +310,11 @@ namespace StarterAssets
 
         private void Move()
         {
+            if (OuterSync)
+            {
+                return;
+            }
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.Sprint ? SprintSpeed : MoveSpeed;
 
@@ -352,6 +407,11 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            if (OuterSync)
+            {
+                return;
+            }
+
             if (Grounded)
             {
                 // reset the fall timeout timer
@@ -465,7 +525,8 @@ namespace StarterAssets
             _animator.SetBool(_animIDFreeFall, false);
         }
 
-        public void SetPosAndRot(Vector3 pos, Quaternion rot)
+        public void SetPosAndRot(Vector3 pos, 
+                                 Quaternion rot)
         {
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -474,6 +535,85 @@ namespace StarterAssets
 
             transform.position = pos;
             transform.rotation = rot;
+
+        }
+
+        public void SetFPSSyncedAnimations(Vector3 pos,
+                                           Vector3 prevPos, 
+                                           bool jumped,
+                                           bool crouched)
+        {
+            // TODO: setup animations for third person view
+        }
+
+        public void DisablePhysicsAndAll()
+        {
+            //Debug.LogError("should disable third person controller physics and all");
+            OuterSync = true;
+        }
+
+        public void MoveToPos(Vector3 pos,
+                              Quaternion rot, 
+                              Vector3 prevPos, 
+                              bool jumped, 
+                              bool crouched)
+        {
+            //_controller.Move(pos - transform.position);
+
+            //GameObject[] children = GraphicsObject.GetComponentsInChildren<GameObject>(true);
+
+            //for (int i  = 0; i < children.Length; i++)
+            //{
+            //    children[i].layer = 9;
+            //}
+
+            SkinnedMeshRenderer.gameObject.layer = 9;
+
+            pos += Vector3.down * 1.0f;
+            transform.position = pos;
+            transform.rotation = rot;
+            //Debug.LogError("Syncing third person controller to pos " + transform.position + " on frame " + FrameCount + " at time " + Time.time);
+            FrameCount++;
+
+            SetFPSSyncedAnimations(pos, 
+                                   prevPos, 
+                                   jumped, 
+                                   crouched);
+        }
+
+        public void DisableThings()
+        {
+            OuterSync = true;
+            _controller.enabled = false;
+            CapsuleCollider capsule = GetComponent<CapsuleCollider>();
+            capsule.enabled = false;
+
+            CharacterController controller = GetComponent<CharacterController>();
+            controller.enabled = false;
+
+            //Collider[] colliders = GetComponentsInChildren<Collider>(true);
+
+            //for (int i = 0; i < colliders.Length; i++) 
+            //{
+            //    colliders[i].enabled = false;
+            //    Debug.LogError("Looping through colliders " + i + " the collider is enabled " + colliders[i].enabled + " gameobject name is " + colliders[i].gameObject.name);
+            //}
+
+            //BasicRigidBodyPush push = GetComponent<BasicRigidBodyPush>();
+            //push.canPush = false;
+        }
+
+        public void EnableThings()
+        {
+            OuterSync = false;
+            Debug.LogError("ENABLING THINGS");
+            _mainCamera.SetActive(true);
+            _controller.enabled = true;
+            CapsuleCollider capsule = GetComponent<CapsuleCollider>();
+            capsule.enabled =  true;
+
+            CharacterController controller = GetComponent<CharacterController>();
+            controller.enabled = true;
         }
     }
 }
