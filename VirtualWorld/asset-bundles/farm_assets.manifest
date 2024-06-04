@@ -1,0 +1,192 @@
+ManifestFileVersion: 0
+CRC: 2513520009
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9141b1136dd0c3059233a9ad8610501e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: acd22cadbbd842912cca4c83313e16eb
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 205
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 850595691
+  Script: {instanceID: 0}
+- Class: 1953259897
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.BoolParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ClampedFloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ClampedIntParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ColorParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.FloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.MinFloatParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.DepthOfFieldModeParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.HDRACESPresetParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.NeutralRangeReductionModeParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.TonemappingModeParameter
+Assets:
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_Maa_Asfaltti.png
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD.prefab
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kasviurat_Maassa.fbx
+- "Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Quad.fbx"
+- Assets/BundledScenes/Farm/Assets/Materials/Trunk.mat
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_Maa_Ruoho.png
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Ruusu.png
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD2.fbx
+- Assets/BundledScenes/Farm/Scenes/FarmSettings.lighting
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD1.fbx
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD4.fbx
+- Assets/BundledScenes/Farm/Assets/Misc/Farmi_AlueenRajat.fbx
+- Assets/BundledScenes/Farm/Scenes/Farm/ReflectionProbe-1.exr
+- Assets/BundledScenes/Farm/Assets/Textures/Skybox.png
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Kukka_Keltainen.png
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD3.fbx
+- Assets/BundledScenes/Farm/Scenes/Farm/ReflectionProbe-2.exr
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD1.fbx
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Laituri.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD0.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD2.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD0.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD0.fbx
+- "Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Duo.fbx"
+- "Assets/BundledScenes/Farm/Assets/Misc/Farmi_J\xE4rvi_Vesi.prefab"
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kasviurat_Sein\xE4llinen.fbx"
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kottik\xE4rryt.fbx"
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Ruoho.png
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 8.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Materials/Farmi_Pelto_Kasvi.mat
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD3.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD.prefab
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD1.fbx
+- Assets/BundledScenes/Farm/Scenes/Farm/Global Post-Processing Profile.asset
+- Assets/BundledScenes/Farm/Assets/Materials/Leaf_Kuusi.shadergraph
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 7.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi3.fbx
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 2.terrainlayer
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_El\xE4inJuomaAstia.fbx"
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD0.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD2.fbx
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Possula.fbx
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Aita_ThreeBoard.fbx
+- "Assets/BundledScenes/Farm/Assets/Textures/HMP_Farmi_V\xE4riPaletti.png"
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD0.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD.prefab
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD0.fbx
+- "Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Penta.fbx"
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kaivo.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD2.fbx
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Aita_TwoBoard_LOD.prefab
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Hein\xE4K\xE4rry.fbx"
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Postilaatikko.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD1.fbx
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_PuuLehdet.png
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Aita_TwoBoard.fbx
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Perunakellari.fbx
+- "Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Trio.fbx"
+- Assets/BundledScenes/Farm/Assets/Materials/Skybox_Material.mat
+- Assets/BundledScenes/Farm/Assets/Materials/Pelto.shadergraph
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_Maa_Muta.png
+- Assets/BundledScenes/Farm/Scenes/Farm/Lightmap-0_comp_dir.png
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD2.fbx
+- Assets/BundledScenes/Farm/Scenes/Farm/Lightmap-0_comp_light.exr
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_TraktoriVaja.fbx
+- Assets/BundledScenes/Farm/Assets/Materials/Leaf.shadergraph
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kottik\xE4rryt_Pystyss\xE4.fbx"
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD.prefab
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD1.fbx
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Tuoli.fbx
+- Assets/BundledScenes/Farm/Assets/Materials/Yleis_Materiaali.mat
+- "Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Solo.fbx"
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_Pelto_Kasvi.png
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 1.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Teurastaja.fbx
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Komposti.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD2.fbx
+- Assets/BundledScenes/Farm/Assets/Misc/Tori_Alue_Rajat.fbx
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Py\xF6re\xE4Paali_Muoveissa.fbx"
+- Assets/BundledScenes/Farm/Assets/Materials/Leaf_Kuusi.mat
+- Assets/BundledScenes/Farm/Assets/Materials/Farmi_Lampi_Vesi.shadergraph
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kasviurat_Sein\xE4llinenSienet.fbx"
+- Assets/BundledScenes/Farm/Assets/Materials/Leaf.mat
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Silo.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD1.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD3.fbx
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Py\xF6re\xE4Paali_Muoveissa_LOD
+  Variant.prefab"
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD1.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD2.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_LumpeenLehti_LOD.prefab
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Kanala.fbx
+- Assets/BundledScenes/Farm/Assets/Misc/Tori_Tie_Farmilta.fbx
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 4.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD 1.prefab
+- "Assets/BundledScenes/Farm/Assets/Propit/Farmi_Aita_P\xE4\xE4ty.fbx"
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 3.terrainlayer
+- Assets/BundledScenes/Farm/Scenes/Farm/ReflectionProbe-0.exr
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_Maa_Hiekka.png
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Kasviurat_Verkko.fbx
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Kasvihuone.fbx
+- "Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_Ty\xF6kaluVarasto.fbx"
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_PuuLehdet_Kuusi.png
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 5.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Materials/Farmi_Lampi_Vesi.mat
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_LumpeenLehti.fbx
+- "Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_El\xE4inNavetta.fbx"
+- Assets/BundledScenes/Farm/Assets/Rakennukset/Farmi_MainTalo.fbx
+- Assets/BundledScenes/Farm/Assets/Propit/Farmi_Onki_Pidike.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD3.fbx
+- Assets/BundledScenes/Farm/Assets/Textures/Farmi_Maa_Sora.png
+- Assets/BundledScenes/Farm/Assets/Textures/NewLayer 6.terrainlayer
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD.prefab
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD0.fbx
+- Assets/BundledScenes/Farm/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD.prefab
+Dependencies: []

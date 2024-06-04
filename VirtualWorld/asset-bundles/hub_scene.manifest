@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1931993938
+CRC: 275089472
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8cbc601f4722ff39f2f9bfe988086364
+    Hash: e0a71bfa68bfa46e0f6f9caf97d24155
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ed766da6122dcd6259cc6619bb5a8050
+    Hash: 9e9632c39241b55d4b366afb3e63744a
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -36,6 +36,8 @@ ClassTypes:
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: e02e42c4ed88093459df46e4d66dc31f, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
@@ -49,8 +51,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
 - Class: 114
@@ -77,4 +77,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/BundledScenes/Hub/Scenes/Hub.unity
 Dependencies:
-- G:/Repositories/hyvanmielenpelit/Unity/VirtualWorld/VirtualWorld/asset-bundles/hub_assets
+- E:/Repositories/hyvanmielenpelit/VirtualWorld/VirtualWorld/asset-bundles/hub_assets
