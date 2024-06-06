@@ -139,7 +139,6 @@ namespace Vehicles
                     transform.position = originalPos;
                     transform.rotation = originalRot;
                     Rigidbody.velocity = Vector3.zero;
-                    Debug.Log("Resetted pos " + Time.time);
                 }
             }
 

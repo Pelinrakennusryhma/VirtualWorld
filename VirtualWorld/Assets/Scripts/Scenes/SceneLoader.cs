@@ -344,6 +344,11 @@ namespace Scenes
             SceneManager.SetActiveScene(newSubScene);
             SceneManager.UnloadSceneAsync(oldSubScene);
         }
+
+        public void MoveToMainScene(GameObject objectToMove)
+        {
+            SceneManager.MoveGameObjectToScene(objectToMove, SceneManager.GetSceneByName(MainSceneName));
+        }
     }
 }
 

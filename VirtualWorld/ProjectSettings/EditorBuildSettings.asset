@@ -14,6 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 6a793b360179dc2439a76f5c8490b3f2
+  - enabled: 1
+    path: Assets/DiceThrowing/Scenes/DiceThrowingBare.unity
+    guid: e0825c97d7090be4bbdcafe405fb2f31
+  - enabled: 1
+    path: Assets/BundledScenes/Farm/Scenes/Farm.unity
+    guid: 3860be37a0e8298479dc1a8f9e215651
+  - enabled: 1
+    path: Assets/BundledScenes/Hub/Scenes/Hub.unity
+    guid: 7561fdbf45cd7a04f8e1f2f826ee9f83
   - enabled: 0
     path: Assets/Scenes/NetworkLauncher.unity
     guid: 056b2c2cbcf56a548ad0a7be9cd4b7f3
@@ -26,6 +35,48 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Test3.unity
     guid: ecc6432701e95eb499860df13d965414
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/LobbyWaterPark.unity
+    guid: bc7344c78e6ecda4ba75c9f857ebf0fe
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark1.unity
+    guid: cd1cd54c4eb32384f8070e5ffc645ad4
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark2.unity
+    guid: 07210a3761f6e8d40ba6f7860c9aab2d
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark3.unity
+    guid: a5653370ef7084e4e88eacf74dc6cb82
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark4.unity
+    guid: 82804ca1ff224f84fbdd410302b75e8b
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark5.unity
+    guid: 4d45abecd6a6e274ea244373a0f5d1a8
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark6.unity
+    guid: 863e4c747065133468e0c0c0bb5eb241
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark7.unity
+    guid: a025c6c8fbe77334d9c42620e03860f5
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark8.unity
+    guid: 3dba29380ea4c3640a3284888f901cdf
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark9.unity
+    guid: 78e34888a4079dc45abdb2994a1f3305
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterPark10.unity
+    guid: c2589202d3e95b648a75327b9f4092da
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterParkEasy.unity
+    guid: 408e1a9d03381d34198dccde0f3523fb
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterParkExpert.unity
+    guid: e50e9602433876d4ab6814f80523f060
+  - enabled: 1
+    path: Assets/WaterPark/Scenes/WaterParkIntermediate.unity
+    guid: c79eb488e72c3f7449f1e10650af73d5
   - enabled: 1
     path: Assets/TableTopInvaders/Scenes/Menus/Credits.unity
     guid: a755b4855bfde1c45a34bb6398e6ed56
@@ -270,9 +321,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScene.unity
     guid: 08024bf0a71c10b4aa3e29b940eea5a1
   - enabled: 1
-    path: Assets/DiceThrowing/Scenes/DiceThrowingBare.unity
-    guid: e0825c97d7090be4bbdcafe405fb2f31
-  - enabled: 1
     path: Assets/Farm/Scenes/FarmScene.unity
     guid: 708ecd4d4c732924fb3dd5bf45b988b6
   - enabled: 1
@@ -281,9 +329,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Restaurant/Scenes/RestaurantScene.unity
     guid: c59f836c7768b7a41878c9380429216b
-  - enabled: 1
-    path: Assets/BundledScenes/Farm/Scenes/Farm.unity
-    guid: 3860be37a0e8298479dc1a8f9e215651
   - enabled: 1
     path: Assets/ShootingRange/Scenes/LobbyShootingRange.unity
     guid: a917745db051a9645b6e5cf172308721
@@ -296,9 +341,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ShootingRange/Scenes/ExpertCourseShootingRange.unity
     guid: 09af0d9534f280748b5251598213e8fe
-  - enabled: 1
-    path: Assets/BundledScenes/Hub/Scenes/Hub.unity
-    guid: 7561fdbf45cd7a04f8e1f2f826ee9f83
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}
