@@ -19,6 +19,7 @@ namespace WorldObjects
         [SerializeField] ScenePackMode scenePackMode = ScenePackMode.ALL;
         [Tooltip("Extra data that can be passed to scene loading")]
         [SerializeField] string sceneDataString;
+        [SerializeField] bool bundled = false;
         ScenePicker scenePicker;
 
         void Start()
@@ -28,7 +29,7 @@ namespace WorldObjects
 
         public void Interact(UnityAction _)
         {
-            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(scenePackMode, sceneDataString));
+            SceneLoader.Instance.LoadScene(scenePicker.scenePath, new SceneLoadParams(scenePackMode, sceneDataString), bundled);
         }
     }
 }

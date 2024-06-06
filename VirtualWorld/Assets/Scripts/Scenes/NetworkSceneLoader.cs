@@ -62,14 +62,38 @@ namespace Scenes
             Debug.Log("--- SERVER INIT END ---");
         }
 
-        public void MoveToNetworkScene(NetworkConnection conn, string sceneToLoadName)
+        public void MoveToNetworkScene(NetworkConnection conn, string sceneToLoadName, bool bundled)
         {
             string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
-            MoveToNetworkSceneServerRpc(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
+            if (bundled)
+            {
+                DownloadSceneAndMove(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
+            } else
+            {
+                PlayerEvents.Instance.CallEventSceneLoadStarted(); // Load Ended is called from CharacterManager once character has been inited on the new scene.
+                MoveToNetworkSceneServerRpc(conn, sceneToLoadName, currentSceneName, CreateMovedNetworkObjects());
+            }
 
-            Debug.Log("Moving to networked scene");
+
         }
+
+        async void DownloadSceneAndMove(NetworkConnection conn, string sceneToLoadName, string sceneToUnloadName, NetworkObject[] movedNetworkObjects)
+        {
+            bool bundledSceneLoaded = await AssetBundleLoader.Instance.DownloadBundledScene(sceneToLoadName);
+
+            if (bundledSceneLoaded)
+            {
+                Debug.Log("Succeeded to load scene from asset bundle.");
+                PlayerEvents.Instance.CallEventSceneLoadStarted(); // Load Ended is called from CharacterManager once character has been inited on the new scene.
+                MoveToNetworkSceneServerRpc(conn, sceneToLoadName, sceneToUnloadName, CreateMovedNetworkObjects());
+            } else
+            {
+                Debug.LogError("Failed to load scene from asset bundle.");
+            }
+
+        }
+
         ///<summary>
         ///NetworkObjects that should be moved to another network scene.
         ///Currently an array of one object, the player character.

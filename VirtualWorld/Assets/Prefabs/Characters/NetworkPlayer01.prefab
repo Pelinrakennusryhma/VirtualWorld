@@ -2888,6 +2888,7 @@ MonoBehaviour:
     m_Bits: 1
   invokeLandingDelay: 0.25
   CinemachineCameraTarget: {fileID: 2403281327749895622}
+  vcam: {fileID: 4395321836587321181}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0

@@ -1,0 +1,72 @@
+ManifestFileVersion: 0
+CRC: 1353795707
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bff2270c3a68a8d584e96b82b71e38b8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 34aeda4e701d7f1a423012e209480f63
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.BoolParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ClampedFloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ClampedIntParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.ColorParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.MinFloatParameter
+- AssemblyName: Unity.RenderPipelines.Core.Runtime
+  ClassName: UnityEngine.Rendering.TextureParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.DownscaleParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.HDRACESPresetParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.NeutralRangeReductionModeParameter
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.TonemappingModeParameter
+Assets:
+- Assets/BundledScenes/Hub/GalaxyFire/Textures/front_galaxyfire.tif
+- Assets/BundledScenes/Hub/GalaxyFire/Textures/right_galaxyfire.tif
+- Assets/BundledScenes/Hub/Materials/Hub_Wall.mat
+- Assets/BundledScenes/Hub/GalaxyFire/Material/GalaxyFireMaterial.mat
+- Assets/BundledScenes/Hub/Prefabs/HubWall.prefab
+- Assets/BundledScenes/Hub/GalaxyFire/Textures/left_galaxyfire.tif
+- Assets/BundledScenes/Hub/Scenes/Hub/GlobalVolumeProfile.asset
+- Assets/BundledScenes/Hub/Prefabs/HubFloor.prefab
+- Assets/BundledScenes/Hub/GalaxyFire/Textures/back_galaxyfire.tif
+- Assets/BundledScenes/Hub/Materials/Hub_Floor.mat
+- Assets/BundledScenes/Hub/GalaxyFire/Textures/down_galaxyfire.tif
+- Assets/BundledScenes/Hub/GalaxyFire/Textures/up_galaxyfire.tif
+Dependencies: []

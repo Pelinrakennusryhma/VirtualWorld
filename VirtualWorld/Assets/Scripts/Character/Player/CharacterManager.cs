@@ -1,18 +1,15 @@
 using UnityEngine;
 using Authentication;
-using UnityEngine.Events;
 using BackendConnection;
 using FishNet.Object;
 using Dev;
-using UI;
 using FishNet.Connection;
-using System.Collections.Generic;
-using Items;
 using StarterAssets;
 using FishNet;
 using FishNet.Managing.Scened;
 using Networking;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Characters
@@ -58,6 +55,7 @@ namespace Characters
 
         public void SetOwnedCharacter(GameObject obj, ThirdPersonController controller)
         {
+            // Subcribe for FishNet's scene events so spawn pos/rot and be found in a new scene.
             InstanceFinder.SceneManager.OnLoadEnd += OnSceneLoaded;
             OwnedCharacter = obj;
             ownedController = controller;
@@ -68,6 +66,7 @@ namespace Characters
             NetworkSceneConnector connector = null;
             Scene loadedScene = args.LoadedScenes[0];
 
+            // Find the Connector script, it should preferably be on the first object on the scene.
             foreach (GameObject rootGO in loadedScene.GetRootGameObjects())
             {
                 connector = rootGO.GetComponent<NetworkSceneConnector>();
@@ -82,6 +81,7 @@ namespace Characters
             {
                 string prevSceneName = System.Text.Encoding.UTF8.GetString(args.QueueData.SceneLoadData.Params.ClientParams);
 
+                // Get the arrival position based on the name of the scene where the character is coming from.
                 Transform spawnPos = connector.GetSpawnTransform(prevSceneName);
 
                 ownedController.SetPosAndRot(spawnPos.position, spawnPos.rotation);
@@ -93,6 +93,7 @@ namespace Characters
             PlayerEvents.Instance.CallEventSceneLoadEnded();
             PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}");
         }
+
 
         // Disable and enable inputs depending on if we are driving a car.
         public void SetInputsEnabled(bool isEnabled)

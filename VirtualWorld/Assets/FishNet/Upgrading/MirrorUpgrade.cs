@@ -1,5 +1,5 @@
 ﻿#if UNITY_EDITOR
-#if FishNet
+#if MIRROR
 using UnityEditor;
 using UnityEngine;
 using FishNet.Object;
@@ -13,32 +13,32 @@ using FishNet.Component.Observing;
 using FishNet.Editing;
 using System.IO;
 using System.Collections;
-using FishNet;
-using FishNetNetworkTransformBase = FishNet.NetworkTransformBase;
-using FishNetNetworkTransformChild = FishNet.NetworkTransformChild;
-using FishNetNetworkAnimator = FishNet.NetworkAnimator;
-#if !FishNet_57_0_OR_NEWER
-using FishNetNetworkProximityChecker = FishNet.NetworkProximityChecker;
-using FishNetNetworkSceneChecker = FishNet.NetworkSceneChecker;
+using Mirror;
+using MirrorNetworkTransformBase = Mirror.NetworkTransformBase;
+using MirrorNetworkTransformChild = Mirror.NetworkTransformChild;
+using MirrorNetworkAnimator = Mirror.NetworkAnimator;
+#if !MIRROR_57_0_OR_NEWER
+using MirrorNetworkProximityChecker = Mirror.NetworkProximityChecker;
+using MirrorNetworkSceneChecker = Mirror.NetworkSceneChecker;
 #endif
 
 #if FGG_ASSETS
-using FlexNetworkAnimator = FirstGearGames.FishNets.Assets.FlexNetworkAnimators.FlexNetworkAnimator;
-using FlexNetworkTransformBase = FirstGearGames.FishNets.Assets.FlexNetworkTransforms.FlexNetworkTransformBase;
-using FastProximityChecker = FirstGearGames.FishNets.Assets.NetworkProximities.FastProximityChecker;
+using FlexNetworkAnimator = FirstGearGames.Mirrors.Assets.FlexNetworkAnimators.FlexNetworkAnimator;
+using FlexNetworkTransformBase = FirstGearGames.Mirrors.Assets.FlexNetworkTransforms.FlexNetworkTransformBase;
+using FastProximityChecker = FirstGearGames.Mirrors.Assets.NetworkProximities.FastProximityChecker;
 #endif
 
 #if FGG_PROJECTS
 using FlexSceneChecker = FirstGearGames.FlexSceneManager.FlexSceneChecker;
 #endif
 
-namespace FishNet.Upgrading.FishNet.Editing
+namespace FishNet.Upgrading.Mirror.Editing
 {
 
     /* IMPORTANT IMPORTANT IMPORTANT IMPORTANT 
-    * If you receive errors about missing FishNet components,
-    * such as NetworkIdentity, then remove FishNet and any other
-    * FishNet defines.
+    * If you receive errors about missing Mirror components,
+    * such as NetworkIdentity, then remove MIRROR and any other
+    * MIRROR defines.
     * Project Settings -> Player -> Other -> Scripting Define Symbols.
     * 
     * If you are also using my assets add FGG_ASSETS to the defines, and
@@ -46,7 +46,7 @@ namespace FishNet.Upgrading.FishNet.Editing
     [APIExclude]
     [ExecuteInEditMode]
     [InitializeOnLoad]
-    public class FishNetUpgrade : MonoBehaviour
+    public class MirrorUpgrade : MonoBehaviour
     {
         /// <summary>
         /// SceneCondition within FishNet.
@@ -94,7 +94,7 @@ namespace FishNet.Upgrading.FishNet.Editing
         private bool _initialized;
 
 
-        private const string OBJECT_NAME_PREFIX = "FishNetUpgrade";
+        private const string OBJECT_NAME_PREFIX = "MirrorUpgrade";
 
 
         private void Awake()
@@ -114,7 +114,7 @@ namespace FishNet.Upgrading.FishNet.Editing
             if (!_initialized)
             {
                 FindConditions(true);
-                _gameObjects = Finding.GetGameObjects(true, false, true, new string[] { "/FishNet/" });
+                _gameObjects = Finding.GetGameObjects(true, false, true, new string[] { "/Mirror/" });
                 _goIndex = 0;
                 _initialized = true;
             }
@@ -240,10 +240,10 @@ namespace FishNet.Upgrading.FishNet.Editing
 
         private bool IterateNetworkTransform(GameObject go)
         {
-            if (go.TryGetComponent(out FishNetNetworkTransformBase nt1))
+            if (go.TryGetComponent(out MirrorNetworkTransformBase nt1))
             {
                 Transform target;
-                if (nt1 is FishNetNetworkTransformChild mc1)
+                if (nt1 is MirrorNetworkTransformChild mc1)
                     target = mc1.target;
                 else
                     target = go.transform;
@@ -273,7 +273,7 @@ namespace FishNet.Upgrading.FishNet.Editing
 
         private bool IterateNetworkAnimator(GameObject go)
         {
-            if (go.TryGetComponent(out FishNetNetworkAnimator mna))
+            if (go.TryGetComponent(out MirrorNetworkAnimator mna))
             {
                 Replace(mna, mna.transform);
                 return true;
@@ -303,11 +303,11 @@ namespace FishNet.Upgrading.FishNet.Editing
 
         private bool IterateSceneChecker(GameObject go)
         {
-#if !FishNet_57_0_OR_NEWER
+#if !MIRROR_57_0_OR_NEWER
             if (_sceneCondition == null)
                 return false;
 
-            if (go.TryGetComponent(out FishNetNetworkSceneChecker msc))
+            if (go.TryGetComponent(out MirrorNetworkSceneChecker msc))
             {
                 Replace(msc);
                 return true;
@@ -352,11 +352,11 @@ namespace FishNet.Upgrading.FishNet.Editing
 
         private bool IterateProximityChecker(GameObject go)
         {
-#if !FishNet_57_0_OR_NEWER
+#if !MIRROR_57_0_OR_NEWER
             if (_distanceCondition == null)
                 return false;
 
-            if (go.TryGetComponent(out FishNetNetworkProximityChecker mnpc))
+            if (go.TryGetComponent(out MirrorNetworkProximityChecker mnpc))
             {
                 Replace(mnpc);
                 return true;
