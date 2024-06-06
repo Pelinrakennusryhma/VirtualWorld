@@ -316,6 +316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7815887162451583778, guid: bd16b5075ea7fa1428b8349c6a4da989,
         type: 3}
+      propertyPath: bundled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7815887162451583778, guid: bd16b5075ea7fa1428b8349c6a4da989,
+        type: 3}
       propertyPath: <DetectionMessage>k__BackingField
       value: Travel to the farm.
       objectReference: {fileID: 0}

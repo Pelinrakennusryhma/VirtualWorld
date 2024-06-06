@@ -1,18 +1,15 @@
 using UnityEngine;
 using Authentication;
-using UnityEngine.Events;
 using BackendConnection;
 using FishNet.Object;
 using Dev;
-using UI;
 using FishNet.Connection;
-using System.Collections.Generic;
-using Items;
 using StarterAssets;
 using FishNet;
 using FishNet.Managing.Scened;
 using Networking;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 namespace Characters
@@ -96,6 +93,7 @@ namespace Characters
             PlayerEvents.Instance.CallEventSceneLoadEnded();
             PlayerEvents.Instance.CallEventInformationReceived($"Entered {loadedScene.name}");
         }
+
 
         // Disable and enable inputs depending on if we are driving a car.
         public void SetInputsEnabled(bool isEnabled)
