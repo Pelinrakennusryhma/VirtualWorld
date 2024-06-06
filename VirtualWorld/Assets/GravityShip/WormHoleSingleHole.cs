@@ -27,11 +27,13 @@ public class WormHoleSingleHole : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("WArps warps");
+        Debug.Log("WArps warps");
 
         if (other.gameObject.CompareTag("Player")
             && CanEnterHole)
         {
+            Debug.Log("Should warp");
+
             Vector3 offset = other.gameObject.transform.position - transform.position;
             CanEnterHole = true;
             WormHoleController.WarpToOtherHole(this,

@@ -16,6 +16,8 @@ namespace Vehicles
 {
     public class CarManager : NetworkBehaviour, I_Interactable
     {
+        public GameObject NonNetworkedCarPrefab;
+
         private const string EnterCarPrompt = "Enter Car";
         private const string CarAlreadyHasADriverPrompt = "Car Has a Driver";
 
@@ -95,6 +97,28 @@ namespace Vehicles
             Quaternion lookRot = Quaternion.LookRotation(toCar, Vector3.up);
 
             DedicatedCarCamera.transform.rotation = lookRot;
+
+            Debug.Log("Start called on car manager");
+
+            if (NonNetworkRecognizer.Instance != null)
+            {                
+
+                GameObject nnCar = Instantiate(NonNetworkedCarPrefab);
+
+                Scenes.SceneLoader.Instance.MoveToMainScene(nnCar);
+
+
+                CarManagerNonNetworked cmnn = nnCar.GetComponent<CarManagerNonNetworked>();
+                cmnn.SetSpawn(transform);
+
+                Debug.Log("Instantiating. Transform position is " + transform.position + " instantiated car transform position is " + nnCar.transform.position);
+
+                Destroy(gameObject);
+
+                Debug.Log("Car scene is " + nnCar.gameObject.scene.name);
+            }
+
+            //Debug.Break();
         }
 
         private void Update()

@@ -228,5 +228,7 @@ public class PlayerControllerGravityShip : MonoBehaviour
     public void WarpWithWormHole(Vector3 targetPos)
     {
         transform.position = targetPos;
+
+        Debug.Log("Warping with wormhole " + gameObject.name);
     }
 }

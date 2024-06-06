@@ -87,112 +87,80 @@ namespace StarterAssets
 		}
 		public void OnMove(InputAction.CallbackContext value)
 		{
-			switch (CharacterManager.Instance.gameState)
-			{
-				case GAME_STATE.FREE:
-                    MoveInput(value.ReadValue<Vector2>());
-                    break;
-				case GAME_STATE.MENU:
-					break;
-				case GAME_STATE.TABLET:
-					break;
-                case GAME_STATE.DIALOG:
-                    break;
-				default:
-					break;
-			}
-		}
-
-		public void OnLook(InputAction.CallbackContext value)
-		{
-            switch (CharacterManager.Instance.gameState)
-            {
-                case GAME_STATE.FREE:
-                    if (cursorInputForLook)
-                    {
-                        LookInput(value.ReadValue<Vector2>());
-                    }
-                    break;
-                case GAME_STATE.MENU:
-                    break;
-                case GAME_STATE.TABLET:
-                    break;
-                case GAME_STATE.DIALOG:
-                    break;
-                default:
-                    break;
-            }
-		}
-
-		public void OnJump(InputAction.CallbackContext value)
-		{
-            switch (CharacterManager.Instance.gameState)
-            {
-                case GAME_STATE.FREE:
-                    JumpInput(value.performed);
-                    break;
-                case GAME_STATE.MENU:
-                    break;
-                case GAME_STATE.TABLET:
-                    break;
-                case GAME_STATE.DIALOG:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-		public void OnSprint(InputAction.CallbackContext value)
-		{
-            switch (CharacterManager.Instance.gameState)
-            {
-                case GAME_STATE.FREE:
-                    SprintInput(value.performed);
-                    break;
-                case GAME_STATE.MENU:
-                    break;
-                case GAME_STATE.TABLET:
-                    break;
-                case GAME_STATE.DIALOG:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-		public void OnInteract(InputAction.CallbackContext value)
-		{	
-            switch (CharacterManager.Instance.gameState)
-            {
-                case GAME_STATE.FREE:
-                    InteractInput(value.performed);
-                    break;
-                case GAME_STATE.MENU:
-                    break;
-                case GAME_STATE.TABLET:
-                    break;
-                case GAME_STATE.DIALOG:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void OnTablet(InputAction.CallbackContext value)
-        {
-            if (value.action.WasPerformedThisFrame())
+            if (CharacterManager.Instance != null)
             {
                 switch (CharacterManager.Instance.gameState)
                 {
                     case GAME_STATE.FREE:
-                        ZeroInputs();
-                        CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
-                        PlayerEvents.Instance.CallEventOpenTabletPressed();
+                        MoveInput(value.ReadValue<Vector2>());
                         break;
                     case GAME_STATE.MENU:
                         break;
                     case GAME_STATE.TABLET:
-                        PlayerEvents.Instance.CallEventCloseTabletPressed();
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                switch (CharacterManagerNonNetworked.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        MoveInput(value.ReadValue<Vector2>());
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+		}
+
+		public void OnLook(InputAction.CallbackContext value)
+		{
+            if (CharacterManager.Instance != null)
+            {
+
+                switch (CharacterManager.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        if (cursorInputForLook)
+                        {
+                            LookInput(value.ReadValue<Vector2>());
+                        }
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                switch (CharacterManagerNonNetworked.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        if (cursorInputForLook)
+                        {
+                            LookInput(value.ReadValue<Vector2>());
+                        }
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
                         break;
                     case GAME_STATE.DIALOG:
                         break;
@@ -202,21 +170,207 @@ namespace StarterAssets
             }
         }
 
+		public void OnJump(InputAction.CallbackContext value)
+		{
+            if (CharacterManager.Instance != null)
+            {
+                switch (CharacterManager.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        JumpInput(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                switch (CharacterManagerNonNetworked.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        JumpInput(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+		public void OnSprint(InputAction.CallbackContext value)
+		{
+            if (CharacterManager.Instance != null)
+            {
+                switch (CharacterManager.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        SprintInput(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                switch (CharacterManagerNonNetworked.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        SprintInput(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+		public void OnInteract(InputAction.CallbackContext value)
+		{
+            if (CharacterManager.Instance != null)
+            {
+                switch (CharacterManager.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        InteractInput(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                switch (CharacterManagerNonNetworked.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        InteractInput(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public void OnTablet(InputAction.CallbackContext value)
+        {
+            if (value.action.WasPerformedThisFrame())
+            {
+                if (CharacterManager.Instance != null)
+                {
+                    switch (CharacterManager.Instance.gameState)
+                    {
+                        case GAME_STATE.FREE:
+                            ZeroInputs();
+                            CharacterManager.Instance.SetGameState(GAME_STATE.LOCKED);
+                            PlayerEvents.Instance.CallEventOpenTabletPressed();
+                            break;
+                        case GAME_STATE.MENU:
+                            break;
+                        case GAME_STATE.TABLET:
+                            PlayerEvents.Instance.CallEventCloseTabletPressed();
+                            break;
+                        case GAME_STATE.DIALOG:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                else
+                {
+                    switch (CharacterManagerNonNetworked.Instance.gameState)
+                    {
+                        case GAME_STATE.FREE:
+                            ZeroInputs();
+                            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.LOCKED);
+                            PlayerEvents.Instance.CallEventOpenTabletPressed();
+                            break;
+                        case GAME_STATE.MENU:
+                            break;
+                        case GAME_STATE.TABLET:
+                            PlayerEvents.Instance.CallEventCloseTabletPressed();
+                            break;
+                        case GAME_STATE.DIALOG:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
         public void OnAction1(InputAction.CallbackContext value)
 		{
-            switch (CharacterManager.Instance.gameState)
+            if (CharacterManager.Instance != null)
             {
-                case GAME_STATE.FREE:
-                    Action1Input(value.performed);
-                    break;
-                case GAME_STATE.MENU:
-                    break;
-                case GAME_STATE.TABLET:
-                    break;
-                case GAME_STATE.DIALOG:
-                    break;
-                default:
-                    break;
+                switch (CharacterManager.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        Action1Input(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                switch (CharacterManagerNonNetworked.Instance.gameState)
+                {
+                    case GAME_STATE.FREE:
+                        Action1Input(value.performed);
+                        break;
+                    case GAME_STATE.MENU:
+                        break;
+                    case GAME_STATE.TABLET:
+                        break;
+                    case GAME_STATE.DIALOG:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -224,22 +378,46 @@ namespace StarterAssets
 		{
 			if(value.action.WasPerformedThisFrame())
 			{
-                switch (CharacterManager.Instance.gameState)
+                if (CharacterManager.Instance != null)
                 {
-                    case GAME_STATE.FREE:
-                        CharacterManager.Instance.SetGameState(GAME_STATE.MENU);
-                        break;
-                    case GAME_STATE.MENU:
-                        CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
-                        break;
-                    case GAME_STATE.TABLET:
-                        PlayerEvents.Instance.CallEventCloseTabletPressed();
-                        break;
-                    case GAME_STATE.DIALOG:
-                        CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
-                        break;
-                    default:
-                        break;
+                    switch (CharacterManager.Instance.gameState)
+                    {
+                        case GAME_STATE.FREE:
+                            CharacterManager.Instance.SetGameState(GAME_STATE.MENU);
+                            break;
+                        case GAME_STATE.MENU:
+                            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+                            break;
+                        case GAME_STATE.TABLET:
+                            PlayerEvents.Instance.CallEventCloseTabletPressed();
+                            break;
+                        case GAME_STATE.DIALOG:
+                            CharacterManager.Instance.SetGameState(GAME_STATE.FREE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                else
+                {
+                    switch (CharacterManagerNonNetworked.Instance.gameState)
+                    {
+                        case GAME_STATE.FREE:
+                            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.MENU);
+                            break;
+                        case GAME_STATE.MENU:
+                            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
+                            break;
+                        case GAME_STATE.TABLET:
+                            PlayerEvents.Instance.CallEventCloseTabletPressed();
+                            break;
+                        case GAME_STATE.DIALOG:
+                            CharacterManagerNonNetworked.Instance.SetGameState(GAME_STATE.FREE);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 		}
@@ -248,19 +426,40 @@ namespace StarterAssets
         {
             if (value.action.WasPerformedThisFrame())
             {
-                switch (CharacterManager.Instance.gameState)
+                if (CharacterManager.Instance != null)
                 {
-                    case GAME_STATE.FREE:
-                        QuestManager.Instance.ToggleFocusedQuest();
-                        break;
-                    case GAME_STATE.MENU:
-                        break;
-                    case GAME_STATE.TABLET:
-                        break;
-                    case GAME_STATE.DIALOG:
-                        break;
-                    default:
-                        break;
+                    switch (CharacterManager.Instance.gameState)
+                    {
+                        case GAME_STATE.FREE:
+                            QuestManager.Instance.ToggleFocusedQuest();
+                            break;
+                        case GAME_STATE.MENU:
+                            break;
+                        case GAME_STATE.TABLET:
+                            break;
+                        case GAME_STATE.DIALOG:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                else
+                {
+                    switch (CharacterManagerNonNetworked.Instance.gameState)
+                    {
+                        case GAME_STATE.FREE:
+                            QuestManager.Instance.ToggleFocusedQuest();
+                            break;
+                        case GAME_STATE.MENU:
+                            break;
+                        case GAME_STATE.TABLET:
+                            break;
+                        case GAME_STATE.DIALOG:
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

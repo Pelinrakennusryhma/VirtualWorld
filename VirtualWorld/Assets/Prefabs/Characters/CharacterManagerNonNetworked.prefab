@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5585604776717508355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6496685599238982568}
+  - component: {fileID: 6203663215727701464}
+  - component: {fileID: 8613104118265851934}
+  - component: {fileID: 3414383178370510505}
+  m_Layer: 0
+  m_Name: CharacterManagerNonNetworked
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6496685599238982568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 187.42542, y: 459.1544, z: 81.66716}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6203663215727701464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a1c0f4ce301c144bd6c30143a6f549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: 0
+  <OwnedCharacter>k__BackingField: {fileID: 0}
+  ClientId: 0
+  DummyItems:
+  - {fileID: 11400000, guid: c16ca8bb49d537243997ea1d0bcb808a, type: 2}
+  - {fileID: 11400000, guid: 665ab5b0559cbbc4da1bb97ee65d8f0e, type: 2}
+  - {fileID: 11400000, guid: 69a36462a78ed62469e1af57e5297469, type: 2}
+  - {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02, type: 2}
+--- !u!114 &8613104118265851934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76616a97c6b3e61469d554efac98dc73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
+  itemDatabase: {fileID: 11400000, guid: a9b69edd0a0f7d94e859ef3ef80d1160, type: 2}
+  <CreditItem>k__BackingField: {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02,
+    type: 2}
+--- !u!114 &3414383178370510505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9ce0da6383276a42ac022a4228e1bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questDatabase: {fileID: 11400000, guid: 5cf1e2e792ebb7748a63fc3ef5f67111, type: 2}
+  autoFocusQuest: 1

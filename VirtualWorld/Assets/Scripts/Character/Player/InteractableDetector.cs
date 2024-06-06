@@ -86,6 +86,7 @@ namespace Characters
 
         private void OnTriggerStay(Collider other)
         {
+
             if (!isEnabled)
             {
                 OnTriggerExit(other);
