@@ -12,7 +12,7 @@ public class AssetBundleLoader : MonoBehaviour
     public static AssetBundleLoader Instance { get; private set; }
 
     // Keeps track of bundled scenes that have been loaded
-    List<string> loadedBundledSceneNames = new List<string>();
+    List<string> loadedBundles = new List<string>();
 
     void Awake()
     {
@@ -40,26 +40,21 @@ public class AssetBundleLoader : MonoBehaviour
     }
     void AddLoadedBundledSceneName(string name)
     {
-        loadedBundledSceneNames.Add(name);
+        loadedBundles.Add(name);
     }
 
     bool BundledSceneAlreadyLoaded(string name)
     {
-        return loadedBundledSceneNames.Contains(name);
+        return loadedBundles.Contains(name);
     }
 
     // If bundled scene has already been loaded before or is successfully loaded now, return true so scene loading can resume.
     public async UniTask<bool> DownloadBundledScene(string sceneName)
     {
-        if (BundledSceneAlreadyLoaded(sceneName))
-        {
-            return true;
-        }
-
         bool success = false;
         await GetAssetBundles(sceneName, (loadedAssetBundles) =>
         {
-            if(loadedAssetBundles != null)
+            if(loadedAssetBundles == true)
             {
                 success = true;
             }
@@ -69,65 +64,63 @@ public class AssetBundleLoader : MonoBehaviour
     }
 
     // callback is called with either null to inform about failed downloading or with the AssetBundle on success
-    IEnumerator GetAssetBundles(string sceneName, UnityAction<AssetBundle> callback)
+    IEnumerator GetAssetBundles(string sceneName, UnityAction<bool> callback)
     {
         string formattedSceneName = sceneName.ToLower();
         string sceneBundlePath = baseUrl + formattedSceneName + "_scene"; // scenes must be bundled separately and loaded before the assets used in it
-        string assetsBundlePath = baseUrl + formattedSceneName + "_assets";
+        //string assetsBundlePath = baseUrl + formattedSceneName + "_assets";
 
-        UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(sceneBundlePath);
-        Debug.Log("Attempting to download bundle from: " + sceneBundlePath);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success)
+        if(!BundledSceneAlreadyLoaded(sceneBundlePath))
         {
-            Debug.Log(www.error);
-            callback(null);
-            yield break;
+            UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(sceneBundlePath);
+            Debug.Log("Attempting to download bundle from: " + sceneBundlePath);
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                callback(false);
+                yield break;
+            }
+            else
+            {
+                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
+                AddLoadedBundledSceneName(sceneBundlePath);
+            }
         }
-        else
+
+        // because farm, market and park were proviced as one big scene with no easy way of
+        // finding out which assets are used in which scenes, we just do one bundle for them all then
+        string assetsBundlePath = baseUrl + "mega_assets";
+
+        if (!BundledSceneAlreadyLoaded(assetsBundlePath))
         {
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
-        }
+            UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(assetsBundlePath);
+            Debug.Log("Attempting to download bundle from: " + assetsBundlePath);
+            yield return www.SendWebRequest();
 
-        www = UnityWebRequestAssetBundle.GetAssetBundle(assetsBundlePath);
-        Debug.Log("Attempting to download bundle from: " + assetsBundlePath);
-        yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                callback(false);
+                yield break;
+            }
+            else
+            {
+                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
 
-        if (www.result != UnityWebRequest.Result.Success)
+                Debug.Log("--- Loaded Assets --- ");
+                bundle.LoadAllAssets();
+                Debug.Log("--- End Assets --- ");
+
+                AddLoadedBundledSceneName(assetsBundlePath);
+
+                callback(true);
+            }
+        } else
         {
-            Debug.Log(www.error);
-            callback(null);
-            yield break;
-        }
-        else
-        {
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
-
-            Debug.Log("--- Loaded Assets --- ");
-            //foreach (string assetName in bundle.GetAllAssetNames())
-            //{
-            //    if (assetName.EndsWith(".mat"))
-            //    {
-            //        Debug.Log("Loading asset: " + assetName);
-            //        bundle.LoadAsset(assetName);
-            //    }
-            //}
-
-            //foreach (string assetName in bundle.GetAllAssetNames())
-            //{
-            //    if (!assetName.EndsWith(".mat"))
-            //    {
-            //        Debug.Log("Loading asset: " + assetName);
-            //        bundle.LoadAsset(assetName);
-            //    }
-            //}
-
-            bundle.LoadAllAssets();
-
-            Debug.Log("--- End Assets --- ");
-            AddLoadedBundledSceneName(sceneName);
-            callback(bundle);
+            Debug.Log("Bundle already downloaded from: " + assetsBundlePath);
+            callback(true);
         }
     }
 }

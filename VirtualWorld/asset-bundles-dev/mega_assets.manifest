@@ -1,0 +1,166 @@
+ManifestFileVersion: 0
+CRC: 2411681443
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a892830c3a65475d739fdaef0981d614
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f549bb31d996426a1125fa99cc270320
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 205
+  Script: {instanceID: 0}
+- Class: 850595691
+  Script: {instanceID: 0}
+- Class: 1953259897
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD.prefab
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Tori_Koju_Burger.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kasviurat_Maassa.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Quad.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Materials/Trunk.mat
+- Assets/BundledScenes/MegaScene/Assets/Misc/Puisto_Alue_Rajat.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Tori_PensaAita/Tori_PensasAita_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Scenes/MegaSceneSettings.lighting
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_Koju_HotDog.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_Opaste.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD4.fbx
+- Assets/BundledScenes/MegaScene/Assets/Materials/Vesi.mat
+- Assets/BundledScenes/MegaScene/Assets/Misc/Farmi_AlueenRajat.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD3.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Laituri.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_Puu_JuuriKoriste.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD0.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_J\xE4\xE4tel\xF6Auto.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD0.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Duo.fbx"
+- "Assets/BundledScenes/MegaScene/Assets/Misc/Farmi_J\xE4rvi_Vesi.prefab"
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kasviurat_Sein\xE4llinen.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_PuistoValo.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kottik\xE4rryt.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD3.fbx
+- Assets/BundledScenes/MegaScene/Assets/Materials/Farmi_Pelto_Kasvi.mat
+- Assets/BundledScenes/MegaScene/Assets/Misc/Kaupunki_Tiet.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD.prefab
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Tori_TransportHub.fbx
+- Assets/BundledScenes/MegaScene/Assets/Materials/Tori_Maapallo.mat
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_Roskakori.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Tori_PensaAita/Tori_PensasAita_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Materials/Leaf_Kuusi.shadergraph
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_Koju_Jakkara.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Tori_PensaAita/Tori_PensasAita_LOD.prefab
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_El\xE4inJuomaAstia.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Assets/Misc/Puisto_MiniGolf_RataRajat.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Possula.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Aita_ThreeBoard.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD.prefab
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Materials/Vesi.shadergraph
+- "Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Penta.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kaivo.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Hein\xE4K\xE4rry.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Postilaatikko.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Aita_TwoBoard.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_M\xF6kki.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Aita_TwoBoard_LOD.prefab
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_Lintutorni_LODs/Puisto_Lintutorni_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Perunakellari.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Tori_PensaAita/Tori_PensasAita_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Puisto_Roskakori.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Trio.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Materials/Skybox_Material.mat
+- Assets/BundledScenes/MegaScene/Assets/Materials/Pelto.shadergraph
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_TraktoriVaja.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Tori_PensaAita/Tori_PensasAita_Alusta.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pelto_10m/Farmi_Pelto_10m_LOD2.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kottik\xE4rryt_Pystyss\xE4.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Materials/Leaf.shadergraph
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD.prefab
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Tuoli.fbx
+- Assets/BundledScenes/MegaScene/Assets/Materials/Yleis_Materiaali.mat
+- "Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Sien/Farmi_Sieni\xE4_Solo.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Tori_Koju_Lehti.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Teurastaja.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Komposti.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Assets/Misc/Tori_Alue_Rajat.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Py\xF6re\xE4Paali_Muoveissa.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Propit/Tori_Lamppu.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Tori_KojuP\xF6yt\xE4_Varjolla.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Materials/Leaf_Kuusi.mat
+- Assets/BundledScenes/MegaScene/Assets/Materials/Farmi_Lampi_Vesi.shadergraph
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kasviurat_Sein\xE4llinenSienet.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Materials/Leaf.mat
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Silo.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD1.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Tori_P\xF6yt\xE4.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD3.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Py\xF6re\xE4Paali_Muoveissa_LOD
+  Variant.prefab"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi7/Farmi_Puu_Testi7_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 3/Farmi_Lohkare3_LOD2.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Kanala.fbx
+- Assets/BundledScenes/MegaScene/Assets/Misc/Tori_Tie_Farmilta.fbx
+- Assets/BundledScenes/MegaScene/Assets/Misc/Tori_Tiet.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Puu_Testi3/Farmi_Puu_Testi4_LOD
+  1.prefab
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Aita_P\xE4\xE4ty.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Tori_Silta_Katolla.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Puisto_Penkki.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_Gazebo.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_Lintutorni_LODs/Puisto_Lintutorni_LOD1.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_Lintutorni_LODs/Puisto_Lintutorni_LODs.prefab
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Kasviurat_Verkko.fbx
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Kasvihuone.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_Ty\xF6kaluVarasto.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Textures/NewLayer 5.terrainlayer
+- Assets/BundledScenes/MegaScene/Assets/Materials/Farmi_Lampi_Vesi.mat
+- "Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_El\xE4inNavetta.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Rakennukset/Farmi_MainTalo.fbx
+- Assets/BundledScenes/MegaScene/Assets/Propit/Farmi_Onki_Pidike.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Rakennukset/Puisto_MiniGolf_P\xE4\xE4Rakennus.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD3.fbx
+- "Assets/BundledScenes/MegaScene/Assets/Propit/Puisto_Polkupy\xF6r\xE4_Teline.fbx"
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 2/Farmi_Lohkare2_LOD.prefab
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Pensas/Farmi_Pensas_LOD0.fbx
+- Assets/BundledScenes/MegaScene/Assets/Kasvit/Farmi_Lohkare/Lohkare 1/Farmi_Lohkare1_LOD.prefab
+Dependencies: []

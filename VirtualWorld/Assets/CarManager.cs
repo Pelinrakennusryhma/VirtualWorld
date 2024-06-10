@@ -98,8 +98,6 @@ namespace Vehicles
 
             DedicatedCarCamera.transform.rotation = lookRot;
 
-            Debug.Log("Start called on car manager");
-
             if (NonNetworkRecognizer.Instance != null)
             {                
 
