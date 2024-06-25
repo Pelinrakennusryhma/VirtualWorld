@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8232eb8315b8643489d4f44277594c73
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Assets: {instanceID: 0}
+  - Head: {instanceID: 0}
+  - Hair: {instanceID: 0}
+  - Clothes: {instanceID: 0}
+  - SkinMaterial: {fileID: 2100000, guid: c084b15da69c81e4d862f0e56a157e83, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
