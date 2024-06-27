@@ -170,6 +170,7 @@ public class Customiser : MonoBehaviour
 //Creating two buttons in Unity interface for testing purposes. They call the "Randomise" and "Update Appearance" functions.
 //The buttons only work correctly during play.
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Customiser))]
 
 public class CustomiserEditor : Editor
@@ -197,3 +198,4 @@ public class CustomiserEditor : Editor
     }
 
 }
+#endif

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6203663215727701464}
   - component: {fileID: 8613104118265851934}
   - component: {fileID: 3414383178370510505}
+  - component: {fileID: -1637147050837204322}
   m_Layer: 0
   m_Name: CharacterManagerNonNetworked
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
+  _addedNetworkObject: {fileID: -1637147050837204322}
   _networkObjectCache: {fileID: 0}
   itemDatabase: {fileID: 11400000, guid: a9b69edd0a0f7d94e859ef3ef80d1160, type: 2}
   <CreditItem>k__BackingField: {fileID: 11400000, guid: dd19d5fa3e6f84343a79fa785a24ca02,
@@ -86,3 +87,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questDatabase: {fileID: 11400000, guid: 5cf1e2e792ebb7748a63fc3ef5f67111, type: 2}
   autoFocusQuest: 1
+--- !u!114 &-1637147050837204322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585604776717508355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours: []
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  SerializedTransformProperties:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 10722248635777646760
