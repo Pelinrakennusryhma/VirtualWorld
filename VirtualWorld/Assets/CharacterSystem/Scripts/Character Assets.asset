@@ -51,6 +51,7 @@ MonoBehaviour:
   LashTexture:
   - {fileID: 2800000, guid: bca867d48ff3bc247b19bff23dcb9a20, type: 3}
   - {fileID: 2800000, guid: 132d06a620ecec14ebeb4799feca5377, type: 3}
+  - {fileID: 2800000, guid: b377a348c9b5ec94ba68e7fb13dbe8ea, type: 3}
   EyebrowTexture:
   - {fileID: 2800000, guid: 2f3419916b81a7f4d947509e1f1abe46, type: 3}
   - {fileID: 2800000, guid: 5672e81f77c60fe43a2f242e0d16828e, type: 3}
@@ -84,9 +85,9 @@ MonoBehaviour:
   Hairs:
   - {fileID: 0}
   - {fileID: -4855403971026362441, guid: a6dbdd3cf3b004946bb701db9f869b9d, type: 3}
-  - {fileID: 6596381345002932943, guid: a6dbdd3cf3b004946bb701db9f869b9d, type: 3}
+  - {fileID: 0}
   - {fileID: 6393254986201036714, guid: a6dbdd3cf3b004946bb701db9f869b9d, type: 3}
-  - {fileID: -7364985928304622843, guid: a6dbdd3cf3b004946bb701db9f869b9d, type: 3}
+  - {fileID: 0}
   - {fileID: -4282209985123671734, guid: a6dbdd3cf3b004946bb701db9f869b9d, type: 3}
   Clothes:
   - {fileID: 1004952562449434086, guid: a6dbdd3cf3b004946bb701db9f869b9d, type: 3}

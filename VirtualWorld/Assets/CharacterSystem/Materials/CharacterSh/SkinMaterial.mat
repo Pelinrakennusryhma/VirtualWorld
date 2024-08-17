@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ALPHATexture:
-        m_Texture: {fileID: 2800000, guid: 47e63265dce26e04bac0c00b9c2f0d09, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8af2dff81f77c1c45b3e56234fde7987, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseTexture:
@@ -61,5 +61,7 @@ Material:
     m_Floats:
     - _Sh_Fat: 0
     - _Sh_M_F: 0
-    m_Colors: []
+    - _Sh_Muscle: 0
+    m_Colors:
+    - _Eye_Color: {r: 0.745283, g: 0.53376216, b: 0.38318795, a: 0}
   m_BuildTextureStacks: []

@@ -33,11 +33,14 @@ public class Customiser : MonoBehaviour
     private Material ClothesMaterial;
     private Material LashesMaterial;
     private Material BrowsMaterial;
+    private Material HairMaterial;
 
     private Texture2D ClothesTexture;
+    private Texture2D ClothesNorm;
 
     //variables for use internally and between this script and the bone graph.
     public Color SkColor;
+    public Color HairColor;
     public float Fatness;
     public float Fitness;
     public float MascFem;
@@ -45,6 +48,7 @@ public class Customiser : MonoBehaviour
     public float Chest;
 
     private int HeadRandom;
+    private int ChestYN;
 
 
 
@@ -77,6 +81,7 @@ public class Customiser : MonoBehaviour
         ClothesMaterial = Clothes.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
         LashesMaterial = Lashes.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
         BrowsMaterial = Eyebrows.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
+        HairMaterial = Hair.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
 
         Debug.Log("Materials created");
     }
@@ -102,10 +107,15 @@ public class Customiser : MonoBehaviour
         ClothesMaterial.SetFloat("_Sh_M_F", (float)(MascFem * 1.02));
         SkinMaterial.SetColor("_SKN_Color", SkColor);
         SkinMaterial2.SetColor("_SKN_Color", SkColor);
+        HairMaterial.SetColor("_Hair_ColorSh", HairColor);
 
-        //Picks alpha for body material from the clothes it is currently wearing, in order to hide the correct areas from the body under the clothes. Fixes clipping issues.
+        //Picks alpha for body material from the clothes the character is currently wearing, in order to hide the correct areas of the body under clothes. Fixes clipping issues.
+        /*Does the same for face material in order to hide parts of the neck when needed. The clothes' normal map contains an alpha channel for this particular information. It is a strange place to
+        keep this info, but I'm saving space by giving textures multiple uses.*/
         ClothesTexture = (Texture2D)ClothesMaterial.GetTexture("_BaseTexture");
+        ClothesNorm = (Texture2D)ClothesMaterial.GetTexture("_NormalsTexture");
         SkinMaterial2.SetTexture("_ALPHATexture", ClothesTexture);
+        SkinMaterial.SetTexture("_ALPHATexture", ClothesNorm);
 
         Debug.Log("Character appearance updated");
     }
@@ -116,6 +126,8 @@ public class Customiser : MonoBehaviour
     //Randomise currently also includes bodyshape variables, excluding height.
     public void Randomise()
     {
+        ChestYN = Random.Range(0, 2);
+        Debug.Log(ChestYN);
         HeadRandom = Random.Range(0, Assets.Heads.Length);
 
         Head.sharedMesh = Assets.Heads[HeadRandom];
@@ -143,7 +155,21 @@ public class Customiser : MonoBehaviour
         MascFem = SkinMaterial.GetFloat("_Sh_M_F");
         SkinMaterial2.SetFloat("_Sh_M_F", SkinMaterial.GetFloat("_Sh_M_F"));
 
-        Chest = Random.Range(0, 10);
+        Hair.sharedMesh = Assets.Hairs[Random.Range(0, Assets.Hairs.Length)];
+        HairColor = Assets.HairColor[Random.Range(0, Assets.HairColor.Length)];
+        HairMaterial.SetColor("_Hair_ColorSh", HairColor);
+
+        //Making the probability of the character having a larger chest than 0, 50/50
+        if (ChestYN == 1)
+        {
+            Chest = Random.Range(1, 10);
+        }
+        else
+        {
+            Chest = 0;
+        }
+            
+            
 
         //juggling variables, yay
 

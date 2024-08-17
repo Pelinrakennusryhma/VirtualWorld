@@ -8,7 +8,7 @@ ModelImporter:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -42,13 +42,13 @@ ModelImporter:
     sortHierarchyByName: 1
     importPhysicalCameras: 1
     importVisibility: 1
-    importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -528,6 +528,11 @@ ModelImporter:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
+    - name: Acc001
+      parentName: default_Char(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
     - name: Armature
       parentName: default_Char(Clone)
       position: {x: -0, y: 0, z: 0}
@@ -556,7 +561,7 @@ ModelImporter:
     - name: Left_Foot
       parentName: Left_LowerLeg
       position: {x: -0.0035172652, y: 0.5032186, z: 0.010961709}
-      rotation: {x: -0.03570098, y: 0.04995759, z: -0.019575229, w: 0.99792105}
+      rotation: {x: -0.035700984, y: 0.04995759, z: -0.01957523, w: 0.99792105}
       scale: {x: 1.0000002, y: 0.9999998, z: 0.9999998}
     - name: Left_Toes
       parentName: Left_Foot
@@ -581,7 +586,7 @@ ModelImporter:
     - name: Right_Foot
       parentName: Right_LowerLeg
       position: {x: 0.0045293616, y: -0.50325465, z: -0.010959095}
-      rotation: {x: -0.035700984, y: 0.04995758, z: -0.019575221, w: 0.99792105}
+      rotation: {x: -0.035700988, y: 0.04995758, z: -0.019575223, w: 0.99792105}
       scale: {x: 1.0000001, y: 1, z: 1}
     - name: Right_Toes
       parentName: Right_Foot
@@ -748,7 +753,7 @@ ModelImporter:
     - name: Jaw
       parentName: Head
       position: {x: -0, y: -0.009271393, z: 0.040044088}
-      rotation: {x: 0.15949214, y: 0.6888848, z: 0.15949221, w: 0.68888485}
+      rotation: {x: 0.12909639, y: 0.6952225, z: 0.12909642, w: 0.69522226}
       scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: Left_Eye
       parentName: Head
@@ -894,14 +899,34 @@ ModelImporter:
       rotation: {x: -0.000000044703473, y: -0.000000016939783, z: 0.000000020849177,
         w: 1}
       scale: {x: 1.0000001, y: 1, z: 1}
-    - name: Body_default002
+    - name: Body_default003
       parentName: default_Char(Clone)
-      position: {x: 0.0000000041464565, y: -0.069874495, z: 0.052315224}
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Brow001
+      parentName: default_Char(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair001
+      parentName: default_Char(Clone)
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Head001
       parentName: default_Char(Clone)
       position: {x: 0.0000000041464565, y: -0.069874495, z: 0.052315224}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Lash001
+      parentName: default_Char(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Underwear
+      parentName: default_Char(Clone)
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
